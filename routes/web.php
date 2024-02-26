@@ -14,8 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('customer.layout.app');
-});
+    return view('customer.pages.home.home_customer');
+})->name('home_customer');
+
 
 
 // Router admin
@@ -48,41 +49,3 @@ Route::get('/', function () {
 
 
 // Router customer
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

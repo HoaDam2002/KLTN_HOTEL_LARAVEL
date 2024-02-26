@@ -8,7 +8,8 @@
     <title>DANA Hotel</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ asset('assets/customer/images/logo/favicon.png') }}">
+    <link rel="shortcut icon"
+        href="{{ asset('assets/customer/images/logo/z5175648554199_ccc2baf0a7ac356050aa28149405a89d.jpg') }}">
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{{ asset('assets/customer/css/bootstrap.min.css') }}">
@@ -50,11 +51,24 @@
         </svg>
     </div>
 
-    @include('customer.layout.header');
+    <main class="body-bg">
+        @include('customer.layout.header')
 
-    @yield('content');
+        {{-- start banner --}}
+        @php
+            $name_page = Route::currentRouteName();
+        @endphp
+        @if ($name_page == 'home_customer')
+            @include('customer.layout.banner')
+        @endif
+        {{-- end banner --}}
 
-    @include('customer.layout.footer');
+
+        @yield('content')
+
+
+        @include('customer.layout.footer')
+    </main>
 
 
     <!-- Jquery js -->
