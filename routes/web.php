@@ -17,7 +17,9 @@ Route::get('/', function () {
     return view('customer.pages.home.home_customer');
 })->name('home_customer');
 
-
+Route::get('/pay', function () {
+    return view('customer.pages.checkout.checkout');
+})->name('checkout_customer');
 
 // Router admin
 
