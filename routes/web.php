@@ -12,6 +12,14 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('setLocale/{locale}', function ($locale) {
+    if (in_array($locale, Config::get('app.locales'))) {
+      Session::put('locale', $locale);
+    }
+    return redirect()->back();
+})->name('app.setLocale');
+
+
 
 Route::get('/', function () {
     return view('customer.pages.home.home_customer');
@@ -20,8 +28,6 @@ Route::get('/', function () {
 Route::get('/pay', function () {
     return view('customer.pages.checkout.checkout');
 })->name('checkout_customer');
-
-// Router admin
 
 
 

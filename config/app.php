@@ -85,6 +85,9 @@ return [
 
     'locale' => 'en',
 
+    // Bổ sung thêm danh sách các ngôn ngữ
+    'locales' => ['vi', 'en'],
+
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
@@ -95,9 +98,8 @@ return [
     | the language folders that are provided through your application.
     |
     */
-
+    
     'fallback_locale' => 'en',
-
     /*
     |--------------------------------------------------------------------------
     | Faker Locale
