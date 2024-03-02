@@ -91,6 +91,8 @@
 
     <!-- main js -->
     <script src="{{ asset('assets/customer/js/main.js') }}"></script>
+
+    @yield('js');
 </body>
 
 </html>
