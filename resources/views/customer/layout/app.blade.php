@@ -27,6 +27,9 @@
     <link rel="stylesheet" href="{{ asset('assets/customer/css/jquery-ui.css') }}">
     <!-- Main css -->
     <link rel="stylesheet" href="{{ asset('assets/customer/css/main.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">
+
+
 </head>
 
 <body>
@@ -91,8 +94,21 @@
 
     <!-- main js -->
     <script src="{{ asset('assets/customer/js/main.js') }}"></script>
-
-    @yield('js');
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let lang = "{{ App::getLocale() }}";
+            if (lang) {
+                if (lang == 'en') {
+                    document.getElementById('en-flag').classList.add('active');
+                    document.getElementById('vi-flag').classList.remove('active');
+                } else if (lang == 'vi') {
+                    document.getElementById('vi-flag').classList.add('active');
+                    document.getElementById('en-flag').classList.remove('active');
+                }
+            }
+        })
+    </script>
+    @yield('js')
 </body>
 
 </html>
