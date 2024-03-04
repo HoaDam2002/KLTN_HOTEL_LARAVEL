@@ -29,6 +29,16 @@ Route::get('/pay', function () {
     return view('customer.pages.checkout.checkout');
 })->name('checkout_customer');
 
+Route::get('/aboutus', function () {
+    return view('customer.pages.about_us.about_us');
+})->name('aboutus_customer');
+
+Route::get('/listroom', function () {
+    return view('customer.pages.list_room.list_room_customer');
+})->name('listroom_customer');
+
+// Router admin
+
 
 
 
