@@ -55,14 +55,14 @@
     </div>
 
     <main class="body-bg">
-        @include('customer.layout.header')
+        @include('layout.header')
 
         {{-- start banner --}}
         @php
             $name_page = Route::currentRouteName();
         @endphp
         @if ($name_page == 'home_customer')
-            @include('customer.layout.banner')
+            @include('layout.banner')
         @endif
         {{-- end banner --}}
 
@@ -70,7 +70,7 @@
         @yield('content')
 
 
-        @include('customer.layout.footer')
+        @include('layout.footer')
     </main>
 
 
