@@ -1,4 +1,4 @@
-@extends('customer.layout.app')
+@extends('layout.app')
 @section('content')
     {{-- start about us --}}
     <section class="about padding-y-120">

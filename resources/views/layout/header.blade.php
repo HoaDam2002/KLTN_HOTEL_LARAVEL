@@ -25,6 +25,21 @@
     .language-switcher:hover .dropdown {
         display: block;
     }
+
+    .account-icon-link {
+        text-decoration: none;
+        color: #333;
+    }
+
+    .account-icon-link i {
+        font-size: 40px;
+    }
+
+    .account-icon-link img {
+        width: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
 </style>
 
 <!-- ==================== Mobile Menu Start Here ==================== -->
@@ -35,7 +50,6 @@
             <img src="{{ asset('assets/customer/images/logo/logo.png') }}" alt="Logo">
         </a>
         <div class="mobile-menu__menu">
-
             <ul class="nav-menu flx-align nav-menu--mobile">
                 <li class="nav-menu__item">
                     <a href="/" class="nav-menu__link">{{ __('Home') }}</a>
@@ -174,8 +188,7 @@
                     <button class="flag-button"><img
                             src="{{ asset('assets/customer/images/lang/flag_vi.jpg') }}" /></button>
                     <div id="en-dropdown" class="dropdown">
-                        <a href="{{ route('app.setLocale', ['locale' => 'en']) }}" class="locale_link"
-                            onclick="change_language('en')">
+                        <a href="{{ route('app.setLocale', ['locale' => 'en']) }}" class="locale_link">
                             <img src="{{ asset('assets/customer/images/lang/flag_en.jpg') }}" />
                         </a>
                     </div>
@@ -184,8 +197,7 @@
                     <button class="flag-button"><img
                             src="{{ asset('assets/customer/images/lang/flag_en.jpg') }}" /></button>
                     <div id="vi-dropdown" class="dropdown">
-                        <a href="{{ route('app.setLocale', ['locale' => 'vi']) }}" class="locale_link"
-                            onclick="change_language('vi')">
+                        <a href="{{ route('app.setLocale', ['locale' => 'vi']) }}" class="locale_link">
                             <img src="{{ asset('assets/customer/images/lang/flag_vi.jpg') }}" />
                         </a>
                     </div>
@@ -288,14 +300,21 @@
 
             <!-- Header Right start -->
             <div class="header-right flx-align">
-                <button class="btn btn-outline-light d-lg-block d-none" data-bs-toggle="modal"
+                {{-- <button class="btn btn-outline-light d-lg-block d-none" data-bs-toggle="modal"
                     data-bs-target="#modal_signin">
                     {{ __('Sign In') }}
                     <span class="icon-right text-gradient icon">
                         <i class="fas fa-arrow-right"></i>
                     </span>
-                </button>
+                </button> --}}
                 <button type="button" class="toggle-mobileMenu d-lg-none ms-3"> <i class="las la-bars"></i>
+                </button>
+                <button class="btn d-lg-block d-none">
+                    <a href="/customer/account" class="account-icon-link"><i
+                            class="fa-regular fa-circle-user"></i></a>
+                    {{-- <a href="/customer/account" class="account-icon-link"><img
+                            src="{{ asset('assets/customer/images/logo/z5175648554199_ccc2baf0a7ac356050aa28149405a89d.jpg') }}"
+                            alt="account"></a> --}}
                 </button>
             </div>
 
@@ -307,26 +326,3 @@
     </div>
 </header>
 <!-- ==================== Header End Here ==================== -->
-
-@section('js')
-    <script>
-        if (localStorage.getItem('change_language')) {
-            let lang = localStorage.getItem('change_language');
-            if (lang == 'en') {
-                document.getElementById('en-flag').classList.add('active');
-                document.getElementById('vi-flag').classList.remove('active');
-            } else if (lang == 'vi') {
-                document.getElementById('vi-flag').classList.add('active');
-                document.getElementById('en-flag').classList.remove('active');
-            }
-        }
-
-        function change_language(lang) {
-            if (lang == 'en') {
-                localStorage.setItem('change_language', 'en');
-            } else if (lang == 'vi') {
-                localStorage.setItem('change_language', 'vi');
-            }
-        }
-    </script>
-@endsection

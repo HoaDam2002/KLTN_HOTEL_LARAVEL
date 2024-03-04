@@ -22,22 +22,32 @@ Route::get('setLocale/{locale}', function ($locale) {
 
 //Router customer
 Route::get('/', function () {
-    return view('customer.pages.home.home_customer');
+    return view('pages.home.home_customer');
 })->name('home_customer');
 
 Route::get('/pay', function () {
-    return view('customer.pages.checkout.checkout');
+    return view('pages.checkout.checkout');
 })->name('checkout_customer');
 
 Route::get('/aboutus', function () {
-    return view('customer.pages.about_us.about_us');
+    return view('pages.about_us.about_us');
 })->name('aboutus_customer');
 
 Route::get('/listroom', function () {
-    return view('customer.pages.list_room.list_room_customer');
+    return view('pages.list_room.list_room_customer');
 })->name('listroom_customer');
 
-// Router admin
+Route::get('/customer/account', function () {
+    return view('pages.account.account_home');
+})->name('checkout_customer');
+
+Route::get('/customer/profile', function () {
+    return view('pages.account.account_profile');
+})->name('checkout_customer');
+
+Route::get('/customer/my-bookings', function () {
+    return view('pages.account.my_booking');
+})->name('checkout_customer');
 
 
 

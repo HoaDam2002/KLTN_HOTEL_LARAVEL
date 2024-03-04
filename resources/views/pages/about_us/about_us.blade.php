@@ -1,4 +1,4 @@
-@extends('customer.layout.app')
+@extends('layout.app')
 
 @section('content')
     <div class="mobile-menu d-lg-none d-block">
