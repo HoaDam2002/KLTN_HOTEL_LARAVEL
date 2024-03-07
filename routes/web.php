@@ -49,6 +49,10 @@ Route::get('/customer/my-bookings', function () {
     return view('pages.account.my_booking');
 })->name('checkout_customer');
 
+Route::get('/customer/change-pass', function () {
+    return view('pages.account.change_pass');
+})->name('change_pass');
+
 
 
 
