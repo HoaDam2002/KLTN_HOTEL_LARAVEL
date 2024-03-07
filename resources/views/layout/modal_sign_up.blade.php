@@ -70,4 +70,4 @@
     </div>
 </div>
 
-@include('customer.layout.modal_sign_in')
+@include('layout.modal_sign_in')
