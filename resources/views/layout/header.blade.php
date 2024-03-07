@@ -1,3 +1,47 @@
+<style>
+    .locale_link {
+        width: 35px;
+    }
+
+    .flag-button {
+        width: 35px;
+        /* display: none; */
+    }
+
+    .language-switcher {
+        display: none;
+    }
+
+    .language-switcher.active {
+        display: block;
+    }
+
+    .dropdown {
+        position: absolute;
+        z-index: 100;
+        display: none;
+    }
+
+    .language-switcher:hover .dropdown {
+        display: block;
+    }
+
+    .account-icon-link {
+        text-decoration: none;
+        color: #333;
+    }
+
+    .account-icon-link i {
+        font-size: 40px;
+    }
+
+    .account-icon-link img {
+        width: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+</style>
+
 <!-- ==================== Mobile Menu Start Here ==================== -->
 <div class="mobile-menu d-lg-none d-block">
     <button type="button" class="close-button"> <i class="las la-times"></i> </button>
@@ -6,72 +50,65 @@
             <img src="{{ asset('assets/customer/images/logo/logo.png') }}" alt="Logo">
         </a>
         <div class="mobile-menu__menu">
-
             <ul class="nav-menu flx-align nav-menu--mobile">
                 <li class="nav-menu__item">
-                    <a href="/" class="nav-menu__link">Home</a>
+                    <a href="/" class="nav-menu__link">{{ __('Home') }}</a>
                 </li>
                 <li class="nav-menu__item has-submenu">
-                    <a href="javascript:void(0)" class="nav-menu__link">Pages</a>
+                    <a href="javascript:void(0)" class="nav-menu__link">{{ __('Pages') }}</a>
                     <ul class="nav-submenu">
                         <li class="nav-submenu__item">
-                            <a href="property.html" class="nav-submenu__link">Rooms</a>
+                            <a href="property.html" class="nav-submenu__link">{{ __('Rooms') }}</a>
                         </li>
                         <li class="nav-submenu__item">
-                            <a href="property-details.html" class="nav-submenu__link">Room Details</a>
+                            <a href="property-details.html" class="nav-submenu__link">{{ __('Room Details') }}</a>
                         </li>
                         <li class="nav-submenu__item">
-                            <a href="add-listing.html" class="nav-submenu__link"> Add New Listing</a>
+                            <a href="add-listing.html" class="nav-submenu__link"> {{ __('Add New Listing') }}</a>
                         </li>
                         <li class="nav-submenu__item">
-                            <a href="map-location.html" class="nav-submenu__link"> Map Location</a>
+                            <a href="map-location.html" class="nav-submenu__link"> {{ __('Map Location') }}</a>
                         </li>
                         <li class="nav-submenu__item">
-                            <a href="about.html" class="nav-submenu__link"> About Us</a>
+                            <a href="about.html" class="nav-submenu__link"> {{ __('About Us') }}</a>
                         </li>
                         <li class="nav-submenu__item">
-                            <a href="faq.html" class="nav-submenu__link"> FAQ</a>
+                            <a href="checkout.html" class="nav-submenu__link"> {{ __('Checkout') }}</a>
                         </li>
                         <li class="nav-submenu__item">
-                            <a href="checkout.html" class="nav-submenu__link"> Checkout</a>
-                        </li>
-                        <li class="nav-submenu__item">
-                            <a href="cart.html" class="nav-submenu__link"> Cart</a>
-                        </li>
-                        <li class="nav-submenu__item">
-                            <a href="account.html" class="nav-submenu__link"> Account</a>
+                            <a href="account.html" class="nav-submenu__link"> {{ __('Account') }}</a>
                         </li>
                     </ul>
                 </li>
                 <li class="nav-menu__item has-submenu">
-                    <a href="javascript:void(0)" class="nav-menu__link">Room</a>
+                    <a href="javascript:void(0)" class="nav-menu__link">{{ __('Room') }}</a>
                     <ul class="nav-submenu">
                         <li class="nav-submenu__item">
-                            <a href="project.html" class="nav-submenu__link">Room List</a>
+                            <a href="project.html" class="nav-submenu__link">{{ __('Room List') }}</a>
                         </li>
                         <li class="nav-submenu__item">
-                            <a href="project-details.html" class="nav-submenu__link">Room Details</a>
+                            <a href="project-details.html" class="nav-submenu__link">{{ __('Room Details') }}</a>
                         </li>
                     </ul>
                 </li>
                 <li class="nav-menu__item has-submenu">
-                    <a href="javascript:void(0)" class="nav-menu__link">Blog</a>
+                    <a href="javascript:void(0)" class="nav-menu__link">{{ __('Blog') }}</a>
                     <ul class="nav-submenu">
                         <li class="nav-submenu__item">
-                            <a href="blog-classic.html" class="nav-submenu__link"> Blog Classic</a>
+                            <a href="blog-classic.html" class="nav-submenu__link"> {{ __('Blog Classic') }}</a>
                         </li>
                         <li class="nav-submenu__item">
-                            <a href="blog-details.html" class="nav-submenu__link"> Blog Details</a>
+                            <a href="blog-details.html" class="nav-submenu__link"> {{ __('Blog Details') }}</a>
                         </li>
                     </ul>
                 </li>
                 <li class="nav-menu__item">
-                    <a href="contact.html" class="nav-menu__link">Contact</a>
+                    <a href="contact.html" class="nav-menu__link">{{ __('Contact') }}</a>
                 </li>
             </ul>
             <button class="btn btn-outline-light d-lg-none d-block mt-4" data-bs-toggle="modal"
                 data-bs-target="#modal_signin" style="width: 100%">
-                Sign In
+                {{ __('Sign In') }}
                 <span class="icon-right text-gradient icon">
                     <i class="fas fa-arrow-right"></i>
                 </span>
@@ -147,6 +184,24 @@
     <div class="container container-two">
         <div class="flx-between">
             <div class="header-info flx-align">
+                <div class="language-switcher" id="vi-flag">
+                    <button class="flag-button"><img
+                            src="{{ asset('assets/customer/images/lang/flag_vi.jpg') }}" /></button>
+                    <div id="en-dropdown" class="dropdown">
+                        <a href="{{ route('app.setLocale', ['locale' => 'en']) }}" class="locale_link">
+                            <img src="{{ asset('assets/customer/images/lang/flag_en.jpg') }}" />
+                        </a>
+                    </div>
+                </div>
+                <div class="language-switcher active" id="en-flag">
+                    <button class="flag-button"><img
+                            src="{{ asset('assets/customer/images/lang/flag_en.jpg') }}" /></button>
+                    <div id="vi-dropdown" class="dropdown">
+                        <a href="{{ route('app.setLocale', ['locale' => 'vi']) }}" class="locale_link">
+                            <img src="{{ asset('assets/customer/images/lang/flag_vi.jpg') }}" />
+                        </a>
+                    </div>
+                </div>
                 <div class="header-info__item flx-align">
                     <span class="header-info__icon"><i class="fas fa-phone"></i></span>
                     <a href="tel:" class="header-info__text">(629) 555-0129</a>
@@ -184,59 +239,60 @@
 
                 <ul class="nav-menu flx-align ">
                     <li class="nav-menu__item">
-                        <a href="/" class="nav-menu__link">Home</a>
+                        <a href="/" class="nav-menu__link">{{ __('Home') }}</a>
                     </li>
                     <li class="nav-menu__item has-submenu">
-                        <a href="javascript:void(0)" class="nav-menu__link">Pages</a>
+                        <a href="javascript:void(0)" class="nav-menu__link">{{ __('Pages') }}</a>
                         <ul class="nav-submenu">
                             <li class="nav-submenu__item">
-                                <a href="property.html" class="nav-submenu__link">Rooms</a>
+                                <a href="property.html" class="nav-submenu__link">{{ __('Rooms') }}</a>
                             </li>
                             <li class="nav-submenu__item">
-                                <a href="property-details.html" class="nav-submenu__link">Room Details</a>
+                                <a href="property-details.html"
+                                    class="nav-submenu__link">{{ __('Room Details') }}</a>
                             </li>
                             <li class="nav-submenu__item">
-                                <a href="map-location.html" class="nav-submenu__link"> Map Location</a>
+                                <a href="map-location.html" class="nav-submenu__link"> {{ __('Map Location') }}</a>
                             </li>
                             <li class="nav-submenu__item">
-                                <a href="about.html" class="nav-submenu__link"> About Us</a>
+                                <a href="about.html" class="nav-submenu__link"> {{ __('About Us') }}</a>
                             </li>
                             <li class="nav-submenu__item">
-                                <a href="checkout.html" class="nav-submenu__link"> Checkout</a>
+                                <a href="checkout.html" class="nav-submenu__link"> {{ __('Checkout') }}</a>
                             </li>
                             <li class="nav-submenu__item">
-                                <a href="cart.html" class="nav-submenu__link"> Cart</a>
+                                <a href="cart.html" class="nav-submenu__link"> {{ __('Cart') }}</a>
                             </li>
                             <li class="nav-submenu__item">
-                                <a href="account.html" class="nav-submenu__link"> Account</a>
+                                <a href="account.html" class="nav-submenu__link"> {{ __('Account') }}</a>
                             </li>
 
                         </ul>
                     </li>
                     <li class="nav-menu__item has-submenu">
-                        <a href="javascript:void(0)" class="nav-menu__link">Rooms</a>
+                        <a href="javascript:void(0)" class="nav-menu__link">{{ __('Rooms') }}</a>
                         <ul class="nav-submenu">
                             <li class="nav-submenu__item">
-                                <a href="project.html" class="nav-submenu__link">Room List</a>
+                                <a href="project.html" class="nav-submenu__link">{{ __('Room List') }}</a>
                             </li>
                             <li class="nav-submenu__item">
-                                <a href="project-details.html" class="nav-submenu__link">Room Details</a>
+                                <a href="project-details.html" class="nav-submenu__link">{{ __('Room Details') }}</a>
                             </li>
                         </ul>
                     </li>
                     <li class="nav-menu__item has-submenu">
-                        <a href="javascript:void(0)" class="nav-menu__link">Blog</a>
+                        <a href="javascript:void(0)" class="nav-menu__link">{{ __('Blog') }}</a>
                         <ul class="nav-submenu">
                             <li class="nav-submenu__item">
-                                <a href="blog-classic.html" class="nav-submenu__link">Blog List</a>
+                                <a href="blog-classic.html" class="nav-submenu__link">{{ __('Blog List') }}</a>
                             </li>
                             <li class="nav-submenu__item">
-                                <a href="blog-details.html" class="nav-submenu__link">Blog Details</a>
+                                <a href="blog-details.html" class="nav-submenu__link">{{ __('Blog Details') }}</a>
                             </li>
                         </ul>
                     </li>
                     <li class="nav-menu__item">
-                        <a href="contact.html" class="nav-menu__link">Contact</a>
+                        <a href="contact.html" class="nav-menu__link">{{ __('Contact') }}</a>
                     </li>
                 </ul>
             </div>
@@ -244,14 +300,21 @@
 
             <!-- Header Right start -->
             <div class="header-right flx-align">
-                <button class="btn btn-outline-light d-lg-block d-none" data-bs-toggle="modal"
+                {{-- <button class="btn btn-outline-light d-lg-block d-none" data-bs-toggle="modal"
                     data-bs-target="#modal_signin">
-                    Sign In
+                    {{ __('Sign In') }}
                     <span class="icon-right text-gradient icon">
                         <i class="fas fa-arrow-right"></i>
                     </span>
-                </button>
+                </button> --}}
                 <button type="button" class="toggle-mobileMenu d-lg-none ms-3"> <i class="las la-bars"></i>
+                </button>
+                <button class="btn d-lg-block d-none">
+                    <a href="/customer/account" class="account-icon-link"><i
+                            class="fa-regular fa-circle-user"></i></a>
+                    {{-- <a href="/customer/account" class="account-icon-link"><img
+                            src="{{ asset('assets/customer/images/logo/z5175648554199_ccc2baf0a7ac356050aa28149405a89d.jpg') }}"
+                            alt="account"></a> --}}
                 </button>
             </div>
 

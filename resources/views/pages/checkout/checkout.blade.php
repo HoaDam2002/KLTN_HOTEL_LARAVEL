@@ -1,4 +1,4 @@
-@extends('customer.layout.app')
+@extends('layout.app')
 
 @section('content')
     <section class="breadcrumb padding-y-120">
