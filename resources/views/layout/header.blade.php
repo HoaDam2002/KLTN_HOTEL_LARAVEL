@@ -84,7 +84,7 @@
                     <a href="javascript:void(0)" class="nav-menu__link">{{ __('Room') }}</a>
                     <ul class="nav-submenu">
                         <li class="nav-submenu__item">
-                            <a href="project.html" class="nav-submenu__link">{{ __('Room List') }}</a>
+                            <a href="/listroom" class="nav-submenu__link">{{ __('Room List') }}</a>
                         </li>
                         <li class="nav-submenu__item">
                             <a href="project-details.html" class="nav-submenu__link">{{ __('Room Details') }}</a>
@@ -273,7 +273,7 @@
                         <a href="javascript:void(0)" class="nav-menu__link">{{ __('Rooms') }}</a>
                         <ul class="nav-submenu">
                             <li class="nav-submenu__item">
-                                <a href="project.html" class="nav-submenu__link">{{ __('Room List') }}</a>
+                                <a href="/listroom" class="nav-submenu__link">{{ __('Room List') }}</a>
                             </li>
                             <li class="nav-submenu__item">
                                 <a href="project-details.html" class="nav-submenu__link">{{ __('Room Details') }}</a>
@@ -318,9 +318,9 @@
                 </button>
             </div>
 
-            @include('customer.layout.modal_sign_in')
+            @include('layout.modal_sign_in')
 
-            @include('customer.layout.modal_sign_up')
+            @include('layout.modal_sign_up')
             <!-- Header Right End  -->
         </nav>
     </div>

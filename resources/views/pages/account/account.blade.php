@@ -19,7 +19,7 @@
                                 <span class="icon"> <i class="fas fa-user"></i></span>
                                 Profile
                             </a>
-                            <a href="/customer/my-booking" class="nav-link" id="my_bookings"
+                            <a href="/customer/my-bookings" class="nav-link" id="my_bookings"
                                 onclick="menu_account_customer(this.id)">
                                 <span class="icon"> <i class="fas fa-list"></i></span>
                                 {{ __('My Bookings') }}

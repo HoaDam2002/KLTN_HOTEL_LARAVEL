@@ -28,8 +28,12 @@
     <!-- Main css -->
     <link rel="stylesheet" href="{{ asset('assets/customer/css/main.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
 
 
+    @yield('css')
 </head>
 
 <body>
@@ -94,6 +98,12 @@
 
     <!-- main js -->
     <script src="{{ asset('assets/customer/js/main.js') }}"></script>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             let lang = "{{ App::getLocale() }}";

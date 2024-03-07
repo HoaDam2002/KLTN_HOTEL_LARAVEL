@@ -3,6 +3,7 @@
         color: #fff;
         padding: 5px 10px;
         border-radius: 40px;
+        min-width: 85px;
     }
 
     .status.cancel {
@@ -12,12 +13,64 @@
     .status.confirm {
         background-color: green;
     }
+
+    .status.pending {
+        background-color: blue;
+    }
+
+    .status.finish {
+        background-color: black;
+    }
+
+    .status.checkin {
+        background-color: crimson;
+    }
+
+    .btn_filter {
+        background: var(--main-gradient);
+        color: #fff;
+        padding: 8px 20px;
+    }
+
+    .filter_booking form {
+        position: relative;
+    }
+
+    .filter_booking input {
+        width: 100%;
+        padding: 8px 15px;
+        outline: none;
+    }
+
+    .btn_search_booking {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+    }
 </style>
 @extends('pages.account.account')
 @section('content_account')
     <div class="col-xl-9 col-lg-8">
         <div class="tab-content" id="v-pills-tabContent">
             <div class="overflow-auto">
+                <div class="card common-card min-w-maxContent" style="margin-bottom: 20px">
+                    <div class="card-body filter_booking d-flex">
+                        <button class="btn_filter dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">Filter</button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Cancel</a></li>
+                            <li><a class="dropdown-item" href="#">Check in</a></li>
+                            <li><a class="dropdown-item" href="#">Confirm</a></li>
+                            <li><a class="dropdown-item" href="#">Pending</a></li>
+                            <li><a class="dropdown-item" href="#">Finish</a></li>
+                        </ul>
+                        <form action="" class="w-50 ms-3">
+                            <input type="text" name="" id="" placeholder="Room Name" class="">
+                            <button type="submit" class="btn_search_booking"><i
+                                    class="fa-solid fa-magnifying-glass"></i></button>
+                        </form>
+                    </div>
+                </div>
                 <div class="card common-card min-w-maxContent">
                     <div class="card-body">
                         <table class="table style-two">
@@ -63,11 +116,72 @@
                                     <td>
                                         <span class="status cancel" id="checkout">Cancel</span>
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         <button type="button"
                                             class="rounded-btn delete-btn text-danger bg-danger bg-opacity-10 flex-shrink-0">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
+                                    </td> --}}
+                                    <td class="" style="cursor: default;">
+                                        <button type="button"
+                                            class="rounded-btn text-danger bg-danger bg-opacity-10 flex-shrink-0"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa-solid fa-gear"></i>
+                                        </button>
+                                        {{-- <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#">Cancel</a></li>
+                                            <li><a class="dropdown-item" href="#">Evaluate</a></li>
+                                        </ul> --}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="cart-item__thumb">
+                                                <img src="{{ asset('assets/customer/images/thumbs/property-1.png') }}"
+                                                    alt="" />
+                                            </div>
+                                            <div class="cart-item__content">
+                                                <h6 class="cart-item__title fw-500 font-18">
+                                                    <a href="property.html" class="link">3 Rooms
+                                                        Manhattan</a>
+                                                </h6>
+                                                <p class="property-item__location d-flex gap-2 font-14">
+                                                    <span class="icon text-gradient">
+                                                        <i class="fas fa-map-marker-alt"></i></span>
+                                                    66 Broklyant, New York
+                                                    America
+                                                </p>
+                                                <span class="cart-item__price">Price:
+                                                    <span class="fw-500 text-heading">$85.00</span></span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="date" id="checkin">17/02/2024</span>
+                                    </td>
+                                    <td>
+                                        <span class="date" id="checkout">17/02/2024</span>
+                                    </td>
+                                    <td>
+                                        <span class="status checkin" id="checkout">Check in</span>
+                                    </td>
+                                    {{-- <td>
+                                        <button type="button"
+                                            class="rounded-btn delete-btn text-danger bg-danger bg-opacity-10 flex-shrink-0">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </td> --}}
+                                    <td class="" style="cursor: default;">
+                                        <button type="button"
+                                            class="rounded-btn text-danger bg-danger bg-opacity-10 flex-shrink-0"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa-solid fa-gear"></i>
+                                        </button>
+                                        {{-- <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#">Cancel</a></li>
+                                            <li><a class="dropdown-item" href="#">Evaluate</a></li>
+                                        </ul> --}}
                                     </td>
                                 </tr>
                                 <tr>
@@ -102,11 +216,22 @@
                                     <td>
                                         <span class="status confirm" id="checkout">{{ __('Confirm') }}</span>
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         <button type="button"
                                             class="rounded-btn delete-btn text-danger bg-danger bg-opacity-10 flex-shrink-0">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
+                                    </td> --}}
+                                    <td class="">
+                                        <button type="button"
+                                            class="rounded-btn text-danger bg-danger bg-opacity-10 flex-shrink-0"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa-solid fa-gear"></i>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#">Cancel</a></li>
+                                            {{-- <li><a class="dropdown-item" href="#">Evaluate</a></li> --}}
+                                        </ul>
                                     </td>
                                 </tr>
                                 <tr>
@@ -139,13 +264,24 @@
                                         <span class="date" id="checkout">17/02/2024</span>
                                     </td>
                                     <td>
-                                        <span class="status" id="checkout">Pending</span>
+                                        <span class="status pending" id="checkout">Pending</span>
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         <button type="button"
                                             class="rounded-btn delete-btn text-danger bg-danger bg-opacity-10 flex-shrink-0">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
+                                    </td> --}}
+                                    <td class="">
+                                        <button type="button"
+                                            class="rounded-btn text-danger bg-danger bg-opacity-10 flex-shrink-0"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa-solid fa-gear"></i>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#">Cancel</a></li>
+                                            {{-- <li><a class="dropdown-item" href="#">Evaluate</a></li> --}}
+                                        </ul>
                                     </td>
                                 </tr>
                                 <tr>
@@ -178,13 +314,25 @@
                                         <span class="date" id="checkout">17/02/2024</span>
                                     </td>
                                     <td>
-                                        <span class="status" id="checkout">Pending</span>
+                                        <span class="status finish" id="checkout">Finish</span>
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         <button type="button"
                                             class="rounded-btn delete-btn text-danger bg-danger bg-opacity-10 flex-shrink-0">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
+                                    </td> --}}
+                                    <td class="">
+                                        <button type="button"
+                                            class="rounded-btn text-danger bg-danger bg-opacity-10 flex-shrink-0"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa-solid fa-gear"></i>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            {{-- <li><a class="dropdown-item" href="#">Cancel</a></li> --}}
+                                            <li><button class="dropdown-item" data-bs-toggle="modal"
+                                                    data-bs-target="#modal_evaluate">Evaluate</button></li>
+                                        </ul>
                                     </td>
                                 </tr>
                             </tbody>
@@ -210,4 +358,5 @@
             </nav>
         </div>
     </div>
+    @include('layout.modal_evaluate')
 @endsection
