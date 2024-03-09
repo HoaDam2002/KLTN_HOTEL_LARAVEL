@@ -43,15 +43,19 @@ Route::get('/customer/account', function () {
 
 Route::get('/customer/profile', function () {
     return view('pages.account.account_profile');
-})->name('checkout_customer');
+})->name('profile');
 
 Route::get('/customer/my-bookings', function () {
     return view('pages.account.my_booking');
-})->name('checkout_customer');
+})->name('my_booking');
 
 Route::get('/customer/change-pass', function () {
     return view('pages.account.change_pass');
 })->name('change_pass');
+
+Route::get('/room-detail', function () {
+    return view('pages.room_detail.room_detail');
+})->name('rooom_detail');
 
 
 
