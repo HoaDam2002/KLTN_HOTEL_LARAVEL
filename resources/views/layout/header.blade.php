@@ -61,7 +61,7 @@
                             <a href="property.html" class="nav-submenu__link">{{ __('Rooms') }}</a>
                         </li>
                         <li class="nav-submenu__item">
-                            <a href="property-details.html" class="nav-submenu__link">{{ __('Room Details') }}</a>
+                            <a href="/room-detail" class="nav-submenu__link">{{ __('Room Details') }}</a>
                         </li>
                         <li class="nav-submenu__item">
                             <a href="add-listing.html" class="nav-submenu__link"> {{ __('Add New Listing') }}</a>
@@ -87,18 +87,7 @@
                             <a href="/listroom" class="nav-submenu__link">{{ __('Room List') }}</a>
                         </li>
                         <li class="nav-submenu__item">
-                            <a href="project-details.html" class="nav-submenu__link">{{ __('Room Details') }}</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-menu__item has-submenu">
-                    <a href="javascript:void(0)" class="nav-menu__link">{{ __('Blog') }}</a>
-                    <ul class="nav-submenu">
-                        <li class="nav-submenu__item">
-                            <a href="blog-classic.html" class="nav-submenu__link"> {{ __('Blog Classic') }}</a>
-                        </li>
-                        <li class="nav-submenu__item">
-                            <a href="blog-details.html" class="nav-submenu__link"> {{ __('Blog Details') }}</a>
+                            <a href="/room-detail" class="nav-submenu__link">{{ __('Room Details') }}</a>
                         </li>
                     </ul>
                 </li>
@@ -248,8 +237,7 @@
                                 <a href="property.html" class="nav-submenu__link">{{ __('Rooms') }}</a>
                             </li>
                             <li class="nav-submenu__item">
-                                <a href="property-details.html"
-                                    class="nav-submenu__link">{{ __('Room Details') }}</a>
+                                <a href="/room-detail" class="nav-submenu__link">{{ __('Room Details') }}</a>
                             </li>
                             <li class="nav-submenu__item">
                                 <a href="map-location.html" class="nav-submenu__link"> {{ __('Map Location') }}</a>
@@ -276,18 +264,7 @@
                                 <a href="/listroom" class="nav-submenu__link">{{ __('Room List') }}</a>
                             </li>
                             <li class="nav-submenu__item">
-                                <a href="project-details.html" class="nav-submenu__link">{{ __('Room Details') }}</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-menu__item has-submenu">
-                        <a href="javascript:void(0)" class="nav-menu__link">{{ __('Blog') }}</a>
-                        <ul class="nav-submenu">
-                            <li class="nav-submenu__item">
-                                <a href="blog-classic.html" class="nav-submenu__link">{{ __('Blog List') }}</a>
-                            </li>
-                            <li class="nav-submenu__item">
-                                <a href="blog-details.html" class="nav-submenu__link">{{ __('Blog Details') }}</a>
+                                <a href="/room-detail" class="nav-submenu__link">{{ __('Room Details') }}</a>
                             </li>
                         </ul>
                     </li>
