@@ -57,11 +57,10 @@ Route::get('/room-detail', function () {
     return view('pages.room_detail.room_detail');
 })->name('rooom_detail');
 
-
-
-
-
-
+//lễ tân
+Route::get('recep/room-diagram', function () {
+    return view('pages.receptionist.room_diagram');
+})->name('rooom_detail');
 
 
 
