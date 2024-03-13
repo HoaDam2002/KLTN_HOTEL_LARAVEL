@@ -54,20 +54,6 @@
 
 @section('js')
     <script>
-        // if (sessionStorage.getItem('menu_acc_customer')) {
-        //     let list_menu = document.querySelectorAll('.nav-link');
-        //     list_menu.forEach(function(item) {
-        //         item.classList.remove('active');
-        //     });
-        //     let id_menu = sessionStorage.getItem('menu_acc_customer');
-        //     document.getElementById(id_menu).classList.add('active');
-        // }
-
-        // function menu_account_customer(id) {
-        //     let id_menu = id;
-        //     sessionStorage.setItem('menu_acc_customer', id_menu);
-        // }
-
         document.addEventListener("DOMContentLoaded", function() {
             let current_url = window.location.href;
             let parts_url = current_url.split('/');
