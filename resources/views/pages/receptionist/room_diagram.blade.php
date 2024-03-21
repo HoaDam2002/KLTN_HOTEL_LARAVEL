@@ -2,18 +2,31 @@
 
 @section('css')
     <style>
-        /* .room_diagram .row {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin: auto;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    } */
+        .btn-primary {
+            background: var(--main-gradient) !important;
+        }
+
+        .btn {
+            padding: 15px 30px !important;
+        }
+
+        .wrapper_diagram {
+            padding: 0;
+            height: 110px;
+            cursor: pointer;
+        }
 
         .card {
-            padding: 0;
+            height: 110px;
+        }
 
+        .card-header {
+            padding: 3px 16px;
         }
 
         .card-body {
-            min-height: 180px;
-            position: relative;
+            padding-bottom: 5px;
+            padding-top: 5px;
         }
 
         .card-deposited {
@@ -30,9 +43,12 @@
         }
 
         .btn-action {
+            color: #000 !important;
+        }
+
+        .btn-action-room-da {
             position: absolute;
             bottom: 16px;
-            color: #000 !important;
         }
 
         .func_filter_status {
@@ -48,6 +64,42 @@
             border-radius: 30px;
             margin-bottom: 10px;
             text-align: center;
+            /* color: #fff; */
+        }
+
+        .bg-deposit {
+            background-color: rgb(224, 207, 252);
+            color: #000;
+        }
+
+        .bg-deposit:hover {
+            color: #000;
+        }
+
+        /* modal btn booking */
+        .wrapper-btn-booking-modal {
+            display: flex;
+            justify-content: center;
+        }
+
+        .card-text {
+            font-size: 14px;
+        }
+
+        /* modal */
+
+        .wrapper_info_room {
+            display: flex;
+        }
+
+        .wrapper_info_room span {
+            min-width: 200px;
+        }
+
+        .info_room_item {
+            border-bottom: 1px solid #333;
+            padding-right: 80px;
+            min-width: 200px;
         }
     </style>
 @endsection
@@ -101,104 +153,344 @@
                 </div>
             </div>
             <div class="func_filter_status mb-4">
-                <a href="#" class="btn_filter text-bg-secondary">All</a>
-                <a href="#" class="btn_filter text-bg-success">Null</a>
-                <a href="#" class="btn_filter text-bg-info">Staked</a>
+                <a href="#" class="btn_filter text-bg-primary">All</a>
+                <a href="#" class="btn_filter text-bg-secondary">Null</a>
+                <a href="#" class="btn_filter text-bg-success">Occupied</a>
+                <a href="#" class="btn_filter bg-deposit">Deposits</a>
                 <a href="#" class="btn_filter text-bg-warning">Check in</a>
                 <a href="#" class="btn_filter text-bg-danger">checkout</a>
             </div>
             <div class="room_diagram container">
                 <div class="row">
-                    <div class="mb-3 col-6 col-md-4 col-lg-3 px-2">
-                        <div class="card card-using mb-3 px-2" style="max-width: 14rem;">
-                            <h6 class="card-header">Double 02</h6>
+                    <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram" data-bs-toggle="modal"
+                        data-bs-target="#modalRoomDeposits">
+                        <div class="card card-using mb-3" style="max-width: 14rem;">
+                            <strong class="card-header">Room 02</strong>
                             <div class="card-body">
-                                <span class="card-title mb-3"><i class="fa-regular fa-user me-2"></i>Nguyen Van
-                                    A</span>
                                 <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>20/02/2024</p>
                                 <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>24/02/2024</p>
-                                <div class="btn-booking">
-                                    <button class="btn btn-sm btn-warning btn-action">Checkout</button>
-                                </div>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Double Room</p>
                             </div>
                         </div>
                     </div>
-                    <div class="mb-3 col-6 col-md-4 col-lg-3 px-2 ">
-                        <div class="card text-bg-secondary mb-3 px-2" style="max-width: 14rem;">
-                            <h6 class="card-header">Single 01</h6>
+                    <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram" data-bs-toggle="modal"
+                        data-bs-target="#modalRoomNull">
+                        <div class="card text-bg-secondary mb-3" style="max-width: 14rem;">
+                            <strong class="card-header">Room 01</strong>
                             <div class="card-body">
-                                <h6 class="card-title text-white">Empty room</h6>
-                                <p class="card-text"></p>
-                                <div class="btn-booking">
-                                    <button class="btn btn-sm btn-light btn-action">Booking</button>
-                                </div>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Status: <span
+                                        class="font-weight-bold">Clean</span></p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>24$ /
+                                    <span>pernight</span>
+                                </p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Double Room</p>
                             </div>
                         </div>
                     </div>
-                    <div class="mb-3 col-6 col-md-4 col-lg-3 px-2">
-                        <div class="card text-bg-success mb-3 px-2" style="max-width: 14rem;">
-                            <h6 class="card-header">Family 05</h6>
+                    <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram" data-bs-toggle="modal"
+                        data-bs-target="#modalRoomCheckin">
+                        <div class="card text-bg-success mb-3" style="max-width: 14rem;">
+                            <strong class="card-header">Room 05</strong>
                             <div class="card-body">
-                                <h5 class="card-title">Success card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                    of
-                                    the card's content.</p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>20/02/2024</p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Deposits: 100$</p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Double Room</p>
                             </div>
                         </div>
                     </div>
-                    <div class="mb-3 col-6 col-md-4 col-lg-3 px-2">
-                        <div class="card text-bg-danger mb-3 px-2" style="max-width: 14rem;">
-                            <h6 class="card-header">Double 10</h6>
+                    <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram" data-bs-toggle="modal"
+                        data-bs-target="#modalRoomCheckout">
+                        <div class="card text-bg-danger mb-3" style="max-width: 14rem;">
+                            <strong class="card-header">Room 10</strong>
                             <div class="card-body">
-                                <h5 class="card-title">Danger card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                    of
-                                    the card's content.</p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>20/02/2024</p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>22/02/2024</p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Double Room</p>
                             </div>
                         </div>
                     </div>
-                    <div class="mb-3 col-6 col-md-4 col-lg-3 px-2">
-                        <div class="card mb-3 px-2 card-deposited" style="max-width: 14rem;">
-                            <div class="card-header">Header</div>
+                    <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram">
+                        <div class="card mb-3 card-deposited" style="max-width: 14rem;">
+                            <div class="card-header">Room 112</div>
                             <div class="card-body">
-                                <h5 class="card-title">Warning card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                    of
-                                    the card's content.</p>
+                                <p class="card-text bold"><i class="fa-solid fa-calendar-days me-2"></i>Status: <span
+                                        class="font-weight-bold">Dirty</span></p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>24$ /
+                                    <span>pernight</span>
+                                </p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Double Room</p>
                             </div>
                         </div>
                     </div>
-                    <div class="mb-3 col-6 col-md-4 col-lg-3 px-2">
-                        <div class="card text-bg-info mb-3 px-2" style="max-width: 14rem;">
-                            <div class="card-header">Header</div>
+                    <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram">
+                        <div class="card mb-3 card-deposited" style="max-width: 14rem;">
+                            <div class="card-header">Room 112</div>
                             <div class="card-body">
-                                <h5 class="card-title">Info card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                    of
-                                    the card's content.</p>
+                                <p class="card-text bold"><i class="fa-solid fa-calendar-days me-2"></i>Status: <span
+                                        class="font-weight-bold">Dirty</span></p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>24$ /
+                                    <span>pernight</span>
+                                </p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Double Room</p>
                             </div>
                         </div>
                     </div>
-                    <div class="mb-3 col-6 col-md-4 col-lg-3 px-2">
-                        <div class="card text-bg-light mb-3 px-2" style="max-width: 14rem;">
-                            <div class="card-header">Header</div>
+                    <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram">
+                        <div class="card mb-3 card-deposited" style="max-width: 14rem;">
+                            <div class="card-header">Room 112</div>
                             <div class="card-body">
-                                <h5 class="card-title">Light card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk
-                                    of
-                                    the card's content.</p>
+                                <p class="card-text bold"><i class="fa-solid fa-calendar-days me-2"></i>Status: <span
+                                        class="font-weight-bold">Dirty</span></p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>24$ /
+                                    <span>pernight</span>
+                                </p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Double Room</p>
                             </div>
                         </div>
                     </div>
-                    <div class="mb-3 col-6 col-md-4 col-lg-3 px-2">
-                        <div class="card text-bg-dark mb-3 px-2" style="max-width: 14rem;">
-                            <div class="card-header">Header</div>
+                    <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram">
+                        <div class="card card-using mb-3" style="max-width: 14rem;">
+                            <strong class="card-header">Room 02</strong>
                             <div class="card-body">
-                                <h5 class="card-title">Dark card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk of
-                                    the card's content.</p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>20/02/2024</p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>24/02/2024</p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Double Room</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram">
+                        <div class="card text-bg-secondary mb-3" style="max-width: 14rem;">
+                            <strong class="card-header">Room 01</strong>
+                            <div class="card-body">
+                                <p class="card-text bold"><i class="fa-solid fa-calendar-days me-2"></i>Status: <span
+                                        class="font-weight-bold">Clean</span></p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>24$ /
+                                    <span>pernight</span>
+                                </p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Double Room</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram">
+                        <div class="card text-bg-success mb-3" style="max-width: 14rem;">
+                            <strong class="card-header">Room 05</strong>
+                            <div class="card-body">
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>20/02/2024</p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Deposits: 100$</p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Double Room</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram">
+                        <div class="card text-bg-danger mb-3" style="max-width: 14rem;">
+                            <strong class="card-header">Room 10</strong>
+                            <div class="card-body">
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>20/02/2024</p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>22/02/2024</p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Double Room</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram">
+                        <div class="card mb-3 card-deposited" style="max-width: 14rem;">
+                            <div class="card-header">Room 112</div>
+                            <div class="card-body">
+                                <p class="card-text bold"><i class="fa-solid fa-calendar-days me-2"></i>Status: <span
+                                        class="font-weight-bold">Dirty</span></p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>24$ /
+                                    <span>pernight</span>
+                                </p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Double Room</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram">
+                        <div class="card mb-3 card-deposited" style="max-width: 14rem;">
+                            <div class="card-header">Room 112</div>
+                            <div class="card-body">
+                                <p class="card-text bold"><i class="fa-solid fa-calendar-days me-2"></i>Status: <span
+                                        class="font-weight-bold">Dirty</span></p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>24$ /
+                                    <span>pernight</span>
+                                </p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Double Room</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram">
+                        <div class="card mb-3 card-deposited" style="max-width: 14rem;">
+                            <div class="card-header">Room 112</div>
+                            <div class="card-body">
+                                <p class="card-text bold"><i class="fa-solid fa-calendar-days me-2"></i>Status: <span
+                                        class="font-weight-bold">Dirty</span></p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>24$ /
+                                    <span>pernight</span>
+                                </p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Double Room</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram">
+                        <div class="card card-using mb-3" style="max-width: 14rem;">
+                            <strong class="card-header">Room 02</strong>
+                            <div class="card-body">
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>20/02/2024</p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>24/02/2024</p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Double Room</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram">
+                        <div class="card text-bg-secondary mb-3" style="max-width: 14rem;">
+                            <strong class="card-header">Room 01</strong>
+                            <div class="card-body">
+                                <p class="card-text bold"><i class="fa-solid fa-calendar-days me-2"></i>Status: <span
+                                        class="font-weight-bold">Clean</span></p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>24$ /
+                                    <span>pernight</span>
+                                </p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Double Room</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram">
+                        <div class="card text-bg-success mb-3" style="max-width: 14rem;">
+                            <strong class="card-header">Room 05</strong>
+                            <div class="card-body">
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>20/02/2024</p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Deposits: 100$</p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Double Room</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram">
+                        <div class="card text-bg-danger mb-3" style="max-width: 14rem;">
+                            <strong class="card-header">Room 10</strong>
+                            <div class="card-body">
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>20/02/2024</p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>22/02/2024</p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Double Room</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram">
+                        <div class="card mb-3 card-deposited" style="max-width: 14rem;">
+                            <div class="card-header">Room 112</div>
+                            <div class="card-body">
+                                <p class="card-text bold"><i class="fa-solid fa-calendar-days me-2"></i>Status: <span
+                                        class="font-weight-bold">Dirty</span></p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>24$ /
+                                    <span>pernight</span>
+                                </p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Double Room</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram">
+                        <div class="card mb-3 card-deposited" style="max-width: 14rem;">
+                            <div class="card-header">Room 112</div>
+                            <div class="card-body">
+                                <p class="card-text bold"><i class="fa-solid fa-calendar-days me-2"></i>Status: <span
+                                        class="font-weight-bold">Dirty</span></p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>24$ /
+                                    <span>pernight</span>
+                                </p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Double Room</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram">
+                        <div class="card mb-3 card-deposited" style="max-width: 14rem;">
+                            <div class="card-header">Room 112</div>
+                            <div class="card-body">
+                                <p class="card-text bold"><i class="fa-solid fa-calendar-days me-2"></i>Status: <span
+                                        class="font-weight-bold">Dirty</span></p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>24$ /
+                                    <span>pernight</span>
+                                </p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Double Room</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram">
+                        <div class="card card-using mb-3" style="max-width: 14rem;">
+                            <strong class="card-header">Room 02</strong>
+                            <div class="card-body">
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>20/02/2024</p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>24/02/2024</p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Double Room</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram">
+                        <div class="card text-bg-secondary mb-3" style="max-width: 14rem;">
+                            <strong class="card-header">Room 01</strong>
+                            <div class="card-body">
+                                <p class="card-text bold"><i class="fa-solid fa-calendar-days me-2"></i>Status: <span
+                                        class="font-weight-bold">Clean</span></p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>24$ /
+                                    <span>pernight</span>
+                                </p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Double Room</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram">
+                        <div class="card text-bg-success mb-3" style="max-width: 14rem;">
+                            <strong class="card-header">Room 05</strong>
+                            <div class="card-body">
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>20/02/2024</p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Deposits: 100$</p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Double Room</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram">
+                        <div class="card text-bg-danger mb-3" style="max-width: 14rem;">
+                            <strong class="card-header">Room 10</strong>
+                            <div class="card-body">
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>20/02/2024</p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>22/02/2024</p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Double Room</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram">
+                        <div class="card mb-3 card-deposited" style="max-width: 14rem;">
+                            <div class="card-header">Room 112</div>
+                            <div class="card-body">
+                                <p class="card-text bold"><i class="fa-solid fa-calendar-days me-2"></i>Status: <span
+                                        class="font-weight-bold">Dirty</span></p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>24$ /
+                                    <span>pernight</span>
+                                </p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Double Room</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram">
+                        <div class="card mb-3 card-deposited" style="max-width: 14rem;">
+                            <div class="card-header">Room 112</div>
+                            <div class="card-body">
+                                <p class="card-text bold"><i class="fa-solid fa-calendar-days me-2"></i>Status: <span
+                                        class="font-weight-bold">Dirty</span></p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>24$ /
+                                    <span>pernight</span>
+                                </p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Double Room</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram">
+                        <div class="card mb-3 card-deposited" style="max-width: 14rem;">
+                            <div class="card-header">Room 112</div>
+                            <div class="card-body">
+                                <p class="card-text bold"><i class="fa-solid fa-calendar-days me-2"></i>Status: <span
+                                        class="font-weight-bold">Dirty</span></p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>24$ /
+                                    <span>pernight</span>
+                                </p>
+                                <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>Double Room</p>
                             </div>
                         </div>
                     </div>
@@ -206,6 +498,378 @@
             </div>
         </div>
     </div>
+
+    {{-- start modal deposits --}}
+    <div class="modal fade" id="modalRoomDeposits" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <strong class="modal-title fs-5" id="staticBackdropLabel">Rooom 01</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="img_room_modal row mb-3 ">
+                        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWwlMjByb29tfGVufDB8fDB8fHww"
+                            alt="" class="rounded col-4">
+                        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWwlMjByb29tfGVufDB8fDB8fHww"
+                            alt="" class="rounded col-4">
+                        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWwlMjByb29tfGVufDB8fDB8fHww"
+                            alt="" class="rounded col-4">
+                    </div>
+                    <div class="wrapper_info_room">
+                        <span>Room name: </span>
+                        <strong class="info_room_item mb-3">Room 01</strong>
+                    </div>
+                    <div class="wrapper_info_room">
+                        <span>Room type: </span>
+                        <strong class="info_room_item mb-3">Double room</strong>
+                    </div>
+                    <div class="wrapper_info_room">
+                        <span>Deposits: </span>
+                        <strong class="info_room_item mb-3">80$</strong>
+                    </div>
+                    <p class="d-inline-flex gap-1">
+                        <a class="" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            Service
+                        </a>
+                    </p>
+                    <div class="collapse" id="collapseExample">
+                        <div class="row">
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                        </div>
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label for="formGroupExampleInput" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="formGroupExampleInput"
+                            placeholder="Example input placeholder" value="Nguyễn Văn A" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="formGroupExampleInput2" class="form-label">Phone</label>
+                        <input type="text" class="form-control" id="formGroupExampleInput2"
+                            placeholder="Another input placeholder" value="0708852641" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="formGroupExampleInput2" class="form-label">Email</label>
+                        <input type="text" class="form-control" id="formGroupExampleInput2"
+                            placeholder="Another input placeholder" value="damvanhoa30052002@gmail.com" disabled>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Check in</span>
+                        <span>>>>>></span>
+                        <span>Check out</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <strong>24/03/2024 14:00</strong>
+                        <strong>25/03/2024 12:00</strong>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- end modal info diposits --}}
+
+    {{-- start modal info room null --}}
+    <div class="modal fade" id="modalRoomNull" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <strong class="modal-title fs-5" id="staticBackdropLabel">Rooom 01</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="img_room_modal row mb-3 ">
+                        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWwlMjByb29tfGVufDB8fDB8fHww"
+                            alt="" class="rounded col-4">
+                        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWwlMjByb29tfGVufDB8fDB8fHww"
+                            alt="" class="rounded col-4">
+                        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWwlMjByb29tfGVufDB8fDB8fHww"
+                            alt="" class="rounded col-4">
+                    </div>
+                    <div class="wrapper_info_room">
+                        <span>Room name: </span>
+                        <strong class="info_room_item mb-3">Room 01</strong>
+                    </div>
+                    <div class="wrapper_info_room">
+                        <span>Room type: </span>
+                        <strong class="info_room_item mb-3">Double room</strong>
+                    </div>
+                    <div class="wrapper_info_room">
+                        <span>Status: </span>
+                        <strong class="info_room_item mb-3">Clean</strong>
+                    </div>
+                    <div class="wrapper_info_room">
+                        <span>Price: </span>
+                        <strong class="info_room_item mb-3">80$/pernight</strong>
+                    </div>
+                    <p class="d-inline-flex mb-3">
+                        <a class="" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            Service
+                        </a>
+                    </p>
+                    <div class="collapse" id="collapseExample">
+                        <div class="row mb-3">
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                        </div>
+                    </div>
+                    <div class="form_add_booking">
+                        <div class="btn_form_add_booking mb-2">
+                            <button class="btn-booking-modal me-4" id="btn-add-booking">
+                                <i class="fa-solid fa-plus"></i>
+                                Add new booking
+                            </button>
+                            <button class="btn-booking-modal" id="btn-add-booking-with-info">
+                                <i class="fa-solid fa-plus"></i>
+                                Book with customer information
+                            </button>
+                        </div>
+                        <div class="form-add-new-booking">
+                            <form>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="name" id="floatingName"
+                                        placeholder="Name">
+                                    <label for="floatingName">Name</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="phone" id="floatingPhone"
+                                        placeholder="Phone number">
+                                    <label for="floatingPhone">Phone</label>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control form-control-lg" name="room_name"
+                                        value="Double 02" disabled />
+                                </div>
+                                <div class="mb-3 input-group form-floating">
+                                    <input type="text" class="form-control" name="checkin" id="floatingCheckin"
+                                        placeholder="Checkin">
+                                    <label for="floatingCheckin">Checkin</label>
+                                    <span class="input-group-text"><i class="fa-solid fa-calendar-days"
+                                            style="padding: 0 10px;"></i></span>
+
+                                </div>
+                                <div class="mb-3 input-group form-floating">
+                                    <input type="text" class="form-control" name="checkin" id="floatingCheckin"
+                                        placeholder="Checkin">
+                                    <label for="floatingCheckin">Checkin</label>
+                                    <span class="input-group-text"><i class="fa-solid fa-calendar-days"
+                                            style="padding: 0 10px;"></i></span>
+
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="payout"
+                                        id="flexRadioDefault1">
+                                    <label class="form-check-label" for="flexRadioDefault1">
+                                        Cash payment
+                                    </label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="payout" id="flexRadioDefault2"
+                                        checked>
+                                    <label class="form-check-label" for="flexRadioDefault2">
+                                        Credit card payment
+                                    </label>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Add new booking</button>
+                            </form>
+                        </div>
+                        <div class="form-add-booking-inf-customer" style="display: none;">
+                            <form>
+                                <div class="input-group mb-3">
+                                    <input type="email" class="form-control" id="floatingInput" placeholder="Phone">
+                                    <button class="input-group-text"><i class="fa-solid fa-magnifying-glass"
+                                            style="padding: 0 10px;"></i></button>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Add new booking</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- end modal info room null --}}
+
+    {{-- modal checkin --}}
+    <div class="modal fade" id="modalRoomCheckin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <strong class="modal-title fs-5" id="staticBackdropLabel">Rooom 01</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="img_room_modal row mb-3 ">
+                        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWwlMjByb29tfGVufDB8fDB8fHww"
+                            alt="" class="rounded col-4">
+                        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWwlMjByb29tfGVufDB8fDB8fHww"
+                            alt="" class="rounded col-4">
+                        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWwlMjByb29tfGVufDB8fDB8fHww"
+                            alt="" class="rounded col-4">
+                    </div>
+                    <div class="wrapper_info_room">
+                        <span>Room name: </span>
+                        <strong class="info_room_item mb-3">Room 01</strong>
+                    </div>
+                    <div class="wrapper_info_room">
+                        <span>Room type: </span>
+                        <strong class="info_room_item mb-3">Double room</strong>
+                    </div>
+                    <div class="wrapper_info_room">
+                        <span>Deposits: </span>
+                        <strong class="info_room_item mb-3">80$</strong>
+                    </div>
+                    <p class="d-inline-flex gap-1">
+                        <a class="" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            Service
+                        </a>
+                    </p>
+                    <div class="collapse" id="collapseExample">
+                        <div class="row">
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                        </div>
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label for="formGroupExampleInput" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="formGroupExampleInput"
+                            placeholder="Example input placeholder" value="Nguyễn Văn A" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="formGroupExampleInput2" class="form-label">Phone</label>
+                        <input type="text" class="form-control" id="formGroupExampleInput2"
+                            placeholder="Another input placeholder" value="0708852641" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="formGroupExampleInput2" class="form-label">Email</label>
+                        <input type="text" class="form-control" id="formGroupExampleInput2"
+                            placeholder="Another input placeholder" value="damvanhoa30052002@gmail.com" disabled>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Check in</span>
+                        <span>>>>>></span>
+                        <span>Check out</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <strong>24/03/2024 14:00</strong>
+                        <strong>25/03/2024 12:00</strong>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Check in</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- end modal checkin --}}
+
+    {{-- start modal checkout --}}
+    <div class="modal fade" id="modalRoomCheckout" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <strong class="modal-title fs-5" id="staticBackdropLabel">Rooom 01</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="img_room_modal row mb-3 ">
+                        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWwlMjByb29tfGVufDB8fDB8fHww"
+                            alt="" class="rounded col-4">
+                        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWwlMjByb29tfGVufDB8fDB8fHww"
+                            alt="" class="rounded col-4">
+                        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWwlMjByb29tfGVufDB8fDB8fHww"
+                            alt="" class="rounded col-4">
+                    </div>
+                    <div class="wrapper_info_room">
+                        <span>Room name: </span>
+                        <strong class="info_room_item mb-3">Room 01</strong>
+                    </div>
+                    <div class="wrapper_info_room">
+                        <span>Room type: </span>
+                        <strong class="info_room_item mb-3">Double room</strong>
+                    </div>
+                    <div class="wrapper_info_room">
+                        <span>Deposits: </span>
+                        <strong class="info_room_item mb-3">80$</strong>
+                    </div>
+                    <p class="d-inline-flex gap-1">
+                        <a class="" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            Service
+                        </a>
+                    </p>
+                    <div class="collapse" id="collapseExample">
+                        <div class="row">
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> 2 person</span>
+                        </div>
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label for="formGroupExampleInput" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="formGroupExampleInput"
+                            placeholder="Example input placeholder" value="Nguyễn Văn A" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="formGroupExampleInput2" class="form-label">Phone</label>
+                        <input type="text" class="form-control" id="formGroupExampleInput2"
+                            placeholder="Another input placeholder" value="0708852641" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="formGroupExampleInput2" class="form-label">Email</label>
+                        <input type="text" class="form-control" id="formGroupExampleInput2"
+                            placeholder="Another input placeholder" value="damvanhoa30052002@gmail.com" disabled>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Check in</span>
+                        <span>>>>>></span>
+                        <span>Check out</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <strong>24/03/2024 14:00</strong>
+                        <strong>25/03/2024 12:00</strong>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Check out</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- end modal checkout --}}
 @endsection
 
 @section('js')
@@ -217,6 +881,18 @@
                 console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end
                     .format('YYYY-MM-DD'));
             });
+        });
+
+        $(document).ready(function() {
+            $('#btn-add-booking').click(function() {
+                $('.form-add-new-booking').css('display', 'block');
+                $('.form-add-booking-inf-customer').css('display', 'none');
+            })
+
+            $('#btn-add-booking-with-info').click(function() {
+                $('.form-add-new-booking').css('display', 'none');
+                $('.form-add-booking-inf-customer').css('display', 'block');
+            })
         });
     </script>
 @endsection
