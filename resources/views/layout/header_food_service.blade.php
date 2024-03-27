@@ -227,49 +227,11 @@
             <div class="header-menu d-lg-block d-none">
 
                 <ul class="nav-menu flx-align ">
-                    <li class="nav-menu__item">
-                        <a href="/" class="nav-menu__link">{{ __('Home') }}</a>
+                    <li class="nav-submenu__item">
+                        <a href="/food_service/manation" class="nav-submenu__link">{{ __('Food Manation') }}</a>
                     </li>
-                    <li class="nav-menu__item has-submenu">
-                        <a href="javascript:void(0)" class="nav-menu__link">{{ __('Pages') }}</a>
-                        <ul class="nav-submenu">
-                            <li class="nav-submenu__item">
-                                <a href="property.html" class="nav-submenu__link">{{ __('Rooms') }}</a>
-                            </li>
-                            <li class="nav-submenu__item">
-                                <a href="/room-detail" class="nav-submenu__link">{{ __('Room Details') }}</a>
-                            </li>
-                            <li class="nav-submenu__item">
-                                <a href="map-location.html" class="nav-submenu__link"> {{ __('Map Location') }}</a>
-                            </li>
-                            <li class="nav-submenu__item">
-                                <a href="about.html" class="nav-submenu__link"> {{ __('About Us') }}</a>
-                            </li>
-                            <li class="nav-submenu__item">
-                                <a href="checkout.html" class="nav-submenu__link"> {{ __('Checkout') }}</a>
-                            </li>
-                            <li class="nav-submenu__item">
-                                <a href="cart.html" class="nav-submenu__link"> {{ __('Cart') }}</a>
-                            </li>
-                            <li class="nav-submenu__item">
-                                <a href="account.html" class="nav-submenu__link"> {{ __('Account') }}</a>
-                            </li>
-
-                        </ul>
-                    </li>
-                    <li class="nav-menu__item has-submenu">
-                        <a href="javascript:void(0)" class="nav-menu__link">{{ __('Rooms') }}</a>
-                        <ul class="nav-submenu">
-                            <li class="nav-submenu__item">
-                                <a href="/listroom" class="nav-submenu__link">{{ __('Room List') }}</a>
-                            </li>
-                            <li class="nav-submenu__item">
-                                <a href="/room-detail" class="nav-submenu__link">{{ __('Room Details') }}</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-menu__item">
-                        <a href="contact.html" class="nav-menu__link">{{ __('Contact') }}</a>
+                    <li class="nav-submenu__item">
+                        <a href="/food_service/order" class="nav-submenu__link">{{ __('Order Food') }}</a>
                     </li>
                 </ul>
             </div>
@@ -277,13 +239,13 @@
 
             <!-- Header Right start -->
             <div class="header-right flx-align">
-                <button class="btn btn-outline-light d-lg-block d-none" data-bs-toggle="modal"
+                {{-- <button class="btn btn-outline-light d-lg-block d-none" data-bs-toggle="modal"
                     data-bs-target="#modal_signin">
                     {{ __('Sign In') }}
                     <span class="icon-right text-gradient icon">
                         <i class="fas fa-arrow-right"></i>
                     </span>
-                </button>
+                </button> --}}
                 <button type="button" class="toggle-mobileMenu d-lg-none ms-3"> <i class="las la-bars"></i>
                 </button>
                 <button class="btn d-lg-block d-none">

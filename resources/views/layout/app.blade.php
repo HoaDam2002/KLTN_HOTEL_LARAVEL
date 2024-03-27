@@ -59,12 +59,24 @@
     </div>
 
     <main class="body-bg">
-        @include('layout.header')
-
-        {{-- start banner --}}
         @php
             $name_page = Route::currentRouteName();
         @endphp
+
+        @switch($name_page)
+            @case('food_service')
+                @include('layout.header_food_service')
+                @break
+            @case('outside_service')
+                @include('layout.header_outside_service')
+                @break
+            @default
+                @include('layout.header')
+        @endswitch
+
+        
+
+        {{-- start banner --}}
         @if ($name_page == 'home_customer')
             @include('layout.banner')
         @endif

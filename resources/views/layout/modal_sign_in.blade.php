@@ -27,9 +27,11 @@
                                     <input class="form-check-input" type="checkbox" value="" id="remember">
                                     <label class="form-check-label" for="remember">Remember me </label>
                                 </div>
-                                <a href="#"
-                                    class="forgot-password text-decoration-underline text-main text-poppins font-14">Forgot
-                                    Password?</a>
+                                <button type="button"
+                                    class="link text-main text-decoration-underline font-14 text-poppins"
+                                    data-bs-toggle="modal" data-bs-target="#modal_forgotpassword"
+                                    data-bs-dismiss="modal" aria-label="Close">Forgot
+                                    Password? </button>
                             </div>
                         </div>
                         <div class="col-12">
@@ -49,7 +51,7 @@
                     </div>
                 </form>
             </div>
-            <div class="modal-footer" style="text-align: center">
+            {{-- <div class="modal-footer" style="text-align: center">
                 <div class="text-center" style="display: flex; flex-direction: column; margin: auto">
 
                     <a href="https://cribmed.com/facebook/login"><img class="mb-2 entered loaded" width="280"
@@ -60,7 +62,9 @@
                             data-src="https://cribmed.com/images/gl-login.png" data-ll-status="loaded"
                             src="https://cribmed.com/images/gl-login.png"></a>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>
+
+@include('layout.modal_forgot_password')

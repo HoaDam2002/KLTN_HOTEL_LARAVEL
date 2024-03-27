@@ -58,9 +58,45 @@ Route::get('/room-detail', function () {
 })->name('rooom_detail');
 
 //lễ tân
-Route::get('recep/room-diagram', function () {
+Route::get('/recep/room-diagram', function () {
     return view('pages.receptionist.room_diagram');
 })->name('rooom_detail');
+
+Route::get('/recep/history-booking', function () {
+    return view('pages.receptionist.historybooking');
+})->name('history-booking-recep');
+
+Route::get('/recep/request-booking', function () {
+    return view('pages.receptionist.request_booking');
+})->name('request-booking-recep');
+
+//nhà hàng
+Route::get('/food_service/manation', function () {
+    return view('pages.food_service.food_manation');
+})->name('food_service');
+
+Route::get('/food_service/order', function () {
+    return view('pages.food_service.food_order');
+})->name('food_service');
+
+Route::get('/food_service/order/detail', function () {
+    return view('pages.food_service.food_detail_order');
+})->name('food_service');
+
+//dịch vụ
+Route::get('/outside_service/manation', function () {
+    return view('pages.service_outside.outside_service_manation');
+})->name('outside_service');
+
+Route::get('/outside_service/order', function () {
+    return view('pages.service_outside.outside_service_order');
+})->name('outside_service');
+
+Route::get('/outside_service/order/detail', function () {
+    return view('pages.service_outside.outside_service_detail_order');
+})->name('outside_service');
+
+
 
 
 
