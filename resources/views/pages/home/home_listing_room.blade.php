@@ -16,14 +16,14 @@
                     <div class="col-lg-4 col-sm-6">
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
-                                <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-7.png') }}"
-                                        alt="" class="cover-img">
+                                <a href="/room-detail" class="link">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-7.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
                                 <h6 class="property-item__title">
-                                    <a href="property-details.html" class="link"> Turning Dreams into Addresses Home
+                                    <a href="/room-detail" class="link"> Turning Dreams into Addresses Home
                                         State </a>
                                 </h6>
                                 <ul class="amenities-list flx-align">
@@ -53,8 +53,8 @@
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
                                 <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-8.png') }}"
-                                        alt="" class="cover-img">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-8.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
@@ -89,8 +89,8 @@
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
                                 <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-9.png') }}"
-                                        alt="" class="cover-img">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-9.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
@@ -125,8 +125,8 @@
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
                                 <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-10.png') }}"
-                                        alt="" class="cover-img">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-10.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
@@ -161,8 +161,8 @@
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
                                 <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-11.png') }}"
-                                        alt="" class="cover-img">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-11.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
@@ -197,8 +197,8 @@
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
                                 <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-12.png') }}"
-                                        alt="" class="cover-img">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-12.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
@@ -238,8 +238,8 @@
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
                                 <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-7.png') }}"
-                                        alt="" class="cover-img">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-7.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
@@ -274,8 +274,8 @@
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
                                 <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-8.png') }}"
-                                        alt="" class="cover-img">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-8.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
@@ -310,8 +310,8 @@
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
                                 <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-9.png') }}"
-                                        alt="" class="cover-img">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-9.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
@@ -346,8 +346,8 @@
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
                                 <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-10.png') }}"
-                                        alt="" class="cover-img">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-10.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
@@ -382,8 +382,8 @@
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
                                 <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-11.png') }}"
-                                        alt="" class="cover-img">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-11.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
@@ -418,8 +418,8 @@
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
                                 <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-12.png') }}"
-                                        alt="" class="cover-img">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-12.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
@@ -452,15 +452,14 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="pills-bed" role="tabpanel" aria-labelledby="pills-bed-tab"
-                tabindex="0">
+            <div class="tab-pane fade" id="pills-bed" role="tabpanel" aria-labelledby="pills-bed-tab" tabindex="0">
                 <div class="row gy-4">
                     <div class="col-lg-4 col-sm-6">
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
                                 <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-7.png') }}"
-                                        alt="" class="cover-img">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-7.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
@@ -495,8 +494,8 @@
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
                                 <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-8.png') }}"
-                                        alt="" class="cover-img">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-8.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
@@ -531,8 +530,8 @@
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
                                 <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-9.png') }}"
-                                        alt="" class="cover-img">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-9.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
@@ -567,8 +566,8 @@
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
                                 <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-10.png') }}"
-                                        alt="" class="cover-img">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-10.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
@@ -603,8 +602,8 @@
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
                                 <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-11.png') }}"
-                                        alt="" class="cover-img">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-11.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
@@ -639,8 +638,8 @@
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
                                 <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-12.png') }}"
-                                        alt="" class="cover-img">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-12.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
@@ -680,8 +679,8 @@
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
                                 <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-7.png') }}"
-                                        alt="" class="cover-img">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-7.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
@@ -716,8 +715,8 @@
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
                                 <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-8.png') }}"
-                                        alt="" class="cover-img">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-8.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
@@ -752,8 +751,8 @@
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
                                 <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-9.png') }}"
-                                        alt="" class="cover-img">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-9.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
@@ -788,8 +787,8 @@
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
                                 <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-10.png') }}"
-                                        alt="" class="cover-img">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-10.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
@@ -824,8 +823,8 @@
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
                                 <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-11.png') }}"
-                                        alt="" class="cover-img">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-11.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
@@ -860,8 +859,8 @@
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
                                 <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-12.png') }}"
-                                        alt="" class="cover-img">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-12.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
@@ -894,15 +893,15 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="pills-swimmingPool" role="tabpanel"
-                aria-labelledby="pills-swimmingPool-tab" tabindex="0">
+            <div class="tab-pane fade" id="pills-swimmingPool" role="tabpanel" aria-labelledby="pills-swimmingPool-tab"
+                tabindex="0">
                 <div class="row gy-4">
                     <div class="col-lg-4 col-sm-6">
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
                                 <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-7.png') }}"
-                                        alt="" class="cover-img">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-7.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
@@ -937,8 +936,8 @@
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
                                 <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-8.png') }}"
-                                        alt="" class="cover-img">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-8.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
@@ -973,8 +972,8 @@
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
                                 <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-9.png') }}"
-                                        alt="" class="cover-img">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-9.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
@@ -1009,8 +1008,8 @@
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
                                 <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-10.png') }}"
-                                        alt="" class="cover-img">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-10.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
@@ -1045,8 +1044,8 @@
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
                                 <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-11.png') }}"
-                                        alt="" class="cover-img">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-11.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
@@ -1081,8 +1080,8 @@
                         <div class="property-item style-two">
                             <div class="property-item__thumb">
                                 <a href="property-details.html" class="link">
-                                    <img src="{{ asset('assets/customer/images/thumbs/property-12.png') }}"
-                                        alt="" class="cover-img">
+                                    <img src="{{ asset('assets/customer/images/thumbs/property-12.png') }}" alt=""
+                                        class="cover-img">
                                 </a>
                             </div>
                             <div class="property-item__content">
@@ -1118,8 +1117,9 @@
         </div>
         <div style="margin-top: 30px">
             <div class="about-button" style="text-align: center">
-                <a href="#" class="btn btn-main">ALL LISING <span class="icon-right"> <i
-                            class="fas fa-arrow-right"></i> </span> </a>
+                <a href="/listroom" class="btn btn-main">ALL LISING <span class="icon-right"> <i
+                            class="fas fa-arrow-right"></i>
+                    </span> </a>
             </div>
         </div>
     </div>

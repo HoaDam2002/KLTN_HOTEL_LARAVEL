@@ -1,7 +1,9 @@
-<div class="modal fade" id="modal_signup" tabindex="-1" aria-labelledby="signup" aria-hidden="true" style="z-index: 9999">
+<div class="modal fade" id="modal_signup" tabindex="-1" aria-labelledby="signup" aria-hidden="true"
+    style="z-index: 9999">
     <div class="modal-dialog modal-md">
         <div class="modal-content" style="padding: 0 15px">
             <div class="modal-header">
+
                 <h4 class="loginRegister__title text-poppins">Sign up to CityScape</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -36,8 +38,8 @@
                                 </div>
                                 <button type="button"
                                     class="link text-main text-decoration-underline font-14 text-poppins"
-                                    data-bs-toggle="modal" data-bs-target="#modal_forgotpassword" data-bs-dismiss="modal"
-                                    aria-label="Close">Forgot
+                                    data-bs-toggle="modal" data-bs-target="#modal_forgotpassword"
+                                    data-bs-dismiss="modal" aria-label="Close">Forgot
                                     Password? </button>
                             </div>
                         </div>

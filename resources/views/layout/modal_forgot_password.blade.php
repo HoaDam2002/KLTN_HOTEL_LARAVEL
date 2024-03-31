@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-md">
         <div class="modal-content" style="padding: 0 15px">
             <div class="modal-header">
-                <h4 class="loginRegister__title text-poppins">{{__('Forgot Password')}}</h4>
+                <h4 class="loginRegister__title text-poppins">{{ __('Forgot Password') }}</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -16,8 +16,10 @@
                         </div>
 
                         <div class="col-12">
-                            <button type="submit" class="btn btn-main w-100">{{__('Send Verification Code')}} <span
-                                    class="icon-right"> <i class="far fa-paper-plane"></i>
+                            <button class="btn btn-main w-100" data-bs-toggle="modal"
+                                data-bs-target="#modal_verification" data-bs-dismiss="modal" aria-label="Close">{{
+                                __('Send
+                                Verification Code') }} <span class="icon-right"> <i class="far fa-paper-plane"></i>
                                 </span> </button>
                         </div>
                         <div class="col-sm-12 mb-0">
@@ -31,18 +33,35 @@
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
 
+
+<div class="modal fade" id="modal_verification" tabindex="-1" aria-labelledby="verification" aria-hidden="true"
+    style="z-index: 9999">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content" style="padding: 0 15px">
+            <div class="modal-header">
+                <h4 class="loginRegister__title text-poppins">{{ __('Forgot Password') }}</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
                 <form action="#" class="change_password">
                     <div class="row gy-lg-4 gy-3">
 
                         <div class="col-12">
                             <label for="verification_code" class="form-label">{{__('Enter Verification Code')}}</label>
-                            <input type="text" class="common-input" placeholder="Verification Code" id="verification_code">
+                            <input type="text" class="common-input" placeholder="Verification Code"
+                                id="verification_code">
                         </div>
 
                         <div class="col-12">
-                            <button type="submit" class="btn btn-main w-100">{{__('Send')}} <span
-                                    class="icon-right"> <i class="far fa-paper-plane"></i>
+                            <button class="btn btn-main w-100" data-bs-toggle="modal"
+                                data-bs-target="#modal_newpassword" data-bs-dismiss="modal"
+                                aria-label="Close">{{__('Send')}} <span class="icon-right"> <i
+                                        class="far fa-paper-plane"></i>
                                 </span> </button>
                         </div>
                         <div class="col-sm-12 mb-0">
@@ -50,13 +69,27 @@
                                 <p class="text">{{__("Don't Have An Account?")}} <button type="button"
                                         class="link text-main text-decoration-underline font-14 text-poppins"
                                         data-bs-toggle="modal" data-bs-target="#modal_signup" data-bs-dismiss="modal"
-                                        aria-label="Close">{{__('Sign up')}}</button>
+                                        aria-label="Close">{{__('Sign
+                                        up')}}</button>
                                 </p>
                             </div>
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
 
+<div class="modal fade" id="modal_newpassword" tabindex="-1" aria-labelledby="newpassword" aria-hidden="true"
+    style="z-index: 9999">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content" style="padding: 0 15px">
+            <div class="modal-header">
+                <h4 class="loginRegister__title text-poppins">{{ __('Forgot Password') }}</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
                 <form action="#" class="change_password">
                     <div class="row gy-lg-4 gy-3">
 
@@ -67,7 +100,8 @@
 
                         <div class="col-12">
                             <label for="password_confirm" class="form-label">{{__('Password Confirm')}}</label>
-                            <input type="password" class="common-input" placeholder="Password Confirm" id="password_confirm">
+                            <input type="password" class="common-input" placeholder="Password Confirm"
+                                id="password_confirm">
                         </div>
 
                         <div class="col-12">
@@ -80,7 +114,8 @@
                                 <p class="text">{{__("Don't Have An Account?")}} <button type="button"
                                         class="link text-main text-decoration-underline font-14 text-poppins"
                                         data-bs-toggle="modal" data-bs-target="#modal_signup" data-bs-dismiss="modal"
-                                        aria-label="Close">{{__('Sign up')}}</button>
+                                        aria-label="Close">{{__('Sign
+                                        up')}}</button>
                                 </p>
                             </div>
                         </div>
