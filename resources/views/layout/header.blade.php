@@ -46,7 +46,7 @@
 <div class="mobile-menu d-lg-none d-block">
     <button type="button" class="close-button"> <i class="las la-times"></i> </button>
     <div class="mobile-menu__inner">
-        <a href="index.html" class="mobile-menu__logo">
+        <a href="/" class="mobile-menu__logo">
             <img src="{{ asset('assets/customer/images/logo/logo.png') }}" alt="Logo">
         </a>
         <div class="mobile-menu__menu">
@@ -58,25 +58,10 @@
                     <a href="javascript:void(0)" class="nav-menu__link">{{ __('Pages') }}</a>
                     <ul class="nav-submenu">
                         <li class="nav-submenu__item">
-                            <a href="property.html" class="nav-submenu__link">{{ __('Rooms') }}</a>
-                        </li>
-                        <li class="nav-submenu__item">
-                            <a href="/room-detail" class="nav-submenu__link">{{ __('Room Details') }}</a>
-                        </li>
-                        <li class="nav-submenu__item">
-                            <a href="add-listing.html" class="nav-submenu__link"> {{ __('Add New Listing') }}</a>
-                        </li>
-                        <li class="nav-submenu__item">
-                            <a href="map-location.html" class="nav-submenu__link"> {{ __('Map Location') }}</a>
+                            <a href="/listroom" class="nav-submenu__link">{{ __('Rooms') }}</a>
                         </li>
                         <li class="nav-submenu__item">
                             <a href="about.html" class="nav-submenu__link"> {{ __('About Us') }}</a>
-                        </li>
-                        <li class="nav-submenu__item">
-                            <a href="checkout.html" class="nav-submenu__link"> {{ __('Checkout') }}</a>
-                        </li>
-                        <li class="nav-submenu__item">
-                            <a href="account.html" class="nav-submenu__link"> {{ __('Account') }}</a>
                         </li>
                     </ul>
                 </li>
@@ -85,9 +70,6 @@
                     <ul class="nav-submenu">
                         <li class="nav-submenu__item">
                             <a href="/listroom" class="nav-submenu__link">{{ __('Room List') }}</a>
-                        </li>
-                        <li class="nav-submenu__item">
-                            <a href="/room-detail" class="nav-submenu__link">{{ __('Room Details') }}</a>
                         </li>
                     </ul>
                 </li>
@@ -111,7 +93,7 @@
 <!-- ==================== Right Offcanvas Start Here ==================== -->
 <div class="common-offcanvas d-lg-block d-none">
     <div class="flx-between">
-        <a href="index.html" class="mobile-menu__logo">
+        <a href="/" class="mobile-menu__logo">
             <img src="{{ asset('assets/customer/images/logo/white-logo.png') }}" alt="Logo">
         </a>
         <button type="button" class="close-button d-flex position-relative top-0 end-0"> <i class="las la-times"></i>
@@ -216,7 +198,7 @@
         <nav class="header-inner flx-between">
             <!-- Logo Start -->
             <div class="logo">
-                <a href="index.html" class="link">
+                <a href="/" class="link">
                     <img src="{{ asset('assets/customer/images/logo/z5175648554199_ccc2baf0a7ac356050aa28149405a89d.jpg') }}"
                         alt="Logo" style="width: 190px; height: 40px; object-fit: contain">
                 </a>
@@ -234,10 +216,7 @@
                         <a href="javascript:void(0)" class="nav-menu__link">{{ __('Pages') }}</a>
                         <ul class="nav-submenu">
                             <li class="nav-submenu__item">
-                                <a href="property.html" class="nav-submenu__link">{{ __('Rooms') }}</a>
-                            </li>
-                            <li class="nav-submenu__item">
-                                <a href="/room-detail" class="nav-submenu__link">{{ __('Room Details') }}</a>
+                                <a href="/listroom" class="nav-submenu__link">{{ __('Rooms') }}</a>
                             </li>
                             <li class="nav-submenu__item">
                                 <a href="map-location.html" class="nav-submenu__link"> {{ __('Map Location') }}</a>
@@ -246,27 +225,13 @@
                                 <a href="about.html" class="nav-submenu__link"> {{ __('About Us') }}</a>
                             </li>
                             <li class="nav-submenu__item">
-                                <a href="checkout.html" class="nav-submenu__link"> {{ __('Checkout') }}</a>
-                            </li>
-                            <li class="nav-submenu__item">
-                                <a href="cart.html" class="nav-submenu__link"> {{ __('Cart') }}</a>
-                            </li>
-                            <li class="nav-submenu__item">
-                                <a href="account.html" class="nav-submenu__link"> {{ __('Account') }}</a>
+                                <a href="/customer/account" class="nav-submenu__link"> {{ __('Account') }}</a>
                             </li>
 
                         </ul>
                     </li>
-                    <li class="nav-menu__item has-submenu">
-                        <a href="javascript:void(0)" class="nav-menu__link">{{ __('Rooms') }}</a>
-                        <ul class="nav-submenu">
-                            <li class="nav-submenu__item">
-                                <a href="/listroom" class="nav-submenu__link">{{ __('Room List') }}</a>
-                            </li>
-                            <li class="nav-submenu__item">
-                                <a href="/room-detail" class="nav-submenu__link">{{ __('Room Details') }}</a>
-                            </li>
-                        </ul>
+                    <li class="nav-menu__item">
+                        <a href="/listroom" class="nav-menu__link">{{ __('Rooms') }}</a>
                     </li>
                     <li class="nav-menu__item">
                         <a href="contact.html" class="nav-menu__link">{{ __('Contact') }}</a>
@@ -287,8 +252,7 @@
                 <button type="button" class="toggle-mobileMenu d-lg-none ms-3"> <i class="las la-bars"></i>
                 </button>
                 <button class="btn d-lg-block d-none">
-                    <a href="/customer/account" class="account-icon-link"><i
-                            class="fa-regular fa-circle-user"></i></a>
+                    <a href="/customer/account" class="account-icon-link"><i class="fa-regular fa-circle-user"></i></a>
                     {{-- <a href="/customer/account" class="account-icon-link"><img
                             src="{{ asset('assets/customer/images/logo/z5175648554199_ccc2baf0a7ac356050aa28149405a89d.jpg') }}"
                             alt="account"></a> --}}

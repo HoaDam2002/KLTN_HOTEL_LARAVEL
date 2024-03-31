@@ -1,8 +1,9 @@
-<div class="modal fade" id="modal_editfood" tabindex="-1" aria-labelledby="signin" aria-hidden="true" style="z-index: 9999">
+<div class="modal fade" id="modal_editfood" tabindex="-1" aria-labelledby="signin" aria-hidden="true"
+    style="z-index: 9999">
     <div class="modal-dialog modal-md">
-        <div class="modal-content" style="padding: 0 15px">
+        <div class="modal-content">
             <div class="modal-header">
-                <h4 class="loginRegister__title text-poppins">Edit Fish</h4>
+                <h4 class="loginRegister__title text-poppins mb-0">Edit Fish</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -12,15 +13,15 @@
                             <label for="Food Name" class="form-label">Name</label>
                             <input type="text" class="common-input" placeholder="Name" id="foodname">
                         </div>
-                        
+
                         <div class="col-12">
                             <label for="price" class="form-label">Price</label>
                             <input type="text" class="common-input" placeholder="Price" id="price">
                         </div>
 
-                        <div class="col-12">
-                            <label for="image" class="form-label">Image</label>
-                            <input type="file" class="common-input" placeholder="image" id="image">
+                        <div>
+                            <label for="formFileLg" class="form-label">Image</label>
+                            <input class="form-control form-control-lg" id="formFileLg" type="file">
                         </div>
 
                         <div class="col-12">
@@ -28,7 +29,7 @@
                                         class="far fa-paper-plane"></i>
                                 </span> </button>
                         </div>
-                        
+
                     </div>
                 </form>
             </div>
@@ -47,4 +48,3 @@
         </div>
     </div>
 </div>
-

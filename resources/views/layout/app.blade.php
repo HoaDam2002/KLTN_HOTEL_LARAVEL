@@ -32,6 +32,18 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            font-family: "Poppins", sans-serif;
+        }
+    </style>
+
 
     @yield('css')
 </head>
@@ -60,25 +72,25 @@
 
     <main class="body-bg">
         @php
-            $name_page = Route::currentRouteName();
+        $name_page = Route::currentRouteName();
         @endphp
 
         @switch($name_page)
-            @case('food_service')
-                @include('layout.header_food_service')
-                @break
-            @case('outside_service')
-                @include('layout.header_outside_service')
-                @break
-            @default
-                @include('layout.header')
+        @case('food_service')
+        @include('layout.header_food_service')
+        @break
+        @case('outside_service')
+        @include('layout.header_outside_service')
+        @break
+        @default
+        @include('layout.header')
         @endswitch
 
-        
+
 
         {{-- start banner --}}
         @if ($name_page == 'home_customer')
-            @include('layout.banner')
+        @include('layout.banner')
         @endif
         {{-- end banner --}}
 

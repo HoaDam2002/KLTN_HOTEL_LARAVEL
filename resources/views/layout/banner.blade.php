@@ -1,5 +1,5 @@
 @php
-    use Carbon\carbon;
+use Carbon\carbon;
 @endphp
 <section class="banner">
     <div class="container container-two">
@@ -32,7 +32,7 @@
                             class="shape-element three" />
                     </div>
                 </div>
-                <div class="col-lg-12">
+                <div class="col-lg-10 m-auto">
                     <ul class="common-tab nav nav-pills" id="pills-tab" role="tablist">
                     </ul>
                     <div class="tab-content" id="pills-tabContent">
@@ -41,48 +41,27 @@
                             <div class="filter">
                                 <form action="#">
                                     <div class="row gy-sm-4 gy-3">
-                                        <div class="col-lg-3 col-sm-6 col-xs-6">
+                                        <div class="col-lg-4 col-sm-6 col-xs-6">
                                             @php
-                                                $currentDay = Carbon::now();
-                                                // dd($currentDay);
+                                            $currentDay = Carbon::now();
+                                            // dd($currentDay);
                                             @endphp
-                                            {{-- <input type="text" class="common-input" placeholder="Enter Keyword" /> --}}
+                                            {{-- <input type="text" class="common-input" placeholder="Enter Keyword" />
+                                            --}}
                                             <input type="text" class="common-input" name="daterange"
                                                 value="01/01/2018 - 01/15/2018" />
                                         </div>
-                                        <div class="col-lg-3 col-sm-6 col-xs-6">
+                                        <div class="col-lg-4 col-sm-6 col-xs-6">
                                             <div class="select-has-icon icon-black">
                                                 <select class="select common-input">
-                                                    <option value="1" disabled>
-                                                        Property Type
-                                                    </option>
-                                                    <option value="1">Apartment</option>
-                                                    <option value="1">House</option>
-                                                    <option value="1">Land</option>
-                                                    <option value="1">
-                                                        Single Family
-                                                    </option>
+                                                    <option value="1">Room type</option>
+                                                    <option value="1">Double Room</option>
+                                                    <option value="1">Family Room</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-3 col-sm-6 col-xs-6">
-                                            <div class="select-has-icon icon-black">
-                                                <select class="select common-input">
-                                                    <option value="1" disabled>
-                                                        Location
-                                                    </option>
-                                                    <option value="1">
-                                                        Bangladesh
-                                                    </option>
-                                                    <option value="1">Japan</option>
-                                                    <option value="1">Korea</option>
-                                                    <option value="1">Singapore</option>
-                                                    <option value="1">Germany</option>
-                                                    <option value="1">Thailand</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-sm-6 col-xs-6">
+
+                                        <div class="col-lg-4 col-sm-6 col-xs-6">
                                             <button type="submit" class="btn btn-main w-100">
                                                 Find Now
                                             </button>
@@ -103,32 +82,9 @@
                                         <div class="col-lg-3 col-sm-6 col-xs-6">
                                             <div class="select-has-icon icon-black">
                                                 <select class="select common-input">
-                                                    <option value="1" disabled>
-                                                        Property Type
-                                                    </option>
-                                                    <option value="1">Apartment</option>
-                                                    <option value="1">House</option>
-                                                    <option value="1">Land</option>
-                                                    <option value="1">
-                                                        Single Family
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-sm-6 col-xs-6">
-                                            <div class="select-has-icon icon-black">
-                                                <select class="select common-input">
-                                                    <option value="1" disabled>
-                                                        Location
-                                                    </option>
-                                                    <option value="1">
-                                                        Bangladesh
-                                                    </option>
-                                                    <option value="1">Japan</option>
-                                                    <option value="1">Korea</option>
-                                                    <option value="1">Singapore</option>
-                                                    <option value="1">Germany</option>
-                                                    <option value="1">Thailand</option>
+                                                    <option value="1">Room type</option>
+                                                    <option value="1">Double Room</option>
+                                                    <option value="1">Family Room</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -153,32 +109,9 @@
                                         <div class="col-lg-3 col-sm-6 col-xs-6">
                                             <div class="select-has-icon icon-black">
                                                 <select class="select common-input">
-                                                    <option value="1" disabled>
-                                                        Property Type
-                                                    </option>
-                                                    <option value="1">Apartment</option>
-                                                    <option value="1">House</option>
-                                                    <option value="1">Land</option>
-                                                    <option value="1">
-                                                        Single Family
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-sm-6 col-xs-6">
-                                            <div class="select-has-icon icon-black">
-                                                <select class="select common-input">
-                                                    <option value="1" disabled>
-                                                        Location
-                                                    </option>
-                                                    <option value="1">
-                                                        Bangladesh
-                                                    </option>
-                                                    <option value="1">Japan</option>
-                                                    <option value="1">Korea</option>
-                                                    <option value="1">Singapore</option>
-                                                    <option value="1">Germany</option>
-                                                    <option value="1">Thailand</option>
+                                                    <option value="1">Room type</option>
+                                                    <option value="1">Double Room</option>
+                                                    <option value="1">Family Room</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -199,8 +132,8 @@
 </section>
 
 @section('js')
-    <script>
-        $(function() {
+<script>
+    $(function() {
 
             $('input[name="daterange"]').daterangepicker({
                 opens: 'left'
@@ -209,5 +142,5 @@
                     .format('YYYY-MM-DD'));
             });
         });
-    </script>
+</script>
 @endsection

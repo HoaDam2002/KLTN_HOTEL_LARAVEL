@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 //Router muilti_language
 Route::get('setLocale/{locale}', function ($locale) {
     if (in_array($locale, Config::get('app.locales'))) {
-      Session::put('locale', $locale);
+        Session::put('locale', $locale);
     }
     return redirect()->back();
 })->name('app.setLocale');
@@ -39,19 +39,19 @@ Route::get('/listroom', function () {
 
 Route::get('/customer/account', function () {
     return view('pages.account.account_home');
-})->name('checkout_customer');
+})->name('account_customer');
 
 Route::get('/customer/profile', function () {
     return view('pages.account.account_profile');
-})->name('profile');
+})->name('profile_customer');
 
 Route::get('/customer/my-bookings', function () {
     return view('pages.account.my_booking');
-})->name('my_booking');
+})->name('my_booking_customer');
 
 Route::get('/customer/change-pass', function () {
     return view('pages.account.change_pass');
-})->name('change_pass');
+})->name('change_pass_customer');
 
 Route::get('/room-detail', function () {
     return view('pages.room_detail.room_detail');
@@ -60,7 +60,7 @@ Route::get('/room-detail', function () {
 //lễ tân
 Route::get('/recep/room-diagram', function () {
     return view('pages.receptionist.room_diagram');
-})->name('rooom_detail');
+})->name('room_diagram_recep');
 
 Route::get('/recep/history-booking', function () {
     return view('pages.receptionist.historybooking');
@@ -71,6 +71,10 @@ Route::get('/recep/request-booking', function () {
 })->name('request-booking-recep');
 
 //nhà hàng
+Route::get('/food_service', function () {
+    return view('pages.food_service.food_home');
+})->name('food_service');
+
 Route::get('/food_service/manation', function () {
     return view('pages.food_service.food_manation');
 })->name('food_service');

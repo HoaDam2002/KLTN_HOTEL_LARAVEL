@@ -1,5 +1,5 @@
 <!-- ==================== Footer Two Start Here ==================== -->
-<footer class="footer footer-two padding-y-120" style="z-index: -1">
+<footer class="footer footer-two padding-y-60" style="z-index: -1">
     <div class="container container-two">
         <div class="row gy-5">
             <div class="col-xl-4 col-lg-6">
