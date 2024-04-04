@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,6 +16,23 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+ 
+    return redirect('/home');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+ 
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
 //Router muilti_language
 Route::get('setLocale/{locale}', function ($locale) {
     if (in_array($locale, Config::get('app.locales'))) {
@@ -37,9 +58,9 @@ Route::get('/listroom', function () {
     return view('pages.list_room.list_room_customer');
 })->name('listroom_customer');
 
-Route::get('/customer/account', function () {
+Route::get('/dashboard', function () {
     return view('pages.account.account_home');
-})->name('account_customer');
+})->middleware(['auth', 'verified'])->name('account_customer');
 
 Route::get('/customer/profile', function () {
     return view('pages.account.account_profile');
@@ -56,6 +77,8 @@ Route::get('/customer/change-pass', function () {
 Route::get('/room-detail', function () {
     return view('pages.room_detail.room_detail');
 })->name('rooom_detail');
+
+Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
 //lễ tân
 Route::get('/recep/room-diagram', function () {
@@ -102,8 +125,13 @@ Route::get('/outside_service/order/detail', function () {
 
 
 
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
-
+require __DIR__.'/auth.php';
 
 
 
