@@ -11,14 +11,14 @@
 
                         <div class="col-12">
                             <label for="Email" class="form-label">Email</label>
-                            <input type="email" class="common-input" placeholder="Email" id="Email">
+                            <input type="email" class="common-input" placeholder="Email" id="email-login">
                         </div>
                         <div class="col-12">
                             <label for="your-password" class="form-label">Password</label>
                             <div class="position-relative">
-                                <input type="password" class="common-input" placeholder="Password" id="your-password">
+                                <input type="password" class="common-input" placeholder="Password" id="your-password-login">
                                 <span class="password-show-hide fas fa-eye toggle-password la-eye-slash"
-                                    id="#your-password"></span>
+                                    id="#your-password-login"></span>
                             </div>
                         </div>
                         <div class="col-12">
@@ -34,9 +34,15 @@
                                     Password? </button>
                             </div>
                         </div>
+                        <div class="error_wrapper container col-12">
+                            <ul class="list_error_signin" style="list-style: outside; background-color: rgb(227,93,106); color: #fff; padding: 10px 50px; margin: 16px 0 0;">
+                                
+                            </ul>
+                        </div>
+
                         <div class="col-12">
-                            <button type="submit" class="btn btn-main w-100">Login <span class="icon-right"> <i
-                                        class="far fa-paper-plane"></i>
+                            <button type="submit" class="btn btn-main w-100" id="btn_login">Login <span
+                                    class="icon-right"> <i class="far fa-paper-plane"></i>
                                 </span> </button>
                         </div>
                         <div class="col-sm-12 mb-0">
@@ -67,4 +73,59 @@
     </div>
 </div>
 
+@section('js')
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('#btn_login').click(function(e) {
+                e.preventDefault();
+                var email = $('#email-login').val();
+                var password = $('#your-password-login').val();
+                console.log(email, password);
+
+                var err = [];
+                var count_err = 0;
+                var html_error_login = '';
+
+                if (email == '') {
+                    err.push('Email cannot be empty.');
+                    count_err = 1;
+                }
+
+                if (password == '') {
+                    err.push('Password cannot be empty.');
+                    count_err = 1;
+                } else if (password.length < 8) {
+                    err.push('Password must be longer than 8 characters.');
+                    count_err = 1;
+                }
+
+                if (count_err != 0) {
+                    err.forEach(element => {
+                        html_error_login += `<li>${element}</li>`
+                    });
+
+                    $('.list_error_sigin').html(html_error_login);
+                }else {
+                    $.ajax({
+                        type: "POST",
+                        url: "/signin",
+                        data: {
+                            'email': email,
+                            'password': password
+                        },
+                        success: function(data) {
+                            $('.list_error_sigin').html(data);
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+@endsection
 @include('layout.modal_forgot_password')

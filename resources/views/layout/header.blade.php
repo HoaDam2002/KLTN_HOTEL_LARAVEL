@@ -46,9 +46,11 @@
 <div class="mobile-menu d-lg-none d-block">
     <button type="button" class="close-button"> <i class="las la-times"></i> </button>
     <div class="mobile-menu__inner">
-        <a href="/" class="mobile-menu__logo">
-            <img src="{{ asset('assets/customer/images/logo/logo.png') }}" alt="Logo">
-        </a>
+        @if (Auth::check())
+            <a href="/" class="mobile-menu__logo">
+                <img src="{{ asset('assets/customer/images/logo/logo.png') }}" alt="Logo">
+            </a>
+        @endif
         <div class="mobile-menu__menu">
             <ul class="nav-menu flx-align nav-menu--mobile">
                 <li class="nav-menu__item">
@@ -77,13 +79,14 @@
                     <a href="contact.html" class="nav-menu__link">{{ __('Contact') }}</a>
                 </li>
             </ul>
-            <button class="btn btn-outline-light d-lg-none d-block mt-4" data-bs-toggle="modal"
-                data-bs-target="#modal_signin" style="width: 100%">
-                {{ __('Sign In') }}
-                <span class="icon-right text-gradient icon">
-                    <i class="fas fa-arrow-right"></i>
-                </span>
-            </button>
+            @if (!Auth::check())
+                <a href="/login" class="btn btn-outline-light d-lg-none d-block mt-4" style="width: 100%">
+                    {{ __('Sign In') }}
+                    <span class="icon-right text-gradient icon">
+                        <i class="fas fa-arrow-right"></i>
+                    </span>
+                </a>
+            @endif
         </div>
     </div>
 </div>
@@ -242,21 +245,24 @@
 
             <!-- Header Right start -->
             <div class="header-right flx-align">
-                <button class="btn btn-outline-light d-lg-block d-none" data-bs-toggle="modal"
-                    data-bs-target="#modal_signin">
-                    {{ __('Sign In') }}
-                    <span class="icon-right text-gradient icon">
-                        <i class="fas fa-arrow-right"></i>
-                    </span>
-                </button>
-                <button type="button" class="toggle-mobileMenu d-lg-none ms-3"> <i class="las la-bars"></i>
-                </button>
-                <button class="btn d-lg-block d-none">
-                    <a href="/customer/account" class="account-icon-link"><i class="fa-regular fa-circle-user"></i></a>
-                    {{-- <a href="/customer/account" class="account-icon-link"><img
+                @if (Auth::check())
+                    <button class="btn d-lg-block d-none">
+                        <a href="/dashboard" class="account-icon-link"><i class="fa-regular fa-circle-user"></i></a>
+                        {{-- <a href="/dashboard" class="account-icon-link"><img
                             src="{{ asset('assets/customer/images/logo/z5175648554199_ccc2baf0a7ac356050aa28149405a89d.jpg') }}"
                             alt="account"></a> --}}
+                    </button>
+                @else
+                    <a href="/login" class="btn btn-outline-light d-lg-block d-none">
+                        {{ __('Sign In') }}
+                        <span class="icon-right text-gradient icon">
+                            <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </a>
+                @endif
+                <button type="button" class="toggle-mobileMenu d-lg-none ms-3"> <i class="las la-bars"></i>
                 </button>
+
             </div>
 
             @include('layout.modal_sign_in')

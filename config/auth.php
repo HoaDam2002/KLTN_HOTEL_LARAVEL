@@ -40,6 +40,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'api' => [
+            'driver' => 'token',
+            'provider' => 'users',
+            'hash' => false,
+        ],
     ],
 
     /*
@@ -62,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\Account::class,
         ],
 
         // 'users' => [
@@ -97,6 +102,13 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
+    ],
+
+    'verification' => [
+        'expire' => 60,
+        'table' => 'email_verifications',
+        'after_resend' => 120,
+        'redirect_to' => '/email-verified',
     ],
 
     /*
