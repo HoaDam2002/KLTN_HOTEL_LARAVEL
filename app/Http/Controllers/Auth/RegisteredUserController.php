@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Account;
+use App\Models\Customer;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -33,8 +34,13 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.Account::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . Account::class],
+            'password' => ['required', Rules\Password::defaults()],
+            'phone' => ['required', 'numeric'],
+            'birth_date' => ['required', 'date_format:d/m/Y', 'before:today'],
+            'address' => ['required', 'string'],
+            'nationality' => ['required'],
+            'password_confirmation' => ['required', 'same:password']
         ]);
 
         $birth_day = \Carbon\Carbon::createFromFormat('d/m/Y', $request->birth_date)->format('Y-m-d');
@@ -51,6 +57,18 @@ class RegisteredUserController extends Controller
         $account = Account::create([
             'email' => $request->email,
             'password' => Hash::make($request->password),
+        ]);
+
+        $user_id = $user->id;
+        $account_id = $account->id;
+        $avatar = '';
+        $count_booking = 0;
+
+        $customer = Customer::create([
+            'avatar' => $avatar,
+            'count_booking' => $count_booking,
+            'id_user' => $user_id,
+            'id_account' => $account_id,
         ]);
 
         event(new Registered($account));
