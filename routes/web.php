@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\customer\RoomController;
 use App\Http\Controllers\StriperController;
+use App\Http\Controllers\Auth\PasswordController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,13 +29,13 @@ Route::get('/email/verify', function () {
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
- 
+
     return redirect('/home');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
- 
+
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
@@ -79,9 +81,7 @@ Route::get('/customer/my-bookings', function () {
     return view('pages.account.my_booking');
 })->name('my_booking_customer');
 
-Route::get('/customer/change-pass', function () {
-    return view('pages.account.change_pass');
-})->name('change_pass_customer');
+
 
 
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
@@ -135,6 +135,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/customer/profile', [ProfileController::class, 'edit'])->name('profile_customer');
     Route::post('/profile/profile/edit', [ProfileController::class, 'update'])->name('profile_customer_edit');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/customer/change-pass', [PasswordController::class, 'showChangePassView'])->name('change_pass_customer');
+    Route::post('/customer/change-pass', [PasswordController::class, 'update'])->name('update_password');
 });
 
 require __DIR__.'/auth.php';
