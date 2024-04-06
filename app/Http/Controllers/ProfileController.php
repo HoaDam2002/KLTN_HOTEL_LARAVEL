@@ -2,39 +2,82 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Customer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use \Intervention\Image\Facades\Image;
+use App\Models\User;
+
 
 class ProfileController extends Controller
 {
     /**
      * Display the user's profile form.
      */
-    public function edit(Request $request): View
+    public function edit(Request $request)
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        $data = Customer::with('user','account')->get()->toArray();
+
+        $data = $data[0];
+    
+        return view('pages.account.account_profile',compact('data'));
     }
 
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
-        $request->user()->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+    public function update(ProfileRequest $request)
+    {
+    
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $date = strtotime(date('Y-m-d H:i:s'));
+
+        $data = $request->all();
+
+        $id = Auth::id();
+
+        $user = User::findOrFail($id);
+
+        $customer = Customer::where('id_user',$id);
+
+        $a = $customer->get('avatar')->toArray();
+
+        $imageOld = $a[0]['avatar'];
+
+        $file = $request->avatar;
+
+        if(empty($data['birth_date'])){
+            $data['birth_date'] = $user->birth_date;
+            // dd($user->birth_date);
         }
 
-        $request->user()->save();
+        if(!empty($file)){
+            $image = $file->getClientOriginalName();
+        }else{
+            $image = $imageOld;
+        }
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        if(!is_dir('customer/avatar/')){
+            mkdir('customer/avatar/');
+        }
+
+        if($user->update($data) && $customer->update(['avatar' => $date.'_'.$image])) {
+            if(!empty($file)) {
+                if($imageOld) {
+                    unlink('customer/avatar/'.$imageOld);
+                }
+                $file->move('customer/avatar/', $date.'_'.$file->getClientOriginalName());
+            }
+            return redirect()->back()->with('success',__('Update Profile User Success'));
+        }else {
+            return redirect()->back()->withErrors('Update Profile User Fail');
+        }
     }
 
     /**

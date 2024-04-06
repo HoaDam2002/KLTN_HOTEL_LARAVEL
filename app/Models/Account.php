@@ -12,7 +12,7 @@ class Account extends Authenticatable implements MustVerifyEmail
     use HasFactory, Notifiable;
 
     protected $table = "account";
-    
+
     protected $fillable = [
         'email',
         'password',
@@ -32,5 +32,16 @@ class Account extends Authenticatable implements MustVerifyEmail
     {
         $this->email_verified_at = now(); // Cập nhật trạng thái xác minh email
         $this->save(); // Lưu thay đổi vào cơ sở dữ liệu
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    // Quan hệ với bảng Account
+    public function account()
+    {
+        return $this->belongsTo(Account::class);
     }
 }

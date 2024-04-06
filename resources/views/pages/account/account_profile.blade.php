@@ -5,31 +5,50 @@
             <div class="card common-card mb-4">
                 <div class="card-body">
                     <div class="profile-info d-flex gap-4 align-items-center">
+                        @php
+                            $avatar = '';
+                            $check = empty($data['avatar']);
+                            $url = $data['avatar'];
+
+                            if ($check) {
+                                $avatar = asset('assets/customer/images/thumbs/team1.png');
+                            } else {
+                                $avatar = asset("/customer/avatar/$url");
+                            }
+                        @endphp
                         <div class="profile-info__thumb">
-                            <img src="{{ asset('assets/customer/images/thumbs/team1.png') }}" alt="" />
+                            <img src="{{ $avatar }}" alt="" />
                         </div>
                         <div class="profile-info__content">
-                            {{-- <span
-                                class="mb-1 fw-semibold text-main text-poppins font-13">{{ _('Agent of Property') }}</span> --}}
+
                             <h4 class="profile-info__title text-poppins mb-4">
-                                Rosalina D. William
+                                {{ $data['user']['name'] }}
                             </h4>
                             <div class="contact-info d-flex gap-3 align-items-center mb-2">
                                 <span class="contact-info__icon text-gradient"><i class="fas fa-map-marker-alt"></i></span>
                                 <div class="contact-info__content">
-                                    <span class="contact-info__address">66 Broklyant, New York India</span>
+                                    <span class="contact-info__address">{{ $data['user']['address'] }}</span>
                                 </div>
                             </div>
                             <div class="contact-info d-flex gap-3 align-items-center mb-2">
                                 <span class="contact-info__icon text-gradient"><i class="fas fa-phone"></i></span>
                                 <div class="contact-info__content">
-                                    <span class="contact-info__address">012 345 678 9101</span>
+                                    <span class="contact-info__address">{{ $data['user']['phone'] }}</span>
                                 </div>
                             </div>
-                            <div class="contact-info d-flex gap-3 align-items-center">
+                            <div class="contact-info d-flex gap-3 align-items-center mb-2">
                                 <span class="contact-info__icon text-gradient"><i class="fas fa-envelope"></i></span>
                                 <div class="contact-info__content">
-                                    <span class="contact-info__address">example@gmail.com</span>
+                                    <span class="contact-info__address">{{ $data['account']['email'] }}</span>
+                                </div>
+                            </div>
+
+                            <div class="contact-info d-flex gap-3 align-items-center">
+                                <span class="contact-info__icon text-gradient"><i
+                                        class="fa-solid fa-cake-candles"></i></i></span>
+                                <div class="contact-info__content">
+                                    <span
+                                        class="contact-info__address">{{ substr($data['user']['birth_date'], 0, 10) }}</span>
                                 </div>
                             </div>
                         </div>
@@ -38,29 +57,63 @@
             </div>
             <div class="card common-card">
                 <div class="card-body">
-                    <form action="#">
+                    @if (session('success'))
+                        <div class="alert alert-success alert-dismissble">
+                            {{-- <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button> --}}
+                            <h4><i class="icon fa fa-check">{{__('Thông báo')}}</i></h4>
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissble">
+                            {{-- <button type="button"F class="close" data-dismiss="alert" aria-hidden="true">x</button> --}}
+                            <h4><i class="icon fa fa-check">{{__('Thông báo')}}</i></h4>
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <form action="/profile/profile/edit" enctype="multipart/form-data" method="post">
+                        @csrf
                         <h6 class="loginRegister__title text-poppins">
-                            {{ __('Get A Quote') }}
+                            {{ __('Your Information') }}
                         </h6>
 
                         <div class="row gy-lg-4 gy-3">
                             <div class="col-sm-6 col-xs-6">
                                 <label for="name" class="form-label">{{ __('Name') }}</label>
-                                <input type="text" class="common-input" placeholder="Enter Your Name" id="name" />
+                                <input type="text" class="common-input name" name="name"
+                                    value="{{ $data['user']['name'] }}" id="name" />
                             </div>
                             <div class="col-sm-6 col-xs-6">
                                 <label for="email" class="form-label">{{ __('Email') }}</label>
-                                <input type="email" class="common-input" placeholder="Enter Your Email" id="email" />
+                                <input type="email" class="common-input" name="email"
+                                    value="{{ $data['account']['email'] }}" id="email" disabled />
                             </div>
                             <div class="col-sm-6 col-xs-6">
                                 <label for="phone" class="form-label">{{ __('Phone') }}</label>
-                                <input type="tel" class="common-input" placeholder="Enter Your Phone" id="phone" />
+                                <input type="tel" class="common-input phone" name="phone"
+                                    value="{{ $data['user']['phone'] }}" id="phone" />
                             </div>
+
+                            <div class="col-sm-6 col-xs-6">
+                                <label for="avatar" class="form-label">{{ __('avatar') }}</label>
+                                <input type="file" class="common-input avatar" name="avatar" id="avatar" />
+                            </div>
+
+                            <div class="col-sm-6 col-xs-6">
+                                <label for="birth_date" class="form-label">{{ __('Birthday') }}</label>
+                                <input type="date" class="common-input birthday" name="birth_date" id="birth_date" />
+                            </div>
+
                             <div class="col-sm-6 col-xs-6">
                                 <label for="gender" class="form-label">{{ __('Gender') }}</label>
                                 <div class="select-has-icon">
-                                    <select class="form-select common-input text-gray-800">
-                                        <option value="Type" disabled="">
+                                    <select class="form-select common-input text-gray-800 gender" name="gender">
+                                        <option value="" disabled="" selected="">
                                             {{ __('Select Your Gender') }}
                                         </option>
                                         <option value="male">
@@ -77,21 +130,11 @@
                             </div>
                             <div class="col-sm-12">
                                 <label for="address" class="form-label">{{ __('Address') }}</label>
-                                <textarea class="common-input" placeholder="Your Address" id="address"></textarea>
+                                <textarea class="common-input address" placeholder="Your Address" aria-valuetext="" name="address" id="address">{{ $data['user']['address'] }}</textarea>
                             </div>
                             <div class="col-12">
-                                <div class="common-check mb-0">
-                                    <input class="form-check-input" type="checkbox" value="" id="remember" />
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Save my name, email, and website in
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        this browser for the next time I
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        comment.') }}
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-main w-100">
-                                    {{ __('Get a free service') }}
+                                <button type="submit" class="btn btn-main w-100" id="liveToastBtn"s>
+                                    {{ __('Update information') }}
                                 </button>
                             </div>
                         </div>
@@ -100,5 +143,76 @@
             </div>
         </div>
     </div>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <img src="..." class="rounded me-2" alt="...">
+                <strong class="me-auto">Success!!!</strong>
+                <small>Now</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Your information have been update !!!
+            </div>
+        </div>
+    </div>
     {{-- end home account --}}
+@endsection
+
+@section('js')
+    <script>
+        
+        // $(document).ready(function() {
+
+        //     $('button#liveToastBtn').click(function(e) {
+        //         e.preventDefault();
+
+        //         let name = $('input.name').val();
+        //         let phone = $('input.phone').val();
+        //         let gender = $('select.gender').val();
+        //         let address = $('textarea.address').val();
+        //         let avatar = $('input.avatar')[0].files[0] || '';
+        //         let birthday = $('input.birthday').val();
+        //         let id_user = "{{ Auth::id() }}";
+        //         // console.log(image);
+
+        //         let form_user = new FormData();
+
+        //         form_user.append('name', name);
+        //         form_user.append('phone', phone);
+        //         form_user.append('gender', gender);
+        //         form_user.append('address', address);
+        //         form_user.append('birth_date', birthday);
+        //         form_user.append('avatar', avatar);
+        //         form_user.append('id_user', id_user);
+
+        //         $.ajax({
+        //             type: "post",
+        //             url: "{{ url('/profile/profile/edit') }}",
+        //             contentType: false,
+        //             processData: false,
+        //             data: form_user,
+        //             success: function(response) {
+        //                 console.log(response.data);
+        //             },
+        //             error: function(xhr, status, error) {
+        //                 var errors = xhr.responseJSON.errors;
+        //                 html = "";
+
+        //                 $.each(errors, function(key, value) {
+        //                     html += "<li>" + value + "</li>";
+        //                 });
+
+        //                 console.log(html);
+        //                 $('.alert-danger').show();
+        //                 $('li.Errors').html(html);
+        //             }
+        //         });
+
+        //     });
+
+
+        // });
+    </script>
 @endsection
