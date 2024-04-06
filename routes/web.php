@@ -2,10 +2,14 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 
+use App\Http\Controllers\customer\RoomController;
+use App\Http\Controllers\StriperController;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Session;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,6 +46,17 @@ Route::get('setLocale/{locale}', function ($locale) {
 })->name('app.setLocale');
 
 //Router customer
+
+//room
+Route::get('/listroom', [RoomController::class, 'index'])->name('listroom_customer');
+Route::post('/room/search', [RoomController::class, 'search']);
+
+Route::get('/room-detail/{id}', [RoomController::class, 'roomDetail'])->name('listroom_detail_customer');
+
+Route::post('/session', [StriperController::class, 'checkout'])->name('session');
+
+
+
 Route::get('/', function () {
     return view('pages.home.home_customer');
 })->name('home_customer');
@@ -54,17 +69,11 @@ Route::get('/aboutus', function () {
     return view('pages.about_us.about_us');
 })->name('aboutus_customer');
 
-Route::get('/listroom', function () {
-    return view('pages.list_room.list_room_customer');
-})->name('listroom_customer');
 
 Route::get('/dashboard', function () {
     return view('pages.account.account_home');
 })->middleware(['auth', 'verified'])->name('account_customer');
 
-Route::get('/customer/profile', function () {
-    return view('pages.account.account_profile');
-})->name('profile_customer');
 
 Route::get('/customer/my-bookings', function () {
     return view('pages.account.my_booking');
@@ -74,9 +83,6 @@ Route::get('/customer/change-pass', function () {
     return view('pages.account.change_pass');
 })->name('change_pass_customer');
 
-Route::get('/room-detail', function () {
-    return view('pages.room_detail.room_detail');
-})->name('rooom_detail');
 
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
@@ -126,9 +132,9 @@ Route::get('/outside_service/order/detail', function () {
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/customer/profile', [ProfileController::class, 'edit'])->name('profile_customer');
+    Route::post('/profile/profile/edit', [ProfileController::class, 'update'])->name('profile_customer_edit');
+    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 require __DIR__.'/auth.php';

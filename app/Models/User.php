@@ -29,6 +29,11 @@ class User extends Model
         'role',
     ];
 
+    // public function account(){
+    //     return $this->hasOne('App\Models\Customer','id_user');
+    // }
+
+
     /**
      * The attributes that should be hidden for serialization.
      *

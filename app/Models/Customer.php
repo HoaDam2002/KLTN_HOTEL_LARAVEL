@@ -16,4 +16,15 @@ class Customer extends Model
         'id_user',
         'id_account'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class,'id_user');
+    }
+
+    // Quan hệ với bảng Account
+    public function account()
+    {
+        return $this->belongsTo(Account::class,'id_account');
+    }
 }
