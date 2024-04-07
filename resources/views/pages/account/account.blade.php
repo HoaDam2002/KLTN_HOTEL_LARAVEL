@@ -10,16 +10,16 @@
                     <div class="account-sidebar search-sidebar">
                         <div class="nav side-tab flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
                             aria-orientation="vertical">
-                            <a href="/customer/account"
-                                class="nav-link {{ Route::currentRouteName() == 'account_customer' ? 'active' : '' }}"
+                            <a href="/dashboard"
+                                class="nav-link {{ Route::currentRouteName() == 'account_home_customer' ? 'active' : '' }}"
                                 id="home_account" onclick="menu_account_customer(this.id)">
-                                <span class="icon"><i class="fas fa-home"></i></span>Home
+                                <span class="icon"><i class="fas fa-home"></i></span>{{ __('Home') }}
                             </a>
                             <a href="/customer/profile"
                                 class="nav-link {{ Route::currentRouteName() == 'profile_customer' ? 'active' : '' }}"
                                 id="profile_account" onclick="menu_account_customer(this.id)">
                                 <span class="icon"> <i class="fas fa-user"></i></span>
-                                Profile
+                                {{ __('Profile') }}
                             </a>
                             <a href="/customer/my-bookings"
                                 class="nav-link {{ Route::currentRouteName() == 'my_booking_customer' ? 'active' : '' }}"
@@ -32,20 +32,20 @@
                                 id="acc_payment" onclick="menu_account_customer(this.id)">
                                 <span class="icon">
                                     <i class="fas fa-money-check"></i></span>
-                                Payments
+                                {{ __('Payments') }}
                             </a>
                             <a href="/customer/change-pass"
                                 class="nav-link {{ Route::currentRouteName() == 'change_pass_customer' ? 'active' : '' }}"
                                 id="change_pass" onclick="menu_account_customer(this.id)">
                                 <span class="icon"> <i class="fas fa-lock"></i></span>
-                                Change Password
+                                {{ __('Change Password') }}
                             </a>
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf
                                 <button type="submit" class="nav-link" id=""
                                     onclick="menu_account_customer(this.id)"><span class="icon">
                                         <i class="fas fa-sign-out-alt"></i></span>
-                                    Logout</a></button>
+                                    {{ __('Logout') }}</a></button>
                             </form>
 
                         </div>
