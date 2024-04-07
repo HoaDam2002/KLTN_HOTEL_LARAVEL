@@ -72,9 +72,7 @@ Route::get('/aboutus', function () {
 })->name('aboutus_customer');
 
 
-Route::get('/dashboard', function () {
-    return view('pages.account.account_home');
-})->middleware(['auth', 'verified'])->name('account_customer');
+
 
 
 Route::get('/customer/my-bookings', function () {
@@ -131,12 +129,13 @@ Route::get('/outside_service/order/detail', function () {
 
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/customer/profile', [ProfileController::class, 'edit'])->name('profile_customer');
     Route::post('/profile/profile/edit', [ProfileController::class, 'update'])->name('profile_customer_edit');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/customer/change-pass', [PasswordController::class, 'showChangePassView'])->name('change_pass_customer');
     Route::post('/customer/change-pass', [PasswordController::class, 'update'])->name('update_password');
+    Route::get('/dashboard', [ProfileController::class, 'showHomeAccountView'])->name('account_home_customer');
 });
 
 require __DIR__.'/auth.php';
