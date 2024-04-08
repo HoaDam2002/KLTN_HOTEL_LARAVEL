@@ -85,14 +85,13 @@
                 @if (isset($data))
                     @foreach ($data as $room)
                         @php
-                            $type_name = $room->typeRoom->type_name;
                             $image = $room->images;
                         @endphp
                         <div class="col-lg-4 col-sm-6">
                             <div class="property-item style-two">
                                 <div class="property-item__thumb">
                                     <a href="/room-detail/{{ $room->id }}" class="link">
-                                        <img src={{ asset("/customer/image_room/$type_name/$image") }} alt=""
+                                        <img src={{ asset("/customer/image_room/$image") }} alt=""
                                             class="cover-img">
                                     </a>
                                 </div>
@@ -124,7 +123,7 @@
                                         <span class="icon text-gradient"> <i class="fas fa-map-marker-alt"></i></span>
                                         Da Nang, Viet Nam
                                     </p>
-                                    <a href="property-details.html"
+                                    <a href="/room-detail/{{ $room->id }}"
                                         class="simple-btn text-gradient fw-semibold font-14">Book Now
                                         <span class="icon-right"> <i class="fas fa-arrow-right"></i> </span> </a>
                                 </div>
@@ -133,12 +132,6 @@
                     @endforeach
                 @endif
             </div>
-
-            <nav aria-label="Page navigation example" id="paginate">
-                <ul class="pagination common-pagination">
-                    {{ $data->links() }}
-                </ul>
-            </nav>
         </div>
     </section>
 

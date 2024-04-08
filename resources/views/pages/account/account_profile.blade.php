@@ -59,23 +59,10 @@
                 <div class="card-body">
                     @if (session('success'))
                         <div class="alert alert-success alert-dismissble">
-                            {{-- <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button> --}}
-                            <h4><i class="icon fa fa-check">{{__('Thông báo')}}</i></h4>
                             {{ session('success') }}
                         </div>
                     @endif
 
-                    @if ($errors->any())
-                        <div class="alert alert-danger alert-dismissble">
-                            {{-- <button type="button"F class="close" data-dismiss="alert" aria-hidden="true">x</button> --}}
-                            <h4><i class="icon fa fa-check">{{__('Thông báo')}}</i></h4>
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
                     <form action="/profile/profile/edit" enctype="multipart/form-data" method="post">
                         @csrf
                         <h6 class="loginRegister__title text-poppins">
@@ -87,7 +74,13 @@
                                 <label for="name" class="form-label">{{ __('Name') }}</label>
                                 <input type="text" class="common-input name" name="name"
                                     value="{{ $data['user']['name'] }}" id="name" />
+                                @error('name')
+                                    <div class="mt-2 text-danger">
+                                        <small>{{ $message }}</small><br>
+                                    </div>
+                                @enderror
                             </div>
+
                             <div class="col-sm-6 col-xs-6">
                                 <label for="email" class="form-label">{{ __('Email') }}</label>
                                 <input type="email" class="common-input" name="email"
@@ -97,13 +90,21 @@
                                 <label for="phone" class="form-label">{{ __('Phone') }}</label>
                                 <input type="tel" class="common-input phone" name="phone"
                                     value="{{ $data['user']['phone'] }}" id="phone" />
+                                @error('phone')
+                                    <div class="mt-2 text-danger">
+                                        <small>{{ $message }}</small><br>
+                                    </div>
+                                @enderror
                             </div>
-
                             <div class="col-sm-6 col-xs-6">
                                 <label for="avatar" class="form-label">{{ __('avatar') }}</label>
                                 <input type="file" class="common-input avatar" name="avatar" id="avatar" />
+                                @error('avatar')
+                                    <div class="mt-2 text-danger">
+                                        <small>{{ $message }}</small><br>
+                                    </div>
+                                @enderror
                             </div>
-
                             <div class="col-sm-6 col-xs-6">
                                 <label for="birth_date" class="form-label">{{ __('Birthday') }}</label>
                                 <input type="date" class="common-input birthday" name="birth_date" id="birth_date" />
@@ -162,7 +163,6 @@
 
 @section('js')
     <script>
-        
         // $(document).ready(function() {
 
         //     $('button#liveToastBtn').click(function(e) {

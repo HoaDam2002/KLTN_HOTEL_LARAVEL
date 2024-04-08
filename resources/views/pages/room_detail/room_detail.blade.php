@@ -135,10 +135,9 @@
                         <div class="col-sm-12 col-6" style="margin-top: 5px;">
                             <div class="property-details__thumb">
                                 @php
-                                    $type_name = $room[0]['type_room']['type_name'];
                                     $image = $room[0]['images'];
                                 @endphp
-                                <img src="{{ asset("/customer/image_room/$type_name/detail/$image") }}" alt=""
+                                <img src="{{ asset("/customer/image_room/detail/$image") }}" alt=""
                                     class="cover-img">
                             </div>
                         </div>
@@ -148,18 +147,19 @@
                             <h6 class="property-details-item__title">Preview</h6>
                             <div class="property-details-item__content">
                                 <div class="row gy-4 gy-lg-5">
-                                    {{-- <div class="col-sm-4 col-6">
+                                    <div class="col-sm-4 col-6">
                                         <div class="amenities-content d-flex align-items-center">
                                             <span class="amenities-content__icon">
-                                                <img src="{{ asset('assets/customer/images/icons/amenities1.svg') }}"
+                                                <img src="{{ asset('assets/customer/images/icons/client-statistics.svg') }}"
                                                     alt="">
                                             </span>
                                             <div class="amenities-content__inner">
-                                                <span class="amenities-content__text">Room</span>
-                                                <h6 class="amenities-content__title mb-0 font-16">4 Room</h6>
+                                                <span class="amenities-content__text"> Max Person</span>
+                                                <h6 class="amenities-content__title mb-0 font-16">{{ $room[0]['person'] }}
+                                                    Person</h6>
                                             </div>
                                         </div>
-                                    </div> --}}
+                                    </div>
                                     <div class="col-sm-4 col-6">
                                         <div class="amenities-content d-flex align-items-center">
                                             <span class="amenities-content__icon">
@@ -182,6 +182,21 @@
                                             <div class="amenities-content__inner">
                                                 <span class="amenities-content__text">Bath</span>
                                                 <h6 class="amenities-content__title mb-0 font-16">1 Baths</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4 col-6">
+                                        <div class="amenities-content d-flex align-items-center">
+                                            <span class="amenities-content__icon">
+                                                <img src="{{ asset('assets/customer/images/icons/amenities1.svg') }}"
+                                                    alt="">
+                                            </span>
+                                            <div class="amenities-content__inner">
+                                                <span class="amenities-content__text">Available Room</span>
+                                                <h6 class="amenities-content__title mb-0 font-16 available_room">10
+                                                    <span>Room</span>
+                                                </h6>
                                             </div>
                                         </div>
                                     </div>
@@ -364,10 +379,22 @@
                             <span>from <strong>${{ $room[0]['price'] }}</strong> / night</span>
                         </div>
                         <div class="info_price">
-                            <form action="{{url("/session")}}" class="action_price" method="post">
+                            <form action="{{ url('/session') }}" class="action_price" method="post">
                                 @csrf
                                 <input type="text" class="common-input" name="daterange" value=""
                                     style="border-radius: 10px" />
+                                <input type="text" name="name" class="name" value="{{ $room[0]['name'] }}"
+                                    hidden>
+                                <input type="text" name="deposits" class="deposits" hidden>
+                                <input type="text" name="id_room" class="id_room" value="{{ $room[0]['id'] }}" hidden>
+
+                                <input type="text" name="price" class="price" value="{{ $room[0]['price'] }}"
+                                    hidden>
+                                <input type="text" name="check_in" class="checkin" hidden>
+                                <input type="text" name="check_out" class="checkout" hidden>
+                                <input type="text" name="quantity" class="quantity" hidden>
+                                <input type="text" name="total" class="total" hidden>
+
                                 <div class="dropdown numberofroomandguests mb-3">
                                     <div class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true"
                                         data-bs-auto-close="outside" id="number_of_rg">Number
@@ -375,86 +402,46 @@
 
                                     <div class="dropdown-menu dropdown_numberof">
                                         <div class="item_numberof">
-                                            <span>Guests</span>
-                                            <div class="wrapper_btn_numberof" onclick="handleClickMenuItemDropdown(e)">
-                                                <button class="minus_btn" id="minus_guest"><span>-</span></button>
-                                                <span class="quantity_numberof" id="quantity_guest">0</span>
-                                                <button class="plus_btn" id="plus_guest"><span>+</span></button>
-                                            </div>
-                                        </div>
-                                        <div class="item_numberof">
                                             <span>Rooms</span>
                                             <div class="wrapper_btn_numberof" onclick="handleClickMenuItemDropdown(e)">
                                                 <button class="minus_btn" id="minus_room"><span>-</span></button>
-                                                <span class="quantity_numberof" id="quantity_room">0</span>
+                                                <span class="quantity_numberof" id="quantity_room">1</span>
                                                 <button class="plus_btn" id="plus_room"><span>+</span></button>
                                             </div>
                                         </div>
+                                        <div class="item_numberof">
+                                            <span>Guests</span>
+                                            <div class="wrapper_btn_numberof" onclick="handleClickMenuItemDropdown(e)">
+                                                <button class="minus_btn" id="minus_guest"><span>-</span></button>
+                                                <span class="quantity_numberof" id="quantity_guest">1</span>
+                                                <button class="plus_btn" id="plus_guest"><span>+</span></button>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
-                                <div class="form-group" style="margin-bottom: 10px; font-size: 20px;">
-                                    <span>Please deposit to reserve a room</span>
+                                <div class="down_payment duration">
+                                    <span>Duration</span>
+                                    <strong>1 day</strong>
                                 </div>
-                                <div class="form-group">
-                                    <label for="stripeToken" style="margin-bottom: 12px; font-weight: bold;">Credit Card:</label>
-                                    <div id="card-element"></div>
+                                <div class="down_payment total">
+                                    <span>Total</span>
+                                    <strong>$10</strong>
                                 </div>
+                                <span style="font-weight: bold; text-align: center; margin-top: 20px;">You must deposit 20%
+                                    in
+                                    advance to request a reservation</span>
 
-                                <button class="btn_request_book" type="submit">Request to book</button>
+                                <button class="btn_request_book request_deposit" type="submit">Deposit for
+                                    {{ $room[0]['price'] * 0.2 }}$</button>
                             </form>
-                            {{-- <div class="down_payment">
-                                <span>Down-Payment Total</span>
-                                <strong>$12</strong>
-                            </div>
-                            <div class="down_payment">
-                                <span>Down-Payment Total</span>
-                                <strong>$12</strong>
-                            </div>
-                            <div class="down_payment">
-                                <span>Down-Payment Total</span>
-                                <strong>$12</strong>
-                            </div> --}}
-                            {{-- <div class="card">
-                                <div class="card-header">Payment Stripe</div>
 
-                                <div class="card-body">
-                                    <form action="{{ url('payment') }}" method="post">
-                                        @csrf
-                                        <div class="form-group">
-                                            <label for="stripeEmail">Email:</label>
-                                            <input type="email" name="stripeEmail" value="{{ Auth::user()->email }}"
-                                                class="form-control" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="stripeToken">Credit Card:</label>
-                                            <div id="card-element"></div>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">Pay ${{ $total }}</button>
-                                    </form>
-                                </div>
-                            </div> --}}
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
-        </div>
     </section>
-
-    <script src="https://js.stripe.com/v3/"></script>
-    <script>
-        // Initialize Stripe.js
-        var stripe = Stripe('{{ env('STRIPE_KEY') }}');
-
-        // Create an instance of Elements
-        var elements = stripe.elements();
-
-        // Create a card Element and add it to the form
-        var card = elements.create('card');
-        card.mount('#card-element');
-    </script>
 @endsection
 
 
@@ -462,73 +449,152 @@
 @section('js')
     <script>
         $(document).ready(function() {
+            let count_guests = 1;
+            let count_rooms = 1;
+
+            let max_person = {{ $room[0]['person'] }}
+            let available_room = parseInt($('.available_room').text(), 10)
+
+            let available_person = max_person;
+
+            let duration = 1;
+            let price = {{ $room[0]['price'] }}
+            let total = price;
+            let deposit = total*0.2;
+
+            var currentDate = new Date();
+
+            var day = currentDate.getDate().toString().padStart(2, '0');
+            var month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+            var year = currentDate.getFullYear();
+
+            var formattedDate = `${year}-${month}-${day}`;
+
+            let checkin = formattedDate;
+            let checkout = formattedDate;
+
+            $('input.checkin').val(checkin)
+            $('input.checkout').val(checkout)
+            $('input.deposits').val(deposit);
+            $('input.total').val(total);
+            $('input.deposit').val(deposit);
+            $('input.quantity').val(count_rooms);
+
             $('.rateYo').each((key, element) => {
                 let id = $(element).attr('id');
                 let rate = $(element).attr('data-rating');
                 data_rating(id, rate);
             });
-        })
 
-        function data_rating(id, rate) {
+            $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
+                var startDate = picker.startDate.format('YYYY-MM-DD');
+                var endDate = picker.endDate.format('YYYY-MM-DD');
+                duration = picker.endDate.diff(picker.startDate, 'days');
+                // $('.total strong').text('$' + (duration * ({{ $room[0]['price'] }} * count_rooms)));
+                // $('.duration strong').text(duration + ' days');
+                up();
+            });
+
+            function data_rating(id, rate) {
+                $(function() {
+                    $(`#${id}`).rateYo({
+                        rating: rate,
+                        readOnly: true,
+                        starWidth: "15px"
+                    });
+                });
+            }
+
+            //daterangerpicker
             $(function() {
-                $(`#${id}`).rateYo({
-                    rating: rate,
-                    readOnly: true,
-                    starWidth: "15px"
+                $('input[name="daterange"]').daterangepicker({
+                    opens: 'left',
+                    minDate: currentDate, // Đặt ngày tối thiểu là ngày hiện tại
+                }, function(start, end, label) {
+                    checkin = start.format('YYYY-MM-DD');
+                    checkout = end.format('YYYY-MM-DD');
+                    $('input.checkin').val(checkin)
+                    $('input.checkout').val(checkout)
+
+                    // console.log("A new date selection was made: " + start.format('YYYY-MM-DD') +
+                    //     ' to ' + end
+                    //     .format('YYYY-MM-DD'));
                 });
             });
-        }
 
-        //daterangerpicker
-        $(function() {
-            $('input[name="daterange"]').daterangepicker({
-                opens: 'left'
-            }, function(start, end, label) {
-                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end
-                    .format('YYYY-MM-DD'));
-            });
-        });
+            $('#minus_guest').click(function(e) {
+                e.preventDefault();
+                if (count_guests > 1) {
+                    count_guests -= 1;
+                    $('#quantity_guest').html(count_guests);
+                    up();
+                }
+                updateNumberOfRG();
+            })
 
-        var count_guests = 0;
-        var count_rooms = 0;
-        $('#minus_guest').click(function(e) {
-            e.preventDefault();
-            if (count_guests > 0) {
-                count_guests -= 1;
+            $('#plus_guest').click(function(e) {
+                e.preventDefault();
+                if (count_guests < available_person) {
+                    count_guests += 1;
+                    up();
+                }
+
                 $('#quantity_guest').html(count_guests);
-            }
-            updateNumberOfRG();
-        })
+                updateNumberOfRG();
+            })
 
-        $('#plus_guest').click(function(e) {
-            e.preventDefault();
-            count_guests += 1;
-            $('#quantity_guest').html(count_guests);
-            updateNumberOfRG();
-        })
+            $('#minus_room').click(function(e) {
+                e.preventDefault();
+                if (count_rooms > 1) {
+                    count_rooms -= 1;
+                    $('#quantity_room').html(count_rooms);
+                    available_person = count_rooms * max_person;
+                    let a = $('#quantity_guest').text();
+                    console.log(available_person);
+                    if (a != available_person) {
+                        count_guests = available_person;
+                        $('#quantity_guest').html(count_guests);
+                    }
+                    up();
 
-        $('#minus_room').click(function(e) {
-            e.preventDefault();
-            if (count_rooms > 0) {
-                count_rooms -= 1;
+                }
+                updateNumberOfRG();
+
+            })
+
+            $('#plus_room').click(function(e) {
+                e.preventDefault();
+                if (count_rooms < available_room) {
+                    count_rooms += 1;
+                    available_person = count_rooms * max_person;
+                    count_guests = available_person;
+                    $('#quantity_guest').html(count_guests);
+                    up();
+                }
                 $('#quantity_room').html(count_rooms);
-            }
-            updateNumberOfRG();
-        })
+                updateNumberOfRG();
+            })
 
-        $('#plus_room').click(function(e) {
-            e.preventDefault();
-            count_rooms += 1;
-            $('#quantity_room').html(count_rooms);
-            updateNumberOfRG();
-        })
+            function up() {
+                total = duration * ({{ $room[0]['price'] }} * count_rooms);
+                deposit = total * 0.2;
+                $('.request_deposit').text('Deposit ' + deposit + '$');
+                $('.total strong').text('$' + total);
+                $('.duration strong').text(duration + ' days');
 
-        function updateNumberOfRG() {
-            if (count_guests > 0 || count_rooms > 0) {
-                $('#number_of_rg').html(`Rooms: ${count_rooms}, Guests: ${count_guests}`);
-            } else {
-                $('#number_of_rg').html('Number of rooms and guests');
+                $('input.deposits').val(deposit);
+                $('input.total').val(total);
+                $('input.quantity').val(count_rooms);
+
             }
-        }
+
+            function updateNumberOfRG() {
+                if (count_guests > 0 || count_rooms > 0) {
+                    $('#number_of_rg').html(`Rooms: ${count_rooms}, Guests: ${count_guests}`);
+                } else {
+                    $('#number_of_rg').html('Number of rooms and guests');
+                }
+            }
+        })
     </script>
 @endsection

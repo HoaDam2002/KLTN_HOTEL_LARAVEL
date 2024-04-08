@@ -84,263 +84,70 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center gap-3">
-                                            <div class="cart-item__thumb">
-                                                <img src="{{ asset('assets/customer/images/thumbs/property-1.png') }}"
-                                                    alt="" />
-                                            </div>
-                                            <div class="cart-item__content">
-                                                <h6 class="cart-item__title fw-500 font-18">
-                                                    <a href="property.html" class="link">3 Rooms
-                                                        Manhattan</a>
-                                                </h6>
-                                                <p class="property-item__location d-flex gap-2 font-14">
-                                                    <span class="icon text-gradient">
-                                                        <i class="fas fa-map-marker-alt"></i></span>
-                                                    66 Broklyant, New York
-                                                    America
-                                                </p>
-                                                <span class="cart-item__price">Price:
-                                                    <span class="fw-500 text-heading">$85.00</span></span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="date" id="checkin">17/02/2024</span>
-                                    </td>
-                                    <td>
-                                        <span class="date" id="checkout">17/02/2024</span>
-                                    </td>
-                                    <td>
-                                        <span class="status cancel" id="checkout">Cancel</span>
-                                    </td>
-                                    {{-- <td>
-                                        <button type="button"
-                                            class="rounded-btn delete-btn text-danger bg-danger bg-opacity-10 flex-shrink-0">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </td> --}}
-                                    <td class="" style="cursor: default;">
-                                        <button type="button"
-                                            class="rounded-btn text-danger bg-danger bg-opacity-10 flex-shrink-0"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="fa-solid fa-gear"></i>
-                                        </button>
-                                        {{-- <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">Cancel</a></li>
-                                            <li><a class="dropdown-item" href="#">Evaluate</a></li>
-                                        </ul> --}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center gap-3">
-                                            <div class="cart-item__thumb">
-                                                <img src="{{ asset('assets/customer/images/thumbs/property-1.png') }}"
-                                                    alt="" />
-                                            </div>
-                                            <div class="cart-item__content">
-                                                <h6 class="cart-item__title fw-500 font-18">
-                                                    <a href="property.html" class="link">3 Rooms
-                                                        Manhattan</a>
-                                                </h6>
-                                                <p class="property-item__location d-flex gap-2 font-14">
-                                                    <span class="icon text-gradient">
-                                                        <i class="fas fa-map-marker-alt"></i></span>
-                                                    66 Broklyant, New York
-                                                    America
-                                                </p>
-                                                <span class="cart-item__price">Price:
-                                                    <span class="fw-500 text-heading">$85.00</span></span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="date" id="checkin">17/02/2024</span>
-                                    </td>
-                                    <td>
-                                        <span class="date" id="checkout">17/02/2024</span>
-                                    </td>
-                                    <td>
-                                        <span class="status checkin" id="checkout">Check in</span>
-                                    </td>
-                                    {{-- <td>
-                                        <button type="button"
-                                            class="rounded-btn delete-btn text-danger bg-danger bg-opacity-10 flex-shrink-0">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </td> --}}
-                                    <td class="" style="cursor: default;">
-                                        <button type="button"
-                                            class="rounded-btn text-danger bg-danger bg-opacity-10 flex-shrink-0"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="fa-solid fa-gear"></i>
-                                        </button>
-                                        {{-- <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">Cancel</a></li>
-                                            <li><a class="dropdown-item" href="#">Evaluate</a></li>
-                                        </ul> --}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center gap-3">
-                                            <div class="cart-item__thumb">
-                                                <img src="{{ asset('assets/customer/images/thumbs/property-1.png') }}"
-                                                    alt="" />
-                                            </div>
-                                            <div class="cart-item__content">
-                                                <h6 class="cart-item__title fw-500 font-18">
-                                                    <a href="property.html" class="link">3 Rooms
-                                                        Manhattan</a>
-                                                </h6>
-                                                <p class="property-item__location d-flex gap-2 font-14">
-                                                    <span class="icon text-gradient">
-                                                        <i class="fas fa-map-marker-alt"></i></span>
-                                                    66 Broklyant, New York
-                                                    America
-                                                </p>
-                                                <span class="cart-item__price">Price:
-                                                    <span class="fw-500 text-heading">$85.00</span></span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="date" id="checkin">17/02/2024</span>
-                                    </td>
-                                    <td>
-                                        <span class="date" id="checkout">17/02/2024</span>
-                                    </td>
-                                    <td>
-                                        <span class="status confirm" id="checkout">{{ __('Confirm') }}</span>
-                                    </td>
-                                    {{-- <td>
-                                        <button type="button"
-                                            class="rounded-btn delete-btn text-danger bg-danger bg-opacity-10 flex-shrink-0">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </td> --}}
-                                    <td class="">
-                                        <button type="button"
-                                            class="rounded-btn text-danger bg-danger bg-opacity-10 flex-shrink-0"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="fa-solid fa-gear"></i>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">Cancel</a></li>
-                                            {{-- <li><a class="dropdown-item" href="#">Evaluate</a></li> --}}
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center gap-3">
-                                            <div class="cart-item__thumb">
-                                                <img src="{{ asset('assets/customer/images/thumbs/property-1.png') }}"
-                                                    alt="" />
-                                            </div>
-                                            <div class="cart-item__content">
-                                                <h6 class="cart-item__title fw-500 font-18">
-                                                    <a href="property.html" class="link">3 Rooms
-                                                        Manhattan</a>
-                                                </h6>
-                                                <p class="property-item__location d-flex gap-2 font-14">
-                                                    <span class="icon text-gradient">
-                                                        <i class="fas fa-map-marker-alt"></i></span>
-                                                    66 Broklyant, New York
-                                                    America
-                                                </p>
-                                                <span class="cart-item__price">Price:
-                                                    <span class="fw-500 text-heading">$85.00</span></span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="date" id="checkin">17/02/2024</span>
-                                    </td>
-                                    <td>
-                                        <span class="date" id="checkout">17/02/2024</span>
-                                    </td>
-                                    <td>
-                                        <span class="status pending" id="checkout">Pending</span>
-                                    </td>
-                                    {{-- <td>
-                                        <button type="button"
-                                            class="rounded-btn delete-btn text-danger bg-danger bg-opacity-10 flex-shrink-0">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </td> --}}
-                                    <td class="">
-                                        <button type="button"
-                                            class="rounded-btn text-danger bg-danger bg-opacity-10 flex-shrink-0"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="fa-solid fa-gear"></i>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">Cancel</a></li>
-                                            {{-- <li><a class="dropdown-item" href="#">Evaluate</a></li> --}}
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center gap-3">
-                                            <div class="cart-item__thumb">
-                                                <img src="{{ asset('assets/customer/images/thumbs/property-1.png') }}"
-                                                    alt="" />
-                                            </div>
-                                            <div class="cart-item__content">
-                                                <h6 class="cart-item__title fw-500 font-18">
-                                                    <a href="property.html" class="link">3 Rooms
-                                                        Manhattan</a>
-                                                </h6>
-                                                <p class="property-item__location d-flex gap-2 font-14">
-                                                    <span class="icon text-gradient">
-                                                        <i class="fas fa-map-marker-alt"></i></span>
-                                                    66 Broklyant, New York
-                                                    America
-                                                </p>
-                                                <span class="cart-item__price">Price:
-                                                    <span class="fw-500 text-heading">$85.00</span></span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="date" id="checkin">17/02/2024</span>
-                                    </td>
-                                    <td>
-                                        <span class="date" id="checkout">17/02/2024</span>
-                                    </td>
-                                    <td>
-                                        <span class="status finish" id="checkout">Finish</span>
-                                    </td>
-                                    {{-- <td>
-                                        <button type="button"
-                                            class="rounded-btn delete-btn text-danger bg-danger bg-opacity-10 flex-shrink-0">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </td> --}}
-                                    <td class="">
-                                        <button type="button"
-                                            class="rounded-btn text-danger bg-danger bg-opacity-10 flex-shrink-0"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="fa-solid fa-gear"></i>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            {{-- <li><a class="dropdown-item" href="#">Cancel</a></li> --}}
-                                            <li><button class="dropdown-item" data-bs-toggle="modal"
-                                                    data-bs-target="#modal_evaluate">Evaluate</button></li>
-                                        </ul>
-                                    </td>
-                                </tr>
+                                @if (isset($data))
+                                    @foreach ($data as $data)
+                                        @php
+                                            $image = $data['room']['images'];
+                                            $checkin = new DateTime($data['check_in']);
+                                            $checkout = new DateTime($data['check_out']);
+
+                                            $interval = $checkout->diff($checkin);
+                                            $numberOfDays = $interval->days;
+
+                                            $total = $data['price'] * $data['quantity'] * $numberOfDays - $data['deposits'];
+                                        @endphp
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-3">
+                                                    <div class="cart-item__thumb">
+                                                        <img src="{{ asset("customer/image_room/$image") }}"
+                                                            alt="" />
+                                                    </div>
+                                                    <div class="cart-item__content">
+                                                        <h6 class="cart-item__title fw-500 font-18">
+                                                            <a href="property.html"
+                                                                class="link">{{ $data['room']['name'] }}</a>
+                                                        </h6>
+                                                        <p class="property-item__location d-flex gap-2 font-14">
+                                                            <span class="icon text-gradient">
+                                                                <i class="fas fa-map-marker-alt"></i></span>
+                                                            Da Nang, Viet Nam
+                                                        </p>
+                                                        <span class="cart-item__price">Total:
+                                                            <span
+                                                                class="fw-500 text-heading">${{ $total }}</span></span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="date" id="checkin">17/02/2024</span>
+                                            </td>
+                                            <td>
+                                                <span class="date" id="checkout">17/02/2024</span>
+                                            </td>
+                                            <td>
+                                                <span class="status" style="background-color: rgb(255,165,0)"
+                                                    id="">{{ $data['status'] }}</span>
+                                            </td>
+
+                                            <td class="" style="cursor: default;">
+                                                <button type="button"
+                                                    class="rounded-btn text-danger bg-danger bg-opacity-10 flex-shrink-0"
+                                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fa-solid fa-gear"></i>
+                                                </button>
+
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            <nav aria-label="Page navigation example">
+            {{-- <nav aria-label="Page navigation example">
                 <ul class="pagination common-pagination">
                     <li class="page-item active">
                         <a class="page-link bg-white" href="#">1</a>
@@ -355,7 +162,7 @@
                         <a class="page-link bg-white" href="#">4</a>
                     </li>
                 </ul>
-            </nav>
+            </nav> --}}
         </div>
     </div>
     @include('layout.modal_evaluate')
