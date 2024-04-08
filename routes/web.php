@@ -55,7 +55,10 @@ Route::post('/room/search', [RoomController::class, 'search']);
 
 Route::get('/room-detail/{id}', [RoomController::class, 'roomDetail'])->name('listroom_detail_customer');
 
-Route::post('/session', [StriperController::class, 'checkout'])->name('session');
+Route::post('pay/session', [StriperController::class, 'checkout'])->name('session');
+Route::get('/success', [StriperController::class, 'success'])->name('success');
+Route::get('/cancel', [StriperController::class, 'cancel'])->name('cancel');
+
 
 
 
@@ -133,6 +136,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/customer/profile', [ProfileController::class, 'edit'])->name('profile_customer');
     Route::post('/profile/profile/edit', [ProfileController::class, 'update'])->name('profile_customer_edit');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/customer/my-bookings', [ProfileController::class, 'list_booking'])->name('list_booking');
+
     Route::get('/customer/change-pass', [PasswordController::class, 'showChangePassView'])->name('change_pass_customer');
     Route::post('/customer/change-pass', [PasswordController::class, 'update'])->name('update_password');
     Route::get('/dashboard', [ProfileController::class, 'showHomeAccountView'])->name('account_home_customer');

@@ -14,11 +14,9 @@ class RoomController extends Controller
      */
     public function index()
     {
-        $data = RoomModel::with('typeRoom')->Paginate(12);
-        
-        $type_room = TypeRoomModel::all();
+        $data = RoomModel::all();
 
-        return view('pages.list_room.list_room_customer',compact('data','type_room'));
+        return view('pages.list_room.list_room_customer',compact('data'));
     }
 
     /**
@@ -26,7 +24,7 @@ class RoomController extends Controller
      */
     public function roomDetail(string $id)
     {
-        $room = RoomModel::with('typeRoom')->where('id',$id)->get()->toArray();
+        $room = RoomModel::where('id',$id)->get()->toArray();
    
         return view('pages.room_detail.room_detail',compact('room'));
     }
