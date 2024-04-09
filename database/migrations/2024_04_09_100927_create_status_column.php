@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('room_detail', function (Blueprint $table) {
-            $table->bigInteger('id_room')->after('type_name');
+        Schema::table('booking_realtime', function (Blueprint $table) {
+            $table->string('status')->after('price')->nullable();
         });
     }
 
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('room_detail', function (Blueprint $table) {
+        Schema::table('booking_realtime', function (Blueprint $table) {
             //
         });
     }

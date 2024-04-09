@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\customer\RoomController;
 use App\Http\Controllers\StriperController;
 use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
@@ -59,6 +60,7 @@ Route::post('pay/session', [StriperController::class, 'checkout'])->name('sessio
 Route::get('/success', [StriperController::class, 'success'])->name('success');
 Route::get('/cancel', [StriperController::class, 'cancel'])->name('cancel');
 
+Route::post('/customer/find_room', [SearchController::class, 'find_available_room'])->name('find_available_room');
 
 
 

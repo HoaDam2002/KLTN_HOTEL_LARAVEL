@@ -379,7 +379,7 @@
                             <span>from <strong>${{ $room[0]['price'] }}</strong> / night</span>
                         </div>
                         <div class="info_price">
-                            <form action="{{ url('/session') }}" class="action_price" method="post">
+                            <form action="{{ url('pay/session') }}" class="action_price" method="post">
                                 @csrf
                                 <input type="text" class="common-input" name="daterange" value=""
                                     style="border-radius: 10px" />
