@@ -94,7 +94,7 @@
                                             $interval = $checkout->diff($checkin);
                                             $numberOfDays = $interval->days;
 
-                                            $total = $data['price'] * $data['quantity'] * $numberOfDays - $data['deposits'];
+                                            $total = (($data['price'] * $data['quantity']) * $numberOfDays) - $data['deposits'];
                                         @endphp
                                         <tr>
                                             <td>
