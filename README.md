@@ -69,6 +69,8 @@ composer require stripe/stripe-php
 composer require propaganistas/laravel-bootstrap-pagination
 composer require intervention/image
 
+update branch tien 
+
 //env
 STRIPE_KEY=pk_test_51NyGenCaiVetgTx40N1hSDA9q1pOfMwRcOVTSvZfjidK8njdwFj4bVDcNjdbgujfzmPMX9uCZFd2eGiVqKqQaWqu00zFOwhpgh
 STRIPE_SECRET=sk_test_51NyGenCaiVetgTx48ezy0HT8PQISZzL83f8XsIzO7FzsqQ08NiCjAfw7GvWAXXnlWChnZwoGSD7Is6Lo1JkQMgaI00J2t8Iu7X
