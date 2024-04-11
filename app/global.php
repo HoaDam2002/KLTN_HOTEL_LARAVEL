@@ -63,10 +63,8 @@ function search_available_room($checkin, $checkout)
                     if ($quantity_room_null == 0) {
                         unset($available_rooms_grouped[$key]);
                     } else {
-                        $available_rooms_grouped[$key] = $quantity_room_null;
+                        $available_rooms_grouped[$key]->quantity = $quantity_room_null;
                     }
-                } else {
-
                 }
             }
         }
