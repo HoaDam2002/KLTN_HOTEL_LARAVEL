@@ -79,9 +79,13 @@ class ProfileController extends Controller
             mkdir('customer/avatar/');
         }
 
-        if($user->update($data) && $customer->update(['avatar' => $date.'_'.$image])) {
+        if(!empty($image)){
+            $image = $date.'_'.$image;
+        }
+
+        if($user->update($data) && $customer->update(['avatar' => $image])) {
             if(!empty($file)) {
-                if($imageOld) {
+                if(!empty($imageOld)) {
                     unlink('customer/avatar/'.$imageOld);
                 }
                 $file->move('customer/avatar/', $date.'_'.$file->getClientOriginalName());
