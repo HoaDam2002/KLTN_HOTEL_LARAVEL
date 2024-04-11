@@ -1,5 +1,5 @@
 @php
-use Carbon\carbon;
+    use Carbon\carbon;
 @endphp
 <section class="banner">
     <div class="container container-two">
@@ -39,83 +39,28 @@ use Carbon\carbon;
                         <div class="tab-pane fade show active" id="pills-rent" role="tabpanel"
                             aria-labelledby="pills-rent-tab" tabindex="0">
                             <div class="filter">
-                                <form action="#">
+                                <form action="/customer/find_room" method="POST">
+                                    @csrf
                                     <div class="row gy-sm-4 gy-3">
                                         <div class="col-lg-4 col-sm-6 col-xs-6">
                                             @php
-                                            $currentDay = Carbon::now();
-                                            // dd($currentDay);
+                                                $current_day = Carbon::now();
+                                                $next_day = $current_day->addDay()->format('d/m/Y');
+                                                $current_day = Carbon::now()->format('d/m/Y');
                                             @endphp
-                                            {{-- <input type="text" class="common-input" placeholder="Enter Keyword" />
-                                            --}}
-                                            <input type="text" class="common-input" name="daterange"
-                                                value="01/01/2018 - 01/15/2018" />
+                                            <input type="text" class="common-input" name="daterange" id="daterange_home" value="{{ $current_day . ' - ' . $next_day }}" />
                                         </div>
                                         <div class="col-lg-4 col-sm-6 col-xs-6">
                                             <div class="select-has-icon icon-black">
-                                                <select class="select common-input">
+                                                <select class="select common-input" name="room_type">
                                                     <option value="1">Room type</option>
-                                                    <option value="1">Double Room</option>
-                                                    <option value="1">Family Room</option>
+                                                    <option value="double_room">Double Room</option>
+                                                    <option value="family_room">Family Room</option>
                                                 </select>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-4 col-sm-6 col-xs-6">
-                                            <button type="submit" class="btn btn-main w-100">
-                                                Find Now
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="pills-buy" role="tabpanel" aria-labelledby="pills-buy-tab"
-                            tabindex="0">
-                            <div class="filter">
-                                <form action="#">
-                                    <div class="row gy-sm-4 gy-3">
-                                        <div class="col-lg-3 col-sm-6 col-xs-6">
-                                            <input type="text" class="common-input" name="daterange"
-                                                value="01/01/2018 - 01/15/2018" />
-                                        </div>
-                                        <div class="col-lg-3 col-sm-6 col-xs-6">
-                                            <div class="select-has-icon icon-black">
-                                                <select class="select common-input">
-                                                    <option value="1">Room type</option>
-                                                    <option value="1">Double Room</option>
-                                                    <option value="1">Family Room</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-sm-6 col-xs-6">
-                                            <button type="submit" class="btn btn-main w-100">
-                                                Find Now
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="pills-sell" role="tabpanel" aria-labelledby="pills-sell-tab"
-                            tabindex="0">
-                            <div class="filter">
-                                <form action="#">
-                                    <div class="row gy-sm-4 gy-3">
-                                        <div class="col-lg-3 col-sm-6 col-xs-6">
-                                            <input type="text" class="common-input" name="daterange"
-                                                value="01/01/2018 - 01/15/2018" />
-                                        </div>
-                                        <div class="col-lg-3 col-sm-6 col-xs-6">
-                                            <div class="select-has-icon icon-black">
-                                                <select class="select common-input">
-                                                    <option value="1">Room type</option>
-                                                    <option value="1">Double Room</option>
-                                                    <option value="1">Family Room</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-sm-6 col-xs-6">
                                             <button type="submit" class="btn btn-main w-100">
                                                 Find Now
                                             </button>
@@ -130,17 +75,3 @@ use Carbon\carbon;
         </div>
     </div>
 </section>
-
-@section('js')
-<script>
-    $(function() {
-
-            $('input[name="daterange"]').daterangepicker({
-                opens: 'left'
-            }, function(start, end, label) {
-                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end
-                    .format('YYYY-MM-DD'));
-            });
-        });
-</script>
-@endsection

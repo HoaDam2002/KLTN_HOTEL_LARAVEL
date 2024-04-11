@@ -510,15 +510,12 @@
                 $('input[name="daterange"]').daterangepicker({
                     opens: 'left',
                     minDate: currentDate, // Đặt ngày tối thiểu là ngày hiện tại
+                    autoApply: true
                 }, function(start, end, label) {
                     checkin = start.format('YYYY-MM-DD');
                     checkout = end.format('YYYY-MM-DD');
                     $('input.checkin').val(checkin)
                     $('input.checkout').val(checkout)
-
-                    // console.log("A new date selection was made: " + start.format('YYYY-MM-DD') +
-                    //     ' to ' + end
-                    //     .format('YYYY-MM-DD'));
                 });
             });
 
