@@ -1,3 +1,6 @@
+@php
+    use Carbon\carbon;
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 
@@ -157,6 +160,23 @@
                 }
             });
 
+            var currentDay = new Date();
+            const year = currentDay.getFullYear(); // Lấy năm (4 chữ số)
+            const month = currentDay.getMonth() + 1; // Lấy tháng (0-11, do đó cần cộng thêm 1 để có 1-12)
+            const day = currentDay.getDate();
+            const formattedDate = `${day}/${month}/${year}`;
+            console.log(formattedDate);
+            $(function() {
+                $('input#daterange_home').daterangepicker({
+                    opens: 'left',
+                    minDate: formattedDate,
+                    autoApply: true,
+                    locale: {
+                        format: 'DD/MM/YYYY',
+                    },
+                    placeholder: 'Checkin - Checkout',
+                });
+            });
         </script>
         @yield('js')
     </body>
