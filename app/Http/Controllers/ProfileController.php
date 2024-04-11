@@ -30,7 +30,10 @@ class ProfileController extends Controller
     
     public function edit(Request $request)
     {
-        $data = Customer::with('user','account')->get()->toArray();
+
+        $id_user = Auth::id();
+
+        $data = Customer::with('user','account')->where('id_user',$id_user)->get()->toArray();
 
         $data = $data[0];
     
