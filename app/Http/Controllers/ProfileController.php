@@ -114,7 +114,10 @@ class ProfileController extends Controller
     }
 
     public function list_booking(){
-        $data = Booking::with('room')->get()->toArray();
+
+        $id_user = Auth::id();
+
+        $data = Booking::with('room')->where('id_user',$id_user)->get()->toArray();
 
         return view('pages.account.my_booking',compact('data'));
     }
