@@ -105,25 +105,40 @@
                                     </div>
                                 @enderror
                             </div>
+                            @php
+                                $date = date("Y-m-d", strtotime($data['user']['birth_date']));
+                            @endphp
                             <div class="col-sm-6 col-xs-6">
                                 <label for="birth_date" class="form-label">{{ __('Birthday') }}</label>
-                                <input type="date" class="common-input birthday" name="birth_date" id="birth_date" />
+                                <input type="date" value="{{$date}}" class="common-input birthday" name="birth_date"
+                                    id="birth_date" />
                             </div>
 
                             <div class="col-sm-6 col-xs-6">
                                 <label for="gender" class="form-label">{{ __('Gender') }}</label>
                                 <div class="select-has-icon">
+                                    @php
+                                        if (!empty($data['users']['gender'])) {
+                                            $gender = $data['user']['gender'];
+                                        } else {
+                                            $gender = '';
+                                        }
+                                    @endphp
                                     <select class="form-select common-input text-gray-800 gender" name="gender">
-                                        <option value="" disabled="" selected="">
-                                            {{ __('Select Your Gender') }}
+                                        <option value="{{ $gender }}" disabled="" selected="">
+                                            @if (!empty($data['user']['gender']))
+                                                {{ $data['user']['gender'] }}
+                                            @else
+                                                {{ __('Select Your Gender') }}
+                                            @endif
                                         </option>
-                                        <option value="male">
+                                        <option value="Male">
                                             Male
                                         </option>
-                                        <option value="female">
+                                        <option value="Female">
                                             Female
                                         </option>
-                                        <option value="other">
+                                        <option value="Other">
                                             Other
                                         </option>
                                     </select>
@@ -163,6 +178,17 @@
 
 @section('js')
     <script>
+        // Định dạng ngày cần chuyển đổi (dd/mm/yyyy)
+        var ngayCanChuyenDoi = {{$data['user']['birth_date']}};
+
+        // Chuyển đổi sang định dạng yyyy-mm-dd
+        var ngayChuyenDoi = ngayCanChuyenDoi.split('/').reverse().join('-');
+
+        // Lấy thẻ input theo ID
+        var inputNgay = document.getElementById('birth_date');
+
+        // Gán giá trị vào thuộc tính value của input
+        inputNgay.value = ngayChuyenDoi;
         // $(document).ready(function() {
 
         //     $('button#liveToastBtn').click(function(e) {
