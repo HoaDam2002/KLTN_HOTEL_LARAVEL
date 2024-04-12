@@ -140,6 +140,6 @@
 
 
     {{-- start listing room --}}
-    @include('pages.home.home_listing_room')
+    @include('pages.home.home_listing_room',compact('data'))
     {{-- end listing room --}}
 @endsection
