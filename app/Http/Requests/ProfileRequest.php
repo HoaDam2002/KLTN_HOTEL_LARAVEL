@@ -22,9 +22,10 @@ class ProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
-            'phone' => 'required',
+            'name' => 'required|alpha_spaces|max:100',
+            'phone' => 'required|regex:/^[0-9]+$/|max:10',
             'avatar' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'address' => 'required'
         ];
     }
 }
