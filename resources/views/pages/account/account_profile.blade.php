@@ -63,7 +63,7 @@
                         </div>
                     @endif
 
-                    <form action="/profile/profile/edit" enctype="multipart/form-data" method="post">
+                    <form action="/profile/edit" enctype="multipart/form-data" method="post">
                         @csrf
                         <h6 class="loginRegister__title text-poppins">
                             {{ __('Your Information') }}
