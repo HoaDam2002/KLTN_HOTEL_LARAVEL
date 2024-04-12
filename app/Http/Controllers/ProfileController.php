@@ -36,6 +36,8 @@ class ProfileController extends Controller
         $data = Customer::with('user','account')->where('id_user',$id_user)->get()->toArray();
 
         $data = $data[0];
+
+        // dd($data);
     
         return view('pages.account.account_profile',compact('data'));
     }
@@ -70,17 +72,13 @@ class ProfileController extends Controller
         }
 
         if(!empty($file)){
-            $image = $file->getClientOriginalName();
+            $image = $date.'_'.$file->getClientOriginalName();
         }else{
             $image = $imageOld;
         }
 
         if(!is_dir('customer/avatar/')){
             mkdir('customer/avatar/');
-        }
-
-        if(!empty($image)){
-            $image = $date.'_'.$image;
         }
 
         if($user->update($data) && $customer->update(['avatar' => $image])) {
