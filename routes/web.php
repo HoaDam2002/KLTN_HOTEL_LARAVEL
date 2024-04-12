@@ -136,7 +136,7 @@ Route::get('/outside_service/order/detail', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/customer/profile', [ProfileController::class, 'edit'])->name('profile_customer');
-    Route::post('/profile/profile/edit', [ProfileController::class, 'update'])->name('profile_customer_edit');
+    Route::post('/profile/edit', [ProfileController::class, 'update'])->name('profile_customer_edit');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/customer/my-bookings', [ProfileController::class, 'list_booking'])->name('list_booking');
