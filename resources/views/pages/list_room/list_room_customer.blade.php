@@ -1,3 +1,6 @@
+@php
+    use Carbon\carbon;
+@endphp
 @extends('layout.app')
 
 @section('content')
@@ -55,7 +58,43 @@
                         </div>
                     </div>
                 </form> --}}
-                <h3 style="text-align: center;">Our Room</h3>
+                <form action="/customer/find_room" method="POST">
+                    @csrf
+                    <div class="row gy-sm-4 gy-3">
+                        <div class="col-lg-4 col-sm-6 col-xs-6">
+                            @php
+                                $current_day = Carbon::now();
+                                $next_day = $current_day->addDay()->format('d/m/Y');
+                                $current_day = Carbon::now()->format('d/m/Y');
+                            @endphp
+                            <input type="text" class="common-input" name="daterange" id="daterange_home"
+                                value="{{ $current_day . ' - ' . $next_day }}" />
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-xs-6">
+                            <div class="select-has-icon icon-black">
+                                <select class="select common-input" name="room_type" class="room_type">
+                                    <option selected value="">Choose Type Room</option>
+                                    @php
+                                        if (session()->has('type_room')) {
+                                            $type_room = session('type_room');
+                                        }
+                                    @endphp
+                                    @foreach ($type_room as $value)
+                                        <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-sm-6 col-xs-6">
+                            <button type="submit" class="btn btn-main w-100">
+                                Find Now
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                {{-- <h3 style="text-align: center;">Our Room</h3> --}}
 
                 <div class="property-filter__bottom flx-between gap-2">
                     {{-- <span class="property-filter__text font-18 text-gray-800">Showing 1-10 of 23</span> --}}
@@ -82,7 +121,7 @@
             </div>
 
             <div class="list-grid-item-wrapper show-two-item row gy-4" id="renderRoom">
-                @if (isset($data))
+                @if (!empty($data))
                     @php
                         $i = 0;
                     @endphp
@@ -119,8 +158,9 @@
                                     <h6 class="property-item__price"> {{ $room->price }}
                                         <span class="day">/per day</span>
                                     </h6>
-                                    <h6 class="property-item__price"> {{ ((isset($count_quantity))? $count_quantity[$i]:$room->quantity) }}
-                                        <span class="day">{{ ((isset($count_quantity))? "Available":"Rooms") }}</span>
+                                    <h6 class="property-item__price">
+                                        {{ isset($count_quantity) ? $count_quantity[$i] : $room->quantity }}
+                                        <span class="day">{{ isset($count_quantity) ? 'Available' : 'Rooms' }}</span>
                                     </h6>
                                     <p class="property-item__location d-flex gap-2">
                                         <span class="icon text-gradient"> <i class="fas fa-map-marker-alt"></i></span>
@@ -133,9 +173,11 @@
                             </div>
                         </div>
                         @php
-                             $i++;
+                            $i++;
                         @endphp
                     @endforeach
+                @else
+                    <h4 style="text-align: center;">None of room available for the time that you chosen</h4>
                 @endif
             </div>
         </div>

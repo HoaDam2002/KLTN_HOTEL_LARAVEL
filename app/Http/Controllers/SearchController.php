@@ -21,20 +21,37 @@ class SearchController extends Controller
         $checkin = Carbon::createFromFormat('d/m/Y', $dateParts[0])->toDateString();
         $checkout = Carbon::createFromFormat('d/m/Y', $dateParts[1])->toDateString();
 
-        $a = search_available_room($checkin, $checkout,'search');
+        $a = search_available_room($checkin, $checkout, 'search');
 
         $List_room = RoomModel::query();
 
         $count_quantity = [];
 
-        foreach ($a as $id_room => $quantity) {        
-            $List_room->orwhere('id',$id_room);
-            $count_quantity[] = $quantity->quantity;
+        $data = [];
+
+        // dd($a);
+
+        $arr = [];
+
+        if (isset($data_search['room_type'])) {
+            $type = $data_search['room_type'];
+         
+            foreach ($a as $id_room => $quantity) {
+                if ($type == $id_room) {
+                    $data = $List_room->where('id', $type)->get();
+                    $count_quantity[] = $quantity->quantity;
+                }
+            }
+        } else {
+            foreach ($a as $id_room => $quantity) {
+                $List_room->orwhere('id', $id_room);
+                $count_quantity[] = $quantity->quantity;
+            }
+
+            $data = $List_room->get();
         }
 
-        $data = $List_room->get();
-
-        return view('pages.list_room.list_room_customer',compact('data','count_quantity'));
+        return view('pages.list_room.list_room_customer', compact('data', 'count_quantity'));
     }
 
     /**

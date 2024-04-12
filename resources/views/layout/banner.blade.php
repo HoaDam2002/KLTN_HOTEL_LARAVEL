@@ -52,10 +52,16 @@
                                         </div>
                                         <div class="col-lg-4 col-sm-6 col-xs-6">
                                             <div class="select-has-icon icon-black">
-                                                <select class="select common-input" name="room_type">
-                                                    <option value="1">Room type</option>
-                                                    <option value="double_room">Double Room</option>
-                                                    <option value="family_room">Family Room</option>
+                                                <select class="select common-input" name="room_type" class="room_type">
+                                                    <option selected value="">Choose Type Room</option>
+                                                    @php
+                                                        if(session()->has('type_room')){
+                                                            $type_room = session('type_room');
+                                                        }
+                                                    @endphp
+                                                    @foreach ($type_room as $value )
+                                                        <option value="{{$value->id}}">{{$value->name}}</option>                                 
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>

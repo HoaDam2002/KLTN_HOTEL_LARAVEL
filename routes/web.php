@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\customer\RoomController;
 use App\Http\Controllers\StriperController;
 use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Config;
@@ -62,11 +63,7 @@ Route::get('/cancel', [StriperController::class, 'cancel'])->name('cancel');
 
 Route::post('/customer/find_room', [SearchController::class, 'find_available_room'])->name('find_available_room');
 
-
-
-Route::get('/', function () {
-    return view('pages.home.home_customer');
-})->name('home_customer');
+Route::get('/', [HomeController::class, 'index'])->name('home_customer');
 
 Route::get('/pay', function () {
     return view('pages.checkout.checkout');
