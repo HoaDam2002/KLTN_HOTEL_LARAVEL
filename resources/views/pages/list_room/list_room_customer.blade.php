@@ -83,6 +83,9 @@
 
             <div class="list-grid-item-wrapper show-two-item row gy-4" id="renderRoom">
                 @if (isset($data))
+                    @php
+                        $i = 0;
+                    @endphp
                     @foreach ($data as $room)
                         @php
                             $image = $room->images;
@@ -116,8 +119,8 @@
                                     <h6 class="property-item__price"> {{ $room->price }}
                                         <span class="day">/per day</span>
                                     </h6>
-                                    <h6 class="property-item__price"> {{ $room->quantity }}
-                                        <span class="day">rooms</span>
+                                    <h6 class="property-item__price"> {{ ((isset($count_quantity))? $count_quantity[$i]:$room->quantity) }}
+                                        <span class="day">{{ ((isset($count_quantity))? "Available":"Rooms") }}</span>
                                     </h6>
                                     <p class="property-item__location d-flex gap-2">
                                         <span class="icon text-gradient"> <i class="fas fa-map-marker-alt"></i></span>
@@ -129,6 +132,9 @@
                                 </div>
                             </div>
                         </div>
+                        @php
+                             $i++;
+                        @endphp
                     @endforeach
                 @endif
             </div>

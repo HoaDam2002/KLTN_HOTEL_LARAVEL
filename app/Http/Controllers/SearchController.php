@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RoomModel;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -20,7 +21,20 @@ class SearchController extends Controller
         $checkin = Carbon::createFromFormat('d/m/Y', $dateParts[0])->toDateString();
         $checkout = Carbon::createFromFormat('d/m/Y', $dateParts[1])->toDateString();
 
-        search_available_room($checkin, $checkout);
+        $a = search_available_room($checkin, $checkout,'search');
+
+        $List_room = RoomModel::query();
+
+        $count_quantity = [];
+
+        foreach ($a as $id_room => $quantity) {        
+            $List_room->orwhere('id',$id_room);
+            $count_quantity[] = $quantity->quantity;
+        }
+
+        $data = $List_room->get();
+
+        return view('pages.list_room.list_room_customer',compact('data','count_quantity'));
     }
 
     /**
