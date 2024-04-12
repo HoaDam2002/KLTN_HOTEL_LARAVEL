@@ -33,11 +33,9 @@ class ProfileController extends Controller
 
         $id_user = Auth::id();
 
-        $data = Customer::with('user','account')->where('id_user',$id_user)->get()->toArray();
+        $data = Customer::with('user','account')->where('id_account',$id_user)->get()->toArray();
 
         $data = $data[0];
-
-        // dd($data);
     
         return view('pages.account.account_profile',compact('data'));
     }
