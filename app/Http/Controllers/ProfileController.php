@@ -52,11 +52,15 @@ class ProfileController extends Controller
 
         $data = $request->all();
 
-        $id = Auth::id();
+        $id_account = Auth::id();
 
-        $user = User::findOrFail($id);
+        $customer = Customer::where('id_account',$id_account);
 
-        $customer = Customer::where('id_user',$id);
+        $i = $customer->get('id_user')->toArray();
+
+        $id_user = $i[0]['id_user']; 
+
+        $user = User::findOrFail($id_user);
 
         $a = $customer->get('avatar')->toArray();
 
@@ -66,7 +70,6 @@ class ProfileController extends Controller
 
         if(empty($data['birth_date'])){
             $data['birth_date'] = $user->birth_date;
-            // dd($user->birth_date);
         }
 
         if(!empty($file)){
