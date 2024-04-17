@@ -1,4 +1,4 @@
-@extends('pages.account.account')
+@extends('pages.receptionist.receptionist')
 
 @section('css')
 <style>
@@ -104,7 +104,7 @@
 </style>
 @endsection
 
-@section('content_account')
+@section('content')
 <div class="col-xl-9 col-lg-8">
     <div class="tab-content" id="v-pills-tabContent">
         <div class="form_recep_room mb-4">

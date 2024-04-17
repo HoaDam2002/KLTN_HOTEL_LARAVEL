@@ -1,6 +1,6 @@
 <?php
 
-function search_available_room($checkin, $checkout, $action)
+function search_available_room($checkin, $checkout, $action = null)
 {
     $booked_rooms = DB::table('booking')->select('id_room', 'quantity')
         ->where(function ($query) use ($checkin, $checkout) {
