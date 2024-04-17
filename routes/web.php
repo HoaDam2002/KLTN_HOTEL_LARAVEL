@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\receptionist\BookingController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -95,9 +96,13 @@ Route::get('/recep/history-booking', function () {
     return view('pages.receptionist.historybooking');
 })->name('history-booking-recep');
 
-Route::get('/recep/request-booking', function () {
-    return view('pages.receptionist.request_booking');
-})->name('request-booking-recep');
+Route::get('/recep/request-booking', [BookingController::class, 'showNewBooking'])->name('request-booking-recep');
+
+Route::get('/recep/info-booking/{id}', [BookingController::class, 'showInfoNewBooking'])->name('request-booking-recep');
+Route::post('/recep/info-booking/{id}', [BookingController::class, 'confirmBooking'])->name('request-booking-recep');
+Route::post('/recep/info-booking/cancel/{id}', [BookingController::class, 'cancelBooking'])->name('request-booking-recep');
+
+
 
 //nhà hàng
 Route::get('/food_service', function () {
