@@ -4,6 +4,7 @@
 @extends('layout.app')
 
 @section('content')
+    {{-- {{dd($dateRange)}} --}}
     <section class="property bg-gray-100 padding-y-120">
         <div class="container container-two">
             <div class="property-filter">
@@ -128,18 +129,33 @@
                     @foreach ($data as $room)
                         @php
                             $image = $room->images;
+                            if(!isset($checkin)){
+                                $checkin = "null";
+                            }
+
+                            if(!isset($checkout)){
+                                $checkout = "null";
+                            }
+
+                            if(isset($count_quantity)){
+                                $timeBooking = $checkin . " " . $checkout . " " . $count_quantity[$i];
+                            }else {
+                                $timeBooking = $checkin . " " . $checkout;
+                            }
+
+                            
                         @endphp
                         <div class="col-lg-4 col-sm-6">
                             <div class="property-item style-two">
                                 <div class="property-item__thumb">
-                                    <a href="/room-detail/{{ $room->id }}" class="link">
+                                    <a href="/room-detail/{{ $room->id }}/{{$timeBooking}}" class="link">
                                         <img src={{ asset("/customer/image_room/$image") }} alt=""
                                             class="cover-img">
                                     </a>
                                 </div>
                                 <div class="property-item__content">
                                     <h6 class="property-item__title">
-                                        <a href="/room-detail/{{ $room->id }}" class="link"> {{ $room->name }}
+                                        <a href="/room-detail/{{ $room->id }}/{{$timeBooking}}" class="link"> {{ $room->name }}
                                         </a>
                                     </h6>
 
@@ -166,7 +182,7 @@
                                         <span class="icon text-gradient"> <i class="fas fa-map-marker-alt"></i></span>
                                         Da Nang, Viet Nam
                                     </p>
-                                    <a href="/room-detail/{{ $room->id }}"
+                                    <a href="/room-detail/{{ $room->id }}/{{$timeBooking}}"
                                         class="simple-btn text-gradient fw-semibold font-14">Book Now
                                         <span class="icon-right"> <i class="fas fa-arrow-right"></i> </span> </a>
                                 </div>

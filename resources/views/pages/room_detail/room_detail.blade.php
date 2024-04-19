@@ -60,7 +60,7 @@
         }
 
         .btn_request_book {
-            background: var(--main-gradient);
+            /* background: var(--main-gradient); */
             width: 100%;
             padding: 15px;
             margin-top: 20px;
@@ -131,11 +131,18 @@
             <div class="row gy-4">
                 <div class="col-lg-8">
                     <div class="row gy-4">
-                        <h5 class="name_room">Garden View Room</h5>
+                        <h5 class="name_room">{{$room[0]['name']}}</h5>
                         <div class="col-sm-12 col-6" style="margin-top: 5px;">
                             <div class="property-details__thumb">
                                 @php
                                     $image = $room[0]['images'];
+                                    if ($checkin != 'null' && $checkout != 'null') {
+                                        $checkin[4] = '/';
+                                        $checkin[7] = '/';
+                                        $checkout[4] = '/';
+                                        $checkout[7] = '/';
+                                    }
+                                    // dd($checkin,$checkout)
                                 @endphp
                                 <img src="{{ asset("/customer/image_room/detail/$image") }}" alt=""
                                     class="cover-img">
@@ -194,7 +201,8 @@
                                             </span>
                                             <div class="amenities-content__inner">
                                                 <span class="amenities-content__text">Available Room</span>
-                                                <h6 class="amenities-content__title mb-0 font-16 available_room">10
+                                                <h6 class="amenities-content__title mb-0 font-16 available_room">
+                                                    {{ $count_available }}
                                                     <span>Room</span>
                                                 </h6>
                                             </div>
@@ -379,6 +387,15 @@
                             <span>from <strong>${{ $room[0]['price'] }}</strong> / night</span>
                         </div>
                         <div class="info_price">
+                            @if ($errors->any())
+                                <div class="alert alert-danger alert-dismissble">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                             <form action="{{ url('pay/session') }}" class="action_price" method="post">
                                 @csrf
                                 <input type="text" class="common-input" name="daterange" value=""
@@ -386,7 +403,8 @@
                                 <input type="text" name="name" class="name" value="{{ $room[0]['name'] }}"
                                     hidden>
                                 <input type="text" name="deposits" class="deposits" hidden>
-                                <input type="text" name="id_room" class="id_room" value="{{ $room[0]['id'] }}" hidden>
+                                <input type="text" name="id_room" class="id_room" value="{{ $room[0]['id'] }}"
+                                    hidden>
 
                                 <input type="text" name="price" class="price" value="{{ $room[0]['price'] }}"
                                     hidden>
@@ -422,18 +440,18 @@
                                 </div>
                                 <div class="down_payment duration">
                                     <span>Duration</span>
-                                    <strong>1 day</strong>
+                                    <strong>{{ $diffInDays ? $diffInDays : 1 }} day</strong>
                                 </div>
                                 <div class="down_payment total">
                                     <span>Total</span>
-                                    <strong>$10</strong>
+                                    <strong>{{ $diffInDays ? $diffInDays * $room[0]['price'] : $room[0]['price'] }}$</strong>
                                 </div>
                                 <span style="font-weight: bold; text-align: center; margin-top: 20px;">You must deposit 20%
                                     in
                                     advance to request a reservation</span>
 
-                                <button class="btn_request_book request_deposit" type="submit">Deposit for
-                                    {{ $room[0]['price'] * 0.2 }}$</button>
+                                <button class="btn_request_book request_deposit" type="submit">Deposit
+                                    {{ $diffInDays ? $diffInDays * $room[0]['price'] * 0.2 : $room[0]['price'] * 0.2 }}$</button>
                             </form>
 
                         </div>
@@ -460,21 +478,27 @@
             let duration = 1;
             let price = {{ $room[0]['price'] }}
             let total = price;
-            let deposit = total*0.2;
+            let deposit = total * 0.2;
 
-            var currentDate = new Date();
+            checkin = "{{ $checkin }}"
+            checkout = "{{ $checkout }}"
 
-            var day = currentDate.getDate().toString().padStart(2, '0');
-            var month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-            var year = currentDate.getFullYear();
+            if (checkin == 'null' && checkout == 'null') {
+                $('button.request_deposit').prop('disabled', true);
 
-            var formattedDate = `${year}-${month}-${day}`;
+                $('button.minus_btn').prop('disabled', true);
+                $('button.plus_btn').prop('disabled', true);
 
-            let checkin = formattedDate;
-            let checkout = formattedDate;
+                $('button.request_deposit').css('background-color', 'rgb(214,214,214)');
+            } else {
+                duration = {{ $diffInDays }}
+                total = duration * price
+                deposit = total * 0.2;
+                $('input.checkin').val(checkin);
+                $('input.checkout').val(checkout);
+                $('button.request_deposit').css('background', 'var(--main-gradient)');
+            }
 
-            $('input.checkin').val(checkin)
-            $('input.checkout').val(checkout)
             $('input.deposits').val(deposit);
             $('input.total').val(total);
             $('input.deposit').val(deposit);
@@ -490,9 +514,31 @@
                 var startDate = picker.startDate.format('YYYY-MM-DD');
                 var endDate = picker.endDate.format('YYYY-MM-DD');
                 duration = picker.endDate.diff(picker.startDate, 'days');
-                // $('.total strong').text('$' + (duration * ({{ $room[0]['price'] }} * count_rooms)));
-                // $('.duration strong').text(duration + ' days');
                 up();
+
+                $.ajax({
+                    type: "post",
+                    url: "/customer/find_room/ajax",
+                    data: {
+                        checkin: checkin,
+                        checkout: checkout,
+                        id_room: {{ $room[0]['id'] }},
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        let data = response.room
+
+                        if (data != null) {
+                            $('button.request_deposit').css('background',
+                                'var(--main-gradient)');
+                            $('button.request_deposit').prop('disabled', false);
+
+                            $('button.minus_btn').prop('disabled', false);
+                            $('button.plus_btn').prop('disabled', false);
+                            available_room = data.length;
+                        }
+                    }
+                });
             });
 
             function data_rating(id, rate) {
@@ -503,19 +549,26 @@
                         starWidth: "15px"
                     });
                 });
-            }
+            };
 
-            //daterangerpicker
             $(function() {
                 $('input[name="daterange"]').daterangepicker({
                     opens: 'left',
-                    minDate: currentDate, // Đặt ngày tối thiểu là ngày hiện tại
-                    autoApply: true
+                    minDate: moment(),
+                    autoApply: true,
+                    startDate: checkin != 'null' ? moment(checkin, 'YYYY-MM-DD') : moment(),
+                    endDate: checkout != 'null' ? moment(checkout, 'YYYY-MM-DD') : moment()
                 }, function(start, end, label) {
                     checkin = start.format('YYYY-MM-DD');
                     checkout = end.format('YYYY-MM-DD');
-                    $('input.checkin').val(checkin)
-                    $('input.checkout').val(checkout)
+
+                    $('input.checkin').val(checkin);
+                    $('input.checkout').val(checkout);
+                    console.log(checkin, checkout);
+
+
+
+                    duration = end.diff(start, 'days') + 1;
                 });
             });
 
@@ -547,7 +600,6 @@
                     $('#quantity_room').html(count_rooms);
                     available_person = count_rooms * max_person;
                     let a = $('#quantity_guest').text();
-                    console.log(available_person);
                     if (a != available_person) {
                         count_guests = available_person;
                         $('#quantity_guest').html(count_guests);
@@ -556,7 +608,6 @@
 
                 }
                 updateNumberOfRG();
-
             })
 
             $('#plus_room').click(function(e) {

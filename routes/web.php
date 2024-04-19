@@ -56,13 +56,15 @@ Route::get('setLocale/{locale}', function ($locale) {
 Route::get('/listroom', [RoomController::class, 'index'])->name('listroom_customer');
 Route::post('/room/search', [RoomController::class, 'search']);
 
-Route::get('/room-detail/{id}', [RoomController::class, 'roomDetail'])->name('listroom_detail_customer');
+Route::get('/room-detail/{id}/{data}', [RoomController::class, 'roomDetail'])->name('listroom_detail_customer');
 
 Route::post('pay/session', [StriperController::class, 'checkout'])->name('session');
 Route::get('/success', [StriperController::class, 'success'])->name('success');
 Route::get('/cancel', [StriperController::class, 'cancel'])->name('cancel');
 
 Route::post('/customer/find_room', [SearchController::class, 'find_available_room'])->name('find_available_room');
+Route::post('/customer/find_room/ajax', [SearchController::class, 'find_available_room_ajax'])->name('find_available_room_ajax');
+
 
 Route::get('/', [HomeController::class, 'index'])->name('home_customer');
 

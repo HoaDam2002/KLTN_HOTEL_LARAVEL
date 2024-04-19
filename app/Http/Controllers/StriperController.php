@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Stripe\Stripe;
 
 class StriperController extends Controller
@@ -17,9 +18,9 @@ class StriperController extends Controller
 
         $data = $request->all();
 
-        if (!auth()->check()) {
-            // session(['checkout_after_login' => true]);
+        // dd($data);
 
+        if (!auth()->check()) {
             return redirect()->route('login');
         } else {
             session()->put('deposit',$data);
@@ -31,12 +32,12 @@ class StriperController extends Controller
             $courseItems[] = [
                 'price_data' => [
                     'currency' => 'USD',
-                    'unit_amount' => $data['price'] * 100,
+                    'unit_amount' => $data['deposits'] * 100,
                     'product_data' => [
                         'name' => $data['name'],
                     ],
                 ],
-                'quantity' => $data['quantity'],
+                'quantity' => 1,
             ];
     
             $checkoutSession = \Stripe\Checkout\Session::create([
@@ -75,9 +76,9 @@ class StriperController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function cancel(Request $request)
     {
-        //
+        return Redirect()->back()->withErrors('Your booking have been canceled!');
     }
 
     /**

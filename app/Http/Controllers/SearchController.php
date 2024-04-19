@@ -21,6 +21,8 @@ class SearchController extends Controller
         $checkin = Carbon::createFromFormat('d/m/Y', $dateParts[0])->toDateString();
         $checkout = Carbon::createFromFormat('d/m/Y', $dateParts[1])->toDateString();
 
+        // dd($checkin,$checkout);
+
         $a = search_available_room($checkin, $checkout, 'search');
 
         $List_room = RoomModel::query();
@@ -51,15 +53,25 @@ class SearchController extends Controller
             $data = $List_room->get();
         }
 
-        return view('pages.list_room.list_room_customer', compact('data', 'count_quantity'));
+        return view('pages.list_room.list_room_customer', compact('data', 'count_quantity','checkin','checkout'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function find_available_room_ajax(Request $request)
     {
-        //
+        $rooms = search_available_room($request->checkin, $request->checkout, 'search');
+
+        $id_room = $request->id_room;
+
+        if(isset($rooms[$id_room])){
+            $result_room = $rooms[$id_room];
+        }else{
+            $result_room = null;
+        }
+
+        return response()->json(['room' => $result_room]);
     }
 
     /**

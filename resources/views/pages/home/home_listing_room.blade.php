@@ -24,14 +24,14 @@
                             <div class="col-lg-4 col-sm-6">
                                 <div class="property-item style-two">
                                     <div class="property-item__thumb">
-                                        <a href="/room-detail/{{ $room->id }}" class="link">
+                                        <a href="/room-detail/{{ $room->id }}/null null" class="link">
                                             <img src={{ asset("/customer/image_room/$image") }} alt=""
                                                 class="cover-img">
                                         </a>
                                     </div>
                                     <div class="property-item__content">
                                         <h6 class="property-item__title">
-                                            <a href="/room-detail/{{ $room->id }}" class="link">
+                                            <a href="/room-detail/{{ $room->id }}/null null" class="link">
                                                 {{ $room->name }}
                                             </a>
                                         </h6>
@@ -61,7 +61,7 @@
                                                     class="fas fa-map-marker-alt"></i></span>
                                             Da Nang, Viet Nam
                                         </p>
-                                        <a href="/room-detail/{{ $room->id }}"
+                                        <a href="/room-detail/{{ $room->id }}/null null"
                                             class="simple-btn text-gradient fw-semibold font-14">Book Now
                                             <span class="icon-right"> <i class="fas fa-arrow-right"></i> </span> </a>
                                     </div>
