@@ -7,6 +7,9 @@ use App\Models\RoomModel;
 use App\Models\TypeRoomModel;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
+use Mockery\Undefined;
+use \DateTime;
+
 class RoomController extends Controller
 {
     /**
@@ -16,17 +19,39 @@ class RoomController extends Controller
     {
         $data = RoomModel::all();
 
-        return view('pages.list_room.list_room_customer',compact('data'));
+        return view('pages.list_room.list_room_customer', compact('data'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function roomDetail(string $id)
+    public function roomDetail(string $id, Request $time)
     {
-        $room = RoomModel::where('id',$id)->get()->toArray();
-   
-        return view('pages.room_detail.room_detail',compact('room'));
+        $room = RoomModel::where('id', $id)->get()->toArray();
+
+        $timeData = explode(" ", $time->data);
+
+        $checkin = $timeData[0];
+        $checkout = $timeData[1];
+
+        $diffInDays = null;
+
+        if ($checkin != 'null' && $checkout != 'null') {
+            $startDate = new DateTime($checkin);
+            $endDate = new DateTime($checkout);
+            $interval = $startDate->diff($endDate);
+
+            $diffInDays = $interval->days;
+        }
+
+        if (isset($timeData[2])) {
+            $count_available = $timeData[2];
+        } else {
+            $count_available = 10;
+        }
+
+
+        return view('pages.room_detail.room_detail', compact('room', 'checkin', 'checkout', 'count_available', 'diffInDays'));
     }
 
     /**
@@ -35,7 +60,7 @@ class RoomController extends Controller
     public function search(Request $request)
     {
         $data = $request->all();
-        
+
         $type = $data['type'];
         $name = $data['name'];
         $price = $data['price'];
@@ -43,20 +68,20 @@ class RoomController extends Controller
 
         $item = RoomModel::query();
 
-        if(isset($type)){
-            $item->where('room_type_id',$type);
+        if (isset($type)) {
+            $item->where('room_type_id', $type);
         }
 
-        if(isset($name)){
-            $item->where('name','like','%'. $name .'%');
+        if (isset($name)) {
+            $item->where('name', 'like', '%' . $name . '%');
         }
 
-        if(isset($price)){
-            $item->whereBetween('price',[$price - 10, $price + 10]);
+        if (isset($price)) {
+            $item->whereBetween('price', [$price - 10, $price + 10]);
         }
 
-        if(isset($bed)){
-            $item->where('beds',$bed);
+        if (isset($bed)) {
+            $item->where('beds', $bed);
         }
 
         $arrItem = $item->with('typeRoom')->get();
