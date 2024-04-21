@@ -288,7 +288,7 @@
                         <!-- Menu Start  -->
                         <div class="header-menu d-lg-block d-none">
 
-                            <h3 style="padding: 15px; margin: 0">Receptionist</h3>
+                            <h3 style="padding: 15px; margin: 0">Room Status Management</h3>
                         </div>
                         <!-- Menu End  -->
 
@@ -324,15 +324,11 @@
                 <div class="container container-two">
                     <div class="row gy-4">
                         {{-- start menu account customer --}}
-                        <div class="col-xl-3 col-lg-4">
+                        {{-- <div class="col-xl-3 col-lg-4">
                             <div class="account-sidebar search-sidebar">
                                 <div class="nav side-tab flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
                                     aria-orientation="vertical">
-                                    {{-- <a href="/dashboard"
-                                        class="nav-link {{ Route::currentRouteName() == 'account_home_customer' ? 'active' : '' }}"
-                                        id="home_account" onclick="menu_account_customer(this.id)">
-                                        <span class="icon"><i class="fas fa-home"></i></span>{{ __('Home') }}
-                                    </a> --}}
+                                    
                                     <a href="/recep/room_diagram"
                                         class="nav-link {{ Route::currentRouteName() == 'room_diagram_recep' ? 'active' : '' }}"
                                         id="profile_account" onclick="menu_account_customer(this.id)">
@@ -362,7 +358,7 @@
 
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         {{-- end menu accout customer --}}
 
                         {{-- start menu account receptionist --}}

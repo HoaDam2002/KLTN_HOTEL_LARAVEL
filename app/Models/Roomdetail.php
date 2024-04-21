@@ -13,5 +13,10 @@ class Roomdetail extends Model
     protected $fillable = [
         'type_name',
         'id_room',
+        'status'
     ];
+
+    public function typeRoom(){
+        return $this->belongsto('App\Models\RoomModel','id_room');
+    }
 }

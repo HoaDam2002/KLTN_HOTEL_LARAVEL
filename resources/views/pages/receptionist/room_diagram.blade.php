@@ -83,7 +83,7 @@
     }
 
     .card-text {
-        font-size: 14px;
+        font-size: 13px;
     }
 
     /* modal */

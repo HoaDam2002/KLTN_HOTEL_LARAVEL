@@ -10,6 +10,8 @@ use App\Http\Controllers\customer\RoomController;
 use App\Http\Controllers\StriperController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\receptionist\RoomDiagramController;
+use App\Http\Controllers\RoomStatusController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Config;
@@ -76,6 +78,8 @@ Route::get('/aboutus', function () {
     return view('pages.about_us.about_us');
 })->name('aboutus_customer');
 
+Route::get('/room_status_management', [RoomStatusController::class, 'index'])->name('room_status_management');
+Route::post('/room_status_management', [RoomStatusController::class, 'update_status'])->name('room_status_management_post');
 
 
 
@@ -90,9 +94,8 @@ Route::get('/customer/my-bookings', function () {
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
 //lễ tân
-Route::get('/recep/room-diagram', function () {
-    return view('pages.receptionist.room_diagram');
-})->name('room_diagram_recep');
+
+Route::get('/recep/room_diagram', [RoomDiagramController::class, 'index'])->name('room_diagram_recep');
 
 Route::get('/recep/history-booking', function () {
     return view('pages.receptionist.historybooking');
