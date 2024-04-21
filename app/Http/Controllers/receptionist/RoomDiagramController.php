@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\receptionist;
 
 use App\Http\Controllers\Controller;
+use App\Models\Roomdetail;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class RoomDiagramController extends Controller
 {
@@ -12,8 +14,17 @@ class RoomDiagramController extends Controller
      */
     public function index()
     {
-        
-        return view('pages.receptionist.room_diagram');
+        $time = Carbon::now();
+
+        $time_checkin = Carbon::parse($time)->setTime(14, 0, 0)->toDateTimeString();
+        $time_checkout = Carbon::parse($time)->setTime(12, 0, 0)->toDateTimeString();
+
+        $roomDetails = Roomdetail::with(['typeRoom','Booking_realtime.user' ,'Booking_realtime' => function ($query) use ($time_checkin, $time_checkout) {
+            $query->where('check_out', '>=', $time_checkout)
+                ->where('check_in', '<=', $time_checkin);
+        }])->get()->toArray();
+
+        return view('pages.receptionist.room_diagram', compact('roomDetails'));
     }
 
     /**

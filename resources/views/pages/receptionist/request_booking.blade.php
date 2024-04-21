@@ -57,6 +57,7 @@
         min-width: 85px;
         background: var(--main-gradient);
     }
+
     .btn_detail_booking a:hover {
         color: #fff;
     }
@@ -95,46 +96,50 @@
                                     <th></th>
                                 </tr>
                             </thead>
+
                             <tbody>
-                                @if(!empty($data_new_booking)) 
+                                {{-- {{dd($data_new_booking)}} --}}
+                                @if (!empty($data_new_booking))
                                     @foreach ($data_new_booking as $item)
-                                    @php
-                                        $check_in = date('d-m-Y');
-                                        $check_out = date('d-m-Y');
-                                    @endphp
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center gap-3">
-                                                <div class="cart-item__thumb">
-                                                    <img src="{{ asset('customer/image_room/'.$item->images) }}" alt="" >
+                                        @php
+                                            $check_in = $item['check_in'];
+                                            $check_out = $item['check_out'];
+                                        @endphp
+
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-3">
+                                                    <div class="cart-item__thumb">
+                                                        <img src="{{ asset('customer/image_room/' . $item['room']['images']) }}"
+                                                            alt="">
+                                                    </div>
+                                                    <div class="cart-item__content">
+                                                        <h6 class="cart-item__title fw-500 font-18">
+                                                            <strong>{{ $item['room']['name'] }}</strong>
+                                                        </h6>
+                                                        <span class="cart-item__price">Price:
+                                                            <span
+                                                                class="fw-500 text-heading">${{ $item['price'] }}</span></span>
+                                                    </div>
                                                 </div>
-                                                <div class="cart-item__content">
-                                                    <h6 class="cart-item__title fw-500 font-18">
-                                                        <strong>{{ $item->name }}</strong>
-                                                    </h6>
-                                                    <span class="cart-item__price">Price:
-                                                        <span class="fw-500 text-heading">${{ $item->price }}</span></span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <span class="date">{{ $check_in }}</span>
-                                        </td>
-                                        <td>
-                                            <span class="date">{{ $check_out }}</span>
-                                        </td>
-                                        <td>
-                                            <span class="status" style="background-color: rgb(255,165,0)"
-                                                id="">{{ $item->status }}</span>
-                                        </td>
-                                        <td>
-                                            <button type="button"
-                                                class="btn_detail_booking">
-                                               <a href="/recep/info-booking/{{ $item->id }}">Detail</a>
-                                            </button>
-                                        </td>
-                                       
-                                    </tr>
+                                            </td>
+                                            <td>
+                                                <span class="date">{{ $check_in }}</span>
+                                            </td>
+                                            <td>
+                                                <span class="date">{{ $check_out }}</span>
+                                            </td>
+                                            <td>
+                                                <span class="status" style="background-color: rgb(255,165,0)"
+                                                    id="">{{ $item['status'] }}</span>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn_detail_booking">
+                                                    <a href="/recep/info-booking/{{ $item['id'] }}">Detail</a>
+                                                </button>
+                                            </td>
+
+                                        </tr>
                                     @endforeach
                                 @else
                                     <h4>No booking </h4>
