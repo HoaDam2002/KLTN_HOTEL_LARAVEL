@@ -15,9 +15,11 @@ class BookingController extends Controller
      */
     public function showNewBooking()
     {
-        $currentDate = Carbon::now();
-        $data_new_booking = \DB::table('booking')->join('rooms', 'booking.id_room', '=', 'rooms.id')
-            ->select('booking.*', 'rooms.*')->where('booking.status', 'pending')->where('booking.created_at', '>', $currentDate)->get()->toArray();
+        $currentDate = Carbon::now()->toDateString();
+        // $data_new_booking = \DB::table('booking')->join('rooms', 'booking.id_room', '=', 'rooms.id')
+        //     ->select('booking.*', 'rooms.*')->where('booking.status', 'pending')->where('booking.created_at', '>' , $currentDate)->get()->toArray();
+        $data_new_booking = Booking::with('room')->where('status','pending')->where('created_at','>=',$currentDate)->get()->toArray();
+
         return view('pages.receptionist.request_booking', compact('data_new_booking'));
     }
 
@@ -25,9 +27,10 @@ class BookingController extends Controller
      * Show the form for creating a new resource.
      */
 
-    public function showInfoNewBooking($id)
+    public function showInfoNewBooking(string $id)
     {
         $booking = Booking::with('room', 'user')->findOrFail($id)->toArray();
+
         $list_empty_room = search_available_room($booking['check_in'], $booking['check_out'], 'search');
         
         $list_empty_room_booking = [];
@@ -44,6 +47,7 @@ class BookingController extends Controller
 
     public function confirmBooking(Request $request) {
         $data = $request->all();
+
         try {
             $allSuccess = true;
             foreach ($data['values'] as $value) {

@@ -21,8 +21,8 @@ class Booking_realtime extends Model
         'identity_card'
     ];
 
-    public function booking()
+    public function user()
     {
-        return $this->belongsTo(Booking::class,'id_booking');
+        return $this->belongsTo(User::class,'id_user');
     }
 }

@@ -69,7 +69,7 @@
                                                     <option selected>Please choose the room</option>
                                                     @if (!empty($list_empty_room_booking))
                                                         @foreach ($list_empty_room_booking as $item)
-                                                            <option value="{{ $item->type_name }}">
+                                                            <option value="{{ $item->id }}">
                                                                 {{ $booking['room']['name'] }} {{ $item->type_name }}
                                                             </option>
                                                         @endforeach
@@ -122,6 +122,7 @@
         $(document).ready(function() {
             $('#btn_confirm_booking').on('click', function() {
                 var selectedValues = [];
+                
                 $(".form-select.form-select-lg").each(function() {
                     selectedValues.push($(this).val());
                 });

@@ -19,4 +19,8 @@ class Roomdetail extends Model
     public function typeRoom(){
         return $this->belongsto('App\Models\RoomModel','id_room');
     }
+
+    public function booking_realtime(){
+        return $this->hasMany('App\Models\Booking_realtime','id_roomDetail');
+    }
 }

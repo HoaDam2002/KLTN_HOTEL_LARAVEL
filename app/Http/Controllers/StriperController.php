@@ -6,6 +6,7 @@ use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Stripe\Stripe;
+use Carbon\Carbon;
 
 class StriperController extends Controller
 {
@@ -17,8 +18,6 @@ class StriperController extends Controller
     {
 
         $data = $request->all();
-
-        // dd($data);
 
         if (!auth()->check()) {
             return redirect()->route('login');
@@ -62,6 +61,14 @@ class StriperController extends Controller
     public function success()
     {
         $data = session('deposit');
+        session()->forget('deposit');
+
+        $checkin = Carbon::parse($data['check_in'])->setTime(14, 0, 0);
+        $checkout = Carbon::parse($data['check_out'])->setTime(12, 0, 0);
+
+
+        $data['check_in'] = $checkin;
+        $data['check_out'] = $checkout;
 
         $data['id_user'] = auth()->user()->id;
         $data['status'] = 'pending'; 
