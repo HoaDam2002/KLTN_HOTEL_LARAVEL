@@ -57,7 +57,7 @@
 
         .func_filter_status {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             flex-wrap: wrap;
         }
 
@@ -68,6 +68,7 @@
             border-radius: 30px;
             margin-bottom: 10px;
             text-align: center;
+            margin: 15px;
             /* color: #fff; */
         }
 
@@ -113,13 +114,16 @@
         <div class="tab-content" id="v-pills-tabContent">
             <div class="form_recep_room mb-4">
                 <div class="filter">
-                    <form action="#">
+                    <form action="/recep/diagram/search_date" method="GET">
+                        @csrf
                         <div class="row gy-sm-4 gy-3">
-                            <div class="col-lg-5 col-sm-6 col-xs-6">
-                                <input type="text" class="common-input" name="daterange" value="" />
-                            </div>
                             <div class="col-lg-4 col-sm-6 col-xs-6">
-                                <input type="text" class="common-input" name="name_room" placeholder="Name Room" />
+                                <input type="text" class="common-input" name="birthday" value="{{ $a }}" />
+                            </div>
+                            {{-- {{dd($a)}} --}}
+                            <div class="col-lg-5 col-sm-6 col-xs-6">
+                                <input type="text" class="common-input name_room" name="name_room"
+                                    placeholder="Name Room / Infor Customer" />
                             </div>
                             <div class="col-md-3 col-sm-6 col-xs-6">
                                 <button type="submit" class="btn btn-main w-100" style="font-size: 11px">
@@ -131,21 +135,21 @@
                 </div>
             </div>
             <div class="func_filter_status mb-4">
-                <a href="#" class="btn_filter text-bg-primary">All</a>
-                <a href="#" class="btn_filter text-bg-secondary">Null</a>
-                <a href="#" class="btn_filter text-bg-success">Occupied</a>
-                <a href="#" class="btn_filter bg-deposit">Deposits</a>
-                <a href="#" class="btn_filter text-bg-warning">Check in</a>
-                <a href="#" class="btn_filter text-bg-danger">checkout</a>
+                <button class="btn_filter text-bg-primary" id="{{ $a }}">All</button>
+                <button class="btn_filter text-bg-secondary" id="{{ $a }}">Null</button>
+                <button class="btn_filter text-bg-success" id="{{ $a }}">Occupied</button>
+                {{-- <a href="#" class="btn_filter bg-deposit">Deposits</a> --}}
+                <button class="btn_filter text-bg-warning" id="{{ $a }}">Check in</button>
+                {{-- <a href="#" class="btn_filter text-bg-danger">checkout</a> --}}
             </div>
             <div class="room_diagram container">
-                <div class="row">
+                <div class="row fill">
                     @if (isset($roomDetails))
                         @foreach ($roomDetails as $item)
                             @php
                                 if (empty($item['booking_realtime'])) {
                                     $p1 = $item['status'];
-                                    $p2 = $item['type_room']['price'];
+                                    $p2 = $item['type_room']['price'] . '/ Pernight';
                                     $p3 = $item['type_room']['name'];
                                     $modal = '#modalRoomNull';
                                     $color = 'text-bg-secondary';
@@ -159,7 +163,7 @@
                                         $p3 = $item['booking_realtime'][0]['check_out'];
                                         $modal = '#modalRoomCheckin';
                                         $color = 'card-deposited';
-                                    }else {
+                                    } else {
                                         $p1 = $name_user;
                                         $p2 = $item['booking_realtime'][0]['check_in'];
                                         $p3 = $item['booking_realtime'][0]['check_out'];
@@ -170,13 +174,18 @@
                             @endphp
 
                             <div class="mb-1 col-4 col-md-3 col-lg-3 px-1 wrapper_diagram" data-bs-toggle="modal"
-                                data-bs-target="{{$modal}}">
-                                <div class="card {{$color}} mb-3" style="max-width: 14rem;">
-                                    <strong class="card-header">{{$item['type_name']}}</strong>
+                                data-bs-target="{{ $modal }}">
+                                <div class="card {{ $color }} mb-3" style="max-width: 14rem;">
+                                    <strong class="card-header">{{ $item['type_name'] }}</strong>
+                                    <strong class="card-header" hidden>{{ $item['type_name'] }}</strong>
+
                                     <div class="card-body">
-                                        <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>{{$p1}}</p>
-                                        <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>{{$p2}}</p>
-                                        <p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>{{$p3}}</p>
+                                        <p class="card-text"><i
+                                                class="fa-solid fa-calendar-days me-2"></i>{{ $p1 }}</p>
+                                        <p class="card-text"><i
+                                                class="fa-solid fa-calendar-days me-2"></i>{{ $p2 }}</p>
+                                        <p class="card-text"><i
+                                                class="fa-solid fa-calendar-days me-2"></i>{{ $p3 }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -199,11 +208,11 @@
                 <div class="modal-body">
                     <div class="img_room_modal row mb-3 ">
                         <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWwlMjByb29tfGVufDB8fDB8fHww"
+                            alt="" class="rounded">
+                        {{-- <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWwlMjByb29tfGVufDB8fDB8fHww"
                             alt="" class="rounded col-4">
                         <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWwlMjByb29tfGVufDB8fDB8fHww"
-                            alt="" class="rounded col-4">
-                        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWwlMjByb29tfGVufDB8fDB8fHww"
-                            alt="" class="rounded col-4">
+                            alt="" class="rounded col-4"> --}}
                     </div>
                     <div class="wrapper_info_room">
                         <span>Room name: </span>
@@ -274,17 +283,13 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <strong class="modal-title fs-5" id="staticBackdropLabel">Rooom 01</strong>
+                    <strong class="modal-title fs-5" id="staticBackdropLabel">Room 01</strong>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="img_room_modal row mb-3 ">
                         <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWwlMjByb29tfGVufDB8fDB8fHww"
-                            alt="" class="rounded col-4">
-                        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWwlMjByb29tfGVufDB8fDB8fHww"
-                            alt="" class="rounded col-4">
-                        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWwlMjByb29tfGVufDB8fDB8fHww"
-                            alt="" class="rounded col-4">
+                            alt="" class="rounded">
                     </div>
                     <div class="wrapper_info_room">
                         <span>Room name: </span>
@@ -562,16 +567,34 @@
 
 @section('js')
     <script>
-        $(function() {
-            $('input[name="daterange"]').daterangepicker({
-                opens: 'left'
-            }, function(start, end, label) {
-                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end
-                    .format('YYYY-MM-DD'));
-            });
-        });
-
         $(document).ready(function() {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            let time = "{{ $a }}";
+
+            console.log(time);
+            $(function() {
+                $('input[name="birthday"]').daterangepicker({
+                    singleDatePicker: true,
+                    showDropdowns: true,
+                    minDate: moment(),
+                    minYear: moment(),
+                    startDate: moment(time, 'YYYY-MM-DD'),
+                    endDate: moment(time, 'YYYY-MM-DD'),
+                    maxYear: parseInt(moment().format('YYYY'), 10),
+                    autoApply: true
+                }, function(start, end, label) {
+                    // time_search = start.format('YYYY-MM-DD');
+                });
+            });
+
+            $('button.btn_filter').attr('id', time);
+
             $('#btn-add-booking').click(function() {
                 $('.form-add-new-booking').css('display', 'block');
                 $('.form-add-booking-inf-customer').css('display', 'none');
@@ -580,6 +603,209 @@
             $('#btn-add-booking-with-info').click(function() {
                 $('.form-add-new-booking').css('display', 'none');
                 $('.form-add-booking-inf-customer').css('display', 'block');
+            })
+
+            $(document).on('input', 'input.name_room', function() {
+
+                let infor = $(this).val();
+
+                $.ajax({
+                    type: "post",
+                    url: "/recep/diagram/search_infor",
+                    data: {
+                        time: time,
+                        infor: infor
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        let item = response.item;
+
+                        let html = '';
+
+                        item.map(function(value) {
+                            if (value.booking_realtime[0].status == 'Checkin') {
+                                html +=
+                                    '<div class="mb-1 col-4 col-md-3 col-lg-3 px-1 wrapper_diagram" data-bs-toggle="modal" data-bs-target="#modalRoomCheckin">' +
+                                    '<div class="card card-deposited mb-3" style="max-width: 14rem;">' +
+                                    '<strong class="card-header">' + value.type_name +
+                                    '</strong>' +
+                                    '<div class="card-body">' +
+                                    '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                    value.booking_realtime[0].user.name + '</p>' +
+                                    '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                    value.booking_realtime[0].check_in + '</p>' +
+                                    '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                    value.booking_realtime[0].check_out + '</p>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>';
+                            } else if (value.booking_realtime[0].status == 'pending') {
+                                html +=
+                                    '<div class="mb-1 col-4 col-md-3 col-lg-3 px-1 wrapper_diagram" data-bs-toggle="modal" data-bs-target="#modalRoomCheckin">' +
+                                    '<div class="card text-bg-success mb-3" style="max-width: 14rem;">' +
+                                    '<strong class="card-header">' + value.type_name +
+                                    '</strong>' +
+                                    '<div class="card-body">' +
+                                    '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                    value.booking_realtime[0].user.name + '</p>' +
+                                    '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                    value.booking_realtime[0].check_in + '</p>' +
+                                    '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                    value.booking_realtime[0].check_out + '</p>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>';
+                            }
+
+                        });
+                        $('div.fill').html(html);
+                    }
+                });
+            });
+
+            $(document).on('click', 'button.btn_filter', function() {
+                let time = $(this).attr('id');
+                let status = $(this).text()
+
+                $.ajax({
+                    type: "post",
+                    url: "/recep/diagram/filter",
+                    data: {
+                        time: time,
+                        status: status
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        let item = response.item;
+                        if (status == "Null") {
+                            let html = '';
+                            item.map(function(value) {
+                                html +=
+                                    '<div class="mb-1 col-4 col-md-3 col-lg-3 px-1 wrapper_diagram" data-bs-toggle="modal" data-bs-target="#modalRoomNull">' +
+                                    '<div class="card text-bg-secondary mb-3" style="max-width: 14rem;">' +
+                                    '<strong class="card-header">' + value.type_name +
+                                    '</strong>' +
+                                    '<div class="card-body">' +
+                                    '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                    value.status + '</p>' +
+                                    '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                    value.type_room.price + '/Pernight </p>' +
+                                    '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                    value.type_room.name + '</p>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>';
+
+                            });
+                            $('div.fill').html(html);
+
+                        } else if (status == 'Occupied') {
+                            let html = '';
+                            item.map(function(value) {
+                                html +=
+                                    '<div class="mb-1 col-4 col-md-3 col-lg-3 px-1 wrapper_diagram" data-bs-toggle="modal" data-bs-target="#modalRoomCheckin">' +
+                                    '<div class="card text-bg-success mb-3" style="max-width: 14rem;">' +
+                                    '<strong class="card-header">' + value.type_name +
+                                    '</strong>' +
+                                    '<div class="card-body">' +
+                                    '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                    value.booking_realtime[0].user.name + '</p>' +
+                                    '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                    value.booking_realtime[0].check_in + '</p>' +
+                                    '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                    value.booking_realtime[0].check_out + '</p>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>';
+
+                            });
+                            $('div.fill').html(html);
+
+                        } else if (status == 'Check in') {
+                            let html = '';
+                            item.map(function(value) {
+                                html +=
+                                    '<div class="mb-1 col-4 col-md-3 col-lg-3 px-1 wrapper_diagram" data-bs-toggle="modal" data-bs-target="#modalRoomCheckin">' +
+                                    '<div class="card card-deposited mb-3" style="max-width: 14rem;">' +
+                                    '<strong class="card-header">' + value.type_name +
+                                    '</strong>' +
+                                    '<div class="card-body">' +
+                                    '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                    value.booking_realtime[0].user.name + '</p>' +
+                                    '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                    value.booking_realtime[0].check_in + '</p>' +
+                                    '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                    value.booking_realtime[0].check_out + '</p>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>';
+
+                            });
+                            $('div.fill').html(html);
+                        } else {
+                            let html = '';
+                            console.log(item);
+                            item.map(function(value) {
+                                if (value.booking_realtime.length == 0) {
+                                    html +=
+                                        '<div class="mb-1 col-4 col-md-3 col-lg-3 px-1 wrapper_diagram" data-bs-toggle="modal" data-bs-target="#modalRoomNull">' +
+                                        '<div class="card text-bg-secondary mb-3" style="max-width: 14rem;">' +
+                                        '<strong class="card-header">' + value
+                                        .type_name +
+                                        '</strong>' +
+                                        '<div class="card-body">' +
+                                        '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                        value.status + '</p>' +
+                                        '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                        value.type_room.price + '/Pernight </p>' +
+                                        '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                        value.type_room.name + '</p>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</div>';
+                                } else if (value.booking_realtime[0].status ==
+                                    'checkin') {
+                                    html +=
+                                        '<div class="mb-1 col-4 col-md-3 col-lg-3 px-1 wrapper_diagram" data-bs-toggle="modal" data-bs-target="#modalRoomCheckin">' +
+                                        '<div class="card card-deposited mb-3" style="max-width: 14rem;">' +
+                                        '<strong class="card-header">' + value
+                                        .type_name +
+                                        '</strong>' +
+                                        '<div class="card-body">' +
+                                        '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                        value.booking_realtime[0].user.name + '</p>' +
+                                        '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                        value.booking_realtime[0].check_in + '</p>' +
+                                        '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                        value.booking_realtime[0].check_out + '</p>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</div>';
+                                } else if (value.booking_realtime[0].status ==
+                                    'pending') {
+                                    html +=
+                                        '<div class="mb-1 col-4 col-md-3 col-lg-3 px-1 wrapper_diagram" data-bs-toggle="modal" data-bs-target="#modalRoomCheckin">' +
+                                        '<div class="card text-bg-success mb-3" style="max-width: 14rem;">' +
+                                        '<strong class="card-header">' + value
+                                        .type_name +
+                                        '</strong>' +
+                                        '<div class="card-body">' +
+                                        '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                        value.booking_realtime[0].user.name + '</p>' +
+                                        '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                        value.booking_realtime[0].check_in + '</p>' +
+                                        '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                        value.booking_realtime[0].check_out + '</p>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</div>';
+                                }
+
+                            });
+                            $('div.fill').html(html);
+                        }
+                    }
+                });
             })
         });
     </script>

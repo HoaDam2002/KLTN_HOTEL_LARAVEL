@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Models\Booking_realtime;
+use App\Models\Roomdetail;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
@@ -18,7 +20,7 @@ class BookingController extends Controller
         $currentDate = Carbon::now()->toDateString();
         // $data_new_booking = \DB::table('booking')->join('rooms', 'booking.id_room', '=', 'rooms.id')
         //     ->select('booking.*', 'rooms.*')->where('booking.status', 'pending')->where('booking.created_at', '>' , $currentDate)->get()->toArray();
-        $data_new_booking = Booking::with('room')->where('status','pending')->where('created_at','>=',$currentDate)->get()->toArray();
+        $data_new_booking = Booking::with('room')->where('status', 'pending')->where('created_at', '>=', $currentDate)->get()->toArray();
 
         return view('pages.receptionist.request_booking', compact('data_new_booking'));
     }
@@ -31,21 +33,25 @@ class BookingController extends Controller
     {
         $booking = Booking::with('room', 'user')->findOrFail($id)->toArray();
 
-        $list_empty_room = search_available_room($booking['check_in'], $booking['check_out'], 'search');
-        
-        $list_empty_room_booking = [];
-        foreach ($list_empty_room as $key => $value) {
-            foreach ($value as $id_room_empty) {
-                if($id_room_empty->id_room == $booking['id_room']) {
-                    $list_empty_room_booking[] = $id_room_empty;
-                }
-            }
-        }
-        return view('pages.receptionist.info_booking', compact('booking', 'list_empty_room_booking'));
+        $checkin = $booking['check_in'];
+        $checkout = $booking['check_out'];
 
+        $id_room = $booking['id_room'];
+
+        $list_empty_room_booking = DB::table('room_detail')
+            ->leftJoin('booking_realtime', function ($join) {
+                $join->on('room_detail.id', '=', 'booking_realtime.id_roomDetail');
+            })
+            ->whereNull('booking_realtime.id')
+            ->where('room_detail.id_room', '=', $id_room)
+            ->select('room_detail.*')
+            ->get();
+
+        return view('pages.receptionist.info_booking', compact('booking', 'list_empty_room_booking'));
     }
 
-    public function confirmBooking(Request $request) {
+    public function confirmBooking(Request $request)
+    {
         $data = $request->all();
 
         try {
@@ -69,7 +75,6 @@ class BookingController extends Controller
                     $allSuccess = false;
                     break;
                 }
-
             }
 
             if ($allSuccess) {
@@ -81,7 +86,6 @@ class BookingController extends Controller
         } catch (\Exception $e) {
             return response()->json(['message' => 'An error occurred: ' . $e->getMessage()], 500);
         }
-        
     }
 
     public function cancelBooking(Request $request)
