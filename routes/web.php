@@ -96,6 +96,10 @@ Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 //lễ tân
 
 Route::get('/recep/room_diagram', [RoomDiagramController::class, 'index'])->name('room_diagram_recep');
+Route::post('/recep/diagram/filter', [RoomDiagramController::class, 'filter'])->name('filter_room_diagram_recep');
+Route::post('/recep/diagram/search_infor', [RoomDiagramController::class, 'search_infor'])->name('search_infor_diagram_recep');
+Route::get('/recep/diagram/search_date', [RoomDiagramController::class, 'search_date'])->name('search_date_diagram_recep');
+
 
 Route::get('/recep/history-booking', function () {
     return view('pages.receptionist.historybooking');
