@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\Customer;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Stripe\Stripe;
@@ -70,8 +72,11 @@ class StriperController extends Controller
         $data['check_in'] = $checkin;
         $data['check_out'] = $checkout;
 
-        $data['id_user'] = auth()->user()->id;
-        $data['status'] = 'pending'; 
+        $id_account = Auth::id();
+        $customer = Customer::with('account', 'user')->where('id_account', $id_account)->first()->toArray();
+        $id_user = $customer['id_user'];
+        $data['id_user'] = $id_user;
+        $data['status'] = 'pending';
 
         if(!empty($data)){
             if(Booking::create($data)){
