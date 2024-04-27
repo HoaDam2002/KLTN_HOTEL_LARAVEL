@@ -30,9 +30,13 @@ class User extends Model
         'role',
     ];
 
-    // public function account(){
-    //     return $this->hasOne('App\Models\Customer','id_user');
-    // }
+    public function customer(){
+        return $this->hasOne(Customer::class,'id_user');
+    }
+
+    public function customer_no_acc(){
+        return $this->hasOne(CustommerNoAccModel::class,'id_user');
+    }
 
 
     /**
