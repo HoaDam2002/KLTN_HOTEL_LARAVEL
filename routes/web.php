@@ -99,6 +99,14 @@ Route::get('/recep/room_diagram', [RoomDiagramController::class, 'index'])->name
 Route::post('/recep/diagram/filter', [RoomDiagramController::class, 'filter'])->name('filter_room_diagram_recep');
 Route::post('/recep/diagram/search_infor', [RoomDiagramController::class, 'search_infor'])->name('search_infor_diagram_recep');
 Route::post('/recep/diagram/search_date', [RoomDiagramController::class, 'search_date'])->name('search_date_diagram_recep');
+Route::post('/recep/diagram/fill_modal', [RoomDiagramController::class, 'fill_modal'])->name('fill_modal_diagram_recep');
+Route::post('/recep/diagram/booking_modal/cus_no_acc', [RoomDiagramController::class, 'booking_cus_no_acc'])->name('booking_cus_no_acc_diagram_recep');
+Route::post('/recep/diagram/search_customer', [RoomDiagramController::class, 'search_customer'])->name('search_customer_diagram_recep');
+Route::post('/recep/diagram/booking_available_cus', [RoomDiagramController::class, 'booking_available_cus'])->name('booking_available_cus_diagram_recep');
+Route::post('/recep/diagram/change_status_booking_realtime', [RoomDiagramController::class, 'change_status_booking_realtime'])->name('change_status_booking_realtime_diagram_recep');
+Route::post('/recep/diagram/checkout', [RoomDiagramController::class, 'checkout'])->name('checkout_diagram_recep');
+Route::post('/recep/diagram/checkout_soon', [RoomDiagramController::class, 'checkout_soon'])->name('checkout_soon_diagram_recep');
+
 
 
 Route::get('/recep/history-booking', function () {

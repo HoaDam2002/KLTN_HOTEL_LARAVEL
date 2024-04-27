@@ -3,9 +3,18 @@
 namespace App\Http\Controllers\receptionist;
 
 use App\Http\Controllers\Controller;
+use App\Models\Booking_realtime;
+use App\Models\BookingRealtiemNoAcc;
+use App\Models\CustommerNoAccModel;
 use App\Models\Roomdetail;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\booking_rep;
+use App\Models\Customer;
+
+use function Laravel\Prompts\search;
 
 class RoomDiagramController extends Controller
 {
@@ -20,7 +29,7 @@ class RoomDiagramController extends Controller
 
         $roomDetails = Roomdetail::with(['typeRoom', 'Booking_realtime.user', 'Booking_realtime' => function ($query) use ($time_checkin, $time_checkout) {
             $query->where('check_out', '>=', $time_checkout)
-                ->where('check_in', '<=', $time_checkin);
+                ->where('check_in', '<=', $time_checkin)->where('status', '!=', 'checkout');
         }]);
 
         return $roomDetails;
@@ -37,18 +46,19 @@ class RoomDiagramController extends Controller
         return view('pages.receptionist.room_diagram', compact('roomDetails', 'a'));
     }
 
-    public function search_date(Request $request){
+    public function search_date(Request $request)
+    {
         $data = $request->all();
-    
+
         $time = $data['birthday'];
-    
+
         $roomDetails = $this->search($time)->get()->toArray();
-    
+
         $a = Carbon::parse($time)->format('Y-m-d');
-    
+
         return view('pages.receptionist.room_diagram', compact('roomDetails', 'a'));
     }
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -61,34 +71,57 @@ class RoomDiagramController extends Controller
 
         $roomDetails = $this->search($time)->get()->toArray();
 
-
         $arr = [];
 
         if ($status == 'Null') {
             foreach ($roomDetails as $item) {
                 if (empty($item['booking_realtime'])) {
                     $arr[] = $item;
+                } else {
+                    if (count($item['booking_realtime']) == 1) {
+                        if ($item['booking_realtime'][0]['check_out'] == $time . " 12:00:00") {
+                            $arr[] = $item;
+                        }
+                    }
                 }
             }
         } else if ($status == "Occupied") {
             foreach ($roomDetails as $item) {
                 if (!empty($item['booking_realtime'])) {
-                    if ($item['booking_realtime'][0]['status'] == 'pending') {
-                        $arr[] = $item;
+                    foreach ($item['booking_realtime'] as $value) {
+                        if ($value['status'] == 'pending') {
+                            $arr[] = $item;
+                            break;
+                        }
                     }
                 }
             }
         } else if ($status == "Check in") {
             foreach ($roomDetails as $item) {
                 if (!empty($item['booking_realtime'])) {
-                    if ($item['booking_realtime'][0]['status'] == 'checkin') {
-                        $arr[] = $item;
+                    foreach ($item['booking_realtime'] as $value) {
+                        if ($value['status'] == 'checkin') {
+                            $arr[] = $item;
+                            break;
+                        }
+                    }
+                }
+            }
+        } else if ($status == "Check out") {
+            foreach ($roomDetails as $item) {
+                if (!empty($item['booking_realtime'])) {
+                    foreach ($item['booking_realtime'] as $value) {
+                        if ($value['status'] == 'checkin' && $value['check_out'] == $time . " 12:00:00") {
+                            $arr[] = $item;
+                        }
                     }
                 }
             }
         } else {
             return response()->json(['item' => $roomDetails, 'status' => $status]);
         }
+
+        // dd($roomDetails);
 
         return response()->json(['item' => $arr, 'status' => $status]);
     }
@@ -103,6 +136,11 @@ class RoomDiagramController extends Controller
         $time = $data['time'];
         $infor = $data['infor'];
 
+        if (empty($infor)) {
+            $roomDetails = $this->search($time)->get()->toArray();
+            return response()->json(['item' => $roomDetails, 'check' => 'true']);
+        }
+
         $time_checkin = Carbon::parse($time)->setTime(14, 0, 0)->toDateTimeString();
         $time_checkout = Carbon::parse($time)->setTime(12, 0, 0)->toDateTimeString();
 
@@ -116,43 +154,242 @@ class RoomDiagramController extends Controller
         $arr = [];
 
         foreach ($roomDetails as $value) {
-            if (!empty($value['booking_realtime'][0]['user'])) {
-                $arr[] = $value;
+            foreach ($value['booking_realtime'] as $item) {
+                if (!empty($item['user'])) {
+                    $arr[] = $value;
+                }
             }
         }
 
-        return response()->json(['item' => $arr]);
+        return response()->json(['item' => $arr, 'check' => 'false']);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function fill_modal(Request $request)
     {
-        //
+        // dd($request->all());
+        $id_room = $request->all()['id_room'];
+
+        $room_detail = Roomdetail::with('typeRoom', 'Booking_realtime.user')->where('id', $id_room)->get()->toArray();
+
+        // dd($room_detail);
+        return response()->json(['item' => $room_detail]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function booking_cus_no_acc(booking_rep $request)
     {
-        //
+        $data = $request->all();
+
+        $checkin = Carbon::parse($data['check_in'])->setTime(14, 0, 0)->toDateTimeString();
+        $checkout = Carbon::parse($data['check_out'])->setTime(12, 0, 0)->toDateTimeString();
+
+        $check_available_room = search_available_room($checkin, $checkout);
+
+        $id_roomDetail = $data['id_roomDetail'];
+
+        $check_available = false;
+
+        foreach ($check_available_room as $value) {
+            if ($value->id == $id_roomDetail) {
+                $check_available = true;
+            }
+        }
+
+        if ($check_available) {
+            ///create user no acc
+            $data['birth_date'] = '2024/01/01';
+            $data['address'] = 'null';
+            $data['nationality'] = 'null';
+            $data['role'] = 'null';
+            $data['gender'] = 'null';
+
+            if ($user = User::create($data)) {
+
+                $id_user = $user->id;
+
+                $customer_no_acc = CustommerNoAccModel::create(['count_booking' => 1, 'id_user' => $id_user]);
+
+                //book
+                $time = Carbon::now()->toDateString();
+                $time_fill = $data['time'];
+
+                if ($time == $data['check_in']) {
+                    $data['status'] = 'checkin';
+                } else {
+                    $data['status'] = 'pending';
+                }
+
+                $data['check_in'] = $checkin;
+                $data['check_out'] = $checkout;
+                $data['id_user'] = $id_user;
+                $data['id_tour'] = $data['phone'];
+                $data['id_booking'] = '0';
+
+                if ($ss = Booking_realtime::create($data)) {
+
+                    if ($data['deposit'] != '0') {
+                        $data['id_booking_realtime'] = $ss->id;
+                        BookingRealtiemNoAcc::create($data);
+                    }
+
+                    $room = $this->search($time_fill)->get()->toArray();
+                    return response()->json(['room' => $room]);
+                }
+            }
+        } else {
+            return response()->json(['mess' => 'Room not available on this time !!!']);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function search_customer(Request $request)
     {
-        //
+        $data = $request->all()['information'];
+
+        $customer = User::with('customer', 'customer_no_acc')->where('name', 'like', '%' . $data . '%')->orwhere('phone', 'like', '%' . $data . '%')->get()->toArray();
+
+        return response()->json(['customer' => $customer]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function booking_available_cus(Request $request)
     {
-        //
+        $data = $request->all();
+
+        $checkin = Carbon::parse($data['check_in'])->setTime(14, 0, 0)->toDateTimeString();
+        $checkout = Carbon::parse($data['check_out'])->setTime(12, 0, 0)->toDateTimeString();
+
+        //book
+        $check_available_room = search_available_room($checkin, $checkout);
+
+        $id_roomDetail = $data['id_roomDetail'];
+
+        $check_available = false;
+
+
+        foreach ($check_available_room as $value) {
+            if ($value->id == $id_roomDetail) {
+                $check_available = true;
+            }
+        }
+
+        
+        if ($check_available) {
+            $time_reload = $data['time'];
+
+            $time = Carbon::now()->toDateString();
+
+            if ($time == $data['check_in']) {
+                $data['status'] = 'checkin';
+            } else {
+                $data['status'] = 'pending';
+            }
+
+            $data['check_in'] = $checkin;
+            $data['check_out'] = $checkout;
+            $data['id_tour'] = $data['phone'];
+
+            $id_user = $data['id_user'];
+
+            // dd($data);
+
+            if ($ss = Booking_realtime::create($data)) {
+                $user = User::with('customer', 'customer_no_acc')->where('id', $id_user)->first();
+
+                if ($user) {
+                    if ($user->customer_no_acc) {
+                        $update_countbooking = CustommerNoAccModel::where('id_user', $id_user)->first();
+                        if ($update_countbooking) {
+                            $update_countbooking->count_booking += 1;
+                            $update_countbooking->save();
+                        }
+                    } else {
+                        $update_countbooking = Customer::where('id_user', $id_user)->first();
+                        if ($update_countbooking) {
+                            $update_countbooking->count_booking += 1;
+                            $update_countbooking->save();
+                        }
+                    }
+                }
+
+                if ($data['deposit'] != '0') {
+                    $data['id_booking_realtime'] = $ss->id;
+                    BookingRealtiemNoAcc::create($data);
+                }
+                $room = $this->search($time_reload)->get()->toArray();
+                return response()->json(['room' => $room]);
+            }
+        } else {
+            return response()->json(['mess' => 'Room not available on this time !!!']);
+        }
+    }
+
+    public function change_status_booking_realtime(Request $request)
+    {
+        $data = $request->all()['id_booking_realtime'];
+
+        $update = Booking_realtime::where('id', $data)->first();
+
+        $update->status = 'checkin';
+
+        $update->save();
+
+        if ($update) {
+            $time = $request->all()['time'];
+
+            $room = $this->search($time)->get()->toArray();
+            return response()->json(['room' => $room]);
+        }
+    }
+
+    public function checkout(Request $request){
+        $data = $request->all();
+
+        $id_booking_realtime = $data['id_booking_realtime'];
+
+        $booking_realtime = Booking_realtime::where('id',$id_booking_realtime)->first();
+
+        $booking_realtime->status = 'checkout';
+        $booking_realtime->payment_total = $data['payment'];
+
+
+        $booking_realtime->save();
+
+        if ($booking_realtime) {
+            $time = $data['time'];
+
+            $room = $this->search($time)->get()->toArray();
+            return response()->json(['room' => $room]);
+        }
+    }
+
+    public function checkout_soon(Request $request){
+        $data = $request->all();
+        
+        $id_booking_realtime = $data['id_booking_realtime'];
+
+        $booking_realtime = Booking_realtime::where('id',$id_booking_realtime)->first();
+
+        $booking_realtime->status = 'checkout_soon';
+        $booking_realtime->payment_total = $data['payment'];
+        $booking_realtime->check_out = $data['checkout'] . " 12:00:00";
+
+        $booking_realtime->save();
+
+        if ($booking_realtime) {
+            $time = $data['time'];
+
+            $room = $this->search($time)->get()->toArray();
+            return response()->json(['room' => $room]);
+        }
     }
 }

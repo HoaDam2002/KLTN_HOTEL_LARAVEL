@@ -5,22 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Booking_realtime extends Model
+class CustommerNoAccModel extends Model
 {
     use HasFactory;
 
-    protected $table = 'booking_realtime';
+    protected $table = 'customer_no_acc';
     protected $fillable = [
-        'id_booking',
-        'id_roomDetail',
-        'id_room',
-        'check_in',
-        'check_out',
-        'price',
+        'count_booking',
         'id_user',
-        'id_tour',
-        'payment',
-        'status'
     ];
 
     public function user()
