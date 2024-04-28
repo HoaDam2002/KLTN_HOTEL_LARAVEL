@@ -106,6 +106,7 @@ Route::post('/recep/diagram/booking_available_cus', [RoomDiagramController::clas
 Route::post('/recep/diagram/change_status_booking_realtime', [RoomDiagramController::class, 'change_status_booking_realtime'])->name('change_status_booking_realtime_diagram_recep');
 Route::post('/recep/diagram/checkout', [RoomDiagramController::class, 'checkout'])->name('checkout_diagram_recep');
 Route::post('/recep/diagram/checkout_soon', [RoomDiagramController::class, 'checkout_soon'])->name('checkout_soon_diagram_recep');
+Route::post('/recep/diagram/cancel', [RoomDiagramController::class, 'cancel'])->name('cancel_diagram_recep');
 
 
 

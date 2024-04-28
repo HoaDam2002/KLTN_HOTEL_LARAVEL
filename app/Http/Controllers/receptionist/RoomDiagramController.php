@@ -71,6 +71,8 @@ class RoomDiagramController extends Controller
 
         $roomDetails = $this->search($time)->get()->toArray();
 
+        // dd($roomDetails);
+
         $arr = [];
 
         if ($status == 'Null') {
@@ -81,8 +83,18 @@ class RoomDiagramController extends Controller
                     if (count($item['booking_realtime']) == 1) {
                         if ($item['booking_realtime'][0]['check_out'] == $time . " 12:00:00") {
                             $arr[] = $item;
+                        }else if($item['booking_realtime'][0]['status'] == "checkout" || $item['booking_realtime'][0]['status'] == "checkout_soon" || $item['booking_realtime'][0]['status'] == "cancel"){
+                            $arr[] = $item;
+                        }
+                    }else{
+                        foreach ($item['booking_realtime'] as $value) {
+                            if($value['status'] == "checkout" || $value['status'] == "checkout_soon" || $value['status'] == "cancel"){
+                                $arr[] = $item;
+                                break;
+                            }
                         }
                     }
+                    
                 }
             }
         } else if ($status == "Occupied") {
@@ -113,6 +125,7 @@ class RoomDiagramController extends Controller
                     foreach ($item['booking_realtime'] as $value) {
                         if ($value['status'] == 'checkin' && $value['check_out'] == $time . " 12:00:00") {
                             $arr[] = $item;
+                            break;
                         }
                     }
                 }
@@ -382,6 +395,25 @@ class RoomDiagramController extends Controller
         $booking_realtime->status = 'checkout_soon';
         $booking_realtime->payment_total = $data['payment'];
         $booking_realtime->check_out = $data['checkout'] . " 12:00:00";
+
+        $booking_realtime->save();
+
+        if ($booking_realtime) {
+            $time = $data['time'];
+
+            $room = $this->search($time)->get()->toArray();
+            return response()->json(['room' => $room]);
+        }
+    }
+
+    public function cancel(Request $request){
+        $data = $request->all();
+        
+        $id_booking_realtime = $data['id_booking_realtime'];
+
+        $booking_realtime = Booking_realtime::where('id',$id_booking_realtime)->first();
+
+        $booking_realtime->status = 'cancel';
 
         $booking_realtime->save();
 

@@ -108,10 +108,10 @@
         }
 
         /* .infor_customer{
-                                                                                                                                                                                                                                                                                                                                                                            display: flex;
-                                                                                                                                                                                                                                                                                                                                                                            justify-content: center;
-                                                                                                                                                                                                                                                                                                                                                                            
-                                                                                                                                                                                                                                                                                                                                                                        } */
+                                                                                                                                                                                                                                                                                                                                                                                                                display: flex;
+                                                                                                                                                                                                                                                                                                                                                                                                                justify-content: center;
+                                                                                                                                                                                                                                                                                                                                                                                                                
+                                                                                                                                                                                                                                                                                                                                                                                                            } */
     </style>
 @endsection
 
@@ -181,7 +181,7 @@
                             @else
                                 @if (count($booking_realtime) == 1)
                                     @foreach ($booking_realtime as $value)
-                                        @if ($value['status'] == 'checkout_soon')
+                                        @if ($value['status'] == 'checkout_soon' || $value['status'] == 'cancel')
                                             <div class="mb-1 col-4 col-md-3 col-lg-3 px-1 wrapper_diagram"
                                                 data-bs-toggle="modal" data-bs-target="#modalRoomNull">
                                                 <div class="card text-bg-secondary mb-3" style="max-width: 14rem;">
@@ -328,7 +328,26 @@
                                     @endforeach
                                 @else
                                     @foreach ($booking_realtime as $value)
-                                        @if ($value['status'] == 'checkin')
+                                        @if ($value['status'] == 'checkout_soon' || $value['status'] == 'cancel')
+                                            <div class="mb-1 col-4 col-md-3 col-lg-3 px-1 wrapper_diagram"
+                                                data-bs-toggle="modal" data-bs-target="#modalRoomNull">
+                                                <div class="card text-bg-secondary mb-3" style="max-width: 14rem;">
+                                                    <strong class="card-header name_room"
+                                                        id="{{ $item['id'] }}">{{ $item['type_name'] }}</strong>
+                                                    <div class="card-body">
+                                                        <p class="card-text"><i
+                                                                class="fa-solid fa-calendar-days me-2"></i>{{ $item['status'] }}
+                                                        </p>
+                                                        <p class="card-text"><i
+                                                                class="fa-solid fa-calendar-days me-2"></i>{{ $item['type_room']['price'] . '/ Pernight' }}
+                                                        </p>
+                                                        <p class="card-text"><i
+                                                                class="fa-solid fa-calendar-days me-2"></i>{{ $item['type_room']['name'] }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @elseif ($value['status'] == 'checkin')
                                             @if ($value['check_out'] == $time . ' 12:00:00')
                                                 <div class="mb-1 col-4 col-md-3 col-lg-3 px-1 wrapper_diagram"
                                                     data-bs-toggle="modal" data-bs-target="#modalRoomCheckout"
@@ -662,7 +681,9 @@
                         <strong class="checkout">25/03/2024 12:00</strong>
                     </div>
                 </div>
+
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-primary bt_cancel">Cancel</button>
                     <button type="button" class="btn btn-primary bt_checkin">Check in</button>
                 </div>
             </div>
@@ -912,6 +933,7 @@
             var newMonth_now = currentDate_now.getMonth() + 1;
             var newYear_now = currentDate_now.getFullYear();
 
+
             if (newDay_now < 10) {
                 newDay_now = '0' + newDay_now;
             }
@@ -926,6 +948,7 @@
                 newMonth = '0' + newMonth;
             }
 
+
             let time_now = newYear_now + '-' + newMonth_now + '-' + (newDay_now - 1);
 
             if (time != time_now) {
@@ -933,9 +956,11 @@
                 $('.filter_checkout').hide();
                 $('.bt_checkout').hide();
                 $('.bt_checkout_soon').hide();
-
-                
             }
+
+
+
+            console.log(time_now);
 
             var check_out = newYear + '-' + newMonth + '-' + newDay;
 
@@ -1254,7 +1279,8 @@
                             let html = '';
                             item.map(function(item) {
                                 item.booking_realtime.map(function(value) {
-                                    if (value.check_out == time_now + " 12:00:00") {
+                                    if (value.check_out == time_now +
+                                        " 12:00:00") {
                                         html +=
                                             '<div class="mb-1 col-4 col-md-3 col-lg-3 px-1 wrapper_diagram" data-bs-toggle="modal" data-bs-target="#modalRoomCheckout" id=' +
                                             value.id + '>' +
@@ -1359,6 +1385,13 @@
                             $('strong.deposit2').text(deposit + "$");
 
                         } else if (modal == '#modalRoomCheckin') {
+
+                            let data_time = date_time_now();
+
+                            if (time + " 12:00:00" > date_time_now) {
+                                $('.bt_cancel').hide();
+                            }
+
                             let booking_realtime = [];
 
                             item.booking_realtime.map(function(value) {
@@ -1377,14 +1410,14 @@
                             $(modal).find('strong.type_room').text(type_room);
                             $(modal).find('input.name_cus').val(name_cus);
                             $(modal).find('input.phone_cus').val(phone);
-                            $(modal).find('strong.checkin').text(check_in + '  14:00:00');
-                            $(modal).find('strong.checkout').text(check_out + '  12:00:00');
+                            $(modal).find('strong.checkin').text(checkin);
+                            $(modal).find('strong.checkout').text(checkout);
 
                             let deposit = cul_deposit(checkin, checkout, price, 'deposit');
                             let duration = cul_deposit(checkin, checkout, price, 'duration');
                             let total = price * duration;
                             let final_total = total - deposit;
-                            console.log(deposit);
+                            console.log(deposit, duration);
 
                             $(modal).find('strong.deposit').text(deposit + "$");
                             $(modal).find('strong.final_total').text(final_total + "$");
@@ -1414,6 +1447,30 @@
                                     }
                                 });
                             })
+
+                            $(document).on('click', 'button.bt_cancel', function() {
+                                $.ajax({
+                                    type: "post",
+                                    url: "/recep/diagram/cancel",
+                                    data: {
+                                        time: time,
+                                        id_booking_realtime: id_booking_realtime
+                                    },
+                                    dataType: "json",
+                                    success: function(response) {
+                                        let rooms = response.room;
+                                        render_all_room(rooms);
+
+                                        $('#modalRoomCheckin').modal(
+                                            'hide');
+                                        var toast = new bootstrap.Toast(
+                                            document.getElementById(
+                                                'liveToast'));
+                                        toast.show();
+                                    }
+                                });
+                            })
+
 
 
                         } else if (modal == '#modalRoomCheckout') {
@@ -1734,7 +1791,7 @@
                     } else {
                         if (bookingrealtime.length == 1) {
                             bookingrealtime.map(function(value) {
-                                if (value.status == 'checkout_soon') {
+                                if (value.status == 'checkout_soon' || value.status == 'cancel') {
                                     html +=
                                         '<div class="mb-1 col-4 col-md-3 col-lg-3 px-1 wrapper_diagram" data-bs-toggle="modal" data-bs-target="#modalRoomNull">' +
                                         '<div class="card text-bg-secondary mb-3" style="max-width: 14rem;">' +
@@ -1790,7 +1847,7 @@
                                             '</div>';
                                     } else {
                                         html +=
-                                            '<div class="mb-1 col-4 col-md-3 col-lg-3 px-1 wrapper_diagram" data-bs-toggle="modal" data-bs-target="##modalRoomCheckout_Soon" id=' +
+                                            '<div class="mb-1 col-4 col-md-3 col-lg-3 px-1 wrapper_diagram" data-bs-toggle="modal" data-bs-target="#modalRoomCheckout_Soon" id=' +
                                             value.id + '>' +
                                             '<div class="card card-deposited mb-3" style="max-width: 14rem;">' +
                                             '<strong class="card-header name_room" id="' + item.id +
@@ -1871,7 +1928,24 @@
                             })
                         } else {
                             bookingrealtime.map(function(value) {
-                                if (value.status == 'checkin') {
+                                if (value.status == 'checkout_soon' || value.status == 'cancel') {
+                                    html +=
+                                        '<div class="mb-1 col-4 col-md-3 col-lg-3 px-1 wrapper_diagram" data-bs-toggle="modal" data-bs-target="#modalRoomNull">' +
+                                        '<div class="card text-bg-secondary mb-3" style="max-width: 14rem;">' +
+                                        '<strong class="card-header name_room" id="' + item.id +
+                                        '">' + item.type_name +
+                                        '</strong>' +
+                                        '<div class="card-body">' +
+                                        '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                        item.status + '</p>' +
+                                        '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                        item.type_room.price + '/ Pernight </p>' +
+                                        '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                        item.type_room.name + '</p>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</div>';
+                                } else if (value.status == 'checkin') {
                                     if (value.check_out == time_now + " 12:00:00") {
                                         html +=
                                             '<div class="mb-1 col-4 col-md-3 col-lg-3 px-1 wrapper_diagram" data-bs-toggle="modal" data-bs-target="#modalRoomCheckout" id=' +
@@ -1895,7 +1969,7 @@
 
                                     } else {
                                         html +=
-                                            '<div class="mb-1 col-4 col-md-3 col-lg-3 px-1 wrapper_diagram" data-bs-toggle="modal" data-bs-target="##modalRoomCheckout_Soon" id=' +
+                                            '<div class="mb-1 col-4 col-md-3 col-lg-3 px-1 wrapper_diagram" data-bs-toggle="modal" data-bs-target="#modalRoomCheckout_Soon" id=' +
                                             value.id + '>' +
                                             '<div class="card card-deposited mb-3" style="max-width: 14rem;">' +
                                             '<strong class="card-header name_room" id="' + item.id +
@@ -1934,8 +2008,6 @@
                                         '</div>' +
                                         '</div>' +
                                         '</div>';
-
-
                                 }
                             })
                         }
@@ -1959,6 +2031,28 @@
                 } else if (action == "deposit") {
                     return deposit;
                 }
+            }
+
+            function date_time_now() {
+                var currentDate_now = new Date();
+                var newDay_now = currentDate_now.getDate();
+                var newMonth_now = currentDate_now.getMonth() + 1;
+                var newYear_now = currentDate_now.getFullYear();
+
+                var hour = currentDate_now.getHours(); // Lấy giờ (0-23)
+                var minute = currentDate_now.getMinutes(); // Lấy phút (0-59)
+                var second = currentDate_now.getSeconds(); // Lấy giây (0-59)
+
+                if (minute < 10) {
+                    minute = '0' + minute;
+                }
+                if (second < 10) {
+                    second = '0' + second;
+                }
+
+                let date_time_now = time_now + ' ' + hour + ':' + minute + ':' + second;
+
+                return date_time_now;
             }
 
         });
