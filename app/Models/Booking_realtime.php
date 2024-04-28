@@ -23,6 +23,11 @@ class Booking_realtime extends Model
         'status'
     ];
 
+    public function room_detail()
+    {
+        return $this->belongsTo(Roomdetail::class,'id_roomDetail');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class,'id_user');

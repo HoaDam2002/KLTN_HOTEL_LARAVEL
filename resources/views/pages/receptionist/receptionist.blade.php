@@ -321,7 +321,7 @@
             </header>
             <!-- ==================== Header End Here ==================== -->
             <section class="account padding-y-60">
-                <div class="container container-two">
+                <div class="container">
                     <div class="row gy-4">
                         {{-- start menu account customer --}}
                         <div class="col-xl-3 col-lg-4">
@@ -345,12 +345,12 @@
                                         <span class="icon"> <i class="fas fa-list"></i></span>
                                         {{ __('New Bookings') }}
                                     </a>
-                                    <a href="recep/all_booking_management"
-                                        class="nav-link {{ Route::currentRouteName() == 'all_booking_management' ? 'active' : '' }}"
+                                    <a href="/recep/history-booking"
+                                        class="nav-link {{ Route::currentRouteName() == 'history-booking_recep' ? 'active' : '' }}"
                                         id="acc_payment" onclick="menu_account_customer(this.id)">
                                         <span class="icon">
                                             <i class="fas fa-money-check"></i></span>
-                                        {{ __('All Bookings') }}
+                                        {{ __('Checked out Bookings') }}
                                     </a>
                                     <form action="{{ route('logout') }}" method="POST">
                                         @csrf

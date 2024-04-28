@@ -148,22 +148,35 @@
                 <div class="modal-body">
                     <h4 style="text-align: center;">Status Room Management</h4>
                     <div class="btn-status">
-                        <button class="status text-bg-danger p-2 w-25" id="Dirty" data-bs-dismiss="modal">Dirty</button>
-                        <button class="status text-bg-success p-2 w-25" id="Clean"
-                            data-bs-dismiss="modal">Clean</button>
-                        <button class="status card-deposited p-2 w-25" id="Checkin"
-                            data-bs-dismiss="modal">Checkin</button>
-                        <button class="status text-bg-secondary p-2 w-25" id="Vacancy"
-                            data-bs-dismiss="modal">Vacancy</button>
+                        <button class="status text-bg-danger p-2 w-25" id="Dirty">Dirty</button>
+                        <button class="status text-bg-success p-2 w-25" id="Clean">Clean</button>
+                        {{-- <button class="status card-deposited p-2 w-25" id="Checkin"
+                            data-bs-dismiss="modal">Checkin</button> --}}
+                        {{-- <button class="status text-bg-secondary p-2 w-25" id="Vacancy"
+                            data-bs-dismiss="modal">Vacancy</button> --}}
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
     {{-- end modal info diposits --}}
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                {{-- <img src="..." class="rounded me-2" alt="..."> --}}
+                <strong class="me-auto">{{ __('Notification') }}</strong>
+                {{-- <small>11 mins ago</small> --}}
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Success!!!
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('js')
@@ -277,6 +290,13 @@
                             r.addClass('card-deposited');
                             r.find('span.status').text('Checkin')
                         }
+
+                        $('#modalEditStatusRoom').modal(
+                            'hide');
+                        var toast = new bootstrap.Toast(
+                            document.getElementById(
+                                'liveToast'));
+                        toast.show();
 
                     }
                 });

@@ -1386,12 +1386,6 @@
 
                         } else if (modal == '#modalRoomCheckin') {
 
-                            let data_time = date_time_now();
-
-                            if (time + " 12:00:00" > date_time_now) {
-                                $('.bt_cancel').hide();
-                            }
-
                             let booking_realtime = [];
 
                             item.booking_realtime.map(function(value) {
