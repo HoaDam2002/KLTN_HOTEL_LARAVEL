@@ -38,6 +38,10 @@ class User extends Model
         return $this->hasOne(CustommerNoAccModel::class,'id_user');
     }
 
+    public function booking_realtime(){
+        return $this->hasMany(Booking_realtime::class,'id_user');
+    }
+
 
     /**
      * The attributes that should be hidden for serialization.
