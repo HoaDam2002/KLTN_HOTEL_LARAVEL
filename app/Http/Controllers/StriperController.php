@@ -80,7 +80,7 @@ class StriperController extends Controller
 
         if(!empty($data)){
             if(Booking::create($data)){
-                return redirect()->route('list_booking');
+                return redirect()->route('my_booking_customer');
             }
         }
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Booking;
+use App\Models\Comment;
 use App\Models\Customer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -121,11 +122,51 @@ class ProfileController extends Controller
     {
         $id_account = Auth::id();
 
+        $id_user = $this->get_id_user();
+
+        $data = Booking::with(['room.comment' => function($query) use ($id_user){
+            $query->where('id_user', $id_user);
+        }])->where('id_user', $id_user)->get()->toArray();
+
+        return view('pages.account.my_booking', compact('data'));
+    }
+
+    public function rating(Request $request)
+    {
+        $data = $request->all();
+
+        $id_user = $this->get_id_user();
+
+        $data['id_user'] = $id_user;
+
+        $comment = Comment::create($data);
+
+        if ($comment) {
+            return response()->json(['mess' => 'success']);
+        }
+    }
+
+    public function cancel(Request $request)
+    {
+        $id_booking = $request->all()['id_booking'];
+
+        $booking = Booking::where('id', $id_booking)->get();
+
+        $booking->status = 'cancel';
+
+        if ($booking) {
+            return response()->json(['mess' => 'success']);
+        }
+    }
+
+    public function get_id_user(){
+
+        $id_account = Auth::id();
+
         $customer = Customer::with('account', 'user')->where('id_account', $id_account)->first()->toArray();
-        
+
         $id_user = $customer['id_user'];
 
-        $data = Booking::with('room')->where('id_user', $id_user)->get()->toArray();
-        return view('pages.account.my_booking', compact('data'));
+        return $id_user;
     }
 }

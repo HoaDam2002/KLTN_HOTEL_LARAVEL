@@ -32,4 +32,9 @@ class Booking_realtime extends Model
     {
         return $this->belongsTo(User::class,'id_user');
     }
+
+    public function booking()
+    {
+        return $this->belongsTo(Booking::class,'id_booking');
+    }
 }

@@ -108,10 +108,10 @@
         }
 
         /* .infor_customer{
-                                                                                                                                                                                                                                                                                                                                                                                                                display: flex;
-                                                                                                                                                                                                                                                                                                                                                                                                                justify-content: center;
-                                                                                                                                                                                                                                                                                                                                                                                                                
-                                                                                                                                                                                                                                                                                                                                                                                                            } */
+                                                                                                                                                                                                                                                                                                                                                                                                                        display: flex;
+                                                                                                                                                                                                                                                                                                                                                                                                                        justify-content: center;
+                                                                                                                                                                                                                                                                                                                                                                                                                        
+                                                                                                                                                                                                                                                                                                                                                                                                                    } */
     </style>
 @endsection
 
@@ -181,26 +181,7 @@
                             @else
                                 @if (count($booking_realtime) == 1)
                                     @foreach ($booking_realtime as $value)
-                                        @if ($value['status'] == 'checkout_soon' || $value['status'] == 'cancel')
-                                            <div class="mb-1 col-4 col-md-3 col-lg-3 px-1 wrapper_diagram"
-                                                data-bs-toggle="modal" data-bs-target="#modalRoomNull">
-                                                <div class="card text-bg-secondary mb-3" style="max-width: 14rem;">
-                                                    <strong class="card-header name_room"
-                                                        id="{{ $item['id'] }}">{{ $item['type_name'] }}</strong>
-                                                    <div class="card-body">
-                                                        <p class="card-text"><i
-                                                                class="fa-solid fa-calendar-days me-2"></i>{{ $item['status'] }}
-                                                        </p>
-                                                        <p class="card-text"><i
-                                                                class="fa-solid fa-calendar-days me-2"></i>{{ $item['type_room']['price'] . '/ Pernight' }}
-                                                        </p>
-                                                        <p class="card-text"><i
-                                                                class="fa-solid fa-calendar-days me-2"></i>{{ $item['type_room']['name'] }}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @elseif ($value['status'] == 'checkin')
+                                        @if ($value['status'] == 'checkin')
                                             @if ($value['check_out'] == $time . ' 12:00:00')
                                                 <div class="mb-1 col-4 col-md-3 col-lg-3 px-1 wrapper_diagram"
                                                     data-bs-toggle="modal" data-bs-target="#modalRoomCheckout"
@@ -328,26 +309,7 @@
                                     @endforeach
                                 @else
                                     @foreach ($booking_realtime as $value)
-                                        @if ($value['status'] == 'checkout_soon' || $value['status'] == 'cancel')
-                                            <div class="mb-1 col-4 col-md-3 col-lg-3 px-1 wrapper_diagram"
-                                                data-bs-toggle="modal" data-bs-target="#modalRoomNull">
-                                                <div class="card text-bg-secondary mb-3" style="max-width: 14rem;">
-                                                    <strong class="card-header name_room"
-                                                        id="{{ $item['id'] }}">{{ $item['type_name'] }}</strong>
-                                                    <div class="card-body">
-                                                        <p class="card-text"><i
-                                                                class="fa-solid fa-calendar-days me-2"></i>{{ $item['status'] }}
-                                                        </p>
-                                                        <p class="card-text"><i
-                                                                class="fa-solid fa-calendar-days me-2"></i>{{ $item['type_room']['price'] . '/ Pernight' }}
-                                                        </p>
-                                                        <p class="card-text"><i
-                                                                class="fa-solid fa-calendar-days me-2"></i>{{ $item['type_room']['name'] }}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @elseif ($value['status'] == 'checkin')
+                                        @if ($value['status'] == 'checkin')
                                             @if ($value['check_out'] == $time . ' 12:00:00')
                                                 <div class="mb-1 col-4 col-md-3 col-lg-3 px-1 wrapper_diagram"
                                                     data-bs-toggle="modal" data-bs-target="#modalRoomCheckout"
@@ -1477,26 +1439,40 @@
                                 }
                             })
 
+                            console.log(booking_realtime);
+
                             let checkin = booking_realtime.check_in;
                             let checkout = booking_realtime.check_out;
                             let price = booking_realtime.price;
                             let name_cus = booking_realtime.user.name;
                             let phone = booking_realtime.user.phone;
-
-                            console.log(checkin, checkout);
+                            let id_booking = '';
+                            let deposit_booking = '';
+                            let total = '';
+                            let final_total = '';
+                            let tour = '';
 
                             let deposit = cul_deposit(checkin, checkout, price, 'deposit');
 
                             let duration = cul_deposit(checkin, checkout, price, 'duration');
-                            console.log(checkin, checkout, duration);
-                            let total = price * duration;
-                            let final_total = total - deposit;
+
+                            if(booking_realtime.booking){
+                                deposit_booking = booking_realtime.booking.deposits;
+                                id_booking = booking_realtime.booking.id;
+                                quantity_booking = booking_realtime.booking.quantity;
+                                total = (price * duration) * quantity_booking;
+                                final_total = total - deposit_booking;
+                                let list_tour = booking_realtime.booking.booking_realtime.map(function(value){ return value.room_detail.type_name })
+                                tour = list_tour.join(', ');
+                            }else{
+                                total = price * duration;
+                                final_total = total - deposit;
+                            }
+
 
                             $(modal).find('strong.deposit').text(deposit + "$");
                             $(modal).find('strong.final_total').text(final_total + "$");
                             $(modal).find('strong.total').text(total + "$");
-
-                            console.log(booking_realtime);
 
                             $(modal).find('strong.name_room').text(name_room);
                             $(modal).find('strong.type_room').text(type_room);
@@ -1505,10 +1481,8 @@
                             $(modal).find('strong.checkin').text(checkin);
                             $(modal).find('strong.checkout').text(checkout);
                             $(modal).find('strong.duration').text(duration);
-                            $(modal).find('input.name_cus').val(name_cus);
+                            $(modal).find('input.name_cus').val(name_cus + "    Tour: " + tour);
                             $(modal).find('input.phone_cus').val(phone);
-
-
 
                             $(document).on('click', 'button.bt_checkout', function() {
                                 $.ajax({
@@ -1517,7 +1491,9 @@
                                     data: {
                                         time: time,
                                         payment: payment_checkout,
-                                        id_booking_realtime: id_booking_realtime
+                                        id_booking_realtime: id_booking_realtime,
+                                        id_booking: id_booking,
+                                        deposit_booking: deposit_booking
                                     },
                                     dataType: "json",
                                     success: function(response) {
@@ -1785,24 +1761,7 @@
                     } else {
                         if (bookingrealtime.length == 1) {
                             bookingrealtime.map(function(value) {
-                                if (value.status == 'checkout_soon' || value.status == 'cancel') {
-                                    html +=
-                                        '<div class="mb-1 col-4 col-md-3 col-lg-3 px-1 wrapper_diagram" data-bs-toggle="modal" data-bs-target="#modalRoomNull">' +
-                                        '<div class="card text-bg-secondary mb-3" style="max-width: 14rem;">' +
-                                        '<strong class="card-header name_room" id="' + item.id +
-                                        '">' + item.type_name +
-                                        '</strong>' +
-                                        '<div class="card-body">' +
-                                        '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
-                                        item.status + '</p>' +
-                                        '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
-                                        item.type_room.price + '/ Pernight </p>' +
-                                        '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
-                                        item.type_room.name + '</p>' +
-                                        '</div>' +
-                                        '</div>' +
-                                        '</div>';
-                                } else if (value.status == 'checkin') {
+                                if (value.status == 'checkin') {
                                     if (value.check_out == time_now + " 12:00:00") {
                                         html +=
                                             '<div class="mb-1 col-4 col-md-3 col-lg-3 px-1 wrapper_diagram" data-bs-toggle="modal" data-bs-target="#modalRoomCheckout" id=' +
@@ -1922,24 +1881,7 @@
                             })
                         } else {
                             bookingrealtime.map(function(value) {
-                                if (value.status == 'checkout_soon' || value.status == 'cancel') {
-                                    html +=
-                                        '<div class="mb-1 col-4 col-md-3 col-lg-3 px-1 wrapper_diagram" data-bs-toggle="modal" data-bs-target="#modalRoomNull">' +
-                                        '<div class="card text-bg-secondary mb-3" style="max-width: 14rem;">' +
-                                        '<strong class="card-header name_room" id="' + item.id +
-                                        '">' + item.type_name +
-                                        '</strong>' +
-                                        '<div class="card-body">' +
-                                        '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
-                                        item.status + '</p>' +
-                                        '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
-                                        item.type_room.price + '/ Pernight </p>' +
-                                        '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
-                                        item.type_room.name + '</p>' +
-                                        '</div>' +
-                                        '</div>' +
-                                        '</div>';
-                                } else if (value.status == 'checkin') {
+                                if (value.status == 'checkin') {
                                     if (value.check_out == time_now + " 12:00:00") {
                                         html +=
                                             '<div class="mb-1 col-4 col-md-3 col-lg-3 px-1 wrapper_diagram" data-bs-toggle="modal" data-bs-target="#modalRoomCheckout" id=' +

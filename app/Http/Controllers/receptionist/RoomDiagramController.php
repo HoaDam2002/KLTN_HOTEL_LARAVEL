@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\booking_rep;
+use App\Models\Booking;
 use App\Models\Customer;
 
 use function Laravel\Prompts\search;
@@ -29,7 +30,7 @@ class RoomDiagramController extends Controller
 
         $roomDetails = Roomdetail::with(['typeRoom', 'Booking_realtime.user', 'Booking_realtime' => function ($query) use ($time_checkin, $time_checkout) {
             $query->where('check_out', '>=', $time_checkout)
-                ->where('check_in', '<=', $time_checkin)->where('status', '!=', 'checkout');
+                ->where('check_in', '<=', $time_checkin)->where('status', '!=', 'checkout')->where('status', '!=', 'checkout_soon')->where('status', '!=', 'cancel');
         }]);
 
         return $roomDetails;
@@ -185,9 +186,8 @@ class RoomDiagramController extends Controller
         // dd($request->all());
         $id_room = $request->all()['id_room'];
 
-        $room_detail = Roomdetail::with('typeRoom', 'Booking_realtime.user')->where('id', $id_room)->get()->toArray();
+        $room_detail = Roomdetail::with('typeRoom', 'Booking_realtime.user','Booking_realtime.booking.booking_realtime.room_detail')->where('id', $id_room)->get()->toArray();
 
-        // dd($room_detail);
         return response()->json(['item' => $room_detail]);
     }
 
@@ -367,22 +367,33 @@ class RoomDiagramController extends Controller
     public function checkout(Request $request){
         $data = $request->all();
 
+        // dd($data);
         $id_booking_realtime = $data['id_booking_realtime'];
 
-        $booking_realtime = Booking_realtime::where('id',$id_booking_realtime)->first();
+        if(!empty($data['id_booking'])){
+            $id_booking = $data['id_booking'];
 
-        $booking_realtime->status = 'checkout';
-        $booking_realtime->payment_total = $data['payment'];
+            $booking_realtime = Booking_realtime::where('id_booking',$id_booking)->update(['status' =>'checkout','payment_total' => $data['payment']]);
 
-
-        $booking_realtime->save();
-
+            $booking = Booking::where('id',$id_booking)->update(['status' => 'checkout']);
+        }else{
+            $booking_realtime = Booking_realtime::where('id',$id_booking_realtime)->first();
+    
+            $booking_realtime->status = 'checkout';
+            $booking_realtime->payment_total = $data['payment'];
+    
+    
+            $booking_realtime->save();
+    
+        }
         if ($booking_realtime) {
             $time = $data['time'];
 
             $room = $this->search($time)->get()->toArray();
             return response()->json(['room' => $room]);
         }
+
+
     }
 
     public function checkout_soon(Request $request){

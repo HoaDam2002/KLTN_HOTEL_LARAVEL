@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\customer;
 
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use App\Models\RoomModel;
 use App\Models\TypeRoomModel;
 use Illuminate\Http\Request;
@@ -50,8 +51,10 @@ class RoomController extends Controller
             $count_available = 10;
         }
 
+        $comment = Comment::with('user.customer')->where('id_room',$id)->get()->toArray();
 
-        return view('pages.room_detail.room_detail', compact('room', 'checkin', 'checkout', 'count_available', 'diffInDays'));
+
+        return view('pages.room_detail.room_detail', compact('room', 'checkin', 'checkout', 'count_available', 'diffInDays','comment'));
     }
 
     /**

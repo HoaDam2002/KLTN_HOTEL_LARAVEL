@@ -1,3 +1,4 @@
+@extends('pages.account.account')
 <style>
     span.status {
         color: #fff;
@@ -48,12 +49,11 @@
         right: 20px;
     }
 </style>
-@extends('pages.account.account')
 @section('content_account')
     <div class="col-xl-9 col-lg-8">
         <div class="tab-content" id="v-pills-tabContent">
             <div class="overflow-auto">
-                <div class="card common-card min-w-maxContent" style="margin-bottom: 20px">
+                {{-- <div class="card common-card min-w-maxContent" style="margin-bottom: 20px">
                     <div class="card-body filter_booking d-flex">
                         <button class="btn_filter dropdown-toggle" data-bs-toggle="dropdown"
                             aria-expanded="false">Filter</button>
@@ -70,7 +70,7 @@
                                     class="fa-solid fa-magnifying-glass"></i></button>
                         </form>
                     </div>
-                </div>
+                </div> --}}
                 <div class="card common-card min-w-maxContent">
                     <div class="card-body">
                         <table class="table style-two">
@@ -85,6 +85,7 @@
                             </thead>
                             <tbody>
                                 @if (isset($data))
+                                    {{-- {{ dd($data) }} --}}
                                     @foreach ($data as $data)
                                         @php
                                             $image = $data['room']['images'];
@@ -92,9 +93,13 @@
                                             $checkout = new DateTime($data['check_out']);
 
                                             $interval = $checkout->diff($checkin);
-                                            $numberOfDays = $interval->days;
+                                            $numberOfDays = $interval->days + 1;
 
-                                            $total = (($data['price'] * $data['quantity']) * $numberOfDays) - $data['deposits'];
+                                            // dd($numberOfDays);
+
+                                            $total =
+                                                $data['price'] * $data['quantity'] * $numberOfDays - $data['deposits'];
+
                                         @endphp
                                         <tr>
                                             <td>
@@ -120,23 +125,33 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <span class="date" id="checkin">17/02/2024</span>
+                                                <span class="date"
+                                                    id="checkin">{{ explode(' ', $data['check_in'])[0] }}</span>
                                             </td>
                                             <td>
-                                                <span class="date" id="checkout">17/02/2024</span>
+                                                <span class="date"
+                                                    id="checkout">{{ explode(' ', $data['check_out'])[0] }}</span>
                                             </td>
                                             <td>
                                                 <span class="status" style="background-color: rgb(255,165,0)"
                                                     id="">{{ $data['status'] }}</span>
                                             </td>
 
-                                            <td class="" style="cursor: default;">
+                                            <td class="btn-action" style="cursor: default;">
                                                 <button type="button"
-                                                    class="rounded-btn text-danger bg-danger bg-opacity-10 flex-shrink-0"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                                    class="rounded-btn text-danger bg-danger bg-opacity-10 flex-shrink-0 action {{ $data['room']['comment'] ? 'true' : 'false' }}"
+                                                    data-bs-toggle="dropdown" aria-expanded="false" id="{{ $data['id_room'] }}">
                                                     <i class="fa-solid fa-gear"></i>
                                                 </button>
-
+                                                <ul class="dropdown-menu">
+                                                    {{-- <li><button type="button"
+                                                            class="dropdown-item cancel" id="{{ $data['id'] }}">{{ __('Cancel') }}</button>
+                                                    </li> --}}
+                                                    <li><button type="button" class="dropdown-item rating"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#modal_evaluate">{{ __('Rating') }}</button>
+                                                    </li>
+                                                </ul>
                                             </td>
                                         </tr>
                                     @endforeach

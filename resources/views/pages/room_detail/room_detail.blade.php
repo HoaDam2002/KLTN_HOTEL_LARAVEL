@@ -131,7 +131,7 @@
             <div class="row gy-4">
                 <div class="col-lg-8">
                     <div class="row gy-4">
-                        <h5 class="name_room">{{$room[0]['name']}}</h5>
+                        <h5 class="name_room">{{ $room[0]['name'] }}</h5>
                         <div class="col-sm-12 col-6" style="margin-top: 5px;">
                             <div class="property-details__thumb">
                                 @php
@@ -254,125 +254,44 @@
                                     <div class="row d-flex justify-content-center">
                                         <div class="col-md-12 col-lg-12">
                                             <div class="card text-dark">
-                                                <div class="card-body p-4">
-                                                    <div class="d-flex flex-start">
-                                                        <img class="avatar_comment"
-                                                            src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(23).webp"
-                                                            alt="avatar" />
-                                                        <div>
-                                                            <h6 class="fw-bold mb-2">Maggie Marsh</h6>
-                                                            <div class="info_comment mb-2">
-                                                                <div class="rateYo" id="rate1" data-rating="3"></div>
-                                                                <div class="d-flex align-items-center ms-1">
-                                                                    <p class="mb-0 date_comment">
-                                                                        March 07, 2021
+                                                @if (!empty($comment))
+                                                    {{-- {{ dd($comment) }} --}}
+                                                    @foreach ($comment as $item)
+                                                        @php
+                                                            $avatar = $item['user']['customer']['avatar'];
+                                                            $name = $item['user']['name'];
+                                                            $date = $item['created_at'];
+                                                            $comment = $item['comment'];
+
+                                                            $date = new DateTime($date);
+
+                                                            $formatted_time = $date->format('F d, Y');
+                                                        @endphp
+                                                        <div class="card-body p-4">
+                                                            <div class="d-flex flex-start">
+                                                                <img class="avatar_comment"
+                                                                    src='{{ asset("/customer/avatar/$avatar") }}'
+                                                                    alt="avatar" />
+                                                                <div>
+                                                                    <h6 class="fw-bold mb-2">{{ $name }}</h6>
+                                                                    <div class="info_comment mb-2">
+                                                                        <div class="rateYo" id="rate1" data-rating="3">
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center ms-1">
+                                                                            <p class="mb-0 date_comment">
+                                                                                {{ $formatted_time }}
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <p class="mb-0">
+                                                                        {{ $comment }}
                                                                     </p>
                                                                 </div>
                                                             </div>
-                                                            <p class="mb-0">
-                                                                Lorem Ipsum is simply dummy text of the printing and
-                                                                typesetting
-                                                                industry. Lorem Ipsum has been the industry's standard dummy
-                                                                text ever
-                                                                since the 1500s, when an unknown printer took a galley of
-                                                                type and
-                                                                scrambled it.
-                                                            </p>
                                                         </div>
-                                                    </div>
-                                                </div>
+                                                    @endforeach
+                                                @endif
 
-                                                {{--
-                                            <hr class="my-0" /> --}}
-
-                                                <div class="card-body p-4">
-                                                    <div class="d-flex flex-start">
-                                                        <img class="avatar_comment"
-                                                            src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(23).webp"
-                                                            alt="avatar" />
-                                                        <div>
-                                                            <h6 class="fw-bold mb-2">Maggie Marsh</h6>
-                                                            <div class="info_comment mb-2">
-                                                                <div class="rateYo" id="rate2" data-rating="4"></div>
-                                                                <div class="d-flex align-items-center ms-1">
-                                                                    <p class="mb-0 date_comment">
-                                                                        March 07, 2021
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                            <p class="mb-0">
-                                                                Lorem Ipsum is simply dummy text of the printing and
-                                                                typesetting
-                                                                industry. Lorem Ipsum has been the industry's standard dummy
-                                                                text ever
-                                                                since the 1500s, when an unknown printer took a galley of
-                                                                type and
-                                                                scrambled it.
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                {{--
-                                            <hr class="my-0" style="height: 1px;" /> --}}
-
-                                                <div class="card-body p-4">
-                                                    <div class="d-flex flex-start">
-                                                        <img class="avatar_comment"
-                                                            src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(23).webp"
-                                                            alt="avatar" />
-                                                        <div>
-                                                            <h6 class="fw-bold mb-2">Maggie Marsh</h6>
-                                                            <div class="info_comment mb-2">
-                                                                <div class="rateYo" id="rate3" data-rating="5"></div>
-                                                                <div class="d-flex align-items-center ms-1">
-                                                                    <p class="mb-0 date_comment">
-                                                                        March 07, 2021
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                            <p class="mb-0">
-                                                                Lorem Ipsum is simply dummy text of the printing and
-                                                                typesetting
-                                                                industry. Lorem Ipsum has been the industry's standard dummy
-                                                                text ever
-                                                                since the 1500s, when an unknown printer took a galley of
-                                                                type and
-                                                                scrambled it.
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <hr class="my-0" />
-
-                                                <div class="card-body p-4">
-                                                    <div class="d-flex flex-start">
-                                                        <img class="avatar_comment"
-                                                            src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(23).webp"
-                                                            alt="avatar" />
-                                                        <div>
-                                                            <h6 class="fw-bold mb-2">Maggie Marsh</h6>
-                                                            <div class="info_comment mb-2">
-                                                                <div class="rateYo" id="rate4" data-rating="1"></div>
-                                                                <div class="d-flex align-items-center ms-1">
-                                                                    <p class="mb-0 date_comment">
-                                                                        March 07, 2021
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                            <p class="mb-0">
-                                                                Lorem Ipsum is simply dummy text of the printing and
-                                                                typesetting
-                                                                industry. Lorem Ipsum has been the industry's standard dummy
-                                                                text ever
-                                                                since the 1500s, when an unknown printer took a galley of
-                                                                type and
-                                                                scrambled it.
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -400,8 +319,7 @@
                                 @csrf
                                 <input type="text" class="common-input" name="daterange" value=""
                                     style="border-radius: 10px" />
-                                <input type="text" name="name" class="name" value="{{ $room[0]['name'] }}"
-                                    hidden>
+                                <input type="text" name="name" class="name" value="{{ $room[0]['name'] }}" hidden>
                                 <input type="text" name="deposits" class="deposits" hidden>
                                 <input type="text" name="id_room" class="id_room" value="{{ $room[0]['id'] }}"
                                     hidden>

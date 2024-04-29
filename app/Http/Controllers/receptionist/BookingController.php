@@ -67,7 +67,9 @@ class BookingController extends Controller
                 $booking->status = $data['status'];
                 $booking->id_user = $data['id_user'];
                 $booking->id_tour = $data['id_tour'];
-                $booking->identity_card = null;
+                $booking->payment = 'in';
+                $booking->payment_total = 'wait';
+
 
                 $result = $booking->save();
 
