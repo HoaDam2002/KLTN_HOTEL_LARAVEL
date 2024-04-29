@@ -32,8 +32,8 @@
                         </div>
 
                         <div class="col-12">
-                            <button type="submit" class="btn btn-main w-100">
-                                <a href="" class="submit_comment">Submit</a>
+                            <button type="button" class="btn btn-main w-100 submit_comment">
+                                Submit
                                 <span class="icon-right"> <i class="far fa-paper-plane"></i></span>
                             </button>
                         </div>
@@ -44,16 +44,114 @@
     </div>
 </div>
 
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            {{-- <img src="..." class="rounded me-2" alt="..."> --}}
+            <strong class="me-auto">{{ __('Notification') }}</strong>
+            {{-- <small>11 mins ago</small> --}}
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Success!!!
+        </div>
+    </div>
+</div>
+
 @section('js')
     <script>
-        $(function() {
-            $("#rateYo").rateYo({
-                rating: 5,
-                fullStar: true,
-                onSet: function(rating, rateYoInstance) {
-                    console.log("Rating is set to: " + rating);
-                }
+        $(document).ready(function() {
+            let rate = 5;
+            let id_room = '';
+            let check_commented = '';
+
+            $(function() {
+                $("#rateYo").rateYo({
+                    rating: 5,
+                    fullStar: true,
+                    onSet: function(rating, rateYoInstance) {
+                        console.log("Rating is set to: " + rating);
+                        rate = rating;
+                    }
+                });
             });
+
+            $(document).on('click', 'button.action', function() {
+                let status = $(this).closest('tr').find('.status').text();
+                id_room = $(this).attr('id');
+
+                check_commented = $(this).hasClass('true');
+
+                console.log(check_commented);
+
+
+                if (status == 'confirm' || status == 'cancel') {
+                    $(this).closest('.btn-action').find('button.cancel').prop('disabled', true);
+                    $(this).closest('.btn-action').find('button.rating').prop('disabled', true);
+                } else if (status == 'pending') {
+                    $(this).closest('.btn-action').find('button.cancel').prop('disabled', false);
+                    $(this).closest('.btn-action').find('button.rating').prop('disabled', true);
+                } else {
+                    if (!check_commented) {
+                        $(this).closest('.btn-action').find('button.rating').prop('disabled', false);
+                        $(this).closest('.btn-action').find('button.cancel').prop('disabled', true);
+                    } else {
+                        $(this).closest('.btn-action').find('button.rating').prop('disabled', true);
+                        $(this).closest('.btn-action').find('button.cancel').prop('disabled', true);
+
+                    }
+                }
+            })
+
+            $(document).on('click', 'button.cancel', function() {
+                let id_booking = $(this).attr('id');
+
+                $.ajax({
+                    type: "post",
+                    url: "/customer/my-bookings/cancel",
+                    data: {
+                        id_booking: id_booking,
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        $('#modal_evaluate').modal(
+                            'hide');
+                        var toast = new bootstrap.Toast(
+                            document.getElementById(
+                                'liveToast'));
+                        toast.show();
+                    }
+                });
+            })
+
+
+            $(document).on('click', 'button.submit_comment', function() {
+                let comment = $(this).closest('.modal-body').find('textarea#comment').val();
+
+                $.ajax({
+                    type: "post",
+                    url: "/customer/my-bookings/rating",
+                    data: {
+                        comment: comment,
+                        rate: rate,
+                        id_room: id_room
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        $('#modal_evaluate').modal(
+                            'hide');
+                        var toast = new bootstrap.Toast(
+                            document.getElementById(
+                                'liveToast'));
+                        toast.show();
+                    }
+                });
+
+            })
+
+
+
+
         });
     </script>
 @endsection

@@ -82,16 +82,6 @@ Route::get('/aboutus', function () {
 Route::get('/room_status_management', [RoomStatusController::class, 'index'])->name('room_status_management');
 Route::post('/room_status_management', [RoomStatusController::class, 'update_status'])->name('room_status_management_post');
 
-
-
-
-Route::get('/customer/my-bookings', function () {
-    return view('pages.account.my_booking');
-})->name('my_booking_customer');
-
-
-
-
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
 //lễ tân
@@ -163,7 +153,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/profile/edit', [ProfileController::class, 'update'])->name('profile_customer_edit');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/customer/my-bookings', [ProfileController::class, 'list_booking'])->name('list_booking');
+    Route::get('/customer/my-bookings', [ProfileController::class, 'list_booking'])->name('my_booking_customer');
+    Route::post('/customer/my-bookings/rating', [ProfileController::class, 'rating'])->name('my_booking_customer_rating');
+    Route::post('/customer/my-bookings/cancel', [ProfileController::class, 'cancel'])->name('my_booking_customer_cancel');
+
 
     Route::get('/customer/change-pass', [PasswordController::class, 'showChangePassView'])->name('change_pass_customer');
     Route::post('/customer/change-pass', [PasswordController::class, 'update'])->name('update_password');

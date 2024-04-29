@@ -27,13 +27,13 @@
                                 <span class="icon"> <i class="fas fa-list"></i></span>
                                 {{ __('My Bookings') }}
                             </a>
-                            <a href="/customer/payment"
+                            {{-- <a href="/customer/payment"
                                 class="nav-link {{ Route::currentRouteName() == 'payment_customer' ? 'active' : '' }}"
                                 id="acc_payment" onclick="menu_account_customer(this.id)">
                                 <span class="icon">
                                     <i class="fas fa-money-check"></i></span>
                                 {{ __('Payments') }}
-                            </a>
+                            </a> --}}
                             <a href="/customer/change-pass"
                                 class="nav-link {{ Route::currentRouteName() == 'change_pass_customer' ? 'active' : '' }}"
                                 id="change_pass" onclick="menu_account_customer(this.id)">
@@ -59,8 +59,4 @@
             </div>
         </div>
     </section>
-@endsection
-
-@section('js')
-    <script></script>
 @endsection

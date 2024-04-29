@@ -5,20 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Booking extends Model
+class Comment extends Model
 {
     use HasFactory;
 
-    protected $table = 'booking';
+    protected $table = 'comment';
     protected $fillable = [
+        'comment',
+        'rate',
         'id_user',
-        'id_room',
-        'status',
-        'check_in',
-        'check_out',
-        'quantity',
-        'deposits',
-        'price'
+        'id_room'
     ];
 
     public function user()
@@ -26,14 +22,9 @@ class Booking extends Model
         return $this->belongsTo(User::class,'id_user');
     }
 
-    public function room()
+    // Quan hệ với bảng Account
+    public function typeRoom()
     {
         return $this->belongsTo(RoomModel::class,'id_room');
-    }   
-
-    public function booking_realtime()
-    {
-        return $this->hasMany(Booking_realtime::class,'id_booking');
-    }  
-
+    }
 }
