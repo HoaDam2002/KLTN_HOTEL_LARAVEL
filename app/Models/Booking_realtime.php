@@ -20,7 +20,8 @@ class Booking_realtime extends Model
         'id_user',
         'id_tour',
         'payment',
-        'status'
+        'status',
+        'payment_total'
     ];
 
     public function room_detail()

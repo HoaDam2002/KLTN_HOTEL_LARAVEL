@@ -107,11 +107,26 @@
             min-width: 200px;
         }
 
+        .change-room{
+            display: flex;
+        }
+
+        .choose_room{
+            width: 90%;
+        }
+
+        .btn-choose{
+            width: 10%;
+            background-color: yellowgreen;
+            /* text-align: center; */
+        }
+
+
         /* .infor_customer{
-                                                                                                                                                                                                                                                                                                                                                                                                                        display: flex;
-                                                                                                                                                                                                                                                                                                                                                                                                                        justify-content: center;
-                                                                                                                                                                                                                                                                                                                                                                                                                        
-                                                                                                                                                                                                                                                                                                                                                                                                                    } */
+                                                                                                                                                                                                                                                                                                                                                                                                                            display: flex;
+                                                                                                                                                                                                                                                                                                                                                                                                                            justify-content: center;
+                                                                                                                                                                                                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                                                                                                                                                                                                        } */
     </style>
 @endsection
 
@@ -245,8 +260,7 @@
                                                 @if ($value['check_out'] == $a . ' 12:00:00')
                                                     <div class="mb-1 col-4 col-md-3 col-lg-3 px-1 wrapper_diagram"
                                                         data-bs-toggle="modal" data-bs-target="#modalRoomNull">
-                                                        <div class="card text-bg-secondary mb-3"
-                                                            style="max-width: 14rem;">
+                                                        <div class="card text-bg-secondary mb-3" style="max-width: 14rem;">
                                                             <strong class="card-header name_room"
                                                                 id="{{ $item['id'] }}">{{ $item['type_name'] }}</strong>
                                                             <div class="card-body">
@@ -623,12 +637,12 @@
                     </div>
 
                     <div class="mb-3 mt-3">
-                        <label for="formGroupExampleInput" class="form-label">Name</label>
+                        <label for="formGroupExampleInput" class="form-label">{{ __('Name') }}</label>
                         <input type="text" class="form-control name_cus" id="formGroupExampleInput"
                             placeholder="Example input placeholder" value="Nguyễn Văn A" disabled>
                     </div>
                     <div class="mb-3">
-                        <label for="formGroupExampleInput2" class="form-label">Phone</label>
+                        <label for="formGroupExampleInput2" class="form-label">{{ __('Phone') }}</label>
                         <input type="text" class="form-control phone_cus" id="formGroupExampleInput2"
                             placeholder="Another input placeholder" value="0708852641" disabled>
                     </div>
@@ -702,6 +716,7 @@
                         <input type="text" class="form-control phone_cus" id="formGroupExampleInput2"
                             placeholder="Another input placeholder" disabled>
                     </div>
+
                     <div class="form-check pay_checkout">
                         <input class="form-check-input a" type="radio" name="pay_checkout" value="cash"
                             id="flexRadioDefault1" checked>
@@ -782,6 +797,27 @@
                         <input type="text" class="form-control phone_cus" id="formGroupExampleInput2"
                             placeholder="Another input placeholder" disabled>
                     </div>
+
+                    <div class="mb-3">
+                        <label for="formGroupExampleInput2" class="form-label">{{ __('Change Room') }}</label>
+                        <div class="change-room">
+                            <select name="room_change" id="formGroupExampleInput2" class="form-control choose_room">
+                                <option value="">Choose Room</option>
+                                <option value="">Choose Room</option>
+
+                                <option value="">Choose Room</option>
+
+                                <option value="">Choose Room</option>
+
+                                <option value="">Choose Room</option>
+
+                            </select>
+                            <button class="btn-choose">Change</button>
+                        </div>
+                        {{-- <input type="text" class="form-control phone_cus" id="formGroupExampleInput2"
+                            placeholder="Another input placeholder" value="0708852641" disabled> --}}
+                    </div>
+
                     <div class="form-check pay_checkout">
                         <input class="form-check-input a" type="radio" name="pay_checkout_soon" value="cash"
                             id="flexRadioDefault1" checked>
@@ -1288,8 +1324,6 @@
                 let modal = $(this).attr('data-bs-target');
                 id_booking_realtime = $(this).attr('id');
 
-                // console.log(id_booking_realtime);
-
                 if ($('input[name="payment"]').prop('checked')) {
                     payment = $('input[name="payment"]:checked').val();
 
@@ -1325,8 +1359,10 @@
                     dataType: "json",
                     success: function(response) {
                         let item = response.item[0];
+                        let list_room = response.list_room;
 
-                        console.log(item);
+                        // console.log(item);
+                        console.log(list_room);
 
                         let name_room = item.type_name;
                         let type_room = item.type_room.name;
@@ -1456,15 +1492,18 @@
 
                             let duration = cul_deposit(checkin, checkout, price, 'duration');
 
-                            if(booking_realtime.booking){
+                            if (booking_realtime.booking) {
                                 deposit_booking = booking_realtime.booking.deposits;
                                 id_booking = booking_realtime.booking.id;
                                 quantity_booking = booking_realtime.booking.quantity;
                                 total = (price * duration) * quantity_booking;
                                 final_total = total - deposit_booking;
-                                let list_tour = booking_realtime.booking.booking_realtime.map(function(value){ return value.room_detail.type_name })
+                                let list_tour = booking_realtime.booking.booking_realtime.map(
+                                    function(value) {
+                                        return value.room_detail.type_name
+                                    })
                                 tour = list_tour.join(', ');
-                            }else{
+                            } else {
                                 total = price * duration;
                                 final_total = total - deposit;
                             }
@@ -1736,6 +1775,10 @@
 
                 })
             })
+
+            // $(document).on('click', 'button.btn-choose', function() {
+                
+            // })
 
             function render_all_room(arr) {
                 console.log(arr);

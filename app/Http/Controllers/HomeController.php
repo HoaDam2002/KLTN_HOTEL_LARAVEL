@@ -14,8 +14,6 @@ class HomeController extends Controller
     {
         $data = RoomModel::all();
 
-        session()->put('type_room',$data);
-
         return view('pages.home.home_customer',compact('data'));
     }
 

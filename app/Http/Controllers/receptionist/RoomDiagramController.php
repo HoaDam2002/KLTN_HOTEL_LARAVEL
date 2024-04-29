@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\booking_rep;
 use App\Models\Booking;
 use App\Models\Customer;
+use App\Models\RoomModel;
 
 use function Laravel\Prompts\search;
 
@@ -84,18 +85,17 @@ class RoomDiagramController extends Controller
                     if (count($item['booking_realtime']) == 1) {
                         if ($item['booking_realtime'][0]['check_out'] == $time . " 12:00:00") {
                             $arr[] = $item;
-                        }else if($item['booking_realtime'][0]['status'] == "checkout" || $item['booking_realtime'][0]['status'] == "checkout_soon" || $item['booking_realtime'][0]['status'] == "cancel"){
+                        } else if ($item['booking_realtime'][0]['status'] == "checkout" || $item['booking_realtime'][0]['status'] == "checkout_soon" || $item['booking_realtime'][0]['status'] == "cancel") {
                             $arr[] = $item;
                         }
-                    }else{
+                    } else {
                         foreach ($item['booking_realtime'] as $value) {
-                            if($value['status'] == "checkout" || $value['status'] == "checkout_soon" || $value['status'] == "cancel"){
+                            if ($value['status'] == "checkout" || $value['status'] == "checkout_soon" || $value['status'] == "cancel") {
                                 $arr[] = $item;
                                 break;
                             }
                         }
                     }
-                    
                 }
             }
         } else if ($status == "Occupied") {
@@ -184,11 +184,30 @@ class RoomDiagramController extends Controller
     public function fill_modal(Request $request)
     {
         // dd($request->all());
-        $id_room = $request->all()['id_room'];
+        $id_roomDetail = $request->all()['id_room'];
 
-        $room_detail = Roomdetail::with('typeRoom', 'Booking_realtime.user','Booking_realtime.booking.booking_realtime.room_detail')->where('id', $id_room)->get()->toArray();
+        $room_detail = Roomdetail::with('typeRoom', 'Booking_realtime.user', 'Booking_realtime.booking.booking_realtime.room_detail')->where('id', $id_roomDetail)->get()->toArray();
 
-        return response()->json(['item' => $room_detail]);
+        $checkin = $room_detail[0]['booking_realtime']['0']['check_in'];
+        $checkout = $room_detail[0]['booking_realtime']['0']['check_out'];
+
+        $id_room = Roomdetail::where('id', $room_detail)->first()->toArray()['id_room'];
+
+        $list_empty_room_booking = DB::table('room_detail')
+            ->whereNotExists(function ($query) use ($checkin, $checkout) {
+                $query->select(DB::raw(1))
+                    ->from('booking_realtime')
+                    ->whereRaw('room_detail.id = booking_realtime.id_roomDetail')
+                    ->where(function ($query) use ($checkin, $checkout) {
+                        $query->where('check_in', '<', $checkout)
+                            ->where('check_out', '>', $checkin);
+                    });
+            })
+            ->where('room_detail.id_room', '=', $id_room) // Thay 2 bằng id_room mong muốn
+            ->select('room_detail.*')
+            ->get();
+
+        return response()->json(['item' => $room_detail, 'list_room' => $list_empty_room_booking]);
     }
 
     /**
@@ -242,6 +261,9 @@ class RoomDiagramController extends Controller
                 $data['id_user'] = $id_user;
                 $data['id_tour'] = $data['phone'];
                 $data['id_booking'] = '0';
+                $data['payment_total'] = 'wait';
+
+
 
                 if ($ss = Booking_realtime::create($data)) {
 
@@ -295,7 +317,7 @@ class RoomDiagramController extends Controller
             }
         }
 
-        
+
         if ($check_available) {
             $time_reload = $data['time'];
 
@@ -310,6 +332,7 @@ class RoomDiagramController extends Controller
             $data['check_in'] = $checkin;
             $data['check_out'] = $checkout;
             $data['id_tour'] = $data['phone'];
+            $data['payment_total'] = 'wait';
 
             $id_user = $data['id_user'];
 
@@ -364,27 +387,27 @@ class RoomDiagramController extends Controller
         }
     }
 
-    public function checkout(Request $request){
+    public function checkout(Request $request)
+    {
         $data = $request->all();
 
         // dd($data);
         $id_booking_realtime = $data['id_booking_realtime'];
 
-        if(!empty($data['id_booking'])){
+        if (!empty($data['id_booking'])) {
             $id_booking = $data['id_booking'];
 
-            $booking_realtime = Booking_realtime::where('id_booking',$id_booking)->update(['status' =>'checkout','payment_total' => $data['payment']]);
+            $booking_realtime = Booking_realtime::where('id_booking', $id_booking)->update(['status' => 'checkout', 'payment_total' => $data['payment']]);
 
-            $booking = Booking::where('id',$id_booking)->update(['status' => 'checkout']);
-        }else{
-            $booking_realtime = Booking_realtime::where('id',$id_booking_realtime)->first();
-    
+            $booking = Booking::where('id', $id_booking)->update(['status' => 'checkout']);
+        } else {
+            $booking_realtime = Booking_realtime::where('id', $id_booking_realtime)->first();
+
             $booking_realtime->status = 'checkout';
             $booking_realtime->payment_total = $data['payment'];
-    
-    
+
+
             $booking_realtime->save();
-    
         }
         if ($booking_realtime) {
             $time = $data['time'];
@@ -392,16 +415,15 @@ class RoomDiagramController extends Controller
             $room = $this->search($time)->get()->toArray();
             return response()->json(['room' => $room]);
         }
-
-
     }
 
-    public function checkout_soon(Request $request){
+    public function checkout_soon(Request $request)
+    {
         $data = $request->all();
-        
+
         $id_booking_realtime = $data['id_booking_realtime'];
 
-        $booking_realtime = Booking_realtime::where('id',$id_booking_realtime)->first();
+        $booking_realtime = Booking_realtime::where('id', $id_booking_realtime)->first();
 
         $booking_realtime->status = 'checkout_soon';
         $booking_realtime->payment_total = $data['payment'];
@@ -417,12 +439,13 @@ class RoomDiagramController extends Controller
         }
     }
 
-    public function cancel(Request $request){
+    public function cancel(Request $request)
+    {
         $data = $request->all();
-        
+
         $id_booking_realtime = $data['id_booking_realtime'];
 
-        $booking_realtime = Booking_realtime::where('id',$id_booking_realtime)->first();
+        $booking_realtime = Booking_realtime::where('id', $id_booking_realtime)->first();
 
         $booking_realtime->status = 'cancel';
 

@@ -42,7 +42,7 @@
                                 <form action="/customer/find_room" method="POST">
                                     @csrf
                                     <div class="row gy-sm-4 gy-3">
-                                        <div class="col-lg-4 col-sm-6 col-xs-6">
+                                        <div class="col-lg-8 col-sm-6 col-xs-6">
                                             @php
                                                 $current_day = Carbon::now();
                                                 $next_day = $current_day->addDay()->format('d/m/Y');
@@ -50,7 +50,7 @@
                                             @endphp
                                             <input type="text" class="common-input" name="daterange" id="daterange_home" value="{{ $current_day . ' - ' . $next_day }}" />
                                         </div>
-                                        <div class="col-lg-4 col-sm-6 col-xs-6">
+                                        {{-- <div class="col-lg-4 col-sm-6 col-xs-6">
                                             <div class="select-has-icon icon-black">
                                                 <select class="select common-input" name="room_type" class="room_type">
                                                     <option selected value="">Choose Type Room</option>
@@ -64,7 +64,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="col-lg-4 col-sm-6 col-xs-6">
                                             <button type="submit" class="btn btn-main w-100">
