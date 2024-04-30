@@ -203,7 +203,7 @@ class RoomDiagramController extends Controller
                             ->where('check_out', '>', $checkin);
                     });
             })
-            ->where('room_detail.id_room', '=', $id_room) // Thay 2 bằng id_room mong muốn
+            ->where('room_detail.id_room', '=', $id_room) 
             ->select('room_detail.*')
             ->get();
 
