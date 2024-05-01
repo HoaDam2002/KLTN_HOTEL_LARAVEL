@@ -1,6 +1,6 @@
 <?php
 
-function search_available_room($checkin, $checkout)
+function search_available_room($checkin, $checkout, $action = null)
 {
     $booked_rooms = DB::table('booking')->select('id_room', 'quantity')
         ->where(function ($query) use ($checkin, $checkout) {
@@ -70,5 +70,9 @@ function search_available_room($checkin, $checkout)
         }
     }
 
-    dd($available_rooms, $available_rooms_grouped);
+    if($action == "search"){
+        return $available_rooms_grouped;
+    }else{
+        return $available_rooms;
+    }
 }

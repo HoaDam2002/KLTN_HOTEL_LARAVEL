@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\Customer;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Stripe\Stripe;
+use Carbon\Carbon;
 
 class StriperController extends Controller
 {
@@ -18,8 +22,6 @@ class StriperController extends Controller
         $data = $request->all();
 
         if (!auth()->check()) {
-            // session(['checkout_after_login' => true]);
-
             return redirect()->route('login');
         } else {
             session()->put('deposit',$data);
@@ -31,12 +33,12 @@ class StriperController extends Controller
             $courseItems[] = [
                 'price_data' => [
                     'currency' => 'USD',
-                    'unit_amount' => $data['price'] * 100,
+                    'unit_amount' => $data['deposits'] * 100,
                     'product_data' => [
                         'name' => $data['name'],
                     ],
                 ],
-                'quantity' => $data['quantity'],
+                'quantity' => 1,
             ];
     
             $checkoutSession = \Stripe\Checkout\Session::create([
@@ -61,13 +63,24 @@ class StriperController extends Controller
     public function success()
     {
         $data = session('deposit');
+        session()->forget('deposit');
 
-        $data['id_user'] = auth()->user()->id;
-        $data['status'] = 'pending'; 
+        $checkin = Carbon::parse($data['check_in'])->setTime(14, 0, 0);
+        $checkout = Carbon::parse($data['check_out'])->setTime(12, 0, 0);
+
+
+        $data['check_in'] = $checkin;
+        $data['check_out'] = $checkout;
+
+        $id_account = Auth::id();
+        $customer = Customer::with('account', 'user')->where('id_account', $id_account)->first()->toArray();
+        $id_user = $customer['id_user'];
+        $data['id_user'] = $id_user;
+        $data['status'] = 'pending';
 
         if(!empty($data)){
             if(Booking::create($data)){
-                return redirect()->route('list_booking');
+                return redirect()->route('my_booking_customer');
             }
         }
     }
@@ -75,9 +88,9 @@ class StriperController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function cancel(Request $request)
     {
-        //
+        return Redirect()->back()->withErrors('Your booking have been canceled!');
     }
 
     /**

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProfileRequest extends FormRequest
+class booking_rep extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,8 @@ class ProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|alpha_spaces|max:100',
-            'phone' => 'required|regex:/^[0-9]+$/|max:10',
-            'avatar' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'address' => 'required'
+            'phone' => 'required|unique:users,phone',
+            'name' => 'required'
         ];
     }
 }

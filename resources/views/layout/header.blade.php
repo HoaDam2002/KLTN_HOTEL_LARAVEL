@@ -239,6 +239,12 @@
                     <li class="nav-menu__item">
                         <a href="contact.html" class="nav-menu__link">{{ __('Contact') }}</a>
                     </li>
+                    <li class="nav-menu__item">
+                        <a href="/room_status_management" class="nav-menu__link">{{ __('Housekeeping') }}</a>
+                    </li>
+                    <li class="nav-menu__item">
+                        <a href="/recep/room_diagram" class="nav-menu__link">{{ __('Receptionist') }}</a>
+                    </li>
                 </ul>
             </div>
             <!-- Menu End  -->

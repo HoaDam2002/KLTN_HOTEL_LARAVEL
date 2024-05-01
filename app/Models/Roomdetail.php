@@ -13,5 +13,14 @@ class Roomdetail extends Model
     protected $fillable = [
         'type_name',
         'id_room',
+        'status'
     ];
+
+    public function typeRoom(){
+        return $this->belongsto('App\Models\RoomModel','id_room');
+    }
+
+    public function booking_realtime(){
+        return $this->hasMany('App\Models\Booking_realtime','id_roomDetail');
+    }
 }

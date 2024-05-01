@@ -14,14 +14,17 @@ class RoomModel extends Model
         'name',
         'price',
         'person',
-        'room_type_id',
         'description',
         'images',
         'beds',
         'quantity'
     ];
 
-    public function typeRoom(){
-        return $this->belongsto('App\Models\TypeRoomModel','room_type_id');
+    public function RoomDetail(){
+        return $this->hasMany('App\Models\RoomDetail','id_room');
+    }
+
+    public function comment(){
+        return $this->hasMany(Comment::class,'id_room');
     }
 }
