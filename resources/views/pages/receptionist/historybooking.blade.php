@@ -58,20 +58,20 @@
 @section('content')
     <div class="col-xl-9 col-lg-8">
         <div style="margin: 0 0 100px 0;">
-            <div class="tab-content" id="v-pills-tabContent">
-                <div style="height: 500px;">
-                    <div class="card common-card min-w-maxContent" style="margin-bottom: 20px">
-                        <div class="card-body filter_booking d-flex" style="justify-content: center">
+            <div class="card common-card min-w-maxContent" style="margin-bottom: 20px">
+                <div class="card-body filter_booking d-flex" style="justify-content: center">
 
-                            <form action="" class="w-50 ms-3">
-                                <input type="text" name="" id="" placeholder="Name or Phone Customer"
-                                    class="name_room">
-                                <button type="submit" class="btn_search_booking"><i
-                                        class="fa-solid fa-magnifying-glass"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="card common-card min-w-maxContent overflow-auto" style="height: 488px;">
+                    <form action="" class="w-50 ms-3">
+                        <input type="text" name="" id="" placeholder="Name or Phone Customer"
+                            class="name_room">
+                        <button type="submit" class="btn_search_booking"><i
+                                class="fa-solid fa-magnifying-glass"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="tab-content overflow-auto" id="v-pills-tabContent">
+                <div>
+                    <div class="card common-card min-w-maxContent">
                         <div class="card-body">
                             <table class="table style-two">
                                 <thead>
@@ -81,6 +81,7 @@
                                         <th>{{ __('Check in') }}</th>
                                         <th>{{ __('Check out') }}</th>
                                         <th>{{ __('Status') }}</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -108,11 +109,11 @@
                                             @endphp
                                             <tr>
                                                 <td>
-                                                    <div class="d-flex align-items-center gap-3">
+                                                    <div class="d-flex align-items-center gap-3" style="max-width: 316px">
                                                         <div class="cart-item__thumb">
                                                             <img src='{{ asset($avatar) }}' alt="" />
                                                         </div>
-                                                        <div class="cart-item__content">
+                                                        <div class="cart-item__content" style="max-width: 200px">
                                                             <h6 class="cart-item__title fw-500 font-18">
                                                                 <a href="property.html"
                                                                     class="link text">{{ $value['room_detail']['type_room']['name'] }}</a>
@@ -132,10 +133,10 @@
                                                     <span class="name_cus text">{{ $value['user']['name'] }}</span>
                                                 </td>
                                                 <td>
-                                                    <span class="date text" id="checkin">{{ $value['check_in'] }}</span>
+                                                    <span class="date text" id="checkin">{{ explode(' ', $value['check_in'])[0] }}</span>
                                                 </td>
                                                 <td>
-                                                    <span class="date text" id="checkout">{{ $value['check_out'] }}</span>
+                                                    <span class="date text" id="checkout">{{ explode(' ', $value['check_out'])[0] }}</span>
                                                 </td>
                                                 <td>
                                                     <span class="status cancel text"

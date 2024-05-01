@@ -86,20 +86,21 @@
                 </div>
                 <div class="card common-card min-w-maxContent">
                     <div class="card-body">
-                        <table class="table style-two">
-                            <thead>
-                                <tr>
-                                    <th>{{ __('My Room Information') }}</th>
-                                    <th>{{ __('Check in') }}</th>
-                                    <th>{{ __('Check out') }}</th>
-                                    <th>{{ __('Status') }}</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
+                        @if (!empty($data_new_booking))
+                            <table class="table style-two">
+                                <thead>
+                                    <tr>
+                                        <th>{{ __('My Room Information') }}</th>
+                                        <th>{{ __('Check in') }}</th>
+                                        <th>{{ __('Check out') }}</th>
+                                        <th>{{ __('Status') }}</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
 
-                            <tbody>
-                                {{-- {{dd($data_new_booking)}} --}}
-                                @if (!empty($data_new_booking))
+                                <tbody>
+                                    {{-- {{dd($data_new_booking)}} --}}
+
                                     @foreach ($data_new_booking as $item)
                                         @php
                                             $check_in = $item['check_in'];
@@ -141,11 +142,11 @@
 
                                         </tr>
                                     @endforeach
-                                @else
-                                    <h4>No booking </h4>
-                                @endif
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        @else
+                            <h4 class="text-center">No booking </h4>
+                        @endif
                     </div>
                 </div>
             </div>
