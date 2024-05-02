@@ -187,7 +187,6 @@ class RoomDiagramController extends Controller
 
         $room_detail = Roomdetail::with('typeRoom', 'Booking_realtime.user', 'Booking_realtime.booking.booking_realtime.room_detail')->where('id', $id_roomDetail)->get()->toArray();
 
-        // dd(empty($room_detail[0]['booking_realtime']));
         if (!empty($room_detail[0]['booking_realtime'])) {
             $checkin = $room_detail[0]['booking_realtime']['0']['check_in'];
             $checkout = $room_detail[0]['booking_realtime']['0']['check_out'];
