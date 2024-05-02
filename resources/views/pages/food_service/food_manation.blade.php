@@ -134,7 +134,7 @@
                                                 data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-pen"></i>
                                             </button>
 
-                                            <button style="margin-left: 5px">
+                                            <button style="margin-left: 5px" data-bs-toggle="modal" data-bs-target="#modal_delete_food">
                                                 <i class="fa-solid fa-trash-can"></i>
                                             </button>
                                         </td>
@@ -170,9 +170,8 @@
                                                 data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-pen"></i>
                                             </button>
 
-                                            <button style="margin-left: 5px">
+                                            <button style="margin-left: 5px" data-bs-toggle="modal" data-bs-target="#modal_delete_food">
                                                 <i class="fa-solid fa-trash-can"></i>
-
                                             </button>
                                         </td>
                                         <td></td>
@@ -216,6 +215,26 @@
         </div>
     </div>
     {{-- end modal add food --}}
+
+    {{-- start modal delete food --}}
+    <div class="modal fade" id="modal_delete_food" tabindex="-1" aria-labelledby="modal_delete_food" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h6 class="modal-title fs-5" id="exampleModalLabel">Delete Food</h6>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <span>Are you sure you want to delete?</span>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-main">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{-- end modal delete food --}}
 @endsection
 
 @include('pages.food_service.modal_edit_food')
