@@ -121,19 +121,19 @@ Route::post('/recep/info-booking/cancel/{id}', [BookingController::class, 'cance
 //nhà hàng
 Route::get('/food_service', function () {
     return view('pages.food_service.food_home');
-})->name('food_service');
+})->name('home_food_service');
 
 Route::get('/food_service/manation', function () {
     return view('pages.food_service.food_manation');
-})->name('food_service');
+})->name('food_service_manation');
 
 Route::get('/food_service/order', function () {
     return view('pages.food_service.food_order');
-})->name('food_service');
+})->name('food_service_order');
 
 Route::get('/food_service/order/detail', function () {
     return view('pages.food_service.food_detail_order');
-})->name('food_service');
+})->name('food_service_order_detail');
 
 //dịch vụ
 Route::get('/outside_service/manation', function () {
