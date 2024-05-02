@@ -39,13 +39,18 @@ class BookingController extends Controller
         $id_room = $booking['id_room'];
 
         $list_empty_room_booking = DB::table('room_detail')
-            ->leftJoin('booking_realtime', function ($join) {
-                $join->on('room_detail.id', '=', 'booking_realtime.id_roomDetail');
+            ->whereNotExists(function ($query) use ($checkin, $checkout) {
+                $query->select(DB::raw(1))
+                    ->from('booking_realtime')
+                    ->whereRaw('room_detail.id = booking_realtime.id_roomDetail')
+                    ->where(function ($query) use ($checkin, $checkout) {
+                        $query->where('check_in', '<', $checkout)
+                            ->where('check_out', '>', $checkin);
+                    });
             })
-            ->whereNull('booking_realtime.id')
             ->where('room_detail.id_room', '=', $id_room)
             ->select('room_detail.*')
-            ->get();
+            ->get()->toArray();
 
         return view('pages.receptionist.info_booking', compact('booking', 'list_empty_room_booking'));
     }
@@ -69,7 +74,6 @@ class BookingController extends Controller
                 $booking->id_tour = $data['id_tour'];
                 $booking->payment = 'creditCard';
                 $booking->payment_total = 'wait';
-
 
                 $result = $booking->save();
 
