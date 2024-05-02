@@ -183,32 +183,37 @@ class RoomDiagramController extends Controller
      */
     public function fill_modal(Request $request)
     {
-        // dd($request->all());
         $id_roomDetail = $request->all()['id_room'];
 
         $room_detail = Roomdetail::with('typeRoom', 'Booking_realtime.user', 'Booking_realtime.booking.booking_realtime.room_detail')->where('id', $id_roomDetail)->get()->toArray();
 
-        $checkin = $room_detail[0]['booking_realtime']['0']['check_in'];
-        $checkout = $room_detail[0]['booking_realtime']['0']['check_out'];
+        // dd(empty($room_detail[0]['booking_realtime']));
+        if (!empty($room_detail[0]['booking_realtime'])) {
+            $checkin = $room_detail[0]['booking_realtime']['0']['check_in'];
+            $checkout = $room_detail[0]['booking_realtime']['0']['check_out'];
 
-        $id_room = Roomdetail::where('id', $room_detail)->first()->toArray()['id_room'];
+            $id_room = Roomdetail::where('id', $room_detail)->first()->toArray()['id_room'];
 
-        $list_empty_room_booking = DB::table('room_detail')
-            ->whereNotExists(function ($query) use ($checkin, $checkout) {
-                $query->select(DB::raw(1))
-                    ->from('booking_realtime')
-                    ->whereRaw('room_detail.id = booking_realtime.id_roomDetail')
-                    ->where(function ($query) use ($checkin, $checkout) {
-                        $query->where('check_in', '<', $checkout)
-                            ->where('check_out', '>', $checkin);
-                    });
-            })
-            ->where('room_detail.id_room', '=', $id_room) 
-            ->select('room_detail.*')
-            ->get();
+            $list_empty_room_booking = DB::table('room_detail')
+                ->whereNotExists(function ($query) use ($checkin, $checkout) {
+                    $query->select(DB::raw(1))
+                        ->from('booking_realtime')
+                        ->whereRaw('room_detail.id = booking_realtime.id_roomDetail')
+                        ->where(function ($query) use ($checkin, $checkout) {
+                            $query->where('check_in', '<', $checkout)
+                                ->where('check_out', '>', $checkin);
+                        });
+                })
+                ->where('room_detail.id_room', '=', $id_room)
+                ->select('room_detail.*')
+                ->get()->toArray();
 
-        return response()->json(['item' => $room_detail, 'list_room' => $list_empty_room_booking]);
+            return response()->json(['item' => $room_detail, 'list_room' => $list_empty_room_booking]);
+        }else{
+            return response()->json(['item' => $room_detail]);
+        }
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -448,6 +453,24 @@ class RoomDiagramController extends Controller
         $booking_realtime = Booking_realtime::where('id', $id_booking_realtime)->first();
 
         $booking_realtime->status = 'cancel';
+
+        $booking_realtime->save();
+
+        if ($booking_realtime) {
+            $time = $data['time'];
+
+            $room = $this->search($time)->get()->toArray();
+            return response()->json(['room' => $room]);
+        }
+    }
+
+    public function change_room(Request $request)
+    {
+        $data = $request->all();
+
+        $booking_realtime = Booking_realtime::where('id', $data['id_booking_realtime'])->first();
+
+        $booking_realtime->id_roomDetail = $data['id_room_change'];
 
         $booking_realtime->save();
 

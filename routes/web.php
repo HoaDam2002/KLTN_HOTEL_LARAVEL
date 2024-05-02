@@ -98,6 +98,8 @@ Route::post('/recep/diagram/change_status_booking_realtime', [RoomDiagramControl
 Route::post('/recep/diagram/checkout', [RoomDiagramController::class, 'checkout'])->name('checkout_diagram_recep');
 Route::post('/recep/diagram/checkout_soon', [RoomDiagramController::class, 'checkout_soon'])->name('checkout_soon_diagram_recep');
 Route::post('/recep/diagram/cancel', [RoomDiagramController::class, 'cancel'])->name('cancel_diagram_recep');
+Route::post('/recep/diagram/change_room', [RoomDiagramController::class, 'change_room'])->name('change_room_diagram_recep');
+
 
 
 Route::get('/recep/history-booking', [RecepHistoryBookingController::class, 'index'])->name('history-booking_recep');
