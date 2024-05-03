@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('pages.service_outside.service_outside')
 
 @section('css')
     <style>
@@ -47,27 +47,18 @@
 
         .btn_search_booking {
             position: absolute;
-            top: 15px;
+            top: 11px;
             right: 20px;
         }
     </style>
 @endsection
 
 @section('content')
-    <div class="container">
+    <div class="col-xl-9 col-lg-9">
         <div class="tab-content" id="v-pills-tabContent">
             <div class="overflow-auto">
-                <div class="card common-card min-w-maxContent" style="margin-bottom: 20px; margin-top: 20px;">
+                <div class="card common-card min-w-maxContent" style="margin-bottom: 20px;">
                     <div class="card-body filter_booking d-flex" style="justify-content: center;">
-                        {{-- <button class="btn_filter dropdown-toggle" data-bs-toggle="dropdown"
-                            aria-expanded="false">Filter</button>
-                        <ul class="dropdown-menu" style="">
-                            <li><a class="dropdown-item" href="#">Cancel</a></li>
-                            <li><a class="dropdown-item" href="#">Check in</a></li>
-                            <li><a class="dropdown-item" href="#">Confirm</a></li>
-                            <li><a class="dropdown-item" href="#">Pending</a></li>
-                            <li><a class="dropdown-item" href="#">Finish</a></li>
-                        </ul> --}}
                         <form action="" class="w-50 ms-3">
                             <input type="text" name="" id="" placeholder="Customer Name" class="">
                             <button type="submit" class="btn_search_booking"><i
@@ -75,7 +66,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="card common-card min-w-maxContent" style="margin-bottom: 100px;"> 
+                <div class="card common-card min-w-maxContent">
                     <div class="card-body">
                         <table class="table style-two">
                             <thead>
@@ -83,6 +74,8 @@
                                     <th>Information</th>
                                     <th>Check in</th>
                                     <th>Check out</th>
+                                    {{-- <th>Status</th> --}}
+                                    {{-- <th>Action</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -97,12 +90,10 @@
                                                 <h6 class="cart-item__title fw-500 font-18">
                                                     <a href="/outside_service/order/detail" class="link">Nguyen Van A</a>
                                                 </h6>
-                                                
-                                                
                                             </div>
                                         </div>
                                     </td>
-                                    
+
                                     <td>
                                         <span class="date" id="checkin">17/02/2024</span>
                                     </td>
@@ -114,6 +105,19 @@
                     </div>
                 </div>
             </div>
+            <nav aria-label="Page navigation example" style="padding-bottom: 50px;">
+                <ul class="pagination common-pagination">
+                    <li class="page-item">
+                        <a class="page-link bg-white" href="#">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link bg-white" href="#">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link bg-white" href="#">3</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
 @endsection
