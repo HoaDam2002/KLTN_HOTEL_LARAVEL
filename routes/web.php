@@ -136,17 +136,21 @@ Route::get('/food_service/order/detail', function () {
 })->name('food_service_order_detail');
 
 //dịch vụ
+Route::get('/outside_service', function () {
+    return view('pages.service_outside.service_home');
+})->name('home_service');
+
 Route::get('/outside_service/manation', function () {
     return view('pages.service_outside.outside_service_manation');
-})->name('outside_service');
+})->name('outside_service_manation');
 
 Route::get('/outside_service/order', function () {
     return view('pages.service_outside.outside_service_order');
-})->name('outside_service');
+})->name('outside_service_order');
 
 Route::get('/outside_service/order/detail', function () {
     return view('pages.service_outside.outside_service_detail_order');
-})->name('outside_service');
+})->name('outside_service_order_detail');
 
 
 
