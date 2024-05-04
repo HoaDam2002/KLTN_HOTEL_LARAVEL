@@ -57,16 +57,16 @@
                                 <strong class="price_booking">$4{{ $booking['price'] }}</strong>
                             </div>
                             <div class="mb-4">
-                                <strong class="mb-2 d-block">Please choose the room for guests</strong>
-                                <div class="row">
+                                <form class="row g-3 needs-validation" novalidate>
+                                    <strong class="mb-2 d-block">Please choose the room for guests</strong>
                                     @if ($booking['quantity'] > 0)
                                         @for ($i = 0; $i < $booking['quantity']; $i++)
                                             <div class="mb-3 col-4">
                                                 <label for="exampleFormControlInput1" class="form-label">Room
                                                     {{ $i + 1 }}</label>
-                                                <select class="form-select form-select-lg"
-                                                    aria-label="Default select example">
-                                                    <option selected>Please choose the room</option>
+                                                <select class="form-select form-select-lg room_booking_realtime"
+                                                    required>
+                                                    <option value="">Please choose the room</option>
                                                     @if (!empty($list_empty_room_booking))
                                                         @foreach ($list_empty_room_booking as $item)
                                                             <option value="{{ $item->id }}">
@@ -75,16 +75,18 @@
                                                         @endforeach
                                                     @endif
                                                 </select>
+                                                <div class="invalid-feedback">
+                                                    Please select a valid room.
+                                                </div>
                                             </div>
                                         @endfor
                                     @endif
-                                </div>
+                                    <div class="card-footer" style="padding: 15px 0">
+                                        <button type="submit" class="btn btn-success"
+                                            id="btn_confirm_booking">Confirm</button>
+                                    </div>
+                                </form>
                             </div>
-                        </div>
-                        <div class="card-footer">
-                            <button class="btn btn-success" id="btn_confirm_booking">Confirm</button>
-                            <button class="btn btn-warning" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">Cancel</button>
                         </div>
                     </div>
                 @endif
@@ -100,7 +102,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>You definitely want to cancel this booking. Once you confirm the cancellation, you will not be able to return to the original status.</p>
+                    <p>You definitely want to cancel this booking. Once you confirm the cancellation, you will not be able
+                        to return to the original status.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -119,55 +122,79 @@
             }
         });
 
+        var selectedValues = [];
+
+        (() => {
+            'use strict'
+
+            const forms = document.querySelectorAll('.needs-validation')
+
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    } else {
+                        event.preventDefault();
+                        var selectedValuesArray = [];
+
+                        $(".room_booking_realtime").each(function() {
+                            var selectedValueRoom = $(this).find('option:selected').val();
+                            if (selectedValueRoom) { 
+                                selectedValuesArray.push(selectedValueRoom);
+                            }
+                        });
+                        $.ajax({
+                            url: '/recep/info-booking/{{ $booking['id'] }}',
+                            method: 'POST',
+                            data: {
+                                id_booking: {{ $booking['id'] }},
+                                id_room: {{ $booking['room']['id'] }},
+                                values: selectedValuesArray,
+                                check_in: '{{ $booking['check_in'] }}',
+                                check_out: '{{ $booking['check_out'] }}',
+                                price: {{ $booking['price'] }},
+                                status: 'pending',
+                                id_user: {{ $booking['user']['id'] }},
+                                id_tour: {{ $booking['id'] }}
+                            },
+                            success: function(response) {
+                                console.log('Data inserted successfully:', response);
+                                window.location.href = '/recep/request-booking';
+                            },
+                            error: function(error) {
+                                console.error('Error inserting data:', error);
+                                window.location.href = '/recep/request-booking';
+                            }
+                        })
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+
         $(document).ready(function() {
-            $('#btn_confirm_booking').on('click', function() {
-                var selectedValues = [];
-                
-                $(".form-select.form-select-lg").each(function() {
-                    selectedValues.push($(this).val());
-                });
+            $('select.room_booking_realtime').change(function() {
+                disableSelectedOptions(this);
+            });
 
-                $.ajax({
-                    url: '/recep/info-booking/{id}',
-                    method: 'POST',
-                    data: {
-                        id_booking: {{ $booking['id'] }},
-                        id_room: {{ $booking['room']['id'] }},
-                        values: selectedValues,
-                        check_in: '{{ $booking['check_in'] }}',
-                        check_out: '{{ $booking['check_out'] }}',
-                        price: {{ $booking['price'] }},
-                        status: 'pending',
-                        id_user: {{ $booking['user']['id'] }},
-                        id_tour: {{ $booking['id'] }}
-                    },
-                    success: function(response) {
-                        console.log('Data inserted successfully:', response);
-                    },
-                    error: function(error) {
-                        console.error('Error inserting data:', error);
-                    }
-                })
-            })
-
-
-            $('#btn_cancel_booking').on('click', function() {
-                $.ajax({
-                    url: '/recep/info-booking/cancel/{id}',
-                    method: 'POST',
-                    data: {
-                        id_booking: {{ $booking['id'] }},
-                    },
-                    success: function(response) {
-                        console.log('Data inserted successfully:', response);
-                        window.location.href = '/recep/request-booking';
-                    },
-                    error: function(error) {
-                        console.error('Error inserting data:', error);
-                        window.location.href = '/recep/request-booking';
-                    }
-                })
-            })
         })
+
+
+        function disableSelectedOptions(selectedOption) {
+            selectedValues.push(selectedOption.value);
+            var selects = $('select.form-select');
+            for (var i = 0; i < selects.length; i++) {
+                var options = $(selects[i]).find('option');
+                for (var j = 0; j < options.length; j++) {
+                    if (selectedValues.includes(options[j].value)) {
+                        options[j].disabled = true;
+                    } else {
+                        options[j].disabled = false;
+                    }
+                }
+            }
+        }
     </script>
 @endsection

@@ -98,6 +98,8 @@ Route::post('/recep/diagram/change_status_booking_realtime', [RoomDiagramControl
 Route::post('/recep/diagram/checkout', [RoomDiagramController::class, 'checkout'])->name('checkout_diagram_recep');
 Route::post('/recep/diagram/checkout_soon', [RoomDiagramController::class, 'checkout_soon'])->name('checkout_soon_diagram_recep');
 Route::post('/recep/diagram/cancel', [RoomDiagramController::class, 'cancel'])->name('cancel_diagram_recep');
+Route::post('/recep/diagram/change_room', [RoomDiagramController::class, 'change_room'])->name('change_room_diagram_recep');
+
 
 
 Route::get('/recep/history-booking', [RecepHistoryBookingController::class, 'index'])->name('history-booking_recep');
@@ -119,32 +121,36 @@ Route::post('/recep/info-booking/cancel/{id}', [BookingController::class, 'cance
 //nhà hàng
 Route::get('/food_service', function () {
     return view('pages.food_service.food_home');
-})->name('food_service');
+})->name('home_food_service');
 
 Route::get('/food_service/manation', function () {
     return view('pages.food_service.food_manation');
-})->name('food_service');
+})->name('food_service_manation');
 
 Route::get('/food_service/order', function () {
     return view('pages.food_service.food_order');
-})->name('food_service');
+})->name('food_service_order');
 
 Route::get('/food_service/order/detail', function () {
     return view('pages.food_service.food_detail_order');
-})->name('food_service');
+})->name('food_service_order_detail');
 
 //dịch vụ
+Route::get('/outside_service', function () {
+    return view('pages.service_outside.service_home');
+})->name('home_service');
+
 Route::get('/outside_service/manation', function () {
     return view('pages.service_outside.outside_service_manation');
-})->name('outside_service');
+})->name('outside_service_manation');
 
 Route::get('/outside_service/order', function () {
     return view('pages.service_outside.outside_service_order');
-})->name('outside_service');
+})->name('outside_service_order');
 
 Route::get('/outside_service/order/detail', function () {
     return view('pages.service_outside.outside_service_detail_order');
-})->name('outside_service');
+})->name('outside_service_order_detail');
 
 
 

@@ -20,7 +20,7 @@ class BookingController extends Controller
         $currentDate = Carbon::now()->toDateString();
         // $data_new_booking = \DB::table('booking')->join('rooms', 'booking.id_room', '=', 'rooms.id')
         //     ->select('booking.*', 'rooms.*')->where('booking.status', 'pending')->where('booking.created_at', '>' , $currentDate)->get()->toArray();
-        $data_new_booking = Booking::with('room')->where('status', 'pending')->where('created_at', '>=', $currentDate)->get()->toArray();
+        $data_new_booking = Booking::with('room')->where('status', 'pending')->where('check_in', '>=', $currentDate)->get()->toArray();
 
         return view('pages.receptionist.request_booking', compact('data_new_booking'));
     }
@@ -39,13 +39,18 @@ class BookingController extends Controller
         $id_room = $booking['id_room'];
 
         $list_empty_room_booking = DB::table('room_detail')
-            ->leftJoin('booking_realtime', function ($join) {
-                $join->on('room_detail.id', '=', 'booking_realtime.id_roomDetail');
+            ->whereNotExists(function ($query) use ($checkin, $checkout) {
+                $query->select(DB::raw(1))
+                    ->from('booking_realtime')
+                    ->whereRaw('room_detail.id = booking_realtime.id_roomDetail')
+                    ->where(function ($query) use ($checkin, $checkout) {
+                        $query->where('check_in', '<', $checkout)
+                            ->where('check_out', '>', $checkin);
+                    });
             })
-            ->whereNull('booking_realtime.id')
             ->where('room_detail.id_room', '=', $id_room)
             ->select('room_detail.*')
-            ->get();
+            ->get()->toArray();
 
         return view('pages.receptionist.info_booking', compact('booking', 'list_empty_room_booking'));
     }
@@ -60,16 +65,15 @@ class BookingController extends Controller
                 $booking = new Booking_realtime();
                 $booking->id_booking = $data['id_booking'];
                 $booking->id_room = $data['id_room'];
-                $booking->id_roomDetail = $value; // Lưu giá trị cụ thể
+                $booking->id_roomDetail = $value;
                 $booking->check_in = $data['check_in'];
                 $booking->check_out = $data['check_out'];
                 $booking->price = $data['price'];
                 $booking->status = $data['status'];
                 $booking->id_user = $data['id_user'];
                 $booking->id_tour = $data['id_tour'];
-                $booking->payment = 'in';
+                $booking->payment = 'creditCard';
                 $booking->payment_total = 'wait';
-
 
                 $result = $booking->save();
 

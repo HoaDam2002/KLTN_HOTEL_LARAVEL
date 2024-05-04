@@ -1,110 +1,101 @@
-@extends('layout.app')
+@extends('pages.food_service.food_service')
 
 @section('css')
-<style>
-    span.status {
-        color: #fff;
-        padding: 5px 10px;
-        border-radius: 40px;
-        min-width: 85px;
-    }
+    <style>
+        span.status {
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 40px;
+            min-width: 85px;
+        }
 
-    .status.cancel {
-        background-color: orange;
-    }
+        .status.cancel {
+            background-color: orange;
+        }
 
-    .status.confirm {
-        background-color: green;
-    }
+        .status.confirm {
+            background-color: green;
+        }
 
-    .status.pending {
-        background-color: blue;
-    }
+        .status.pending {
+            background-color: blue;
+        }
 
-    .status.finish {
-        background-color: black;
-    }
+        .status.finish {
+            background-color: black;
+        }
 
-    .status.checkin {
-        background-color: crimson;
-    }
+        .status.checkin {
+            background-color: crimson;
+        }
 
-    .btn_filter {
-        background: var(--main-gradient);
-        color: #fff;
-        padding: 8px 20px;
-    }
+        .btn_filter {
+            background: var(--main-gradient);
+            color: #fff;
+            padding: 8px 20px;
+        }
 
-    .filter_booking form {
-        position: relative;
-    }
+        .filter_booking form {
+            position: relative;
+        }
 
-    .filter_booking input {
-        width: 100%;
-        padding: 8px 15px;
-        outline: none;
-    }
+        .filter_booking input {
+            width: 100%;
+            padding: 8px 15px;
+            outline: none;
+        }
 
-    .btn_search_booking {
-        position: absolute;
-        top: 15px;
-        right: 20px;
-    }
+        .btn_search_booking {
+            position: absolute;
+            top: 11px;
+            right: 20px;
+        }
 
-    .title_mng_food {
-        background-color: rgb(255, 165, 0);
-        padding: 15px 0;
-        margin-bottom: 40px;
-    }
+        .title_mng_food {
+            background-color: rgb(255, 165, 0);
+            padding: 15px 0;
+            margin-bottom: 40px;
+        }
 
-    .title {
-        margin: auto;
-        text-align: center;
-        color: #fff;
-    }
+        .title {
+            margin: auto;
+            text-align: center;
+            color: #fff;
+        }
 
-    .cart-item__title .link {
-        width: 150px !important;
-    }
+        .cart-item__title .link {
+            width: 150px !important;
+        }
 
-    .title_order_form {
-        text-align: center;
-        margin: auto;
-        padding: 20px 0;
-    }
+        .title_order_form {
+            text-align: center;
+            margin: auto;
+            padding: 20px 0;
+        }
 
-    td,
-    th {
-        text-align: center;
-    }
+        td,
+        th {
+            text-align: center;
+        }
 
-    td {
-        padding: 10px;
-    }
+        td {
+            padding: 10px;
+        }
 
 
-    tr {
-        margin-bottom: 10px;
-    }
-</style>
+        tr {
+            margin-bottom: 10px;
+        }
+    </style>
 @endsection
 
 @section('content')
-<div class="container padding-y-60">
-    <div class="row">
-        <div class="col-12 title_mng_food">
-            <h3 class="title">DANA HOTEL FOOD</h1>
-        </div>
-    </div>
-
-
-    <div class="row">
-        <div class="col-12 col-lg-6">
-            <div class="card-body filter_booking d-flex mb-3" style="justify-content: center">
+    <div class="col-xl-9 col-lg-9">
+        <div class="tab-content" id="v-pills-tabContent">
+            <div class="card card-body filter_booking d-flex mb-3" style="align-items: center;">
                 <form action="" class="w-50 ms-3">
                     <input type="text" name="" id="" placeholder="Food Name" class="">
-                    <button type="submit" class="btn_search_booking"><i
-                            class="fa-solid fa-magnifying-glass"></i></button>
+                    <button type="submit" class="btn_search_booking"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
             </div>
             <div class="tab-content mb-3" id="v-pills-tabContent">
@@ -152,105 +143,107 @@
             </div>
         </div>
 
-        <div class="col-12 col-lg-6" style="background-color: #fff; height: 100%;">
-            <h3 class="title_order_form">INFORMATION ORDER</h3>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="infor_customer" value="Nguyen Van A" disabled>
-                <label for="infor_customer">Name Customer</label>
+        <div class="tab-content mb-3" id="v-pills-tabContent">
+            <div class="card common-card min-w-maxContent">
+                <h3 class="title_order_form">INFORMATION ORDER</h3>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="infor_customer" value="Nguyen Van A" disabled>
+                    <label for="infor_customer">Name Customer</label>
+                </div>
+
+                <table class="table-primary" style="width: 100%; margin: 5px;">
+                    <thead>
+                        <tr class="table-primary">
+                            <th scope="col">ID</th>
+                            <th scope="col">Food</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+
+                            <td class="table-primary">
+                                <span>Fish</span>
+                            </td>
+                            <td class="table-primary">3</td>
+                            <td class="table-primary">
+                                $5
+                            </td>
+                            <td class="table-primary">
+                                15$
+                            </td>
+                            <td class="table-primary">
+                                <div style="padding-right: 20px;">
+                                    <button style="margin-left: 5px">
+                                        <i class="fa-solid fa-plus"></i>
+                                    </button>
+                                    <button style="margin-left: 5px">
+                                        <i class="fa-solid fa-minus"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+
+                            <td class="table-primary">
+                                <span>Fish</span>
+                            </td>
+                            <td class="table-primary">3</td>
+                            <td class="table-primary">
+                                $5
+                            </td>
+                            <td class="table-primary">
+                                15$
+                            </td>
+                            <td class="table-primary">
+                                <div style="padding-right: 20px;">
+                                    <button style="margin-left: 5px">
+                                        <i class="fa-solid fa-plus"></i>
+                                    </button>
+                                    <button style="margin-left: 5px">
+                                        <i class="fa-solid fa-minus"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+
+                            <td class="table-primary">
+                                <span>Fish</span>
+                            </td>
+                            <td class="table-primary">3</td>
+                            <td class="table-primary">
+                                $5
+                            </td>
+                            <td class="table-primary">
+                                15$
+                            </td>
+                            <td class="table-primary">
+                                <div style="padding-right: 20px;">
+                                    <button style="margin-left: 5px">
+                                        <i class="fa-solid fa-plus"></i>
+                                    </button>
+                                    <button style="margin-left: 5px">
+                                        <i class="fa-solid fa-minus"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row"><strong>Total</strong></td>
+                            <td class="table-primary">45$</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-main w-10 mb-2" type="submit"
+                    style="background-color: rgb(255,165,0);">ORDER</button>
             </div>
-
-            <table class="table-primary" style="width: 100%; margin: 5px;">
-                <thead>
-                    <tr class="table-primary">
-                        <th scope="col">ID</th>
-                        <th scope="col">Food</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Total</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-
-                        <td class="table-primary">
-                            <span>Fish</span>
-                        </td>
-                        <td class="table-primary">3</td>
-                        <td class="table-primary">
-                            $5
-                        </td>
-                        <td class="table-primary">
-                            15$
-                        </td>
-                        <td class="table-primary">
-                            <div style="padding-right: 20px;">
-                                <button style="margin-left: 5px">
-                                    <i class="fa-solid fa-plus"></i>
-                                </button>
-                                <button style="margin-left: 5px">
-                                    <i class="fa-solid fa-minus"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-
-                        <td class="table-primary">
-                            <span>Fish</span>
-                        </td>
-                        <td class="table-primary">3</td>
-                        <td class="table-primary">
-                            $5
-                        </td>
-                        <td class="table-primary">
-                            15$
-                        </td>
-                        <td class="table-primary">
-                            <div style="padding-right: 20px;">
-                                <button style="margin-left: 5px">
-                                    <i class="fa-solid fa-plus"></i>
-                                </button>
-                                <button style="margin-left: 5px">
-                                    <i class="fa-solid fa-minus"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-
-                        <td class="table-primary">
-                            <span>Fish</span>
-                        </td>
-                        <td class="table-primary">3</td>
-                        <td class="table-primary">
-                            $5
-                        </td>
-                        <td class="table-primary">
-                            15$
-                        </td>
-                        <td class="table-primary">
-                            <div style="padding-right: 20px;">
-                                <button style="margin-left: 5px">
-                                    <i class="fa-solid fa-plus"></i>
-                                </button>
-                                <button style="margin-left: 5px">
-                                    <i class="fa-solid fa-minus"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row" colspan="4" s>Total</th>
-                        <td class="table-primary">45$</td>
-                    </tr>
-                </tbody>
-            </table>
-            <button class="btn btn-primary mb-3" type="submit" style="background-color: rgb(255,165,0);">ORDER</button>
         </div>
     </div>
-</div>
 @endsection

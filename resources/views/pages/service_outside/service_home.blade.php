@@ -1,4 +1,4 @@
-@extends('pages.food_service.food_service')
+@extends('pages.service_outside.service_outside')
 
 @section('content')
     <div class="col-xl-9 col-lg-8">

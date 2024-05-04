@@ -66,7 +66,7 @@
     <div class="col-xl-9 col-lg-8">
         <div class="tab-content" id="v-pills-tabContent">
             <div class="overflow-auto">
-                <div class="card common-card min-w-maxContent" style="margin-bottom: 20px">
+                {{-- <div class="card common-card min-w-maxContent" style="margin-bottom: 20px">
                     <div class="card-body filter_booking d-flex">
                         <button class="btn_filter dropdown-toggle" data-bs-toggle="dropdown"
                             aria-expanded="false">Filter</button>
@@ -83,23 +83,22 @@
                                     class="fa-solid fa-magnifying-glass"></i></button>
                         </form>
                     </div>
-                </div>
+                </div> --}}
                 <div class="card common-card min-w-maxContent">
                     <div class="card-body">
-                        <table class="table style-two">
-                            <thead>
-                                <tr>
-                                    <th>{{ __('My Room Information') }}</th>
-                                    <th>{{ __('Check in') }}</th>
-                                    <th>{{ __('Check out') }}</th>
-                                    <th>{{ __('Status') }}</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
+                        @if (!empty($data_new_booking))
+                            <table class="table style-two">
+                                <thead>
+                                    <tr>
+                                        <th>{{ __('My Room Information') }}</th>
+                                        <th>{{ __('Check in') }}</th>
+                                        <th>{{ __('Check out') }}</th>
+                                        <th>{{ __('Status') }}</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
 
-                            <tbody>
-                                {{-- {{dd($data_new_booking)}} --}}
-                                @if (!empty($data_new_booking))
+                                <tbody>
                                     @foreach ($data_new_booking as $item)
                                         @php
                                             $check_in = $item['check_in'];
@@ -141,30 +140,14 @@
 
                                         </tr>
                                     @endforeach
-                                @else
-                                    <h4>No booking </h4>
-                                @endif
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        @else
+                            <h4 class="text-center">No booking</h4>
+                        @endif
                     </div>
                 </div>
             </div>
-            {{-- <nav aria-label="Page navigation example">
-            <ul class="pagination common-pagination">
-                <li class="page-item active">
-                    <a class="page-link bg-white" href="#">1</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link bg-white" href="#">2</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link bg-white" href="#">3</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link bg-white" href="#">4</a>
-                </li>
-            </ul>
-        </nav> --}}
         </div>
     </div>
 @endsection

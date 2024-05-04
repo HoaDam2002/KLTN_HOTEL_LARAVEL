@@ -107,15 +107,15 @@
             min-width: 200px;
         }
 
-        .change-room{
+        .change-room {
             display: flex;
         }
 
-        .choose_room{
+        .choose_room {
             width: 90%;
         }
 
-        .btn-choose{
+        .btn-choose {
             width: 10%;
             background-color: yellowgreen;
             /* text-align: center; */
@@ -123,10 +123,10 @@
 
 
         /* .infor_customer{
-                                                                                                                                                                                                                                                                                                                                                                                                                            display: flex;
-                                                                                                                                                                                                                                                                                                                                                                                                                            justify-content: center;
-                                                                                                                                                                                                                                                                                                                                                                                                                            
-                                                                                                                                                                                                                                                                                                                                                                                                                        } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                        display: flex;
+                                                                                                                                                                                                                                                                                                                                                                                                                                        justify-content: center;
+                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                                                                                                                                                                                                                                                                                                                                                                                                                                    } */
     </style>
 @endsection
 
@@ -802,17 +802,9 @@
                         <label for="formGroupExampleInput2" class="form-label">{{ __('Change Room') }}</label>
                         <div class="change-room">
                             <select name="room_change" id="formGroupExampleInput2" class="form-control choose_room">
-                                <option value="">Choose Room</option>
-                                <option value="">Choose Room</option>
-
-                                <option value="">Choose Room</option>
-
-                                <option value="">Choose Room</option>
-
-                                <option value="">Choose Room</option>
 
                             </select>
-                            <button class="btn-choose">Change</button>
+                            <button class="btn-choose btn_change_room">Change</button>
                         </div>
                         {{-- <input type="text" class="form-control phone_cus" id="formGroupExampleInput2"
                             placeholder="Another input placeholder" value="0708852641" disabled> --}}
@@ -927,14 +919,15 @@
             var newMonth = currentDate.getMonth() + 1;
             var newYear = currentDate.getFullYear();
 
-            var newDay_now = currentDate_now.getDate();
+            var newDay_now = currentDate_now.getDate() - 1;
             var newMonth_now = currentDate_now.getMonth() + 1;
             var newYear_now = currentDate_now.getFullYear();
-
 
             if (newDay_now < 10) {
                 newDay_now = '0' + newDay_now;
             }
+
+
             if (newMonth_now < 10) {
                 newMonth_now = '0' + newMonth_now;
             }
@@ -947,7 +940,10 @@
             }
 
 
-            let time_now = newYear_now + '-' + newMonth_now + '-' + (newDay_now - 1);
+            let time_now = newYear_now + '-' + newMonth_now + '-' + newDay_now;
+
+            // console.log(time.trim());
+            console.log(time_now, time);
 
             if (time != time_now) {
                 $('.bt_checkin').hide();
@@ -955,10 +951,6 @@
                 $('.bt_checkout').hide();
                 $('.bt_checkout_soon').hide();
             }
-
-
-
-            console.log(time_now);
 
             var check_out = newYear + '-' + newMonth + '-' + newDay;
 
@@ -1326,7 +1318,6 @@
 
                 if ($('input[name="payment"]').prop('checked')) {
                     payment = $('input[name="payment"]:checked').val();
-
                 }
 
                 $('input[name="payment"]').change(function() {
@@ -1359,11 +1350,12 @@
                     dataType: "json",
                     success: function(response) {
                         let item = response.item[0];
-                        let list_room = response.list_room;
+                        let list_room = [];
+                        if (response.list_room) {
+                            list_room = response.list_room;
+                        }
 
-                        // console.log(item);
                         console.log(list_room);
-
                         let name_room = item.type_name;
                         let type_room = item.type_room.name;
                         let status = item.status;
@@ -1549,6 +1541,16 @@
                                 });
                             })
                         } else if (modal == '#modalRoomCheckout_Soon') {
+
+                            let html = '<option value="">Choose Room</option>';
+
+                            list_room.map(function(value) {
+                                html += '<option value="' + value.id + '">' + value
+                                    .type_name + '</option>'
+                            })
+
+                            $('.choose_room').html(html);
+
                             let booking_realtime = [];
 
                             item.booking_realtime.map(function(value) {
@@ -1596,6 +1598,35 @@
                             $(modal).find('strong.duration').text(duration_soon);
                             $(modal).find('input.name_cus').val(name_cus);
                             $(modal).find('input.phone_cus').val(phone);
+
+                            $(document).on('click', 'button.btn_change_room', function() {
+                                let id_room_change = $(this).closest('.change-room')
+                                    .find('.choose_room').val();
+
+                                console.log(id_booking_realtime);
+                                $.ajax({
+                                    type: "post",
+                                    url: "/recep/diagram/change_room",
+                                    data: {
+                                        time: time,
+                                        id_room_change: id_room_change,
+                                        id_booking_realtime: id_booking_realtime
+                                    },
+                                    dataType: "json",
+                                    success: function(response) {
+                                        let arr = response.room;
+
+                                        render_all_room(arr);
+                                        $('#modalRoomCheckout_Soon').modal(
+                                            'hide');
+                                        var toast = new bootstrap.Toast(
+                                            document.getElementById(
+                                                'liveToast'));
+                                        toast.show();
+                                    }
+                                });
+                            })
+
 
                             $(document).on('click', 'button.bt_checkout_soon', function() {
                                 $.ajax({
@@ -1777,7 +1808,7 @@
             })
 
             // $(document).on('click', 'button.btn-choose', function() {
-                
+
             // })
 
             function render_all_room(arr) {
