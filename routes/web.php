@@ -168,7 +168,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/customer/change-pass', [PasswordController::class, 'update'])->name('update_password');
     Route::get('/dashboard', [ProfileController::class, 'showHomeAccountView'])->name('account_home_customer');
 });
-
+Route::get('/listevaluate', function () {
+    return view('pages.receptionist.listevaluate');
+})->name('list_evaluate');
+Route::get('/accountuserlist', function () {
+    return view('pages.receptionist.accountuser');
+})->name('list_user');
 require __DIR__.'/auth.php';
 
 
