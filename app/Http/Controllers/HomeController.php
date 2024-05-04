@@ -1,7 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Customer;
 use App\Models\RoomModel;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
 
 use Illuminate\Http\Request;
 
@@ -14,7 +19,25 @@ class HomeController extends Controller
     {
         $data = RoomModel::all();
 
-        return view('pages.home.home_customer',compact('data'));
+        if (Auth::check()) {
+            $id_account = Auth::id();
+            $customer = Customer::where('id', $id_account)->first();
+
+            $id_user = $customer->id_user;
+
+            $user = User::where('id', $id_user)->first();
+
+            $role = $user->role;
+
+            if ($role == 'customer') {
+                return view('pages.home.home_customer', compact('data'));
+            } else {
+                Auth::logout();
+                return redirect('/');
+            }
+        }
+
+        return view('pages.home.home_customer', compact('data'));
     }
 
     /**
@@ -24,7 +47,7 @@ class HomeController extends Controller
     {
         $data = RoomModel::all();
 
-        return view('pages.home.home_customer',compact('data'));
+        return view('pages.home.home_customer', compact('data'));
     }
 
     /**

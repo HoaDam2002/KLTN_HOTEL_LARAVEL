@@ -2,6 +2,12 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\Role;
+use App\Http\Middleware\RoleAdmin;
+use App\Http\Middleware\RoleReceptionist;
+use App\Http\Middleware\RoleRestaurant;
+use App\Http\Middleware\RoleService;
+use App\Http\Middleware\RoleStatusManager;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -65,5 +71,11 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'customer' => Role::class,
+        'receptionist' => RoleReceptionist::class,
+        'admin' => RoleAdmin::class,
+        'service' => RoleService::class,
+        'status_manager' => RoleStatusManager::class,
+        'restaurant' => RoleRestaurant::class
     ];
 }

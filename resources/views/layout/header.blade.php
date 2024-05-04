@@ -245,6 +245,12 @@
                     <li class="nav-menu__item">
                         <a href="/recep/room_diagram" class="nav-menu__link">{{ __('Receptionist') }}</a>
                     </li>
+                    <li class="nav-menu__item">
+                        <a href="/food_service" class="nav-menu__link">{{ __('Restaurant') }}</a>
+                    </li>
+                    <li class="nav-menu__item">
+                        <a href="/outside_service/manation" class="nav-menu__link">{{ __('Service') }}</a>
+                    </li>
                 </ul>
             </div>
             <!-- Menu End  -->

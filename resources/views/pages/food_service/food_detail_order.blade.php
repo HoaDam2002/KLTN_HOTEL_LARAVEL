@@ -134,6 +134,144 @@
                                             </button>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-3">
+                                                <div class="cart-item__thumb">
+                                                    <img src="{{ asset('assets/customer/images/thumbs/property-1.png') }}"
+                                                        alt="" />
+                                                </div>
+                                                <div class="cart-item__content">
+                                                    <h6 class="cart-item__title fw-500 font-18">
+                                                        <a href="property.html" class="link">Fish</a>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="" id="">$5</span>
+                                        </td>
+                                        <td>
+                                            <button style="margin-left: 5px">
+                                                <i class="fa-solid fa-plus"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-3">
+                                                <div class="cart-item__thumb">
+                                                    <img src="{{ asset('assets/customer/images/thumbs/property-1.png') }}"
+                                                        alt="" />
+                                                </div>
+                                                <div class="cart-item__content">
+                                                    <h6 class="cart-item__title fw-500 font-18">
+                                                        <a href="property.html" class="link">Fish</a>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="" id="">$5</span>
+                                        </td>
+                                        <td>
+                                            <button style="margin-left: 5px">
+                                                <i class="fa-solid fa-plus"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-3">
+                                                <div class="cart-item__thumb">
+                                                    <img src="{{ asset('assets/customer/images/thumbs/property-1.png') }}"
+                                                        alt="" />
+                                                </div>
+                                                <div class="cart-item__content">
+                                                    <h6 class="cart-item__title fw-500 font-18">
+                                                        <a href="property.html" class="link">Fish</a>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="" id="">$5</span>
+                                        </td>
+                                        <td>
+                                            <button style="margin-left: 5px">
+                                                <i class="fa-solid fa-plus"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-3">
+                                                <div class="cart-item__thumb">
+                                                    <img src="{{ asset('assets/customer/images/thumbs/property-1.png') }}"
+                                                        alt="" />
+                                                </div>
+                                                <div class="cart-item__content">
+                                                    <h6 class="cart-item__title fw-500 font-18">
+                                                        <a href="property.html" class="link">Fish</a>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="" id="">$5</span>
+                                        </td>
+                                        <td>
+                                            <button style="margin-left: 5px">
+                                                <i class="fa-solid fa-plus"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-3">
+                                                <div class="cart-item__thumb">
+                                                    <img src="{{ asset('assets/customer/images/thumbs/property-1.png') }}"
+                                                        alt="" />
+                                                </div>
+                                                <div class="cart-item__content">
+                                                    <h6 class="cart-item__title fw-500 font-18">
+                                                        <a href="property.html" class="link">Fish</a>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="" id="">$5</span>
+                                        </td>
+                                        <td>
+                                            <button style="margin-left: 5px">
+                                                <i class="fa-solid fa-plus"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-3">
+                                                <div class="cart-item__thumb">
+                                                    <img src="{{ asset('assets/customer/images/thumbs/property-1.png') }}"
+                                                        alt="" />
+                                                </div>
+                                                <div class="cart-item__content">
+                                                    <h6 class="cart-item__title fw-500 font-18">
+                                                        <a href="property.html" class="link">Fish</a>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="" id="">$5</span>
+                                        </td>
+                                        <td>
+                                            <button style="margin-left: 5px">
+                                                <i class="fa-solid fa-plus"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
 
                             </table>
                         </div>
