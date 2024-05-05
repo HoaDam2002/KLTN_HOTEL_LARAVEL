@@ -21,7 +21,7 @@ class RoleRestaurant
     {
         if(Auth::check()){
             $id_account = Auth::id();
-            $customer = Customer::where('id', $id_account)->first();
+            $customer = Customer::where('id_account', $id_account)->first();
     
             $id_user = $customer->id_user;
     
