@@ -5,18 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Comment extends Model
+class Staff extends Model
 {
     use HasFactory;
 
-    protected $table = 'comment';
+    protected $table = 'staff';
+
     protected $fillable = [
-        'comment',
-        'rate',
+        'position',
         'id_user',
-        'id_room',
-        'id_booking',
-        'status'
+        'id_account'
     ];
 
     public function user()
@@ -25,8 +23,8 @@ class Comment extends Model
     }
 
     // Quan hệ với bảng Account
-    public function typeRoom()
+    public function account()
     {
-        return $this->belongsTo(RoomModel::class,'id_room');
+        return $this->belongsTo(Account::class,'id_account');
     }
 }
