@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Restaurant;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddFood;
+use App\Models\Booking_realtime;
 use App\Models\Customer;
 use App\Models\Food;
 use App\Models\InvoiceFood;
@@ -79,6 +80,7 @@ class FoodController extends Controller
 
     public function food_order_post(Request $request)
     {
+
         try {
             // Kiểm tra dữ liệu có tồn tại và hợp lệ không
             if (!$request->has('arr') || !$request->has('id_user') || !$request->has('name_user') || !$request->has('id_booking_realtime')) {
@@ -87,7 +89,8 @@ class FoodController extends Controller
 
             $data = $request->all();
 
-            $items = $data['arr'];
+            $items = json_decode($data['arr']);
+
             $id_user = $data['id_user'];
             $name_user = $data['name_user'];
             $id_booking_realtime = $data['id_booking_realtime'];
@@ -106,32 +109,9 @@ class FoodController extends Controller
                     }
                 }
 
-                // $pdf = PDF::loadView('pages.invoice.last_invoice', ['data_pdf' => $data_pdf]);
-                // $pdfFileName = "invoice_" . time() . ".pdf";
+                $pdf = PDF::loadView('pages.invoice.last_invoice', ['data_pdf' => $data_pdf]);
 
-                // Đường dẫn tuyệt đối đến thư mục trên ổ D
-                $options = new Options();
-                $options->set('isHtml5ParserEnabled', true);
-                $options->set('isRemoteEnabled', true);
-                $dompdf = new Dompdf($options);
-
-                // Render view thành file PDF
-                $html = view('pages.invoice.last_invoice', compact('data_pdf'))->render();
-                $dompdf->loadHtml($html);
-                $dompdf->render();
-
-                if (!is_dir('pdf/food')) {
-                    mkdir('pdf/food');
-                }
-
-                $pdfFilePath = public_path('pdf/food/invoice_' . time() . "_$name_user" . '.pdf');
-                file_put_contents($pdfFilePath, $dompdf->output());
-
-                $pdfUrl = url('pdf/invoice_' . time() . "_$name_user" . '.pdf');
-
-
-                // Trả về URL của file PDF
-                return response()->json(['pdf_url' => $pdfUrl]);
+                return $pdf->download("invoice_" . time() . "$name_user.pdf");
             } else {
                 throw new \Exception('Failed to create invoice food.');
             }
@@ -167,7 +147,7 @@ class FoodController extends Controller
             $query->where('status', 'checkin');
         }])->where('id', $id)->get()->toArray();
 
-        $food = Food::all()->toArray();
+        $food = Food::where('status', 'available')->get()->toArray();
 
         return view('pages.food_service.food_detail_order', compact('user', 'food'));
     }
@@ -258,5 +238,48 @@ class FoodController extends Controller
         $food = Food::where('name', 'like', '%' . $data . '%')->paginate(5);
 
         return view('pages.food_service.food_manation', compact('food'));
+    }
+
+    public function ordered_list()
+    {
+        $data = InvoiceFood::with(['invoice_detail.food', 'user.booking_realtime' => function ($query) {
+            $query->where('status', 'checkin');
+        }])->get()->toArray();
+
+        return view('pages.food_service.food_ordered_list', compact('data'));
+    }
+
+    public function ordered_list_search(Request $request)
+    {
+        $infor = $request->all()['infor'];
+
+        $data = InvoiceFood::whereHas('user', function ($query) use ($infor) {
+            $query->where('name', 'like', '%' . $infor . '%');
+        })
+            ->with(['invoice_detail.food', 'user.booking_realtime' => function ($query) {
+                $query->where('status', 'checkin');
+            }])
+            ->paginate(5);
+
+        return view('pages.food_service.food_ordered_list', compact('data'));
+    }
+
+    public function printpdf(Request $request)
+    {
+        $id_invoice = $request->all()['id_invoice'];
+
+        $name_user = $request->all()['name_user'];
+
+        $invoice = InvoiceFood::with('invoice_detail.food')->where('id', $id_invoice)->first()->toArray();
+
+        $data_pdf['name_user'] = $name_user;
+
+        foreach ($invoice['invoice_detail'] as $key => $value) {
+            $data_pdf['food'][] = [$value['food'], $value['quantity']];
+        }
+
+        $pdf = PDF::loadView('pages.invoice.last_invoice', ['data_pdf' => $data_pdf]);
+
+        return $pdf->download("invoice_$name_user.pdf");
     }
 }

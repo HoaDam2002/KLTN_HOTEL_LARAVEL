@@ -38,4 +38,9 @@ class Booking_realtime extends Model
     {
         return $this->belongsTo(Booking::class,'id_booking');
     }
+
+    public function invoice_detail()
+    {
+        return $this->hasMany(InvoiceFoodDetail::class,'id_booking_realtime');
+    }
 }

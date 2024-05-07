@@ -150,6 +150,12 @@ Route::middleware(['restaurant'])->group(function () {
     Route::post('/food/manation/fill_modal', [FoodController::class, 'fill_modal'])->name('fill_modal_food_service');
     Route::post('/food/manation/edit_food/{id}', [FoodController::class, 'edit_food'])->name('edit_food_service');
     Route::post('/food/manation/search_food', [FoodController::class, 'search_food'])->name('search_food_service');
+
+    Route::get('/food/ordered_list', [FoodController::class, 'ordered_list'])->name('food_ordered_list');
+    Route::post('/food/ordered_list/search', [FoodController::class, 'ordered_list_search'])->name('food_ordered_list');
+    Route::post('/food/ordered_list/printpdf', [FoodController::class, 'printpdf'])->name('food_ordered_list');
+
+
     
     Route::post('/food/manation/change_status', [FoodController::class, 'change_status'])->name('change_status_food_service');
     
@@ -189,6 +195,10 @@ Route::middleware(['service'])->group(function () {
     Route::post('/service/manation/search_customer', [ServiceController::class, 'search_customer'])->name('service_order');
 
     Route::get('/service/order/detail/{id}', [ServiceController::class, 'service_detail'])->name('service_order');
+
+    Route::get('/service/ordered_list', [ServiceController::class, 'ordered_list'])->name('service_ordered_list');
+    Route::post('/service/ordered_list/search', [ServiceController::class, 'ordered_list_search'])->name('service_ordered_list');
+    Route::post('/service/ordered_list/printpdf', [ServiceController::class, 'printpdf'])->name('service_ordered_list');
     
 });
 
