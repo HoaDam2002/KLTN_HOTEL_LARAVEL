@@ -79,8 +79,9 @@
         <div class="tab-content" id="v-pills-tabContent">
             <div class="card card-body filter_booking mb-3">
                 <div style="display: flex; justify-content: space-between">
-                    <form action="" class="w-50 ms-3">
-                        <input type="text" name="" id="" placeholder="Name Service" class=""
+                    <form action="/service/manation/search_service" method="POST" class="w-50 ms-3">
+                        @csrf
+                        <input type="text" name="infor" id="" placeholder="Name Service"
                             style="height: 100%">
                         <button type="submit" class="btn_search_booking"><i
                                 class="fa-solid fa-magnifying-glass"></i></button>
@@ -89,6 +90,21 @@
                         Service</button>
                 </div>
             </div>
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissble">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if ($errors->any())
+                <div class="alert alert-danger alert-dismissble">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="tab-content" id="v-pills-tabContent">
                 <div class="overflow-auto">
                     <div class="card common-card min-w-maxContent">
@@ -104,85 +120,64 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center gap-3">
-                                                <div class="cart-item__thumb">
-                                                    <img src="{{ asset('assets/customer/images/thumbs/property-1.png') }}"
-                                                        alt="" />
-                                                </div>
-                                                <div class="cart-item__content">
-                                                    <h6 class="cart-item__title">
-                                                        <a href="property.html" class="link">Fish</a>
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <span class="" id="">$5</span>
-                                        </td>
-                                        <td>
-                                            <div class="form-check form-switch d-flex justify-content-center">
-                                                <input class="form-check-input" type="checkbox" role="switch"
-                                                    id="flexSwitchCheckChecked" checked>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <button type="button"
-                                                class="link text-main text-decoration-underline font-14 text-poppins"
-                                                data-bs-toggle="modal" data-bs-target="#modal_editservice"
-                                                data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-pen"></i>
-                                            </button>
+                                    @if (!empty($service))
+                                        @foreach ($service as $item)
+                                            @php
+                                                $image = $item['image'];
+                                            @endphp
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center gap-3">
+                                                        <div class="cart-item__thumb">
+                                                            <img src='{{ asset("service/$image") }}' alt="" />
+                                                        </div>
+                                                        <div class="cart-item__content">
+                                                            <h6 class="cart-item__title">
+                                                                <div href="property.html" class="link">{{ $item['name'] }}
+                                                                </div>
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span class="" id="">{{ $item['price'] }}</span>
+                                                </td>
+                                                <td>
+                                                    <div class="form-check form-switch d-flex justify-content-center">
+                                                        <input class="form-check-input status" type="checkbox"
+                                                            role="switch" id="flexSwitchCheckChecked"
+                                                            data-id={{ $item['id'] }}
+                                                            {{ $item['status'] == 'available' ? 'checked' : '' }}>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <button type="button"
+                                                        class="link text-main text-decoration-underline font-14 text-poppins btn_edit_service"
+                                                        data-bs-toggle="modal" data-bs-target="#modal_editservice"
+                                                        data-bs-dismiss="modal" aria-label="Close"
+                                                        data-id={{ $item['id'] }}><i class="fa-solid fa-pen"></i>
+                                                    </button>
 
-                                            <button style="margin-left: 5px" data-bs-toggle="modal"
-                                                data-bs-target="#modal_delete_service">
-                                                <i class="fa-solid fa-trash-can"></i>
-                                            </button>
-                                        </td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center gap-3">
-                                                <div class="cart-item__thumb">
-                                                    <img src="{{ asset('assets/customer/images/thumbs/property-1.png') }}"
-                                                        alt="" />
-                                                </div>
-                                                <div class="cart-item__content">
-                                                    <h6 class="cart-item__title">
-                                                        <a href="property.html" class="link">Fish</a>
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <span class="" id="">$5</span>
-                                        </td>
-                                        <td>
-                                            <div class="form-check form-switch d-flex justify-content-center">
-                                                <input class="form-check-input" type="checkbox" role="switch"
-                                                    id="flexSwitchCheckChecked" checked>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <button type="button"
-                                                class="link text-main text-decoration-underline font-14 text-poppins"
-                                                data-bs-toggle="modal" data-bs-target="#modal_editservice"
-                                                data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-pen"></i>
-                                            </button>
-
-                                            <button style="margin-left: 5px" data-bs-toggle="modal"
-                                                data-bs-target="#modal_delete_service">
-                                                <i class="fa-solid fa-trash-can"></i>
-                                            </button>
-                                        </td>
-                                        <td></td>
-                                    </tr>
+                                                    <button style="margin-left: 5px" data-bs-toggle="modal"
+                                                        data-bs-target="#modal_delete_service" class="btn_detele_service"
+                                                        data-id={{ $item['id'] }}>
+                                                        <i class="fa-solid fa-trash-can"></i>
+                                                    </button>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
+                <nav aria-label="Page navigation example" style="padding-bottom: 50px;">
+                    <ul class="pagination common-pagination">
+                        {{ $service->links() }}
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
@@ -197,20 +192,24 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="#">
+                    <form action="/service/manation/add_service" enctype="multipart/form-data" method="post">
+                        @csrf
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="add_foodname" placeholder="Food Name">
-                            <label for="add_foodname">Name Service</label>
+                            <input type="text" class="form-control" name="name" id="add_foodname"
+                                placeholder="Food Name" required>
+                            <label for="add_foodname">Food Name</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="add_price" placeholder="Price">
+                            <input type="number" class="form-control" name="price" id="add_price" placeholder="Price"
+                                required>
                             <label for="add_price">Price</label>
                         </div>
                         <div class="mb-3">
-                            <input class="form-control form-control-lg" type="file" id="formFileMultiple" multiple>
+                            <input class="form-control form-control-lg" name="image" type="file" id="formFileMultiple"
+                                required>
                         </div>
                         <button class="btn btn-main mb-3 w-100" type="submit">Add
-                            New Service</button>
+                            New Food</button>
                     </form>
                 </div>
             </div>
@@ -232,12 +231,119 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-main">Delete</button>
+                    <button type="button" class="btn btn-main comfirm">Delete</button>
                 </div>
             </div>
         </div>
     </div>
     {{-- end modal delete service --}}
+
+    <div class="toast-container p-3 top-0 end-0">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                {{-- <img src="..." class="rounded me-2" alt="..."> --}}
+                <strong class="me-auto">{{ __('Notification') }}</strong>
+                {{-- <small>11 mins ago</small> --}}
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Success!!!
+            </div>
+        </div>
+    </div>
 @endsection
 
 @include('pages.service_outside.modal_edit_service')
+
+@section('js')
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $(document).on('click', 'input.status', function() {
+
+                let status = '';
+                let id_service = $(this).attr('data-id');
+
+                if ($(this).prop('checked')) {
+                    status = 'available';
+                } else {
+                    status = 'unavailable';
+                }
+
+                $.ajax({
+                    type: "post",
+                    url: "/service/manation/change_status",
+                    data: {
+                        status: status,
+                        id_service: id_service,
+                    },
+                    dataType: "json",
+                });
+            });
+
+            let id_service = '';
+            let __this = '';
+
+            $(document).on('click', 'button.btn_detele_service', function() {
+                id_service = $(this).attr('data-id');
+                __this = $(this).closest('tr');
+            })
+
+            $(document).on('click', 'button.comfirm', function() {
+                $.ajax({
+                    type: "post",
+                    url: "/service/manation/delete_service",
+                    data: {
+                        id_service: id_service,
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        let mess = response.mess;
+
+                        if (mess) {
+                            $('#modal_delete_service').modal(
+                                'hide');
+                            var toast = new bootstrap.Toast(
+                                document.getElementById(
+                                    'liveToast'));
+                            toast.show();
+                            __this.remove();
+                        }
+                    }
+                });
+            })
+
+            $(document).on('click', 'button.btn_edit_service', function() {
+                let id_service = $(this).attr('data-id');
+                $('#modal_editservice').find('#form_edit').attr('action',
+                    '/service/manation/edit_service/' +
+                    id_service)
+
+                $.ajax({
+                    type: "post",
+                    url: "/service/manation/fill_modal",
+                    data: {
+                        id_service: id_service,
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        let mess = response.service;
+
+                        console.log(mess);
+
+                        if (mess) {
+                            $('#servicename').val(mess.name);
+                            $('#price').val(mess.price);
+                            $('h4.title_edit').text('Edit ' + mess.name);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+@endsection

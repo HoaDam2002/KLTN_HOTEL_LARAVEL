@@ -6,21 +6,22 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="#">
+                <form id="form_edit" action="" method="post" enctype="multipart/form-data" >
+                    @csrf
                     <div class="row gy-lg-4 gy-3">
                         <div class="col-12">
                             <label for="service_name" class="form-label">Name</label>
-                            <input type="text" class="common-input" placeholder="Service Name" id="service_name">
+                            <input type="text" class="common-input nameservice" placeholder="Service Name" name="name" id="servicename">
                         </div>
                         
                         <div class="col-12">
                             <label for="price" class="form-label">Price</label>
-                            <input type="text" class="common-input" placeholder="Price" id="price">
+                            <input type="text" class="common-input price" placeholder="Price" name="price" id="price">
                         </div>
 
                         <div class="col-12">
                             <label for="image" class="form-label">Image</label>
-                            <input type="file" class="common-input" placeholder="image" id="image">
+                            <input type="file" class="common-input" placeholder="image" name="image" id="image">
                         </div>
 
                         <div class="col-12">

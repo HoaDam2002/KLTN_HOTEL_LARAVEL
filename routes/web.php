@@ -15,6 +15,7 @@ use App\Http\Controllers\receptionist\RoomDiagramController;
 use App\Http\Controllers\Restaurant\FoodController;
 use App\Http\Controllers\RoomStatusController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
@@ -55,7 +56,9 @@ Route::get('setLocale/{locale}', function ($locale) {
 })->name('app.setLocale');
 
 //Router customer
-
+Route::get('/invoice', function () {
+    return view('pages.invoice.last_invoice');
+});
 
 
 Route::middleware(['auth', 'verified', 'customer'])->group(function () {
@@ -151,11 +154,14 @@ Route::middleware(['restaurant'])->group(function () {
     Route::post('/food/manation/change_status', [FoodController::class, 'change_status'])->name('change_status_food_service');
     
     Route::get('/food/order', [FoodController::class, 'food_order'])->name('food_service_order');
+    Route::post('/food/order', [FoodController::class, 'food_order_post'])->name('food_service_order');
+
     Route::post('/food/manation/search_customer', [FoodController::class, 'search_customer'])->name('food_service_order');
 
     
     Route::get('/food/order/detail/{id}', [FoodController::class, 'food_detail'])->name('food_service_order');
 });
+
 Route::get('/listevaluate', function () {
     return view('pages.receptionist.listevaluate');
 })->name('list_evaluate');
@@ -164,22 +170,26 @@ Route::get('/accountuserlist', function () {
 })->name('list_user');
 
 Route::middleware(['service'])->group(function () {
+    Route::get('/outside_service', [ServiceController::class, 'index'])->name('home_service');
 
-    Route::get('/outside_service', function () {
-        return view('pages.service_outside.service_home');
-    })->name('home_service');
+    Route::get('/outside_service/manation', [ServiceController::class, 'service_manager'])->name('service_manation');
+    Route::post('/service/manation/add_service', [ServiceController::class, 'add_service'])->name('add_service');
+
+    Route::post('/service/manation/delete_service', [ServiceController::class, 'delete_service'])->name('delete_service');
+    Route::post('/service/manation/fill_modal', [ServiceController::class, 'fill_modal'])->name('fill_modal_service');
+    Route::post('/service/manation/edit_service/{id}', [ServiceController::class, 'edit_service'])->name('edit_service');
+    Route::post('/service/manation/search_service', [ServiceController::class, 'search_service'])->name('home_service');
     
-    Route::get('/outside_service/manation', function () {
-        return view('pages.service_outside.outside_service_manation');
-    })->name('outside_service_manation');
+    Route::post('/service/manation/change_status', [ServiceController::class, 'change_status'])->name('change_status_service');
+
+    Route::get('/outside_service/order', [ServiceController::class, 'service_order'])->name('service_order');
+    Route::post('/outside_service/order', [ServiceController::class, 'service_order_post'])->name('service_order');
+
+
+    Route::post('/service/manation/search_customer', [ServiceController::class, 'search_customer'])->name('service_order');
+
+    Route::get('/service/order/detail/{id}', [ServiceController::class, 'service_detail'])->name('service_order');
     
-    Route::get('/outside_service/order', function () {
-        return view('pages.service_outside.outside_service_order');
-    })->name('outside_service_order');
-    
-    Route::get('/outside_service/order/detail', function () {
-        return view('pages.service_outside.outside_service_detail_order');
-    })->name('outside_service_order_detail');
 });
 
 
