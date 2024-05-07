@@ -34,6 +34,10 @@ class User extends Model
         return $this->hasOne(Customer::class,'id_user');
     }
 
+    public function staff(){
+        return $this->hasOne(Staff::class,'id_user');
+    }
+
     public function customer_no_acc(){
         return $this->hasOne(CustommerNoAccModel::class,'id_user');
     }

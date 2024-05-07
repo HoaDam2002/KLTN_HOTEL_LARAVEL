@@ -32,6 +32,8 @@ class RouteServiceProvider extends ServiceProvider
 
     public const HOME_STATUS_MANAGER = '/room_status_management';
 
+    public const HOME_STATUS_ADMIN = '/admin/home';
+
 
 
 

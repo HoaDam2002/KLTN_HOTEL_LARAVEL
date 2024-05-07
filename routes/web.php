@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\admin\AdminController;
+use App\Http\Controllers\admin\EvaluateAdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\receptionist\BookingController;
 use App\Http\Controllers\UserController;
@@ -143,37 +145,29 @@ Route::middleware(['receptionist'])->group(function () {
 
 Route::middleware(['restaurant'])->group(function () {
     Route::get('/food_service', [FoodController::class, 'index'])->name('home_food_service');
-    
+
     Route::get('/food/manation', [FoodController::class, 'food_manager'])->name('food_service_manation');
     Route::post('/food/manation/add_food', [FoodController::class, 'add_food'])->name('add_food_food_service');
     Route::post('/food/manation/delete_food', [FoodController::class, 'delete_food'])->name('delete_food_food_service');
     Route::post('/food/manation/fill_modal', [FoodController::class, 'fill_modal'])->name('fill_modal_food_service');
     Route::post('/food/manation/edit_food/{id}', [FoodController::class, 'edit_food'])->name('edit_food_service');
     Route::post('/food/manation/search_food', [FoodController::class, 'search_food'])->name('search_food_service');
-
+  
     Route::get('/food/ordered_list', [FoodController::class, 'ordered_list'])->name('food_ordered_list');
     Route::post('/food/ordered_list/search', [FoodController::class, 'ordered_list_search'])->name('food_ordered_list');
     Route::post('/food/ordered_list/printpdf', [FoodController::class, 'printpdf'])->name('food_ordered_list');
 
-
-    
     Route::post('/food/manation/change_status', [FoodController::class, 'change_status'])->name('change_status_food_service');
-    
+
     Route::get('/food/order', [FoodController::class, 'food_order'])->name('food_service_order');
     Route::post('/food/order', [FoodController::class, 'food_order_post'])->name('food_service_order');
 
     Route::post('/food/manation/search_customer', [FoodController::class, 'search_customer'])->name('food_service_order');
 
-    
+
     Route::get('/food/order/detail/{id}', [FoodController::class, 'food_detail'])->name('food_service_order');
 });
 
-Route::get('/listevaluate', function () {
-    return view('pages.receptionist.listevaluate');
-})->name('list_evaluate');
-Route::get('/accountuserlist', function () {
-    return view('pages.receptionist.accountuser');
-})->name('list_user');
 
 Route::middleware(['service'])->group(function () {
     Route::get('/outside_service', [ServiceController::class, 'index'])->name('home_service');
@@ -185,7 +179,7 @@ Route::middleware(['service'])->group(function () {
     Route::post('/service/manation/fill_modal', [ServiceController::class, 'fill_modal'])->name('fill_modal_service');
     Route::post('/service/manation/edit_service/{id}', [ServiceController::class, 'edit_service'])->name('edit_service');
     Route::post('/service/manation/search_service', [ServiceController::class, 'search_service'])->name('home_service');
-    
+
     Route::post('/service/manation/change_status', [ServiceController::class, 'change_status'])->name('change_status_service');
 
     Route::get('/outside_service/order', [ServiceController::class, 'service_order'])->name('service_order');
@@ -199,9 +193,21 @@ Route::middleware(['service'])->group(function () {
     Route::get('/service/ordered_list', [ServiceController::class, 'ordered_list'])->name('service_ordered_list');
     Route::post('/service/ordered_list/search', [ServiceController::class, 'ordered_list_search'])->name('service_ordered_list');
     Route::post('/service/ordered_list/printpdf', [ServiceController::class, 'printpdf'])->name('service_ordered_list');
-    
+
 });
 
+Route::middleware(['admin'])->prefix('admin')->group(function () {
+    Route::get('/home', [AdminController::class, 'home_admin'])->name('home_admin');
+    Route::get('/list_users', [AdminController::class, 'get_list_users'])->name('users_admin');
+    Route::post('/list_users/delete', [AdminController::class, 'delete_user'])->name('delete_users_admin');
+    Route::get('/search/user', [AdminController::class, 'search_user'])->name('users_admin');
+    Route::post('/set_role_user', [AdminController::class, 'set_role_user'])->name('set_role_users_admin');
+    Route::post('/add_staff', [AdminController::class, 'create_account_staff'])->name('create_account_staff');
+    Route::post('/info_staff', [AdminController::class, 'get_info_staff'])->name('info_staff_admin');
+    Route::post('/edit/info_staff', [AdminController::class, 'edit_info_staff'])->name('edit_info_staff');
+    Route::post('/change_pass_staff', [AdminController::class, 'change_pass_staff'])->name('change_pass_staff_admin');
+    Route::get('/list_evaluate', [EvaluateAdminController::class, 'index'])->name('list_evaluate_admin');
+});
 
 
 require __DIR__ . '/auth.php';
