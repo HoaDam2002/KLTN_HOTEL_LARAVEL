@@ -36,4 +36,9 @@ class Booking extends Model
         return $this->hasMany(Booking_realtime::class,'id_booking');
     }  
 
+    public function comment()
+    {
+        return $this->hasMany(Comment::class,'id_booking');
+    }  
+
 }
