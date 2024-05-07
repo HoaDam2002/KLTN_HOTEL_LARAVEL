@@ -275,7 +275,7 @@
                                                                 <div>
                                                                     <h6 class="fw-bold mb-2">{{ $name }}</h6>
                                                                     <div class="info_comment mb-2">
-                                                                        <div class="rateYo" id="rate1" data-rating="3">
+                                                                        <div class="rateYo" id="rate1" data-rating="{{ $item['rate'] }}">
                                                                         </div>
                                                                         <div class="d-flex align-items-center ms-1">
                                                                             <p class="mb-0 date_comment">
@@ -345,14 +345,14 @@
                                                 <button class="plus_btn" id="plus_room"><span>+</span></button>
                                             </div>
                                         </div>
-                                        <div class="item_numberof">
+                                        {{-- <div class="item_numberof">
                                             <span>Guests</span>
                                             <div class="wrapper_btn_numberof" onclick="handleClickMenuItemDropdown(e)">
                                                 <button class="minus_btn" id="minus_guest"><span>-</span></button>
                                                 <span class="quantity_numberof" id="quantity_guest">1</span>
                                                 <button class="plus_btn" id="plus_guest"><span>+</span></button>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                     </div>
                                 </div>
