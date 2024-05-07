@@ -57,7 +57,7 @@
         <p><strong>Address:</strong> Da Nang, Viet Nam</p>
     </div>
     <div class="customer-info">
-        <p><strong>Customer Name:</strong>{{ $data_pdf['name_user'] ? $data_pdf['name_user'] : ''  }}</p>
+        <p><strong>Customer Name:</strong>{{ $data_pdf['name_user'] ? $data_pdf['name_user'] : '' }}</p>
     </div>
     <table>
         <thead>
@@ -73,18 +73,33 @@
                 $final_total = 0;
             @endphp
             @if (!empty($data_pdf))
-                @foreach ($data_pdf['service'] as $item)
-                    @php
-                        $total = $item[0]['price'] * $item[1];
-                        $final_total += $total;
-                    @endphp
-                    <tr>
-                        <td>{{ $item[0]['name'] }}</td>
-                        <td>{{ $item[0]['price'] }}$</td>
-                        <td>{{ $item[1] }}</td>
-                        <td>{{ $total }}</td>
-                    </tr>
-                @endforeach
+                @if (!empty($data_pdf['service']))
+                    @foreach ($data_pdf['service'] as $item)
+                        @php
+                            $total = $item[0]['price'] * $item[1];
+                            $final_total += $total;
+                        @endphp
+                        <tr>
+                            <td>{{ $item[0]['name'] }}</td>
+                            <td>{{ $item[0]['price'] }}$</td>
+                            <td>{{ $item[1] }}</td>
+                            <td>{{ $total }}</td>
+                        </tr>
+                    @endforeach
+                @else
+                    @foreach ($data_pdf['food'] as $item)
+                        @php
+                            $total = $item[0]['price'] * $item[1];
+                            $final_total += $total;
+                        @endphp
+                        <tr>
+                            <td>{{ $item[0]['name'] }}</td>
+                            <td>{{ $item[0]['price'] }}$</td>
+                            <td>{{ $item[1] }}</td>
+                            <td>{{ $total }}$</td>
+                        </tr>
+                    @endforeach
+                @endif
             @endif
             <!-- Add more rows as needed -->
         </tbody>

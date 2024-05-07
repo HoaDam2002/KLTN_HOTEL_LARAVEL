@@ -300,7 +300,14 @@
                                         id="acc_payment" onclick="menu_account_customer(this.id)">
                                         <span class="icon">
                                             <i class="fas fa-money-check"></i></span>
-                                        {{ __('List Order Food') }}
+                                        {{ __('Order Food') }}
+                                    </a>
+                                    <a href="/food/ordered_list"
+                                        class="nav-link {{ Route::currentRouteName() == 'food_ordered_list' ? 'active' : '' }}"
+                                        id="acc_payment" onclick="menu_account_customer(this.id)">
+                                        <span class="icon">
+                                            <i class="fas fa-money-check"></i></span>
+                                        {{ __('Ordered Food List') }}
                                     </a>
                                     <form action="{{ route('logout') }}" method="POST">
                                         @csrf

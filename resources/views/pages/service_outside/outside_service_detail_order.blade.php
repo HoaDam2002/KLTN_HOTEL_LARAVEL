@@ -177,8 +177,17 @@
                     <div scope="row"><strong>Total</strong></div>
                     <div style="margin-left: 20px;" class="table-primary total_final">0$</div>
                 </div>
-                <button class="btn btn-main w-10 mb-2 btn_order" type="submit"
-                    style="background-color: rgb(255,165,0);">ORDER</button>
+                <form id="orderForm" action="/outside_service/order" method="POST">
+                    @csrf
+                    <input type="text" name="id_user" value="{{ $user[0]['id'] }}" hidden>
+                    <input type="text" name="id_booking_realtime" value="{{ $user[0]['booking_realtime'][0]['id'] }}"
+                        hidden>
+                    <input type="text" name="name_user" value="{{ $user[0]['name'] }}" hidden>
+                    <input type="text" id="arr" name="arr" value="" hidden>
+
+                    <button type="submit" class="btn btn-main w-10 mb-2 btn_order"
+                        style="background-color: rgb(255,165,0);">ORDER</button>
+                </form>
             </div>
         </div>
     </div>
@@ -198,6 +207,10 @@
 
             function allow_order() {
                 $('.btn_order').prop('disabled', arr.length === 0);
+
+                var jsonValue = JSON.stringify(arr);
+
+                $('#arr').val(jsonValue);
             }
 
             $(document).on('click', 'button.add_service', function() {
@@ -241,6 +254,14 @@
                 allow_order();
             });
 
+            $(document).on('click', 'button.btn_order', function() {
+                arr = [];
+                $('tbody.fill').empty();
+                $('.btn_order').prop('disabled', true);
+                $('.total_final').text('0$');
+                $('#orderForm').submit();
+            });
+
             $(document).on('click', 'button.btn_minus', function() {
                 let id_food = $(this).closest('tr').attr('id');
                 let quantityElement = $(this).closest('tr').find('.quantity');
@@ -267,31 +288,31 @@
             });
 
             // Sự kiện khi click vào nút Order
-            $(document).on('click', 'button.btn_order', function() {
-                let id_booking_realtime = {{ $user[0]['booking_realtime'][0]['id'] }};
-                let id_user = "{{ $user[0]['id'] }}";
-                let name_user = "{{ $user[0]['name'] }}";
+            // $(document).on('click', 'button.btn_order', function() {
+            //     let id_booking_realtime = {{ $user[0]['booking_realtime'][0]['id'] }};
+            //     let id_user = "{{ $user[0]['id'] }}";
+            //     let name_user = "{{ $user[0]['name'] }}";
 
-                $.ajax({
-                    type: "post",
-                    url: "/outside_service/order",
-                    data: {
-                        id_user: id_user,
-                        name_user: name_user,
-                        arr: arr,
-                        id_booking_realtime: id_booking_realtime
-                    },
-                    success: function(response) {
-                        var pdfUrl = response.pdf_url;
-                        console.log(pdfUrl);
-                        // Chuyển hướng đến URL của file PDF
-                        window.location.href = pdfUrl;
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(error);
-                    }
-                });
-            });
+            //     $.ajax({
+            //         type: "post",
+            //         url: "/outside_service/order",
+            //         data: {
+            //             id_user: id_user,
+            //             name_user: name_user,
+            //             arr: arr,
+            //             id_booking_realtime: id_booking_realtime
+            //         },
+            //         success: function(response) {
+            //             var pdfUrl = response.pdf_url;
+            //             console.log(pdfUrl);
+            //             // Chuyển hướng đến URL của file PDF
+            //             window.location.href = pdfUrl;
+            //         },
+            //         error: function(xhr, status, error) {
+            //             console.error(error);
+            //         }
+            //     });
+            // });
 
             // Hàm tính tổng final
             function calculateFinalTotal() {

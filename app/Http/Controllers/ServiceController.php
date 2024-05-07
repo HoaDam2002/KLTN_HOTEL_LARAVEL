@@ -9,6 +9,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class ServiceController extends Controller
 {
@@ -199,7 +201,7 @@ class ServiceController extends Controller
 
             $data = $request->all();
 
-            $items = $data['arr'];
+            $items = json_decode($data['arr']);
             $id_user = $data['id_user'];
             $name_user = $data['name_user'];
             $id_booking_realtime = $data['id_booking_realtime'];
@@ -217,33 +219,58 @@ class ServiceController extends Controller
                         throw new \Exception('Food not found.');
                     }
                 }
-                $options = new Options();
-                $options->set('isHtml5ParserEnabled', true);
-                $options->set('isRemoteEnabled', true);
-                $dompdf = new Dompdf($options);
 
-                // Render view thành file PDF
-                $html = view('pages.invoice.last_invoice', compact('data_pdf'))->render();
-                $dompdf->loadHtml($html);
-                $dompdf->render();
+                $pdf = PDF::loadView('pages.invoice.last_invoice', ['data_pdf' => $data_pdf]);
 
-                if (!is_dir('pdf/service')) {
-                    mkdir('pdf/service');
-                }
-
-                $pdfFilePath = public_path('pdf/service/invoice_' . time() . "_$name_user" . '.pdf');
-                file_put_contents($pdfFilePath, $dompdf->output());
-
-                $pdfUrl = url('pdf/service/invoice_' . time() . "_$name_user" . '.pdf');
-
-
-                // Trả về URL của file PDF
-                return response()->json(['pdf_url' => $pdfUrl]);
+                return $pdf->download("invoice_service_" . time() . "$name_user.pdf");
             } else {
                 throw new \Exception('Failed to create invoice service.');
             }
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+
+    public function ordered_list(Request $request)
+    {
+        $data = InvoiceService::with(['invoice_detail.service', 'user.booking_realtime' => function ($query) {
+            $query->where('status', 'checkin');
+        }])->get()->toArray();
+
+        return view('pages.service_outside.service_ordered_list', compact('data'));
+    }
+
+    public function printpdf(Request $request)
+    {
+        $id_invoice = $request->all()['id_invoice'];
+
+        $name_user = $request->all()['name_user'];
+
+        $invoice = InvoiceService::with('invoice_detail.service')->where('id', $id_invoice)->first()->toArray();
+
+        $data_pdf['name_user'] = $name_user;
+
+        foreach ($invoice['invoice_detail'] as $key => $value) {
+            $data_pdf['service'][] = [$value['service'], 1];
+        }
+
+        $pdf = PDF::loadView('pages.invoice.last_invoice', ['data_pdf' => $data_pdf]);
+
+        return $pdf->download("invoice_" . time() . "$name_user.pdf");
+    }
+
+    public function ordered_list_search(Request $request)
+    {
+        $infor = $request->all()['infor'];
+
+        $data = InvoiceService::whereHas('user', function ($query) use ($infor) {
+            $query->where('name', 'like', '%' . $infor . '%');
+        })
+            ->with(['invoice_detail.service', 'user.booking_realtime' => function ($query) {
+                $query->where('status', 'checkin');
+            }])
+            ->paginate(5);
+
+        return view('pages.service_outside.service_ordered_list', compact('data'));
     }
 }

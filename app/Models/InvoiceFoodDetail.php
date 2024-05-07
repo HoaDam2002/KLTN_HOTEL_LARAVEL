@@ -26,4 +26,9 @@ class InvoiceFoodDetail extends Model
     {
         return $this->belongsTo(InvoiceFood::class,'id_invoice_food');
     }
+
+    public function booking_realtime()
+    {
+        return $this->belongsTo(Booking_realtime::class,'id_booking_realtime');
+    }
 }
