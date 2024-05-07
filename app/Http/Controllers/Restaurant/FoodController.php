@@ -4,9 +4,16 @@ namespace App\Http\Controllers\Restaurant;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddFood;
+use App\Models\Customer;
 use App\Models\Food;
+use App\Models\InvoiceFood;
+use App\Models\InvoiceFoodDetail;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Storage;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class FoodController extends Controller
 {
@@ -59,36 +66,110 @@ class FoodController extends Controller
      */
     public function food_order(Request $request)
     {
-        $customer = User::whereHas('booking_realtime' , function($query){
-            $query->where('status','checkin');
-        })->with(['customer','customer_no_acc','booking_realtime' => function($query){
-            $query->where('status','checkin');
+        $customer = User::whereHas('booking_realtime', function ($query) {
+            $query->where('status', 'checkin');
+        })->with(['customer', 'customer_no_acc', 'booking_realtime' => function ($query) {
+            $query->where('status', 'checkin');
         }])->paginate(5);
 
         // dd($customer);
 
-        return view('pages.food_service.food_order',compact('customer'));
+        return view('pages.food_service.food_order', compact('customer'));
     }
+
+    public function food_order_post(Request $request)
+    {
+        try {
+            // Kiểm tra dữ liệu có tồn tại và hợp lệ không
+            if (!$request->has('arr') || !$request->has('id_user') || !$request->has('name_user') || !$request->has('id_booking_realtime')) {
+                throw new \Exception('Invalid request data.');
+            }
+
+            $data = $request->all();
+
+            $items = $data['arr'];
+            $id_user = $data['id_user'];
+            $name_user = $data['name_user'];
+            $id_booking_realtime = $data['id_booking_realtime'];
+
+            $data_pdf['name_user'] = $name_user;
+
+            if ($invoice_food = InvoiceFood::create(['id_user' => $id_user])) {
+                $id_invoice_food = $invoice_food->id;
+                foreach ($items as $key => $value) {
+                    $invoice_detail = InvoiceFoodDetail::create(['id_booking_realtime' => $id_booking_realtime, 'id_invoice_food' => $id_invoice_food, 'id_food' => key($value), 'quantity' => reset($value)]);
+                    $food = Food::find(key($value));
+                    if ($food) {
+                        $data_pdf['food'][] = [$food->toArray(), reset($value)];
+                    } else {
+                        throw new \Exception('Food not found.');
+                    }
+                }
+
+                // $pdf = PDF::loadView('pages.invoice.last_invoice', ['data_pdf' => $data_pdf]);
+                // $pdfFileName = "invoice_" . time() . ".pdf";
+
+                // Đường dẫn tuyệt đối đến thư mục trên ổ D
+                $options = new Options();
+                $options->set('isHtml5ParserEnabled', true);
+                $options->set('isRemoteEnabled', true);
+                $dompdf = new Dompdf($options);
+
+                // Render view thành file PDF
+                $html = view('pages.invoice.last_invoice', compact('data_pdf'))->render();
+                $dompdf->loadHtml($html);
+                $dompdf->render();
+
+                if (!is_dir('pdf/food')) {
+                    mkdir('pdf/food');
+                }
+
+                $pdfFilePath = public_path('pdf/food/invoice_' . time() . "_$name_user" . '.pdf');
+                file_put_contents($pdfFilePath, $dompdf->output());
+
+                $pdfUrl = url('pdf/invoice_' . time() . "_$name_user" . '.pdf');
+
+
+                // Trả về URL của file PDF
+                return response()->json(['pdf_url' => $pdfUrl]);
+            } else {
+                throw new \Exception('Failed to create invoice food.');
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+
 
     public function search_customer(Request $request)
     {
         $infor = $request->all()['infor'];
-        
-        $customer = User::whereHas('booking_realtime' , function($query){
-            $query->where('status','checkin');
-        })->with(['customer','customer_no_acc','booking_realtime' => function($query){
-            $query->where('status','checkin');
-        }])->where('name','like', '%' . $infor . '%')->paginate(5);
 
-        return view('pages.food_service.food_order',compact('customer'));
+        $customer = User::whereHas('booking_realtime', function ($query) {
+            $query->where('status', 'checkin');
+        })->with(['customer', 'customer_no_acc', 'booking_realtime' => function ($query) {
+            $query->where('status', 'checkin');
+        }])->where('name', 'like', '%' . $infor . '%')->paginate(5);
+
+        return view('pages.food_service.food_order', compact('customer'));
     }
+
 
     /**
      * Display the specified resource.
      */
     public function food_detail(string $id)
     {
-        return view('pages.food_service.food_detail_order');
+        $user = User::whereHas('booking_realtime', function ($query) {
+            $query->where('status', 'checkin');
+        })->with(['customer', 'customer_no_acc', 'booking_realtime' => function ($query) {
+            $query->where('status', 'checkin');
+        }])->where('id', $id)->get()->toArray();
+
+        $food = Food::all()->toArray();
+
+        return view('pages.food_service.food_detail_order', compact('user', 'food'));
     }
 
     /**
@@ -170,14 +251,12 @@ class FoodController extends Controller
         return redirect()->back()->withErrors('ADD Food Fail');
     }
 
-    public function search_food(Request $request){
+    public function search_food(Request $request)
+    {
         $data = $request->all()['infor'];
 
-        $food = Food::where('name','like', '%' . $data . '%')->paginate(5);
+        $food = Food::where('name', 'like', '%' . $data . '%')->paginate(5);
 
         return view('pages.food_service.food_manation', compact('food'));
     }
 }
-
-
-

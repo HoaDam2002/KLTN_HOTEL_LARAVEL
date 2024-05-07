@@ -134,8 +134,8 @@
                                                         </div>
                                                         <div class="cart-item__content">
                                                             <h6 class="cart-item__title">
-                                                                <a href="property.html"
-                                                                    class="link">{{ $item['name'] }}</a>
+                                                                <div href="property.html"
+                                                                    class="link">{{ $item['name'] }}</div>
                                                             </h6>
                                                         </div>
                                                     </div>
@@ -286,34 +286,36 @@
                 });
             });
 
+            let id_food = '';
+            let __this = '';
+
             $(document).on('click', 'button.btn_detele_food', function() {
-                let id_food = $(this).attr('data-id');
-                let __this = $(this).closest('tr');
+                id_food = $(this).attr('data-id');
+                __this = $(this).closest('tr');
+            })
+            
+            $(document).on('click', 'button.comfirm', function() {
+                $.ajax({
+                    type: "post",
+                    url: "/food/manation/delete_food",
+                    data: {
+                        id_food: id_food,
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        let mess = response.mess;
 
-                $(document).on('click', 'button.comfirm', function() {
-                    $.ajax({
-                        type: "post",
-                        url: "/food/manation/delete_food",
-                        data: {
-                            id_food: id_food,
-                        },
-                        dataType: "json",
-                        success: function(response) {
-                            let mess = response.mess;
-
-                            if (mess) {
-                                $('#modal_delete_food').modal(
-                                    'hide');
-                                var toast = new bootstrap.Toast(
-                                    document.getElementById(
-                                        'liveToast'));
-                                toast.show();
-                                __this.remove();
-                            }
+                        if (mess) {
+                            $('#modal_delete_food').modal(
+                                'hide');
+                            var toast = new bootstrap.Toast(
+                                document.getElementById(
+                                    'liveToast'));
+                            toast.show();
+                            __this.remove();
                         }
-                    });
-                })
-
+                    }
+                });
             })
 
             $(document).on('click', 'button.btn_edit_food', function() {
@@ -329,12 +331,12 @@
                     },
                     dataType: "json",
                     success: function(response) {
-                        let mess = response.food;
+                        let mess = response.service;
 
                         console.log(mess);
 
                         if (mess) {
-                            $('#foodname').val(mess.name);
+                            $('#servicename').val(mess.name);
                             $('#price').val(mess.price);
                             $('h4.title_edit').text('Edit ' + mess.name);
                         }

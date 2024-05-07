@@ -24,9 +24,9 @@
         <div class="container container-two">
             <form action="#">
                 <div class="row gy-4">
-                    @include('customer.pages.checkout.infor_customer_checkout')
+                    @include('pages.checkout.infor_customer_checkout')
 
-                    @include('customer.pages.checkout.pay_checkout')
+                    @include('pages.checkout.pay_checkout')
                 </div>
             </form>
         </div>
