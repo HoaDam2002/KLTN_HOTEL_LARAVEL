@@ -102,8 +102,7 @@
                                         <td>
                                             <div class="d-flex align-items-center gap-3">
                                                 <div class="">
-                                                    <h6 class="cart-item__title fw-500 font-18"> <a href="property.html"
-                                                            class="link">{{ $user->name }}</a></h6>
+                                                    <h6 class="cart-item__title fw-500 font-18"> <span class="link">{{ $user->name }}</span></h6>
 
                                                 </div>
                                             </div>
