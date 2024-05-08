@@ -152,7 +152,7 @@ Route::middleware(['restaurant'])->group(function () {
     Route::post('/food/manation/fill_modal', [FoodController::class, 'fill_modal'])->name('fill_modal_food_service');
     Route::post('/food/manation/edit_food/{id}', [FoodController::class, 'edit_food'])->name('edit_food_service');
     Route::post('/food/manation/search_food', [FoodController::class, 'search_food'])->name('search_food_service');
-  
+
     Route::get('/food/ordered_list', [FoodController::class, 'ordered_list'])->name('food_ordered_list');
     Route::post('/food/ordered_list/search', [FoodController::class, 'ordered_list_search'])->name('food_ordered_list');
     Route::post('/food/ordered_list/printpdf', [FoodController::class, 'printpdf'])->name('food_ordered_list');
@@ -207,6 +207,9 @@ Route::middleware(['admin'])->prefix('admin')->group(function () {
     Route::post('/edit/info_staff', [AdminController::class, 'edit_info_staff'])->name('edit_info_staff');
     Route::post('/change_pass_staff', [AdminController::class, 'change_pass_staff'])->name('change_pass_staff_admin');
     Route::get('/list_evaluate', [EvaluateAdminController::class, 'index'])->name('list_evaluate_admin');
+    Route::post('/update/status_comment', [EvaluateAdminController::class, 'update_status'])->name('update_status_comment_admin');
+    Route::post('/delete_comment', [EvaluateAdminController::class, 'delete_comment'])->name('delete_comment_admin');
+    Route::get('/search/comment', [EvaluateAdminController::class, 'search_comment'])->name('search_rate_admin');
 });
 
 

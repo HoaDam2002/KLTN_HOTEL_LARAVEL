@@ -51,7 +51,7 @@ class RoomController extends Controller
             $count_available = 10;
         }
 
-        $comment = Comment::with('user.customer')->where('id_room',$id)->get()->toArray();
+        $comment = Comment::with('user.customer')->where('id_room',$id)->where('status', 'show')->get()->toArray();
 
 
         return view('pages.room_detail.room_detail', compact('room', 'checkin', 'checkout', 'count_available', 'diffInDays','comment'));

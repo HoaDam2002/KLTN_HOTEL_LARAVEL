@@ -13,7 +13,7 @@ class EvaluateAdminController extends Controller
      */
     public function index()
     {
-        $data_evaluate = Comment::with('typeroom')->paginate(20);
+        $data_evaluate = Comment::with('typeroom')->paginate(5);
 
         return view('pages.admin.listEvaluate', compact('data_evaluate'));
     }
@@ -21,48 +21,57 @@ class EvaluateAdminController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function update_status(Request $request)
     {
-        //
+        $data = $request->all();
+        if (isset($data['id_comment']) && isset($data['status_comment'])) {
+            $result = Comment::where('id', $data['id_comment'])->update(['status' => $data['status_comment']]);
+
+            if ($result) {
+                return redirect()->back()->with('success', 'Update Status Comment Success');
+            } else {
+                return redirect()->back()->with('error', 'Update Status Comment Fail');
+            }
+        } else {
+            return redirect()->back()->with('error', 'Invalid Data');
+        }
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function delete_comment(Request $request)
     {
-        //
+        $id = $request->id_comment;
+
+        if (isset($id)) {
+            $result = Comment::where('id', $id)->delete();
+
+            if ($result) {
+                return redirect()->back()->with('success', 'Delete Comment Success');
+            } else {
+                return redirect()->back()->with('error', 'Delete Comment Fail');
+            }
+        } else {
+            return redirect()->back()->with('error', 'Invalid Comment ID');
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function search_comment(Request $request)
     {
-        //
-    }
+        $rate = $request->rate;
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        if (isset($rate)) {
+            $data_evaluate = Comment::where('rate', $rate)->paginate(5);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+            if ($data_evaluate) {
+                return view('pages.admin.listEvaluate', compact('data_evaluate'));
+            } else {
+                return redirect()->back()->with('error', 'Comment Not Found');
+            }
+        }
     }
 }
