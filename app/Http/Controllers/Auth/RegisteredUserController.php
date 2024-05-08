@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\DB;
 
 class RegisteredUserController extends Controller
 {
@@ -32,49 +33,57 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z\sàáạãảăắằẳẵặâấầẩẫậèéẹẽẻêềếểễệìíịĩỉòóọõỏôốồổỗộơớờởỡợùúụũủưứừửữựỳýỵỹỷđĐ]+$/'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . Account::class],
-            'password' => ['required', Rules\Password::defaults()],
-            'phone' => ['required', 'numeric'],
-            'birth_date' => ['required', 'date_format:d/m/Y', 'before:today'],
-            'address' => ['required', 'string'],
-            'nationality' => ['required'],
-            'password_confirmation' => ['required', 'same:password']
-        ]);
+        DB::beginTransaction();
 
-        $birth_day = \Carbon\Carbon::createFromFormat('d/m/Y', $request->birth_date)->format('Y-m-d');
+        try {
+            $request->validate([
+                'name' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z\sàáạãảăắằẳẵặâấầẩẫậèéẹẽẻêềếểễệìíịĩỉòóọõỏôốồổỗộơớờởỡợùúụũủưứừửữựỳýỵỹỷđĐ]+$/'],
+                'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . Account::class],
+                'password' => ['required', Rules\Password::defaults()],
+                'phone' => ['required', 'numeric'],
+                'birth_date' => ['required', 'date_format:d/m/Y', 'before:today'],
+                'address' => ['required', 'string'],
+                'nationality' => ['required'],
+                'password_confirmation' => ['required', 'same:password']
+            ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'birth_date' => $birth_day,
-            'address' => $request->address,
-            'nationality' => $request->nationality,
-            'role' => 'customer',
-        ]);
+            $birth_day = \Carbon\Carbon::createFromFormat('d/m/Y', $request->birth_date)->format('Y-m-d');
 
-        $account = Account::create([
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+            $user = User::create([
+                'name' => $request->name,
+                'phone' => $request->phone,
+                'birth_date' => $birth_day,
+                'address' => $request->address,
+                'nationality' => $request->nationality,
+                'role' => 'customer',
+            ]);
 
-        $user_id = $user->id;
-        $account_id = $account->id;
-        $avatar = '';
-        $count_booking = 0;
+            $account = Account::create([
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
 
-        $customer = Customer::create([
-            'avatar' => $avatar,
-            'count_booking' => $count_booking,
-            'id_user' => $user_id,
-            'id_account' => $account_id,
-        ]);
+            $user_id = $user->id;
+            $account_id = $account->id;
+            $avatar = '';
+            $count_booking = 0;
 
-        event(new Registered($account));
+            $customer = Customer::create([
+                'avatar' => $avatar,
+                'count_booking' => $count_booking,
+                'id_user' => $user_id,
+                'id_account' => $account_id,
+            ]);
 
-        Auth::login($account);
+            event(new Registered($account));
 
-        return redirect(RouteServiceProvider::HOME);
+            Auth::login($account);
+            DB::commit();
+
+            return redirect(RouteServiceProvider::HOME);
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return back()->withInput()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 }
