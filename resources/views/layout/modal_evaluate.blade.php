@@ -82,56 +82,31 @@
 
                 check_commented = $(this).hasClass('true');
 
-                console.log(check_commented);
+                console.log(check_commented, status);
 
-
-                if (status == 'confirm' || status == 'cancel') {
-                    $(this).closest('.btn-action').find('button.cancel').prop('disabled', true);
-                    $(this).closest('.btn-action').find('button.rating').prop('disabled', true);
-                } else if (status == 'pending') {
-                    $(this).closest('.btn-action').find('button.cancel').prop('disabled', false);
-                    $(this).closest('.btn-action').find('button.rating').prop('disabled', true);
+                if (status == 'confirm' || status == 'cancel' || status == 'pending') {
+                    $(this).closest('.btn-action').find('button.btn_rating').prop('disabled', true);
                 } else {
                     if (!check_commented) {
-                        $(this).closest('.btn-action').find('button.rating').prop('disabled', false);
-                        $(this).closest('.btn-action').find('button.cancel').prop('disabled', true);
+                        $(this).closest('.btn-action').find('button.btn_rating').prop('disabled', false);
                     } else {
-                        $(this).closest('.btn-action').find('button.rating').prop('disabled', true);
-                        $(this).closest('.btn-action').find('button.cancel').prop('disabled', true);
+                        $(this).closest('.btn-action').find('button.btn_rating').prop('disabled', true);
 
                     }
                 }
-            })
-
-            $(document).on('click', 'button.cancel', function() {
-                let id_booking = $(this).attr('id');
-
-                $.ajax({
-                    type: "post",
-                    url: "/customer/my-bookings/cancel",
-                    data: {
-                        id_booking: id_booking,
-                    },
-                    dataType: "json",
-                    success: function(response) {
-                        $('#modal_evaluate').modal(
-                            'hide');
-                        var toast = new bootstrap.Toast(
-                            document.getElementById(
-                                'liveToast'));
-                        toast.show();
-                    }
-                });
             })
 
 
             $(document).on('click', 'button.submit_comment', function() {
                 let comment = $(this).closest('.modal-body').find('textarea#comment').val();
 
+                let id_booking = $('.btn_rating').attr('id');
+
                 $.ajax({
                     type: "post",
                     url: "/customer/my-bookings/rating",
                     data: {
+                        id_booking: id_booking,
                         comment: comment,
                         rate: rate,
                         id_room: id_room
@@ -144,6 +119,9 @@
                             document.getElementById(
                                 'liveToast'));
                         toast.show();
+                        $('.btn-action').find('button.btn_rating').prop(
+                            'disabled', true);
+
                     }
                 });
 

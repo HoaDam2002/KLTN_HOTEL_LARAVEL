@@ -11,8 +11,17 @@ class InvoiceFood extends Model
 
     protected $table = 'invoice_food';
 
+    protected $fillable = [
+        'id_user',
+    ];
+
     public function invoice_detail()
     {
         return $this->hasMany(InvoiceFoodDetail::class,'id_invoice_food');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class,'id_user');
     }
 }

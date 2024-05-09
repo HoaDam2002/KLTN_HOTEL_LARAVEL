@@ -352,6 +352,20 @@
                                             <i class="fas fa-money-check"></i></span>
                                         {{ __('Checked out Bookings') }}
                                     </a>
+                                    {{-- <a href="/recep/history-booking"
+                                        class="nav-link {{ Route::currentRouteName() == 'history-booking_recep' ? 'active' : '' }}"
+                                        id="acc_payment" onclick="menu_account_customer(this.id)">
+                                        <span class="icon">
+                                        <i class="fa-solid fa-star"></i></i></span>
+                                        {{ __('Evaluate') }}
+                                    </a>
+                                    <a href="/recep/history-booking"
+                                        class="nav-link {{ Route::currentRouteName() == 'history-booking_recep' ? 'active' : '' }}"
+                                        id="acc_payment" onclick="menu_account_customer(this.id)">
+                                        <span class="icon">
+                                        <i class="fa-solid fa-users"></i></span>
+                                        {{ __('Account User') }}
+                                    </a> --}}
                                     <form action="{{ route('logout') }}" method="POST">
                                         @csrf
                                         <button type="submit" class="nav-link" id=""

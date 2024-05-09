@@ -289,18 +289,25 @@
                                         <span class="icon"> <i class="fas fa-user"></i></span>
                                         {{ __('Home') }}
                                     </a>
-                                    <a href="/food_service/manation"
+                                    <a href="/food/manation"
                                         class="nav-link {{ Route::currentRouteName() == 'food_service_manation' ? 'active' : '' }}"
                                         id="my_bookings" onclick="menu_account_customer(this.id)">
                                         <span class="icon"> <i class="fas fa-list"></i></span>
                                         {{ __('Management Food') }}
                                     </a>
-                                    <a href="/food_service/order"
+                                    <a href="/food/order"
                                         class="nav-link {{ Route::currentRouteName() == 'food_service_order' ? 'active' : '' }}"
                                         id="acc_payment" onclick="menu_account_customer(this.id)">
                                         <span class="icon">
                                             <i class="fas fa-money-check"></i></span>
-                                        {{ __('List Order Food') }}
+                                        {{ __('Order Food') }}
+                                    </a>
+                                    <a href="/food/ordered_list"
+                                        class="nav-link {{ Route::currentRouteName() == 'food_ordered_list' ? 'active' : '' }}"
+                                        id="acc_payment" onclick="menu_account_customer(this.id)">
+                                        <span class="icon">
+                                            <i class="fas fa-money-check"></i></span>
+                                        {{ __('Ordered Food List') }}
                                     </a>
                                     <form action="{{ route('logout') }}" method="POST">
                                         @csrf

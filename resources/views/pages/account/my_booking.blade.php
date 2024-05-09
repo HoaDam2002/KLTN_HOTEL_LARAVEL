@@ -110,8 +110,8 @@
                                                     </div>
                                                     <div class="cart-item__content">
                                                         <h6 class="cart-item__title fw-500 font-18">
-                                                            <a href="property.html"
-                                                                class="link">{{ $data['room']['name'] }}</a>
+                                                            <a href="/room-detail/{{ $data['room']['id'] }}/null null" class="link">{{ $data['room']['name'] }}</a>
+                                    
                                                         </h6>
                                                         <p class="property-item__location d-flex gap-2 font-14">
                                                             <span class="icon text-gradient">
@@ -139,7 +139,7 @@
 
                                             <td class="btn-action" style="cursor: default;">
                                                 <button type="button"
-                                                    class="rounded-btn text-danger bg-danger bg-opacity-10 flex-shrink-0 action {{ $data['room']['comment'] ? 'true' : 'false' }}"
+                                                    class="rounded-btn text-danger bg-danger bg-opacity-10 flex-shrink-0 action {{ $data['comment'] ? 'true' : 'false' }}"
                                                     data-bs-toggle="dropdown" aria-expanded="false" id="{{ $data['id_room'] }}">
                                                     <i class="fa-solid fa-gear"></i>
                                                 </button>
@@ -147,7 +147,7 @@
                                                     {{-- <li><button type="button"
                                                             class="dropdown-item cancel" id="{{ $data['id'] }}">{{ __('Cancel') }}</button>
                                                     </li> --}}
-                                                    <li><button type="button" class="dropdown-item rating"
+                                                    <li><button type="button" class="dropdown-item btn_rating" id="{{ $data['id'] }}"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#modal_evaluate">{{ __('Rating') }}</button>
                                                     </li>

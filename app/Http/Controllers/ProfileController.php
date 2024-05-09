@@ -124,10 +124,9 @@ class ProfileController extends Controller
 
         $id_user = $this->get_id_user();
 
-        $data = Booking::with(['room.comment' => function($query) use ($id_user){
+        $data = Booking::with(['room','comment' => function($query) use ($id_user){
             $query->where('id_user', $id_user);
         }])->where('id_user', $id_user)->get()->toArray();
-
         return view('pages.account.my_booking', compact('data'));
     }
 

@@ -1,105 +1,112 @@
-@extends('layout.app')
+<!DOCTYPE html>
+<html lang="en">
 
-@section('css')
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice</title>
     <style>
-        .invoice {
-            width: 60%;
-            margin: auto;
-            margin-bottom: 200px;
-            margin-top: 100px;
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
         }
 
-        .title {
-            font-weight: bold;
+        .header {
             text-align: center;
-            font-size: 40px;
-            background-color: rgb(246,143,32);
+            margin-bottom: 20px;
         }
 
-        .check_time {
-            display: flex;
+        .logo {
+            max-width: 100px;
+            margin-bottom: 10px;
         }
 
-        .content {
-            width: 50%;
+        .hotel-info {
+            margin-bottom: 20px;
         }
 
-        .title_content {
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .total {
             font-weight: bold;
-
-        }
-
-        .boxs {
-            padding-left: 50px;
-            padding-bottom: 20px;
-        }
-
-        .content-t {
-            width: 50%;
-            font-weight: bold;
-        }
-
-        .bd {
-            background-color: rgb(255, 255, 255);
-            border: 2px;
-        }
-
-        .total{
-            font-size: 30px;
         }
     </style>
-@endsection
+</head>
 
-@section('content')
-    <div class="container">
-        <div class="invoice">
-            <p class="title bd">Request</p>
-            <div class="check_time boxs bd">
-                <div class="content">
-                    <p class="title_content">Check In</p>
-                    <p>01 Nov 2023</p>
-                </div>
-                <div class="content">
-                    <p class="title_content">Check Out</p>
-                    <p>29 Nov 2023</p>
-                </div>
-            </div>
-
-            <div class="boxs bd">
-                <div class="check_time">
-                    <p class="title_content content">Hotel Service Price:</p>
-                    <span class="content-t">25$</span>
-                </div>
-                <div>
-                    <div class="check_time">
-                        <p class="title_content content">Food Service Price:</p>
-                        <span class="content-t">25$</span>
-                    </div>
-                    <div class="check_time">
-                        <p class="content">- Fish</p>
-                        <p class="content">$5</p>
-                    </div>
-                </div>
-                <div>
-                    <div class="check_time">
-                        <p class="title_content content">OutSide Service Price: </p>
-                        <p class="content-t">25$</p>
-                    </div>
-                    <div class="check_time">
-                        <p class="content">- Tenis</p>
-                        <p class="content">$5</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="boxs bd">
-                <div>
-                    <div class="check_time">
-                        <p class="title_content content total">Total: </p>
-                        <span class="content-t total">25$</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+<body>
+    <div class="header">
+        <span>Invoice</span>
     </div>
-@endsection
+    <div class="hotel-info">
+        <p><strong>Hotel Name:</strong>DANAHOTEL</p>
+        <p><strong>Address:</strong> Da Nang, Viet Nam</p>
+    </div>
+    <div class="customer-info">
+        <p><strong>Customer Name:</strong>{{ $data_pdf['name_user'] ? $data_pdf['name_user'] : '' }}</p>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @php
+                $final_total = 0;
+            @endphp
+            @if (!empty($data_pdf))
+                @if (!empty($data_pdf['service']))
+                    @foreach ($data_pdf['service'] as $item)
+                        @php
+                            $total = $item[0]['price'] * $item[1];
+                            $final_total += $total;
+                        @endphp
+                        <tr>
+                            <td>{{ $item[0]['name'] }}</td>
+                            <td>{{ $item[0]['price'] }}$</td>
+                            <td>{{ $item[1] }}</td>
+                            <td>{{ $total }}</td>
+                        </tr>
+                    @endforeach
+                @else
+                    @foreach ($data_pdf['food'] as $item)
+                        @php
+                            $total = $item[0]['price'] * $item[1];
+                            $final_total += $total;
+                        @endphp
+                        <tr>
+                            <td>{{ $item[0]['name'] }}</td>
+                            <td>{{ $item[0]['price'] }}$</td>
+                            <td>{{ $item[1] }}</td>
+                            <td>{{ $total }}$</td>
+                        </tr>
+                    @endforeach
+                @endif
+            @endif
+            <!-- Add more rows as needed -->
+        </tbody>
+    </table>
+    <div class="total">
+        Total: {{ $final_total }}
+    </div>
+</body>
+
+</html>

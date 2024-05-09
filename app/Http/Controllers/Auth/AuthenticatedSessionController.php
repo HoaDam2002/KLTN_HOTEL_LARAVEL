@@ -9,6 +9,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use App\Models\Customer;
+use App\Models\User;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -23,13 +25,35 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): RedirectResponse
+    public function store(LoginRequest $request)
     {
         $request->authenticate();
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        if (Auth::check()) {
+            $id_account = Auth::id();
+            $customer = Customer::where('id_account', $id_account)->first();
+
+            $id_user = $customer->id_user;
+
+            $user = User::where('id', $id_user)->first();
+
+            $role = $user->role;
+            if ($role == 'customer') {
+                return redirect()->intended(RouteServiceProvider::HOME);
+            } else if ($role == 'receptionist') {
+                return redirect()->intended(RouteServiceProvider::HOME_RECEPTIONIST);
+            }else if($role == 'restaurant'){
+                return redirect()->intended(RouteServiceProvider::HOME_RESTAURANT);
+            }else if($role == 'service'){
+                return redirect()->intended(RouteServiceProvider::HOME_SERVICE);
+            }else if($role == 'status_manager'){
+                return redirect()->intended(RouteServiceProvider::HOME_STATUS_MANAGER);
+            }else if($role == 'admin'){
+                return redirect()->intended(RouteServiceProvider::HOME_STATUS_ADMIN);
+            }
+        }
     }
 
     /**

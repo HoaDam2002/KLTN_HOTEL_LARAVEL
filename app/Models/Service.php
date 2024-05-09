@@ -13,7 +13,8 @@ class Service extends Model
     protected $fillable = [
         'name',
         'image',
-        'price'
+        'price',
+        'status'
     ];
 
     public function invoice_detail()

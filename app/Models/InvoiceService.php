@@ -11,6 +11,16 @@ class InvoiceService extends Model
 
     protected $table = 'invoice_service';
 
+    protected $fillable = [
+        'id_user',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class,'id_user');
+    }
+
+
     public function invoice_detail()
     {
         return $this->hasMany(InvoiceServiceDetail::class,'id_invoice_service');

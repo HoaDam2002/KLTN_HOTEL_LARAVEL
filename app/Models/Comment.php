@@ -14,7 +14,9 @@ class Comment extends Model
         'comment',
         'rate',
         'id_user',
-        'id_room'
+        'id_room',
+        'id_booking',
+        'status'
     ];
 
     public function user()

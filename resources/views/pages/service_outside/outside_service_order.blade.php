@@ -59,8 +59,9 @@
             <div class="overflow-auto">
                 <div class="card common-card min-w-maxContent" style="margin-bottom: 20px;">
                     <div class="card-body filter_booking d-flex" style="justify-content: center;">
-                        <form action="" class="w-50 ms-3">
-                            <input type="text" name="" id="" placeholder="Customer Name" class="">
+                        <form action="/service/manation/search_customer" method="post" class="w-50 ms-3">
+                            @csrf
+                            <input type="text" name="infor" id="" placeholder="Customer Name" class="">
                             <button type="submit" class="btn_search_booking"><i
                                     class="fa-solid fa-magnifying-glass"></i></button>
                         </form>
@@ -79,27 +80,44 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center gap-3">
-                                            <div class="cart-item__thumb">
-                                                <img src="http://127.0.0.1:8000/assets/customer/images/thumbs/property-1.png"
-                                                    alt="">
-                                            </div>
-                                            <div class="cart-item__content">
-                                                <h6 class="cart-item__title fw-500 font-18">
-                                                    <a href="/outside_service/order/detail" class="link">Nguyen Van A</a>
-                                                </h6>
-                                            </div>
-                                        </div>
-                                    </td>
+                                @if (!empty($customer))
+                                    @foreach ($customer as $item)
+                                        @php
+                                            $avatar =
+                                                'http://127.0.0.1:8000/assets/customer/images/thumbs/property-1.png';
 
-                                    <td>
-                                        <span class="date" id="checkin">17/02/2024</span>
-                                    </td>
-                                    <td>
-                                        <span class="date" id="checkout">17/02/2024</span>
-                                    </td>
+                                            if (!empty($item['customer'])) {
+                                                $avatar = asset('customer/avatar/' . $item['customer']['avatar']);
+                                            }
+
+                                        @endphp
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-3">
+                                                    <div class="cart-item__thumb">
+                                                        <img src="{{ $avatar }}" alt="">
+                                                    </div>
+                                                    <div class="cart-item__content">
+                                                        <h6 class="cart-item__title fw-500 font-18">
+                                                            <a href="/service/order/detail/{{ $item['id'] }}"
+                                                                class="link">{{ $item['name'] }}</a>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <span class="date"
+                                                    id="checkin">{{ explode(' ', $item['booking_realtime'][0]['check_in'])[0] }}</span>
+                                            </td>
+                                            <td>
+                                                <span class="date"
+                                                    id="checkout">{{ explode(' ', $item['booking_realtime'][0]['check_out'])[0] }}</span>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+
                             </tbody>
                         </table>
                     </div>
@@ -107,15 +125,7 @@
             </div>
             <nav aria-label="Page navigation example" style="padding-bottom: 50px;">
                 <ul class="pagination common-pagination">
-                    <li class="page-item">
-                        <a class="page-link bg-white" href="#">1</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link bg-white" href="#">2</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link bg-white" href="#">3</a>
-                    </li>
+                    {{ $customer->links() }}
                 </ul>
             </nav>
         </div>

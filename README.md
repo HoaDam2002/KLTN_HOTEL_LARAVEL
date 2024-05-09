@@ -69,6 +69,7 @@ composer require stripe/stripe-php
 composer require propaganistas/laravel-bootstrap-pagination
 composer require intervention/image
 composer dump-autoload
+composer require barryvdh/laravel-dompdf
 
 update branch tien 
 

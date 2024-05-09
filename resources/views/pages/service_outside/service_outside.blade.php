@@ -290,17 +290,24 @@
                                         {{ __('Home') }}
                                     </a>
                                     <a href="/outside_service/manation"
-                                        class="nav-link {{ Route::currentRouteName() == 'outside_service_manation' ? 'active' : '' }}"
+                                        class="nav-link {{ Route::currentRouteName() == 'service_manation' ? 'active' : '' }}"
                                         id="my_bookings" onclick="menu_account_customer(this.id)">
                                         <span class="icon"> <i class="fas fa-list"></i></span>
                                         {{ __('Management Service') }}
                                     </a>
                                     <a href="/outside_service/order"
-                                        class="nav-link {{ Route::currentRouteName() == 'outside_service_order' ? 'active' : '' }}"
+                                        class="nav-link {{ Route::currentRouteName() == 'service_order' ? 'active' : '' }}"
                                         id="acc_payment" onclick="menu_account_customer(this.id)">
                                         <span class="icon">
                                             <i class="fas fa-money-check"></i></span>
-                                        {{ __('List Order Service') }}
+                                        {{ __('Order Service') }}
+                                    </a>
+                                    <a href="/service/ordered_list"
+                                        class="nav-link {{ Route::currentRouteName() == 'service_ordered_list' ? 'active' : '' }}"
+                                        id="acc_payment" onclick="menu_account_customer(this.id)">
+                                        <span class="icon">
+                                            <i class="fas fa-money-check"></i></span>
+                                        {{ __('Ordered Service List') }}
                                     </a>
                                     <form action="{{ route('logout') }}" method="POST">
                                         @csrf
