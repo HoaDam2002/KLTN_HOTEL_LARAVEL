@@ -6,7 +6,7 @@
             <div class="row gy-4 align-items-center">
                 <div class="col-lg-6">
                     <div class="about-thumb">
-                        <img src="{{ asset('assets/customer/images/thumbs/about-img.png') }}" alt="">
+                        <img src="{{ asset('home/home2.jpg') }}" alt="">
                         <div class="client-statistics flx-align">
                             <span class="client-statistics__icon">
                                 <i class="fas fa-users text-gradient"></i>
