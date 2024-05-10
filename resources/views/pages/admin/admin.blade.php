@@ -119,7 +119,7 @@
                 <button type="button" class="close-button"> <i class="las la-times"></i> </button>
                 <div class="mobile-menu__inner">
                     @if (Auth::check())
-                        <a href="/" class="mobile-menu__logo">
+                        <a href="/admin/home" class="mobile-menu__logo">
                             <img src="{{ asset('assets/customer/images/logo/logo.png') }}" alt="Logo">
                         </a>
                     @endif
@@ -167,7 +167,7 @@
             <!-- ==================== Right Offcanvas Start Here ==================== -->
             <div class="common-offcanvas d-lg-block d-none">
                 <div class="flx-between">
-                    <a href="/" class="mobile-menu__logo">
+                    <a href="/admin/home" class="mobile-menu__logo">
                         <img src="{{ asset('assets/customer/images/logo/white-logo.png') }}" alt="Logo">
                     </a>
                     <button type="button" class="close-button d-flex position-relative top-0 end-0"> <i class="las la-times"></i>
@@ -270,7 +270,7 @@
                     <nav class="header-inner flx-between">
                         <!-- Logo Start -->
                         <div class="logo">
-                            <a href="/" class="link">
+                            <a href="/admin/home" class="link">
                                 <img src="{{ asset('assets/customer/images/logo/z5175648554199_ccc2baf0a7ac356050aa28149405a89d.jpg') }}"
                                     alt="Logo" style="width: 190px; height: 40px; object-fit: contain">
                             </a>
