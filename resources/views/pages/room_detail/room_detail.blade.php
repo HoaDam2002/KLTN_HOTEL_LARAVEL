@@ -275,7 +275,7 @@
                                                                 <div>
                                                                     <h6 class="fw-bold mb-2">{{ $name }}</h6>
                                                                     <div class="info_comment mb-2">
-                                                                        <div class="rateYo" id="rate1" data-rating="{{ $item['rate'] }}">
+                                                                        <div class="rateYo" id="rate{{ $item['id'] }}" data-rating="{{ $item['rate'] }}">
                                                                         </div>
                                                                         <div class="d-flex align-items-center ms-1">
                                                                             <p class="mb-0 date_comment">
