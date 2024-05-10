@@ -82,11 +82,11 @@
                                     <th>Rate
                                         @csrf
                                         <select id="search_rate" name="rate">
-                                            <option value="5" {{ $_GET['rate'] == 5 ? 'selected' : ''}}>⭐⭐⭐⭐⭐</option>
-                                            <option value="4" {{ $_GET['rate'] == 4 ? 'selected' : ''}}>⭐⭐⭐⭐</option>
-                                            <option value="3" {{ $_GET['rate'] == 3 ? 'selected' : ''}}>⭐⭐⭐</option>
-                                            <option value="2" {{ $_GET['rate'] == 2 ? 'selected' : ''}}>⭐⭐</option>
-                                            <option value="1" {{ $_GET['rate'] == 1 ? 'selected' : ''}}>⭐</option>
+                                            <option value="5" {{ isset($_GET['rate']) && $_GET['rate'] == 5 ? 'selected' : ''}}>⭐⭐⭐⭐⭐</option>
+                                            <option value="4" {{ isset($_GET['rate']) && $_GET['rate'] == 4 ? 'selected' : ''}}>⭐⭐⭐⭐</option>
+                                            <option value="3" {{ isset($_GET['rate']) && $_GET['rate'] == 3 ? 'selected' : ''}}>⭐⭐⭐</option>
+                                            <option value="2" {{ isset($_GET['rate']) && $_GET['rate'] == 2 ? 'selected' : ''}}>⭐⭐</option>
+                                            <option value="1" {{ isset($_GET['rate']) && $_GET['rate'] == 1 ? 'selected' : ''}}>⭐</option>
                                         </select>
                                     </th>
                                     </form>
