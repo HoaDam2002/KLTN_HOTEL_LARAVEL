@@ -44,14 +44,16 @@ class AuthenticatedSessionController extends Controller
                 return redirect()->intended(RouteServiceProvider::HOME);
             } else if ($role == 'receptionist') {
                 return redirect()->intended(RouteServiceProvider::HOME_RECEPTIONIST);
-            }else if($role == 'restaurant'){
+            } else if ($role == 'restaurant') {
                 return redirect()->intended(RouteServiceProvider::HOME_RESTAURANT);
-            }else if($role == 'service'){
+            } else if ($role == 'service') {
                 return redirect()->intended(RouteServiceProvider::HOME_SERVICE);
-            }else if($role == 'status_manager'){
+            } else if ($role == 'status_manager') {
                 return redirect()->intended(RouteServiceProvider::HOME_STATUS_MANAGER);
-            }else if($role == 'admin'){
-                return redirect()->intended(RouteServiceProvider::HOME_STATUS_ADMIN);
+            } else if ($role == 'admin') {
+                return redirect()->intended(RouteServiceProvider::HOME_ADMIN);
+            } else if ($role == 'manager') {
+                return redirect()->intended(RouteServiceProvider::HOME_MANAGER);
             }
         }
     }

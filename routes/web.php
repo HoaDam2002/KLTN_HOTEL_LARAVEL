@@ -12,6 +12,7 @@ use App\Http\Controllers\customer\RoomController;
 use App\Http\Controllers\StriperController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\manager\ManagerController;
 use App\Http\Controllers\RecepHistoryBookingController;
 use App\Http\Controllers\receptionist\RoomDiagramController;
 use App\Http\Controllers\Restaurant\FoodController;
@@ -210,6 +211,12 @@ Route::middleware(['admin'])->prefix('admin')->group(function () {
     Route::post('/update/status_comment', [EvaluateAdminController::class, 'update_status'])->name('update_status_comment_admin');
     Route::post('/delete_comment', [EvaluateAdminController::class, 'delete_comment'])->name('delete_comment_admin');
     Route::get('/search/comment', [EvaluateAdminController::class, 'search_comment'])->name('search_rate_admin');
+});
+
+
+Route::middleware(['manager'])->prefix('manager')->group(function () {
+    Route::get('/home', [ManagerController::class, 'home_manager'])->name('home_manager');
+    Route::get('/statistical', [ManagerController::class, 'statistical'])->name('statistical_manager');
 });
 
 

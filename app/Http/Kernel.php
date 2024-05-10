@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\Role;
 use App\Http\Middleware\RoleAdmin;
+use App\Http\Middleware\RoleManager;
 use App\Http\Middleware\RoleReceptionist;
 use App\Http\Middleware\RoleRestaurant;
 use App\Http\Middleware\RoleService;
@@ -76,6 +77,7 @@ class Kernel extends HttpKernel
         'admin' => RoleAdmin::class,
         'service' => RoleService::class,
         'status_manager' => RoleStatusManager::class,
-        'restaurant' => RoleRestaurant::class
+        'restaurant' => RoleRestaurant::class,
+        'manager' => RoleManager::class
     ];
 }
