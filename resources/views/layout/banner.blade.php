@@ -23,13 +23,13 @@
                 </div>
                 <div class="col-lg-6 order-lg-0 order-1">
                     <div class="banner-thumb">
-                        <img src="{{ asset('assets/customer/images/thumbs/banner-img.png') }}" alt="" />
+                        <img src="{{ asset('home/home1.jpg') }}" alt="" />
                         <img src="{{ asset('assets/customer/images/shapes/shape-triangle.png') }}" alt=""
                             class="shape-element one" />
-                        <img src="{{ asset('assets/customer/images/shapes/shape-circle.png') }}" alt=""
+                        {{-- <img src="{{ asset('assets/customer/images/shapes/shape-circle.png') }}" alt=""
                             class="shape-element two" />
                         <img src="{{ asset('assets/customer/images/shapes/shape-moon.png') }}" alt=""
-                            class="shape-element three" />
+                            class="shape-element three" /> --}}
                     </div>
                 </div>
                 <div class="col-lg-10 m-auto">
