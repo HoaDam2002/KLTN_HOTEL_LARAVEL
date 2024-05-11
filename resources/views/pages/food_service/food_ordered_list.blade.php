@@ -95,14 +95,14 @@
             <div class="card card-body filter_booking d-flex mb-3" style="align-items: center;">
                 <form action="/food/ordered_list/search" class="w-50 ms-3" method="POST">
                     @csrf
-                    <input type="text" name="infor" id="" placeholder="Food Name" class="">
+                    <input type="text" name="infor" id="" placeholder="Name or phone Customer" class="">
                     <button type="submit" class="btn_search_booking"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
             </div>
             <div class="tab-content mb-3" id="v-pills-tabContent">
                 <div class="overflow-auto">
                     <div class="card common-card min-w-maxContent">
-                        <div class="card-body" style="height: 400px; overflow-y: auto;">
+                        <div class="card-body">
                             <table class="table style-two">
                                 <thead>
                                     <tr>
@@ -130,10 +130,12 @@
                                                     <span class="price_food" id="">{{ $Total }}$</span>
                                                 </td>
                                                 <td>
-                                                    <form action="/service/ordered_list/printpdf" method="post">
+                                                    <form action="/food/ordered_list/printpdf" method="post">
                                                         @csrf
-                                                        <input type="text" name="id_invoice" value="{{ $item['id'] }}" hidden>
-                                                        <input type="text" name="name_user" value="{{ $item['user']['name'] }}" hidden>
+                                                        <input type="text" name="id_invoice" value="{{ $item['id'] }}"
+                                                            hidden>
+                                                        <input type="text" name="name_user"
+                                                            value="{{ $item['user']['name'] }}" hidden>
 
                                                         <button type="submit" class="add_food" style="margin-left: 5px">
                                                             <i class="fa-solid fa-print" style="font-size: 25px"></i>
@@ -146,7 +148,11 @@
                             </table>
                         </div>
                     </div>
-
+                    <nav aria-label="Page navigation example" style="padding-bottom: 50px;">
+                        <ul class="pagination common-pagination">
+                            {{ $data->links() }}
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>

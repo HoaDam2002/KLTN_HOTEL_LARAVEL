@@ -235,7 +235,7 @@ class ServiceController extends Controller
     {
         $data = InvoiceService::with(['invoice_detail.service', 'user.booking_realtime' => function ($query) {
             $query->where('status', 'checkin');
-        }])->get()->toArray();
+        }])->paginate(6);
 
         return view('pages.service_outside.service_ordered_list', compact('data'));
     }

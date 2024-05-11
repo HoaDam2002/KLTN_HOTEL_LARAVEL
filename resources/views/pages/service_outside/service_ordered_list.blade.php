@@ -95,7 +95,7 @@
             <div class="card card-body filter_booking d-flex mb-3" style="align-items: center;">
                 <form action="/service/ordered_list/search" method="POST" class="w-50 ms-3">
                     @csrf
-                    <input type="text" name="infor" id="" placeholder="Food Name" class="">
+                    <input type="text" name="infor" id="" placeholder="Name or phone Customer" class="">
                     <button type="submit" class="btn_search_booking"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
             </div>
@@ -148,12 +148,13 @@
                             </table>
                         </div>
                     </div>
-
+                    <nav aria-label="Page navigation example" style="padding-bottom: 50px;">
+                        <ul class="pagination common-pagination">
+                            {{ $data->links() }}
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>
     </div>
-@endsection
-
-@section('js')
 @endsection
