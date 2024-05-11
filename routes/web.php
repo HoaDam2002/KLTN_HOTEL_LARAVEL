@@ -97,7 +97,7 @@ Route::post('/customer/find_room/ajax', [SearchController::class, 'find_availabl
 Route::get('/', [HomeController::class, 'index'])->name('home_customer');
 
 Route::get('/pay', function () {
-    return view('pages.checkout.checkout');
+    return view('pages.invoice.invoice_checkout');
 })->name('checkout_customer');
 
 Route::get('/aboutus', function () {
@@ -128,7 +128,7 @@ Route::middleware(['receptionist'])->group(function () {
     Route::post('/recep/diagram/checkout_soon', [RoomDiagramController::class, 'checkout_soon'])->name('checkout_soon_diagram_recep');
     Route::post('/recep/diagram/cancel', [RoomDiagramController::class, 'cancel'])->name('cancel_diagram_recep');
     Route::post('/recep/diagram/change_room', [RoomDiagramController::class, 'change_room'])->name('change_room_diagram_recep');
-
+    Route::post('/recep/diagram/fill_checkout', [RoomDiagramController::class, 'fill_checkout'])->name('fill_checkout_diagram_recep');
 
     Route::get('/recep/request-booking', [BookingController::class, 'showNewBooking'])->name('request-booking-recep');
 

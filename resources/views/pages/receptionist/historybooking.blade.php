@@ -88,7 +88,8 @@
                                     @if (!empty($item))
                                         @foreach ($item as $value)
                                             @php
-                                                if ($value['user']['customer']) {
+
+                                                if (!empty($value['user']['customer'])) {
                                                     $avatar =
                                                         '/customer/avatar/' . $value['user']['customer']['avatar'];
                                                 } else {
@@ -115,8 +116,8 @@
                                                         </div>
                                                         <div class="cart-item__content" style="max-width: 200px">
                                                             <h6 class="cart-item__title fw-500 font-18">
-                                                                <a href="property.html"
-                                                                    class="link text">{{ $value['room_detail']['type_room']['name'] }}</a>
+                                                                <div class="link text">
+                                                                    {{ $value['room_detail']['type_room']['name'] }}</div>
                                                             </h6>
 
                                                             <span class="cart-item__price text">Price:
@@ -133,10 +134,12 @@
                                                     <span class="name_cus text">{{ $value['user']['name'] }}</span>
                                                 </td>
                                                 <td>
-                                                    <span class="date text" id="checkin">{{ explode(' ', $value['check_in'])[0] }}</span>
+                                                    <span class="date text"
+                                                        id="checkin">{{ explode(' ', $value['check_in'])[0] }}</span>
                                                 </td>
                                                 <td>
-                                                    <span class="date text" id="checkout">{{ explode(' ', $value['check_out'])[0] }}</span>
+                                                    <span class="date text"
+                                                        id="checkout">{{ explode(' ', $value['check_out'])[0] }}</span>
                                                 </td>
                                                 <td>
                                                     <span class="status cancel text"
@@ -179,10 +182,10 @@
             }
         });
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             $(document).on('input', 'input.name_room', function() {
                 let infor = $(this).val();
-    
+
                 console.log(infor);
                 $.ajax({
                     type: "post",
@@ -193,26 +196,30 @@
                     dataType: "json",
                     success: function(response) {
                         let item = response.item;
-    
+
                         let html = '';
-    
+
                         console.log(item);
-    
+
                         item.map(function(value) {
-                            
+
                             if (value.booking_realtime) {
-  
+
                                 value.booking_realtime.map(function(item) {
                                     var checkin = item.check_in.split(' ')[0];
                                     var checkout = item.check_out.split(' ')[0];
-                                    
-                                    
-                                    let total = cul_total(checkin,checkout, item.price);
 
-                                    let avatar = 'http://127.0.0.1:8000/assets/customer/images/thumbs/property-1.png';
-                                    
-                                    if(value.customer){
-                                        avatar = "{{asset('/customer/avatar')}}/" + value.customer.avatar;
+
+                                    let total = cul_total(checkin, checkout,
+                                        item.price);
+
+                                    let avatar =
+                                        'http://127.0.0.1:8000/assets/customer/images/thumbs/property-1.png';
+
+                                    if (value.customer) {
+                                        avatar =
+                                            "{{ asset('/customer/avatar') }}/" +
+                                            value.customer.avatar;
                                     }
 
                                     html +=
@@ -220,36 +227,45 @@
                                         '<td>' +
                                         '<div class="d-flex align-items-center gap-3">' +
                                         '<div class="cart-item__thumb">' +
-                                        '<img src=' + avatar +' alt="" />' +
+                                        '<img src=' + avatar + ' alt="" />' +
                                         '</div>' +
                                         '<div class="cart-item__content">' +
                                         '<h6 class="cart-item__title fw-500 font-18">' +
-                                        '<a href="property.html" class="link text">' + item.room_detail.type_room.name +'</a>' +
+                                        '<a href="property.html" class="link text">' +
+                                        item.room_detail.type_room.name +
+                                        '</a>' +
                                         '</h6>' +
                                         '<span class="cart-item__price text">Price: ' +
-                                        '<span class="fw-500 text-heading text">' + item.room_detail.type_room.price + '</span>' +
+                                        '<span class="fw-500 text-heading text">' +
+                                        item.room_detail.type_room.price +
+                                        '</span>' +
                                         '</span>' +
                                         '<span class="cart-item__price text"> Total: ' +
-                                        '<span class="fw-500 text-heading text">' + total + '</span>' +
+                                        '<span class="fw-500 text-heading text">' +
+                                        total + '</span>' +
                                         '</span>' +
                                         '</div>' +
                                         '</div>' +
                                         '</td>' +
                                         '<td>' +
-                                        '<span class="name_cus text">'+ value.name + '</span>' +
+                                        '<span class="name_cus text">' + value
+                                        .name + '</span>' +
                                         '</td>' +
                                         '<td>' +
-                                        '<span class="date text" id="checkin">'+ item.check_in +'</span>' +
+                                        '<span class="date text" id="checkin">' +
+                                        item.check_in + '</span>' +
                                         '</td>' +
                                         '<td>' +
-                                        '<span class="date text" id="checkout">'+ item.check_out +'</span>' +
+                                        '<span class="date text" id="checkout">' +
+                                        item.check_out + '</span>' +
                                         '</td>' +
                                         '<td>' +
-                                        '<span class="status cancel text" id="checkout">' + item.status + '</span>' +
+                                        '<span class="status cancel text" id="checkout">' +
+                                        item.status + '</span>' +
                                         '</td>' +
                                         '</tr>';
-    
-                                    
+
+
                                 })
                             }
                         })
@@ -263,10 +279,10 @@
                 var date2 = new Date(b);
 
                 var difference = date2.getTime() - date1.getTime();
-                
+
                 var daysDifference = Math.floor(difference / (1000 * 60 * 60 * 24));
 
-                if(daysDifference == 0){
+                if (daysDifference == 0) {
                     daysDifference = 1;
                 }
 
@@ -274,8 +290,7 @@
 
                 return total;
             }
-            
-        });
 
+        });
     </script>
 @endsection

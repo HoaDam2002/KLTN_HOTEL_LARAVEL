@@ -14,7 +14,12 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\booking_rep;
 use App\Models\Booking;
 use App\Models\Customer;
+use App\Models\InvoiceFood;
+use App\Models\InvoiceService;
 use App\Models\RoomModel;
+use \DateTime;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 use function Laravel\Prompts\search;
 
@@ -208,7 +213,7 @@ class RoomDiagramController extends Controller
                 ->get()->toArray();
 
             return response()->json(['item' => $room_detail, 'list_room' => $list_empty_room_booking]);
-        }else{
+        } else {
             return response()->json(['item' => $room_detail]);
         }
     }
@@ -395,51 +400,228 @@ class RoomDiagramController extends Controller
     {
         $data = $request->all();
 
-        // dd($data);
         $id_booking_realtime = $data['id_booking_realtime'];
+        $id_user = $data['id_user'];
+        $name_user = $data['name_user'];
 
         if (!empty($data['id_booking'])) {
             $id_booking = $data['id_booking'];
 
-            $booking_realtime = Booking_realtime::where('id_booking', $id_booking)->update(['status' => 'checkout', 'payment_total' => $data['payment']]);
+            $booking_realtime = Booking_realtime::where('id_booking', $id_booking)->where('status', 'checkin')->update(['status' => 'checkout', 'payment_total' => $data['payment']]);
 
             $booking = Booking::where('id', $id_booking)->update(['status' => 'checkout']);
+
+            $data_pdf['room'] = $this->cul_total_room_has_booking($data['id_booking']);
+            $data_pdf['food'] = $this->cul_total_food($id_booking_realtime, $id_user);
+            $data_pdf['service'] = $this->cul_total_service($id_booking_realtime, $id_user);
+            $data_pdf['name_user'] = $name_user;
+
+            // dd($data_pdf['room']['total']);
+
+            $data_pdf['final_total'] =  $data_pdf['room']['total'] * count($data_pdf['room']['rooms']) + (!empty($data_pdf['food']) ? $data_pdf['food']['total'] : 0) + (!empty($data_pdf['service']) ? $data_pdf['service']['total'] : 0);
+
+            $pdf = PDF::loadView('pages.invoice.invoice_checkout', ['data_pdf' => $data_pdf]);
+            return $pdf->download("invoice_" . time() . "$name_user.pdf");
         } else {
             $booking_realtime = Booking_realtime::where('id', $id_booking_realtime)->first();
 
             $booking_realtime->status = 'checkout';
             $booking_realtime->payment_total = $data['payment'];
 
-
             $booking_realtime->save();
-        }
-        if ($booking_realtime) {
-            $time = $data['time'];
 
-            $room = $this->search($time)->get()->toArray();
-            return response()->json(['room' => $room]);
+            $data_pdf['room'] = $this->cul_total_room_no_booking($id_booking_realtime);
+            $data_pdf['food'] = $this->cul_total_food($id_booking_realtime, $id_user);
+            $data_pdf['service'] = $this->cul_total_service($id_booking_realtime, $id_user);
+            $data_pdf['name_user'] = $name_user;
+
+            $data_pdf['final_total'] =  $data_pdf['room']['total'] + (!empty($data_pdf['food']) ? $data_pdf['food']['total'] : 0) + (!empty($data_pdf['service']) ? $data_pdf['service']['total'] : 0);
+
+            $pdf = PDF::loadView('pages.invoice.invoice_checkout', ['data_pdf' => $data_pdf]);
+            return $pdf->download("invoice_" . time() . "$name_user.pdf");
         }
     }
 
+    public function cul_total_room_has_booking($id_booking, $is_soon = null)
+    {
+        $booking = Booking::with('booking_realtime.room_detail.typeRoom')->where('id', $id_booking)->first()->toArray();
+
+        $id_booking = $booking['id'];
+
+        $booking_realtime = Booking_realtime::with('room_detail.typeRoom', 'room_detail')->where('id_booking', $id_booking)->where('status', 'checkin')->get()->toArray();
+
+        $room_available_checkin = count($booking_realtime);
+
+        $checkin = $booking['check_in'];
+        $checkout = !empty($is_soon) ? $is_soon : $booking['check_out'];
+
+        $startDate = new DateTime($checkin);
+        $endDate = new DateTime($checkout);
+        $interval = $startDate->diff($endDate);
+
+        $diffInDays = $interval->days + 1;
+
+        $total = (($booking['price'] * $room_available_checkin) * $diffInDays) - $booking['deposits'];
+
+        $arr['rooms'] = $booking_realtime;
+        $arr['total'] = $total / $booking['quantity'];
+        $arr['quantity_night'] = $diffInDays;
+
+        return $arr;
+    }
+
+    public function cul_total_room_no_booking($id_booking_realtime, $is_soon = null)
+    {
+        $booking = Booking_realtime::with('room_detail.typeRoom', 'room_detail')->where('id', $id_booking_realtime)->first()->toArray();
+
+   
+        $checkin = $booking['check_in'];
+        $checkout = !empty($is_soon) ? $is_soon : $booking['check_out'];
+
+        $startDate = new DateTime($checkin);
+        $endDate = new DateTime($checkout);
+        $interval = $startDate->diff($endDate);
+
+        $diffInDays = $interval->days + 1;
+        $arr['rooms'][] = $booking;
+
+        if ($booking['payment'] == 'in') {
+            $total = $booking['price'] * $diffInDays;
+
+            $arr['total'] = $total;
+            $arr['quantity_night'] = $diffInDays;
+
+            return $arr;
+        } else {
+            $deposit = BookingRealtiemNoAcc::where('id_booking_realtime', $id_booking_realtime)->first()->toArray();
+
+            $total = ($booking['price'] * $diffInDays) - $deposit['deposit'];
+
+            if($total < 0){
+                $total = 0;
+            }
+           
+            $arr['total'] = $total;
+            $arr['quantity_night'] = $diffInDays;
+
+            return $arr;
+        }
+    }
+
+    public function cul_total_food($id_booking_realtime, $id_user)
+    {
+        $invoices = DB::table('invoice_food')
+            ->join('invoice_detail_food', 'invoice_food.id', '=', 'invoice_detail_food.id_invoice_food')
+            ->join('food', 'food.id', '=', 'invoice_detail_food.id_food') // Thêm bảng food và điều kiện kết nối
+            ->select(
+                DB::raw('MAX(food.name) AS name'),
+                DB::raw('MAX(food.price) AS price'),
+                'invoice_food.id_user AS user_id',
+                'food.id AS food_id',
+                DB::raw('SUM(invoice_detail_food.quantity) AS total_quantity'),
+                DB::raw('SUM(invoice_detail_food.quantity * food.price) AS total') // Tính tổng số tiền cho mỗi loại food
+            )
+            ->where('invoice_food.id_user', $id_user) // Thêm điều kiện id_user
+            ->where('invoice_detail_food.id_booking_realtime', $id_booking_realtime) // Thêm điều kiện cho id_booking_realtime
+            ->groupBy('invoice_food.id_user', 'food.id')
+            ->get()->toArray();
+
+        if (empty($invoices)) {
+            return $list_food_ordered = [];
+        }
+
+        $total = 0;
+
+        foreach ($invoices as $key => $value) {
+            $total += $value->price * $value->total_quantity;
+        }
+
+        $list_food_ordered['total'] = $total;
+        $list_food_ordered['invoice'] = $invoices;
+
+
+        return $list_food_ordered;
+    }
+
+    public function cul_total_service($id_booking_realtime, $id_user)
+    {
+        $invoices = DB::table('invoice_service')
+            ->join('invoice_detail_service', 'invoice_service.id', '=', 'invoice_detail_service.id_invoice_service')
+            ->join('service', 'service.id', '=', 'invoice_detail_service.id_service')
+            ->select(
+                DB::raw('MAX(service.name) AS name'),
+                DB::raw('MAX(service.price) AS price'),
+                'invoice_service.id_user AS user_id',
+                'service.id AS service_id',
+                DB::raw('SUM(service.price) AS total')
+            )
+            ->where('invoice_service.id_user', $id_user)
+            ->where('invoice_detail_service.id_booking_realtime', $id_booking_realtime)
+            ->groupBy('invoice_service.id_user', 'service.id')
+            ->get()->toArray();
+
+        if (empty($invoices)) {
+            return $list_food_ordered = [];
+        }
+
+        $total = 0;
+
+        foreach ($invoices as $key => $value) {
+            $total += $value->price;
+        }
+
+        $list_food_ordered['total'] = $total;
+        $list_food_ordered['invoice'] = $invoices;
+
+
+        return $list_food_ordered;
+    }
+
+
+
     public function checkout_soon(Request $request)
     {
+
         $data = $request->all();
 
         $id_booking_realtime = $data['id_booking_realtime'];
+        $id_user = $data['id_user'];
+        $name_user = $data['name_user'];
+        $time_checkout = $data['time'] . " 12:00:00";
 
-        $booking_realtime = Booking_realtime::where('id', $id_booking_realtime)->first();
+        if (!empty($data['id_booking'])) {
+            $id_booking = $data['id_booking'];
 
-        $booking_realtime->status = 'checkout_soon';
-        $booking_realtime->payment_total = $data['payment'];
-        $booking_realtime->check_out = $data['checkout'] . " 12:00:00";
+            $booking_realtime = Booking_realtime::where('id_booking', $id_booking)->where('status', 'checkin')->update(['status' => 'checkout_soon','check_out' => $time_checkout, 'payment_total' => $data['payment']]);
 
-        $booking_realtime->save();
+            $data_pdf['room'] = $this->cul_total_room_has_booking($data['id_booking'],$time_checkout);
+            $data_pdf['food'] = $this->cul_total_food($id_booking_realtime, $id_user);
+            $data_pdf['service'] = $this->cul_total_service($id_booking_realtime, $id_user);
+            $data_pdf['name_user'] = $name_user;
 
-        if ($booking_realtime) {
-            $time = $data['time'];
 
-            $room = $this->search($time)->get()->toArray();
-            return response()->json(['room' => $room]);
+            $data_pdf['final_total'] =  $data_pdf['room']['total'] * count($data_pdf['room']['rooms']) + (!empty($data_pdf['food']) ? $data_pdf['food']['total'] : 0) + (!empty($data_pdf['service']) ? $data_pdf['service']['total'] : 0);
+
+            $pdf = PDF::loadView('pages.invoice.invoice_checkout', ['data_pdf' => $data_pdf]);
+            return $pdf->download("invoice_" . time() . "$name_user.pdf");
+        } else {
+            $booking_realtime = Booking_realtime::where('id', $id_booking_realtime)->first();
+
+            $booking_realtime->status = 'checkout_soon';
+            $booking_realtime->check_out = $time_checkout;
+            $booking_realtime->payment_total = $data['payment'];
+
+            $booking_realtime->save();
+
+            $data_pdf['room'] = $this->cul_total_room_no_booking($id_booking_realtime,$time_checkout);
+            $data_pdf['food'] = $this->cul_total_food($id_booking_realtime, $id_user);
+            $data_pdf['service'] = $this->cul_total_service($id_booking_realtime, $id_user);
+            $data_pdf['name_user'] = $name_user;
+
+            $data_pdf['final_total'] =  $data_pdf['room']['total'] + (!empty($data_pdf['food']) ? $data_pdf['food']['total'] : 0) + (!empty($data_pdf['service']) ? $data_pdf['service']['total'] : 0);
+
+            $pdf = PDF::loadView('pages.invoice.invoice_checkout', ['data_pdf' => $data_pdf]);
+            return $pdf->download("invoice_" . time() . "$name_user.pdf");
         }
     }
 
@@ -479,5 +661,14 @@ class RoomDiagramController extends Controller
             $room = $this->search($time)->get()->toArray();
             return response()->json(['room' => $room]);
         }
+    }
+
+    public function fill_checkout(Request $request)
+    {
+        $time = $request->all()['time'];
+
+        $room = $this->search($time)->get()->toArray();
+
+        return response()->json(['room' => $room]);
     }
 }

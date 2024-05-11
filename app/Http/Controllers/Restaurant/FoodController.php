@@ -244,7 +244,7 @@ class FoodController extends Controller
     {
         $data = InvoiceFood::with(['invoice_detail.food', 'user.booking_realtime' => function ($query) {
             $query->where('status', 'checkin');
-        }])->get()->toArray();
+        }])->paginate(6);
 
         return view('pages.food_service.food_ordered_list', compact('data'));
     }
@@ -254,7 +254,7 @@ class FoodController extends Controller
         $infor = $request->all()['infor'];
 
         $data = InvoiceFood::whereHas('user', function ($query) use ($infor) {
-            $query->where('name', 'like', '%' . $infor . '%');
+            $query->where('name', 'like', '%' . $infor . '%')->orwhere('phone', 'like' , '%' . $infor . '%');
         })
             ->with(['invoice_detail.food', 'user.booking_realtime' => function ($query) {
                 $query->where('status', 'checkin');
