@@ -33,19 +33,19 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z\sàáạãảăắằẳẵặâấầẩẫậèéẹẽẻêềếểễệìíịĩỉòóọõỏôốồổỗộơớờởỡợùúụũủưứừửữựỳýỵỹỷđĐ]+$/'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . Account::class],
+            'password' => ['required', Rules\Password::defaults()],
+            'phone' => ['required', 'numeric'],
+            'birth_date' => ['required', 'date_format:d/m/Y', 'before:today'],
+            'address' => ['required', 'string'],
+            'nationality' => ['required'],
+            'password_confirmation' => ['required', 'same:password']
+        ]);
         DB::beginTransaction();
 
         try {
-            $request->validate([
-                'name' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z\sàáạãảăắằẳẵặâấầẩẫậèéẹẽẻêềếểễệìíịĩỉòóọõỏôốồổỗộơớờởỡợùúụũủưứừửữựỳýỵỹỷđĐ]+$/'],
-                'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . Account::class],
-                'password' => ['required', Rules\Password::defaults()],
-                'phone' => ['required', 'numeric'],
-                'birth_date' => ['required', 'date_format:d/m/Y', 'before:today'],
-                'address' => ['required', 'string'],
-                'nationality' => ['required'],
-                'password_confirmation' => ['required', 'same:password']
-            ]);
 
             $birth_day = \Carbon\Carbon::createFromFormat('d/m/Y', $request->birth_date)->format('Y-m-d');
 
@@ -83,7 +83,7 @@ class RegisteredUserController extends Controller
             return redirect(RouteServiceProvider::HOME);
         } catch (\Throwable $th) {
             DB::rollback();
-            return back()->withInput()->withErrors(['error' => $e->getMessage()]);
+            return back()->withInput()->withErrors(['error' => $th->getMessage()]);
         }
     }
 }
