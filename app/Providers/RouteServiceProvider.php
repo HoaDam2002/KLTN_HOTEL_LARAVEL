@@ -7,6 +7,10 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Customer;
+use App\Models\User;
+
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -17,7 +21,23 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/home';
+
+    public const HOME = '/dashboard';
+
+    public const HOME_RECEPTIONIST = '/recep/room_diagram';
+
+    public const HOME_RESTAURANT = '/food_service';
+
+    public const HOME_SERVICE = '/outside_service';
+
+    public const HOME_STATUS_MANAGER = '/room_status_management';
+
+    public const HOME_ADMIN = '/admin/home';
+
+    public const HOME_MANAGER = '/manager/home';
+
+
+
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
