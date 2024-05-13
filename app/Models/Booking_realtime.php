@@ -39,8 +39,13 @@ class Booking_realtime extends Model
         return $this->belongsTo(Booking::class,'id_booking');
     }
 
-    public function invoice_detail()
+    public function invoice_detail_food()
     {
         return $this->hasMany(InvoiceFoodDetail::class,'id_booking_realtime');
+    }
+
+    public function invoice_detail_service()
+    {
+        return $this->hasMany(InvoiceServiceDetail::class,'id_booking_realtime');
     }
 }
