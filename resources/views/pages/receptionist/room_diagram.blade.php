@@ -123,10 +123,10 @@
 
 
         /* .infor_customer{
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            display: flex;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            justify-content: center;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                display: flex;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                justify-content: center;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            } */
     </style>
 @endsection
 
@@ -156,12 +156,14 @@
                 </div>
             </div>
             <div class="func_filter_status mb-4">
-                <button class="btn_filter text-bg-primary" id="{{ $a }}">All</button>
+
                 <button class="btn_filter text-bg-secondary" id="{{ $a }}">Null</button>
                 <button class="btn_filter text-bg-success" id="{{ $a }}">Occupied</button>
                 {{-- <button class="btn_filter bg-deposit filter_ready">Ready</button> --}}
                 <button class="btn_filter text-bg-warning" id="{{ $a }}">Check in</button>
-                <button class="btn_filter text-bg-danger filter_checkout" id="{{ $a }}"">Check out</button>
+                <button class="btn_filter text-bg-danger filter_checkout" id="{{ $a }}">Check out</button>
+                <button class="btn_filter text-bg-primary" id="{{ $a }}"><i
+                        class="fa-solid fa-arrows-rotate"></i></button>
             </div>
             <div class="room_diagram container">
                 <div class="row fill">
@@ -695,15 +697,23 @@
                         <strong class="info_room_item mb-3 deposit">80$</strong>
                     </div>
                     <div class="wrapper_info_room">
-                        <span>Total: </span>
-                        <strong class="info_room_item mb-3 total">80$</strong>
+                        <span>Total Food: </span>
+                        <strong class="info_room_item mb-3 total_food" style="color: red">80$</strong>
+                    </div>
+                    <div class="wrapper_info_room">
+                        <span>Total Service: </span>
+                        <strong class="info_room_item mb-3 total_service" style="color: red">80$</strong>
+                    </div>
+                    <div class="wrapper_info_room">
+                        <span>Total Room: </span>
+                        <strong class="info_room_item mb-3 total" style="color: red">80$</strong>
                     </div>
                     <div class="wrapper_info_room">
                         <span>Duration: </span>
-                        <strong class="info_room_item mb-3 duration" style="color: red">80$</strong>
+                        <strong class="info_room_item mb-3 duration">80$</strong>
                     </div>
                     <div class="wrapper_info_room">
-                        <span>Final Total: </span>
+                        <span>Total Amount: </span>
                         <strong class="info_room_item mb-3 final_total" style="color: red">80$</strong>
                     </div>
                     <div class="mb-3 mt-3">
@@ -753,7 +763,6 @@
                         <input type="text" name="name_user" id="name_user" hidden>
                         <button type="submit" class="btn btn-primary bt_checkout">Check out</button>
                     </form>
-
                 </div>
             </div>
         </div>
@@ -787,7 +796,15 @@
                         <strong class="info_room_item mb-3 deposit">80$</strong>
                     </div>
                     <div class="wrapper_info_room">
-                        <span>Total: </span>
+                        <span>Total Food: </span>
+                        <strong class="info_room_item mb-3 total_food">80$</strong>
+                    </div>
+                    <div class="wrapper_info_room">
+                        <span>Total Service: </span>
+                        <strong class="info_room_item mb-3 total_service">80$</strong>
+                    </div>
+                    <div class="wrapper_info_room">
+                        <span>Total Hotel: </span>
                         <strong class="info_room_item mb-3 total">80$</strong>
                     </div>
                     <div class="wrapper_info_room">
@@ -795,7 +812,7 @@
                         <strong class="info_room_item mb-3 duration" style="color: red">80$</strong>
                     </div>
                     <div class="wrapper_info_room">
-                        <span>Final Total: </span>
+                        <span>Total Amount: </span>
                         <strong class="info_room_item mb-3 final_total" style="color: red">80$</strong>
                     </div>
                     <div class="mb-3 mt-3">
@@ -992,6 +1009,16 @@
             $('div.days').hide()
             $('button.booking_2').prop('disabled', true);
 
+            if (time_now != time) {
+                $('div.pay').show();;
+                $('div.deposit_head').show();
+                check = false;
+
+                $('div.pay2').show();
+                $('div.deposit_head2').show()
+                check2 = false;
+            }
+
             $(function() {
                 $('input[name="birthday"]').daterangepicker({
                     singleDatePicker: true,
@@ -1021,7 +1048,7 @@
                     $('strong.deposit').text(deposit + "$");
 
 
-                    if (check_in > time) {
+                    if (check_in > time_now) {
                         $('div.pay').show();
                         $('div.deposit_head').show()
                         check = false;
@@ -1033,7 +1060,7 @@
                     }
                 });
 
-                
+
 
                 $('input[name="daterange2"]').daterangepicker({
                     opens: 'left',
@@ -1051,7 +1078,7 @@
                     $('strong.deposit2').text(deposit2 + "$");
 
 
-                    if (check_in2 > time) {
+                    if (check_in2 > time_now) {
                         $('div.pay2').show();
                         $('div.deposit_head2').show()
                         check2 = false;
@@ -1340,66 +1367,10 @@
 
             let id_room = "";
             let id_roomDetail = "";
-            
+
             let id_booking_realtime = "";
             let payment_checkout = "";
             let pay_checkout_soon = "";
-
-            $(document).on('click', 'button.bt_checkout', function(event) {
-                event.preventDefault();
-                $(this).closest('#form_checkout').submit();
-
-                let modal = $(this).closest('.modal').attr('id');
-                console.log(modal);
-
-                $.ajax({
-                    type: "post",
-                    url: "/recep/diagram/fill_checkout",
-                    data: {
-                        time: time,
-                    },
-                    dataType: "json",
-                    success: function(response) {
-                        let arr = response.room;
-
-                        render_all_room(arr);
-                        $('#' + modal).modal(
-                            'hide');
-                        var toast = new bootstrap.Toast(
-                            document.getElementById(
-                                'liveToast'));
-                        toast.show();
-                    }
-                });
-            });
-
-            $(document).on('click', 'button.bt_checkout_soon', function() {
-                event.preventDefault();
-                $(this).closest('#form_checkout').submit();
-
-                let modal = $(this).closest('.modal').attr('id');
-                console.log(modal);
-
-                $.ajax({
-                    type: "post",
-                    url: "/recep/diagram/fill_checkout",
-                    data: {
-                        time: time,
-                    },
-                    dataType: "json",
-                    success: function(response) {
-                        let arr = response.room;
-
-                        render_all_room(arr);
-                        $('#' + modal).modal(
-                            'hide');
-                        var toast = new bootstrap.Toast(
-                            document.getElementById(
-                                'liveToast'));
-                        toast.show();
-                    }
-                });
-            })
 
             $(document).on('click', 'div.wrapper_diagram', function() {
                 id_room = $(this).find('strong.name_room').attr('id');
@@ -1441,6 +1412,7 @@
                     dataType: "json",
                     success: function(response) {
                         let item = response.item[0];
+
                         let list_room = [];
                         if (response.list_room) {
                             list_room = response.list_room;
@@ -1507,8 +1479,6 @@
                                 }
                             })
 
-                            console.log(booking_realtime);
-
                             let id_user = booking_realtime.user.id;
                             let checkin = booking_realtime.check_in;
                             let checkout = booking_realtime.check_out;
@@ -1521,6 +1491,8 @@
                             let final_total = '';
                             let tour = '';
                             let list_tour = [];
+                            let total_food = 0;
+                            let total_service = 0;
 
                             let deposit = cul_deposit(checkin, checkout, price, 'deposit');
 
@@ -1529,6 +1501,16 @@
                             }
 
                             let duration = cul_deposit(checkin, checkout, price, 'duration');
+
+                            if (booking_realtime.invoice_detail_food) {
+                                total_food = cul_total_food(booking_realtime
+                                    .invoice_detail_food);
+                            }
+
+                            if (booking_realtime.invoice_detail_service) {
+                                total_service = cul_total_service(booking_realtime
+                                    .invoice_detail_service);
+                            }
 
                             if (booking_realtime.booking) {
 
@@ -1544,14 +1526,17 @@
                                 id_booking = booking_realtime.booking.id;
                                 quantity_booking = booking_realtime.booking.quantity;
                                 total = (price * duration) * count_tour;
-                                final_total = total - (deposit * count_tour);
+                                final_total = (total - (deposit * count_tour)) + total_food +
+                                    total_service;
                             } else {
-                                total = price * duration;
-                                final_total = total - deposit;
+                                total = price * duration - deposit;
+                                final_total = total + total_food + total_service;;
                             }
 
 
-                            $(modal).find('strong.deposit').text(deposit + "$");
+                            $(modal).find('strong.total_food').text(total_food + "$");
+                            $(modal).find('strong.total_service').text(total_service + "$");
+
                             $(modal).find('strong.final_total').text(final_total + "$");
                             $(modal).find('strong.total').text(total + "$");
 
@@ -1606,6 +1591,8 @@
                             let final_total = '';
                             let tour = '';
                             let list_tour = [];
+                            let total_food = 0;
+                            let total_service = 0;
 
                             let deposit = cul_deposit(checkin, checkout, price, 'deposit');
 
@@ -1614,6 +1601,16 @@
                             }
 
                             let duration = cul_deposit(checkin, checkout, price, 'duration');
+
+                            if (booking_realtime.invoice_detail_food) {
+                                total_food = cul_total_food(booking_realtime
+                                    .invoice_detail_food);
+                            }
+
+                            if (booking_realtime.invoice_detail_service) {
+                                total_service = cul_total_service(booking_realtime
+                                    .invoice_detail_service);
+                            }
 
                             if (booking_realtime.booking) {
 
@@ -1629,11 +1626,16 @@
                                 id_booking = booking_realtime.booking.id;
                                 quantity_booking = booking_realtime.booking.quantity;
                                 total = (price * duration) * count_tour;
-                                final_total = total - (deposit * count_tour);
+                                final_total = total - (deposit * count_tour) + total_food +
+                                    total_service;
                             } else {
                                 total = price * duration;
                                 final_total = total - deposit;
                             }
+
+
+                            $(modal).find('strong.total_food').text(total_food + "$");
+                            $(modal).find('strong.total_service').text(total_service + "$");
 
 
                             $(modal).find('strong.deposit').text(deposit + "$");
@@ -1726,7 +1728,6 @@
                     dataType: "json",
                     success: function(response) {
                         let arr = response.room;
-
                         render_all_room(arr);
                         $('#modalRoomCheckout_Soon').modal(
                             'hide');
@@ -2143,6 +2144,24 @@
 
                 return date_time_now;
             }
+
+            function cul_total_food(arr) {
+                console.log(arr);
+                let total_food = 0;
+                total_food += arr.reduce(function(acc, invoice) {
+                    return acc + (invoice.food.price * invoice.quantity);
+                }, 0);
+                return total_food;
+            }
+
+            function cul_total_service(arr) {
+                let total_service = 0;
+                total_service += arr.reduce(function(acc, invoice) {
+                    return acc + invoice.service.price
+                }, 0);
+                return total_service;
+            }
+
 
         });
     </script>

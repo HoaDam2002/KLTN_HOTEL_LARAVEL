@@ -71,6 +71,7 @@
                         <th>Number of Nights</th>
                         <th>Number of Room</th>
                         <th>Price/Night</th>
+                        <th>Deposited</th>
                         <th>Total</th>
                     </tr>
                     @foreach ($data_pdf['room']['rooms'] as $key => $item)
@@ -80,6 +81,7 @@
                             <td>{{ !empty($item['quantity']) ? $item['quantity'] . ' Rooms' : '1' . ' Room' }}
                             </td>
                             <td>{{ $item['price'] }}$</td>
+                            <td>{{ $data_pdf['room']['deposits'] }}$</td>
                             <td>{{ $data_pdf['room']['total'] }}$</td>
                         </tr>
                     @endforeach
