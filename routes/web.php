@@ -60,7 +60,7 @@ Route::get('setLocale/{locale}', function ($locale) {
 
 //Router customer
 Route::get('/invoice', function () {
-    return view('pages.invoice.last_invoice');
+    return view('pages.Report.report');
 });
 
 

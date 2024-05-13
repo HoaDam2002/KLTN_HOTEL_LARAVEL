@@ -190,7 +190,9 @@ class RoomDiagramController extends Controller
     {
         $id_roomDetail = $request->all()['id_room'];
 
-        $room_detail = Roomdetail::with('typeRoom', 'Booking_realtime.user', 'Booking_realtime.booking.booking_realtime.room_detail')->where('id', $id_roomDetail)->get()->toArray();
+        $room_detail = Roomdetail::with('booking_realtime.invoice_detail_food.food','booking_realtime.invoice_detail_service.service','typeRoom', 'booking_realtime.user', 'booking_realtime.booking.booking_realtime.room_detail')->where('id', $id_roomDetail)->get()->toArray();
+
+        // dd($room_detail);
 
         if (!empty($room_detail[0]['booking_realtime'])) {
             $checkin = $room_detail[0]['booking_realtime']['0']['check_in'];
@@ -464,6 +466,7 @@ class RoomDiagramController extends Controller
         $total = (($booking['price'] * $room_available_checkin) * $diffInDays) - $booking['deposits'];
 
         $arr['rooms'] = $booking_realtime;
+        $arr['deposits'] = $booking['deposits'];
         $arr['total'] = $total / $booking['quantity'];
         $arr['quantity_night'] = $diffInDays;
 
@@ -489,6 +492,7 @@ class RoomDiagramController extends Controller
             $total = $booking['price'] * $diffInDays;
 
             $arr['total'] = $total;
+            $arr['deposits'] = 0;
             $arr['quantity_night'] = $diffInDays;
 
             return $arr;
@@ -502,6 +506,7 @@ class RoomDiagramController extends Controller
             }
            
             $arr['total'] = $total;
+            $arr['deposits'] = 0;
             $arr['quantity_night'] = $diffInDays;
 
             return $arr;
