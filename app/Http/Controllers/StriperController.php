@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\BookingMail;
+use App\Models\Account;
 use App\Models\Booking;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Auth;
@@ -9,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Stripe\Stripe;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 class StriperController extends Controller
 {
@@ -40,7 +43,7 @@ class StriperController extends Controller
                 ],
                 'quantity' => 1,
             ];
-    
+
             $checkoutSession = \Stripe\Checkout\Session::create([
                 'line_items' => $courseItems,
                 'mode' => 'payment',
@@ -73,13 +76,16 @@ class StriperController extends Controller
         $data['check_out'] = $checkout;
 
         $id_account = Auth::id();
+        $email_account = Account::where('id', $id_account)->value('email');
         $customer = Customer::with('account', 'user')->where('id_account', $id_account)->first()->toArray();
         $id_user = $customer['id_user'];
         $data['id_user'] = $id_user;
         $data['status'] = 'pending';
 
         if(!empty($data)){
-            if(Booking::create($data)){
+            $booking = Booking::create($data);
+            if($booking){
+                Mail::to($email_account)->send(new BookingMail($booking));
                 return redirect()->route('my_booking_customer');
             }
         }
