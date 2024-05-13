@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class BookingRealtiemNoAcc extends Model
 {
     use HasFactory;
-    protected $table = 'booking_realtime_cus_no_acc';
+    protected $table = 'deposit_customer_counter';
     protected $fillable = [
         'id_booking_realtime',
         'deposit',
