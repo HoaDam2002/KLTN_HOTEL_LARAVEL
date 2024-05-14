@@ -200,18 +200,18 @@ class RoomDiagramController extends Controller
 
             $id_room = Roomdetail::where('id', $room_detail)->first()->toArray()['id_room'];
 
-            $list_empty_room_booking = DB::table('room_detail')
+            $list_empty_room_booking = DB::table('room_type_detail')
                 ->whereNotExists(function ($query) use ($checkin, $checkout) {
                     $query->select(DB::raw(1))
                         ->from('booking_realtime')
-                        ->whereRaw('room_detail.id = booking_realtime.id_roomDetail')
+                        ->whereRaw('room_type_detail.id = booking_realtime.id_roomDetail')
                         ->where(function ($query) use ($checkin, $checkout) {
                             $query->where('check_in', '<', $checkout)
                                 ->where('check_out', '>', $checkin);
                         });
                 })
-                ->where('room_detail.id_room', '=', $id_room)
-                ->select('room_detail.*')
+                ->where('room_type_detail.id_room', '=', $id_room)
+                ->select('room_type_detail.*')
                 ->get()->toArray();
 
             return response()->json(['item' => $room_detail, 'list_room' => $list_empty_room_booking]);

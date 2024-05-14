@@ -41,7 +41,7 @@
                             </div>
                         </div>
                         <div class="about-button">
-                            <a href="#" class="btn btn-main">Learn More <span class="icon-right"> <i
+                            <a href="/aboutus" class="btn btn-main">Learn More <span class="icon-right"> <i
                                         class="fas fa-arrow-right"></i> </span> </a>
                         </div>
                     </div>
@@ -53,7 +53,7 @@
 
 
     {{-- Start Convenient --}}
-    <section class="property-type-three padding-t-120 padding-b-60" style="background-color: hsl(var(--white));">
+    {{-- <section class="property-type-three padding-t-120 padding-b-60" style="background-color: hsl(var(--white));">
         <div class="container container-two">
             <div class="section-heading style-left">
                 <span class="section-heading__subtitle bg-white"> <span class="text-gradient fw-semibold">Property
@@ -135,7 +135,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     {{-- End Convenient --}}
 
 
