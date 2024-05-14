@@ -121,12 +121,19 @@
             /* text-align: center; */
         }
 
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1050;
+        }
+
 
         /* .infor_customer{
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                display: flex;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                justify-content: center;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    display: flex;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    justify-content: center;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                } */
     </style>
 @endsection
 
@@ -542,7 +549,7 @@
 
                                 <div class="form-check pay">
                                     <input class="form-check-input a" type="radio" name="payment" value="cash"
-                                        id="flexRadioDefault1">
+                                        id="flexRadioDefault1" checked>
                                     <label class="form-check-label" for="flexRadioDefault1">
                                         Cash payment for Deposit
                                     </label>
@@ -576,10 +583,6 @@
                                     <input class="form-control" type="text" name="daterange2" />
                                 </div>
 
-                                <div class="list-group">
-
-                                </div>
-
                                 <div class="wrapper_info_room deposit_head2">
                                     <span style="color: red">Deposit: </span>
                                     <strong style="color: red; font-size: 20px;"
@@ -587,14 +590,14 @@
                                 </div>
 
                                 <div class="form-check pay2">
-                                    <input class="form-check-input a" type="radio" name="payment" value="cash"
-                                        id="flexRadioDefault1">
+                                    <input class="form-check-input a" type="radio" name="payment-2" value="cash"
+                                        id="flexRadioDefault1" checked>
                                     <label class="form-check-label" for="flexRadioDefault1">
                                         Cash payment for Deposit
                                     </label>
                                 </div>
                                 <div class="form-check mb-3 pay2">
-                                    <input class="form-check-input b" type="radio" name="payment" value="creditCard"
+                                    <input class="form-check-input b" type="radio" name="payment-2" value="creditCard"
                                         id="flexRadioDefault2">
                                     <label class="form-check-label" for="flexRadioDefault2">
                                         Credit card payment for Deposit
@@ -602,9 +605,12 @@
                                 </div>
 
 
-                                <button type="button" style="margin-top: 10px;" class="btn btn-primary booking_2">Add
+                                <button type="button" style="margin-bottom: 10px;" class="btn btn-primary booking_2">Add
                                     new
                                     booking</button>
+                                <div class="list-group">
+
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -1044,20 +1050,31 @@
                     check_in = start.format('YYYY-MM-DD');
                     check_out = end.format('YYYY-MM-DD');
 
+                    console.log(check_in, check_out);
+
                     deposit = cul_deposit(check_in, check_out, price, 'deposit');
                     $('strong.deposit').text(deposit + "$");
 
+                    if (check_in == check_out) {
+                        alert('Please choose different arrival and departure dates');
+                        $('button.booking').prop('disabled', true);
+                    } else {
+                        $('button.booking').prop('disabled', false);
+                    }
 
                     if (check_in > time_now) {
                         $('div.pay').show();
                         $('div.deposit_head').show()
                         check = false;
+                        payment = 'cash'
                     } else {
                         check = true;
                         $('div.deposit_head').hide()
                         $('div.pay').hide();
                         payment = 'in'
                     }
+
+                    console.log(payment);
                 });
 
 
@@ -1077,17 +1094,26 @@
                     deposit2 = cul_deposit(check_in2, check_out2, price, 'deposit');
                     $('strong.deposit2').text(deposit2 + "$");
 
+                    if (check_in2 == check_out2) {
+                        alert('Please choose different arrival and departure dates');
+                        $('button.booking_2').prop('disabled', true);
+                    } else {
+                        $('button.booking_2').prop('disabled', false);
+                    }
 
                     if (check_in2 > time_now) {
                         $('div.pay2').show();
                         $('div.deposit_head2').show()
                         check2 = false;
+                        payment = 'cash'
                     } else {
                         check2 = true;
                         $('div.deposit_head2').hide()
                         $('div.pay2').hide();
                         payment = 'in';
                     }
+
+                    console.log(payment);
                 });
             });
 
@@ -1372,6 +1398,37 @@
             let payment_checkout = "";
             let pay_checkout_soon = "";
 
+            $(document).on('click', 'button.bt_checkout', function(event) {
+                even.preventDefault();
+
+                $(this).closest('#form_checkout').submit();
+
+                $(this).prop('disabled', true);
+
+                $('#modalRoomCheckout').modal(
+                    'hide');
+                var toast = new bootstrap.Toast(
+                    document.getElementById(
+                        'liveToast'));
+                toast.show();
+            })
+
+            $(document).on('click', 'button.bt_checkout_soon', function(event) {
+                event.preventDefault();
+
+                $(this).closest('#form_checkout').submit();
+
+                $(this).prop('disabled', true);
+
+                $('#modalRoomCheckout_Soon').modal(
+                    'hide');
+                var toast = new bootstrap.Toast(
+                    document.getElementById(
+                        'liveToast'));
+                toast.show();
+            })
+
+
             $(document).on('click', 'div.wrapper_diagram', function() {
                 id_room = $(this).find('strong.name_room').attr('id');
                 console.log(id_room);
@@ -1384,7 +1441,16 @@
 
                 $('input[name="payment"]').change(function() {
                     payment = $('input[name="payment"]:checked').val();
+                    console.log(payment);
+                });
 
+                if ($('input[name="payment-2"]').prop('checked')) {
+                    payment = $('input[name="payment-2"]:checked').val();
+                }
+
+                $('input[name="payment-2"]').change(function() {
+                    payment = $('input[name="payment-2"]:checked').val();
+                    console.log(payment);
                 });
 
                 if ($('input[name="pay_checkout"]').prop('checked')) {
@@ -1435,6 +1501,9 @@
 
                             $('strong.deposit').text(deposit + "$");
                             $('strong.deposit2').text(deposit + "$");
+
+                            payment = 'in';
+                            console.log(payment);
 
                         } else if (modal == '#modalRoomCheckin') {
 
@@ -1769,6 +1838,7 @@
                             $('div.err_date').show();
                             $('div.err_date').find('small').text(response.mess);
                         } else {
+                            empty_err();
                             let rooms = response.room;
                             render_all_room(rooms);
 
@@ -1795,6 +1865,31 @@
                 });
 
             })
+
+            function empty_err() {
+                $('div.err_name').show();
+                $('div.err_name').find('small').text('');
+
+                $('div.err_phone').show();
+                $('div.err_phone').find('small').text('');
+
+                $('div.err_date').show();
+                $('div.err_date').find('small').text('');
+
+                $('div.err_date1').show();
+                $('div.err_date1').find('small').text('');
+
+                $('div.pay').hide();
+                $('div.deposit_head').hide();
+
+                $('div.pay2').hide();
+                $('div.deposit_head2').hide()
+
+                $('input.name').val('');
+                $('input.phone').val('');
+                $('input.information').val('');
+                $('.list-group').empty();
+            }
 
             let type_customer = '';
 
@@ -1862,6 +1957,7 @@
                             $('div.err_date1').show();
                             $('div.err_date1').find('small').text(response.mess);
                         } else {
+                            empty_err();
                             render_all_room(rooms);
                             $('#modalRoomNull').modal('hide');
                             var toast = new bootstrap.Toast(document.getElementById(
