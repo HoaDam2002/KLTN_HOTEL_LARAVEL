@@ -5,7 +5,7 @@
             <div class="col-xl-4 col-lg-6">
                 <div class="footer-item">
                     <div class="footer-item__logo">
-                        <a href="index.html"> <img src="assets/images/logo/white-logo.png" alt=""></a>
+                        <a href="/"> <img src="{{ asset('assets/customer/images/logo/logo.png') }}" alt=""></a>
                     </div>
                     <p class="footer-item__desc">It is a long established fact that a reader will be distracted</p>
 
@@ -17,7 +17,7 @@
                                         class="fas fa-map-marker-alt"></i></span>
                                 <div class="contact-info__content">
                                     <span class="contact-info__text text-white">Address</span>
-                                    <span class="contact-info__address text-white">66 Broklyant, New York India</span>
+                                    <span class="contact-info__address text-white">Da Nang, Viet Nam</span>
                                 </div>
                             </div>
                         </div>
@@ -27,7 +27,7 @@
                                 <span class="contact-info__icon text-gradient"><i class="fas fa-phone"></i></span>
                                 <div class="contact-info__content">
                                     <span class="contact-info__text text-white">Phone Number</span>
-                                    <span class="contact-info__address text-white">012 345 678 9101</span>
+                                    <span class="contact-info__address text-white">0394903720</span>
                                 </div>
                             </div>
                         </div>
@@ -40,15 +40,15 @@
                 <div class="footer-item">
                     <h6 class="footer-item__title">Services</h6>
                     <ul class="footer-menu">
-                        <li class="footer-menu__item"><a href="property.html" class="footer-menu__link">Reliable Rentals
+                        <li class="footer-menu__item"><a href="" class="footer-menu__link">Reliable Rentals
                             </a></li>
-                        <li class="footer-menu__item"><a href="property.html" class="footer-menu__link">Golden Key
+                        <li class="footer-menu__item"><a href="" class="footer-menu__link">Golden Key
                                 Properties </a></li>
-                        <li class="footer-menu__item"><a href="property.html" class="footer-menu__link">Swift Home Sales
+                        <li class="footer-menu__item"><a href="" class="footer-menu__link">Swift Home Sales
                             </a></li>
-                        <li class="footer-menu__item"><a href="property.html" class="footer-menu__link">Elite Realty
+                        <li class="footer-menu__item"><a href="" class="footer-menu__link">Elite Realty
                                 Services </a></li>
-                        <li class="footer-menu__item"><a href="property.html" class="footer-menu__link">Dream Property
+                        <li class="footer-menu__item"><a href="" class="footer-menu__link">Dream Property
                                 Solutions </a></li>
                     </ul>
                 </div>
@@ -59,14 +59,14 @@
                     <h6 class="footer-item__title">Our gallery</h6>
                     <p class="footer-item__desc">It is a long established fact that reader will be Elite Property </p>
 
-                    <form action="#" class="mt-4 subscribe-box">
+                    {{-- <form action="#" class="mt-4 subscribe-box">
                         <div class="input-group">
                             <input type="text" class="form-control common-input common-input--md text-white"
                                 placeholder="Your mail address">
                             <button type="submit" class="px-4 input-group-text bg--gradient border-0 text-white"><i
                                     class="fas fa-paper-plane"></i></button>
                         </div>
-                    </form>
+                    </form> --}}
 
                     <ul class="social-list">
                         <li class="social-list__item"><a href="https://www.facebook.com"

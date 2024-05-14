@@ -38,9 +38,9 @@ function search_available_room($checkin, $checkout, $action = null)
         ->whereIn('status', ['pending', 'checkin'])
         ->pluck('id_roomDetail');
 
-    $all_rooms = DB::table('rooms')
-        ->join('room_detail', 'rooms.id', '=', 'room_detail.id_room')
-        ->select('room_detail.*')
+    $all_rooms = DB::table('room_type')
+        ->join('room_type_detail', 'room_type.id', '=', 'room_type_detail.id_room')
+        ->select('room_type_detail.*')
         ->get();
 
     $available_rooms = $all_rooms->reject(function ($room) use ($realtime_booked_rooms) {

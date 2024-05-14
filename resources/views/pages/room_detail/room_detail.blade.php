@@ -275,7 +275,8 @@
                                                                 <div>
                                                                     <h6 class="fw-bold mb-2">{{ $name }}</h6>
                                                                     <div class="info_comment mb-2">
-                                                                        <div class="rateYo" id="rate{{ $item['id'] }}" data-rating="{{ $item['rate'] }}">
+                                                                        <div class="rateYo" id="rate{{ $item['id'] }}"
+                                                                            data-rating="{{ $item['rate'] }}">
                                                                         </div>
                                                                         <div class="d-flex align-items-center ms-1">
                                                                             <p class="mb-0 date_comment">
@@ -401,6 +402,8 @@
             checkin = "{{ $checkin }}"
             checkout = "{{ $checkout }}"
 
+            console.log(checkin, checkout);
+
             if (checkin == 'null' && checkout == 'null') {
                 $('button.request_deposit').prop('disabled', true);
 
@@ -431,32 +434,40 @@
             $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
                 var startDate = picker.startDate.format('YYYY-MM-DD');
                 var endDate = picker.endDate.format('YYYY-MM-DD');
-                duration = picker.endDate.diff(picker.startDate, 'days');
-                up();
+                console.log(startDate === endDate);
+                if (startDate === endDate) {
+                    $('button.request_deposit').css('background-color', 'rgb(214,214,214)');
+                    $('button.request_deposit').prop('disabled', true);
+                    alert('Please choose different arrival and departure dates')
+                    return;
+                } else {
+                    duration = picker.endDate.diff(picker.startDate, 'days');
+                    up();
 
-                $.ajax({
-                    type: "post",
-                    url: "/customer/find_room/ajax",
-                    data: {
-                        checkin: checkin,
-                        checkout: checkout,
-                        id_room: {{ $room[0]['id'] }},
-                    },
-                    dataType: "json",
-                    success: function(response) {
-                        let data = response.room
+                    $.ajax({
+                        type: "post",
+                        url: "/customer/find_room/ajax",
+                        data: {
+                            checkin: checkin,
+                            checkout: checkout,
+                            id_room: {{ $room[0]['id'] }},
+                        },
+                        dataType: "json",
+                        success: function(response) {
+                            let data = response.room
 
-                        if (data != null) {
-                            $('button.request_deposit').css('background',
-                                'var(--main-gradient)');
-                            $('button.request_deposit').prop('disabled', false);
+                            if (data != null) {
+                                $('button.request_deposit').css('background',
+                                    'var(--main-gradient)');
+                                $('button.request_deposit').prop('disabled', false);
 
-                            $('button.minus_btn').prop('disabled', false);
-                            $('button.plus_btn').prop('disabled', false);
-                            available_room = data.length;
+                                $('button.minus_btn').prop('disabled', false);
+                                $('button.plus_btn').prop('disabled', false);
+                                available_room = data.length;
+                            }
                         }
-                    }
-                });
+                    });
+                }
             });
 
             function data_rating(id, rate) {
@@ -484,32 +495,9 @@
                     $('input.checkout').val(checkout);
                     console.log(checkin, checkout);
 
-
-
                     duration = end.diff(start, 'days') + 1;
                 });
             });
-
-            $('#minus_guest').click(function(e) {
-                e.preventDefault();
-                if (count_guests > 1) {
-                    count_guests -= 1;
-                    $('#quantity_guest').html(count_guests);
-                    up();
-                }
-                updateNumberOfRG();
-            })
-
-            $('#plus_guest').click(function(e) {
-                e.preventDefault();
-                if (count_guests < available_person) {
-                    count_guests += 1;
-                    up();
-                }
-
-                $('#quantity_guest').html(count_guests);
-                updateNumberOfRG();
-            })
 
             $('#minus_room').click(function(e) {
                 e.preventDefault();
