@@ -56,7 +56,7 @@
                 <li class="nav-menu__item">
                     <a href="/" class="nav-menu__link">{{ __('Home') }}</a>
                 </li>
-                <li class="nav-menu__item has-submenu">
+                {{-- <li class="nav-menu__item has-submenu">
                     <a href="javascript:void(0)" class="nav-menu__link">{{ __('Pages') }}</a>
                     <ul class="nav-submenu">
                         <li class="nav-submenu__item">
@@ -66,7 +66,7 @@
                             <a href="about.html" class="nav-submenu__link"> {{ __('About Us') }}</a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
                 <li class="nav-menu__item has-submenu">
                     <a href="javascript:void(0)" class="nav-menu__link">{{ __('Room') }}</a>
                     <ul class="nav-submenu">
@@ -215,24 +215,6 @@
                     <li class="nav-menu__item">
                         <a href="/" class="nav-menu__link">{{ __('Home') }}</a>
                     </li>
-                    <li class="nav-menu__item has-submenu">
-                        <a href="javascript:void(0)" class="nav-menu__link">{{ __('Pages') }}</a>
-                        <ul class="nav-submenu">
-                            <li class="nav-submenu__item">
-                                <a href="/listroom" class="nav-submenu__link">{{ __('Rooms') }}</a>
-                            </li>
-                            <li class="nav-submenu__item">
-                                <a href="map-location.html" class="nav-submenu__link"> {{ __('Map Location') }}</a>
-                            </li>
-                            <li class="nav-submenu__item">
-                                <a href="about.html" class="nav-submenu__link"> {{ __('About Us') }}</a>
-                            </li>
-                            <li class="nav-submenu__item">
-                                <a href="/customer/account" class="nav-submenu__link"> {{ __('Account') }}</a>
-                            </li>
-
-                        </ul>
-                    </li>
                     <li class="nav-menu__item">
                         <a href="/listroom" class="nav-menu__link">{{ __('Rooms') }}</a>
                     </li>
@@ -250,6 +232,12 @@
                     </li>
                     <li class="nav-menu__item">
                         <a href="/outside_service/manation" class="nav-menu__link">{{ __('Service') }}</a>
+                    </li>
+                    <li class="nav-menu__item">
+                        <a href="/manager/home" class="nav-menu__link">{{ __('Manager') }}</a>
+                    </li>
+                    <li class="nav-menu__item">
+                        <a href="/admin/home" class="nav-menu__link">{{ __('Admin') }}</a>
                     </li>
                 </ul>
             </div>

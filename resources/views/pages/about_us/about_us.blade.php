@@ -171,7 +171,7 @@
 
 
     <!-- ==================== Header Start Here ==================== -->
-    <header class="header dark-header has-border">
+    {{-- <header class="header dark-header has-border">
         <div class="container container-two">
             <nav class="header-inner flx-between">
                 <!-- Logo Start -->
@@ -293,7 +293,7 @@
                 <!-- Header Right End  -->
             </nav>
         </div>
-    </header>
+    </header> --}}
     <!-- ==================== Header End Here ==================== -->
 
 
@@ -306,7 +306,7 @@
                     <div class="breadcrumb__wrapper">
                         <h2 class="breadcrumb__title"> About Us</h2>
                         <ul class="breadcrumb__list">
-                            <li class="breadcrumb__item"><a href="index.html" class="breadcrumb__link"> <i
+                            <li class="breadcrumb__item"><a href="/" class="breadcrumb__link"> <i
                                         class="las la-home"></i> Home</a> </li>
                             <li class="breadcrumb__item"><i class="fas fa-angle-right"></i></li>
                             <li class="breadcrumb__item"> <span class="breadcrumb__item-text"> About Us </span> </li>
@@ -325,7 +325,7 @@
                 <div class="col-lg-6">
                     <div class="about-three-thumb">
                         <div class="about-three-thumb__inner">
-                            <img src="assets/images/thumbs/about-three-img.png" alt="">
+                            <img src="{{ asset('home/home1.jpg') }}" alt="">
                             <div class="project-content">
                                 <div class="project-content__inner">
                                     <h2 class="project-content__number"> 10k+ </h2>
@@ -363,10 +363,10 @@
                                 <span class="text fw-semibold">Global Real Estate Investments</span>
                             </li>
                         </ul>
-                        <div class="about-button">
+                        {{-- <div class="about-button">
                             <a href="#" class="btn btn-outline-main bg-white">Learn More <span class="icon-right">
                                     <i class="fas fa-arrow-right"></i> </span> </a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -390,11 +390,12 @@
                         </span>
                         <div class="property-type-three-item__content">
                             <h6 class="property-type-three-item__title">Prestige Management</h6>
-                            <p class="property-type-three-item__desc font-18">Real estate is a lucrative ind involves the
-                                buying selling and reproperties. It encompa </p>
-                            <a href="property.html" class="simple-btn text-heading fw-semibold">More About
+                            <p class="property-type-three-item__desc font-18">Prestige Management is about elevating and
+                                maintaining an organization's reputation and performance through strategic planning and
+                                effective leadership.</p>
+                            {{-- <a href="property.html" class="simple-btn text-heading fw-semibold">More About
                                 <span class="icon-right"> <i class="fas fa-arrow-right"></i> </span>
-                            </a>
+                            </a> --}}
                         </div>
                     </div>
                 </div>
@@ -405,11 +406,12 @@
                         </span>
                         <div class="property-type-three-item__content">
                             <h6 class="property-type-three-item__title">Prime Investments</h6>
-                            <p class="property-type-three-item__desc font-18">Real estate is a lucrative ind involves the
-                                buying selling and reproperties. It encompa </p>
-                            <a href="property.html" class="simple-btn text-heading fw-semibold">More About
+                            <p class="property-type-three-item__desc font-18">Prime Investments seeks out and capitalizes
+                                on lucrative opportunities in diverse markets, prioritizing strategic planning and prudent
+                                financial management to maximize returns for our clients and partners. </p>
+                            {{-- <a href="property.html" class="simple-btn text-heading fw-semibold">More About
                                 <span class="icon-right"> <i class="fas fa-arrow-right"></i> </span>
-                            </a>
+                            </a> --}}
                         </div>
                     </div>
                 </div>
@@ -420,11 +422,11 @@
                         </span>
                         <div class="property-type-three-item__content">
                             <h6 class="property-type-three-item__title">SmartHouse Agency</h6>
-                            <p class="property-type-three-item__desc font-18">Real estate is a lucrative ind involves the
-                                buying selling and reproperties. It encompa </p>
-                            <a href="property.html" class="simple-btn text-heading fw-semibold">More About
+                            <p class="property-type-three-item__desc font-18">SmartHouse Agency: Where innovation meets
+                                personalized real estate solutions for modern living. </p>
+                            {{-- <a href="property.html" class="simple-btn text-heading fw-semibold">More About
                                 <span class="icon-right"> <i class="fas fa-arrow-right"></i> </span>
-                            </a>
+                            </a> --}}
                         </div>
                     </div>
                 </div>
@@ -435,11 +437,11 @@
                         </span>
                         <div class="property-type-three-item__content">
                             <h6 class="property-type-three-item__title">Reliable Rentals</h6>
-                            <p class="property-type-three-item__desc font-18">Real estate is a lucrative ind involves the
-                                buying selling and reproperties. It encompa </p>
-                            <a href="property.html" class="simple-btn text-heading fw-semibold">More About
+                            <p class="property-type-three-item__desc font-18">Reliable Rentals: Your trusted source for
+                                dependable leasing solutions. </p>
+                            {{-- <a href="property.html" class="simple-btn text-heading fw-semibold">More About
                                 <span class="icon-right"> <i class="fas fa-arrow-right"></i> </span>
-                            </a>
+                            </a> --}}
                         </div>
                     </div>
                 </div>
@@ -450,11 +452,11 @@
                         </span>
                         <div class="property-type-three-item__content">
                             <h6 class="property-type-three-item__title">Golden Key Properties</h6>
-                            <p class="property-type-three-item__desc font-18">Real estate is a lucrative ind involves the
-                                buying selling and reproperties. It encompa </p>
-                            <a href="property.html" class="simple-btn text-heading fw-semibold">More About
+                            <p class="property-type-three-item__desc font-18">Golden Key Properties: Unlocking your pathway
+                                to exceptional real estate experiences.</p>
+                            {{-- <a href="property.html" class="simple-btn text-heading fw-semibold">More About
                                 <span class="icon-right"> <i class="fas fa-arrow-right"></i> </span>
-                            </a>
+                            </a> --}}
                         </div>
                     </div>
                 </div>
@@ -465,11 +467,11 @@
                         </span>
                         <div class="property-type-three-item__content">
                             <h6 class="property-type-three-item__title">Swift Home Sales</h6>
-                            <p class="property-type-three-item__desc font-18">Real estate is a lucrative ind involves the
-                                buying selling and reproperties. It encompa </p>
-                            <a href="property.html" class="simple-btn text-heading fw-semibold">More About
+                            <p class="property-type-three-item__desc font-18">Swift Home Sales excels in urban and suburban
+                                real estate. With our expertise and dedication, we ensure quick, seamless transactions. </p>
+                            {{-- <a href="property.html" class="simple-btn text-heading fw-semibold">More About
                                 <span class="icon-right"> <i class="fas fa-arrow-right"></i> </span>
-                            </a>
+                            </a> --}}
                         </div>
                     </div>
                 </div>
@@ -477,152 +479,6 @@
         </div>
     </section>
     <!-- ======================= Property Type Three End =========================== -->
-    <!-- ========================= Team Section Start ============================= -->
-    <section class="team padding-y-60">
-        <div class="container container-two">
-            <div class="section-heading style-left style-flex flx-between align-items-end gap-3">
-                <div class="section-heading__inner">
-                    <span class="section-heading__subtitle"> <span class="text-gradient fw-semibold">OuR
-                            Professionals</span> </span>
-                    <h2 class="section-heading__title">Investment and Growth through Real Estate</h2>
-                </div>
-                <a href="#" class="btn btn-main">Learn More <span class="icon-right"> <i class="fas fa-plus"></i>
-                    </span> </a>
-            </div>
-            <div class="row gy-4">
-                <div class="col-lg-4 col-sm-6 col-xs-6">
-                    <div class="team-item">
-                        <div class="team-item__thumb">
-                            <img src="assets/images/thumbs/team1.png" alt="" class="cover-img">
-                        </div>
-                        <div class="team-item__content flx-between flex-nowrap">
-                            <div>
-                                <h6 class="team-item__name mb-1 text-white">Annette Black</h6>
-                                <span class="team-item__designation font-12 text-white fw-light">President of Sales</span>
-                            </div>
-                            <div class="social-share">
-                                <button type="button" class="social-share__button"><i
-                                        class="fas fa-share-alt"></i></button>
-                                <ul class="social-share-list">
-                                    <li class="social-share-list__item">
-                                        <a href="https://www.facebook.com" class="social-share-list__link"><i
-                                                class="fab fa-facebook-f"></i></a>
-                                    </li>
-                                    <li class="social-share-list__item">
-                                        <a href="https://www.twitter.com" class="social-share-list__link"><i
-                                                class="fab fa-twitter"></i></a>
-                                    </li>
-                                    <li class="social-share-list__item">
-                                        <a href="https://www.linkedin.com" class="social-share-list__link"><i
-                                                class="fab fa-linkedin-in"></i></a>
-                                    </li>
-                                    <li class="social-share-list__item">
-                                        <a href="https://www.pinterest.com" class="social-share-list__link"><i
-                                                class="fab fa-instagram"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 col-xs-6">
-                    <div class="team-item">
-                        <div class="team-item__thumb">
-                            <img src="assets/images/thumbs/team2.png" alt="" class="cover-img">
-                        </div>
-                        <div class="team-item__content flx-between flex-nowrap">
-                            <div>
-                                <h6 class="team-item__name mb-1 text-white">Savannah Nguyen</h6>
-                                <span class="team-item__designation font-12 text-white fw-light">Manager of Sales</span>
-                            </div>
-                            <div class="social-share">
-                                <button type="button" class="social-share__button"><i
-                                        class="fas fa-share-alt"></i></button>
-                                <ul class="social-share-list">
-                                    <li class="social-share-list__item">
-                                        <a href="https://www.facebook.com" class="social-share-list__link"><i
-                                                class="fab fa-facebook-f"></i></a>
-                                    </li>
-                                    <li class="social-share-list__item">
-                                        <a href="https://www.twitter.com" class="social-share-list__link"><i
-                                                class="fab fa-twitter"></i></a>
-                                    </li>
-                                    <li class="social-share-list__item">
-                                        <a href="https://www.linkedin.com" class="social-share-list__link"><i
-                                                class="fab fa-linkedin-in"></i></a>
-                                    </li>
-                                    <li class="social-share-list__item">
-                                        <a href="https://www.pinterest.com" class="social-share-list__link"><i
-                                                class="fab fa-instagram"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 col-xs-6">
-                    <div class="team-item">
-                        <div class="team-item__thumb">
-                            <img src="assets/images/thumbs/team3.png" alt="" class="cover-img">
-                        </div>
-                        <div class="team-item__content flx-between flex-nowrap">
-                            <div>
-                                <h6 class="team-item__name mb-1 text-white">Bessie Cooper</h6>
-                                <span class="team-item__designation font-12 text-white fw-light">Director of Sales</span>
-                            </div>
-                            <div class="social-share">
-                                <button type="button" class="social-share__button"><i
-                                        class="fas fa-share-alt"></i></button>
-                                <ul class="social-share-list">
-                                    <li class="social-share-list__item">
-                                        <a href="https://www.facebook.com" class="social-share-list__link"><i
-                                                class="fab fa-facebook-f"></i></a>
-                                    </li>
-                                    <li class="social-share-list__item">
-                                        <a href="https://www.twitter.com" class="social-share-list__link"><i
-                                                class="fab fa-twitter"></i></a>
-                                    </li>
-                                    <li class="social-share-list__item">
-                                        <a href="https://www.linkedin.com" class="social-share-list__link"><i
-                                                class="fab fa-linkedin-in"></i></a>
-                                    </li>
-                                    <li class="social-share-list__item">
-                                        <a href="https://www.pinterest.com" class="social-share-list__link"><i
-                                                class="fab fa-instagram"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- ========================= Team Section End ============================= -->
 
     <!-- ============================= CTA section Start ===================== -->
-    <section class="cta padding-b-120">
-        <div class="container container-two">
-            <div class="cta-box flx-between gap-2">
-                <div class="cta-content">
-                    <h2 class="cta-content__title">Subscribe To Our <span class="text-gradient">Newsletter</span> </h2>
-                    <p class="cta-content__desc">It is a long established fact that a reader will be distracted by the
-                        readable content of a page when looking at its layout.</p>
-                    <form action="#" class="cta-content__form d-flex align-items-center gap-2">
-                        <div class="position-relative w-100">
-                            <input type="text" class="common-input common-input--withLeftIcon w-100"
-                                placeholder="Enter Your Email Address">
-                            <span class="input-icon input-icon--left text-gradient font-20 line-height-1"><i
-                                    class="far fa-envelope"></i></span>
-                        </div>
-                        <button type="submit" class="btn btn-main text-uppercase flex-shrink-0"> Subscribe <span
-                                class="text">Now</span> </button>
-                    </form>
-                </div>
-                <div class="cta-content__thumb d-xl-block d-none">
-                    <img src="assets/images/thumbs/cta-img.png" alt="">
-                </div>
-            </div>
-        </div>
-    </section>
 @endsection
