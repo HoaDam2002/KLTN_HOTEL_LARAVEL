@@ -140,7 +140,7 @@
                 <div class="col-12 col-sm-6 col-md-4">
                     <div class="card card_user mb-3 card_custom" >
                         <div class="card-body">
-                            <h5 class="card-title">300</h5>
+                            <h5 class="card-title">{{ $statisticalData['quantity_user'] }}</h5>
                             <p class="card-text">{{ __('User') }}</p>
                         </div>
                         <div class="icon_card card_icon_user"><i class="fa-regular fa-circle-user"></i></div>
@@ -149,7 +149,7 @@
                 <div class="col-12 col-sm-6 col-md-4">
                     <div class="card card_bookings mb-3 card_custom" >
                         <div class="card-body">
-                            <h5 class="card-title">300</h5>
+                            <h5 class="card-title">{{ $statisticalData['total_bookings'] }}</h5>
                             <p class="card-text">{{ __('Bookings') }}</p>
                         </div>
                         <div class="icon_card card_icon_bookings"><i class="fa-solid fa-hotel"></i></div>
@@ -158,7 +158,7 @@
                 <div class="col-12 col-sm-6 col-md-4">
                     <div class="card card_revenue mb-3 card_custom" >
                         <div class="card-body">
-                            <h5 class="card-title">30000000$</h5>
+                            <h5 class="card-title">${{ $statisticalData['revenue'] }}</h5>
                             <p class="card-text">{{ __('Revenue') }}</p>
                         </div>
                         <div class="icon_card card_icon_revenue"><i class="fa-solid fa-chart-simple"></i></div>
@@ -167,7 +167,7 @@
                 <div class="col-12 col-sm-6 col-md-4">
                     <div class="card card_restaurant mb-3 card_custom" >
                         <div class="card-body">
-                            <h5 class="card-title">300</h5>
+                            <h5 class="card-title">{{ $statisticalData['quantity_food'] }}</h5>
                             <p class="card-text">{{ __('Dish is ordered') }}</p>
                         </div>
                         <div class="icon_card card_icon_restaurant"><i class="fa-solid fa-utensils"></i></div>
@@ -176,14 +176,14 @@
                 <div class="col-12 col-sm-6 col-md-4">
                     <div class="card card_service mb-3 card_custom" >
                         <div class="card-body">
-                            <h5 class="card-title">300</h5>
+                            <h5 class="card-title">{{ $statisticalData['quantity_service'] }}</h5>
                             <p class="card-text">{{ __('service is booked') }}</p>
                         </div>
                         <div class="icon_card card_icon_service"><i class="fa-solid fa-spa"></i></div>
                     </div>
                 </div>
             </div>
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-12">
                     <div class="mb-3">
                         <button class="btn_export btn_pdf">
@@ -224,7 +224,7 @@
                         </tbody>
                       </table>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 @endsection
