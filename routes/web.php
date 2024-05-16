@@ -13,6 +13,7 @@ use App\Http\Controllers\StriperController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\manager\ManagerController;
+use App\Http\Controllers\manager\StatisticalController;
 use App\Http\Controllers\RecepHistoryBookingController;
 use App\Http\Controllers\receptionist\RoomDiagramController;
 use App\Http\Controllers\Restaurant\FoodController;
@@ -216,7 +217,7 @@ Route::middleware(['admin'])->prefix('admin')->group(function () {
 
 Route::middleware(['manager'])->prefix('manager')->group(function () {
     Route::get('/home', [ManagerController::class, 'home_manager'])->name('home_manager');
-    Route::get('/statistical', [ManagerController::class, 'statistical'])->name('statistical_manager');
+    Route::get('/statistical', [StatisticalController::class, 'index'])->name('statistical_manager');
 });
 
 
