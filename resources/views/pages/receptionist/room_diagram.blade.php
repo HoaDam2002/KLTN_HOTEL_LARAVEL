@@ -1695,7 +1695,7 @@
                                     total_service;
                             } else {
                                 total = price * duration;
-                                final_total = total - deposit;
+                                final_total = total - deposit + total_food + total_service;
                             }
 
             
