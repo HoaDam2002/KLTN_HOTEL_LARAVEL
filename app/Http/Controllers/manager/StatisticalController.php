@@ -110,7 +110,7 @@ class StatisticalController extends Controller
 
         if ($list_bookings_in_place) {
             foreach ($list_bookings_in_place as $booking) {
-                $quantity_bookings_in_place += $booking->quantity;
+                $quantity_bookings_in_place += 1;
                 if (!empty($booking->deposit_customer)) {
                     $total_deposit_customer += $booking->deposit_customer->deposit;
                 }
@@ -174,40 +174,113 @@ class StatisticalController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function searchStatistical(Request $request)
     {
-        //
+        $searchDate = $request->search_date;
+        $searchDate = explode('-', $searchDate);
+
+        $start_date = trim($searchDate[0]);
+        $end_date = trim($searchDate[1]);
+
+        $start_date_formatted = Carbon::createFromFormat('d/m/Y', $start_date)->format('Y/m/d');
+        $end_date_formatted = Carbon::createFromFormat('d/m/Y', $end_date)->format('Y/m/d');
+
+        $statisticalData = $this->getAllStatistical($start_date_formatted, $end_date_formatted);
+
+        return view('pages.manager.manager_statistical', compact('statisticalData', 'start_date', 'end_date'));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function reportService(Request $request)
     {
-        //
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+        $start_date_format = Carbon::createFromFormat('d/m/Y', $request->start_date)->format('Y/m/d');
+        $end_date_format = Carbon::createFromFormat('d/m/Y', $request->end_date)->format('Y/m/d');
+
+        $list_service = InvoiceServiceDetail::with('service')
+            ->where('created_at', '>=', $start_date_format . ' 00:00:00')
+            ->where('created_at', '<=', $end_date_format . ' 23:59:59')
+            ->get();
+
+
+        return view('pages.manager.report_service', compact('list_service', 'start_date', 'end_date'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function reportFood(Request $request)
     {
-        //
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+        $start_date_format = Carbon::createFromFormat('d/m/Y', $request->start_date)->format('Y/m/d');
+        $end_date_format = Carbon::createFromFormat('d/m/Y', $request->end_date)->format('Y/m/d');
+
+        $list_food = InvoiceFoodDetail::with('food')
+            ->where('created_at', '>=', $start_date_format . ' 00:00:00')
+            ->where('created_at', '<=', $end_date_format . ' 23:59:59')
+            ->get();
+
+        return view('pages.manager.report_food', compact('list_food', 'start_date', 'end_date'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function reportUserBooking(Request $request)
     {
-        //
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+        $start_date_format = Carbon::createFromFormat('d/m/Y', $request->start_date)->format('Y/m/d');
+        $end_date_format = Carbon::createFromFormat('d/m/Y', $request->end_date)->format('Y/m/d');
+
+        $list_users_booking_onl = Booking::with('user', 'room')->whereIn('status', ['pending', 'confirm'])
+            ->where('created_at', '>=', $start_date_format . ' 00:00:00')
+            ->where('created_at', '<=', $end_date_format . ' 23:59:59')
+            ->get();
+
+        $list_users_booking_in_place = Booking_realtime::with('user', 'room')
+            ->where('id_booking', 0)
+            ->where('created_at', '>=', $start_date_format . ' 00:00:00')
+            ->where('created_at', '<=', $end_date_format . ' 23:59:59')
+            ->get();
+
+        $list_users_booking_onl_grouped = $list_users_booking_onl->groupBy('id_user');
+        $list_users_booking_in_place_grouped = $list_users_booking_in_place->groupBy('id_user');
+
+        $merged_grouped_users_booking = $list_users_booking_onl_grouped->mergeRecursive($list_users_booking_in_place_grouped);
+
+
+        return view('pages.manager.report_user', compact('merged_grouped_users_booking', 'start_date', 'end_date'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function reporBooking(Request $request)
     {
-        //
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+        $start_date_format = Carbon::createFromFormat('d/m/Y', $request->start_date)->format('Y/m/d');
+        $end_date_format = Carbon::createFromFormat('d/m/Y', $request->end_date)->format('Y/m/d');
+
+
+        $list_bookings_onl = Booking::with('user', 'room')->whereIn('status', ['pending', 'confirm'])
+            ->where('created_at', '>=', $start_date_format . ' 00:00:00')
+            ->where('created_at', '<=', $end_date_format . ' 23:59:59')
+            ->get();
+
+        $list_bookings_in_place = Booking_realtime::with('deposit_customer', 'user', 'room')
+            ->where('id_booking', 0)
+            ->where('created_at', '>=', $start_date_format . ' 00:00:00')
+            ->where('created_at', '<=', $end_date_format . ' 23:59:59')
+            ->get();
+
+        $merged_list_booking = $list_bookings_onl->mergeRecursive($list_bookings_in_place);
+
+        return view('pages.manager.report_booking', compact('merged_list_booking', 'start_date', 'end_date'));
     }
 }
