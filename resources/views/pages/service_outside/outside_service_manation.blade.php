@@ -196,8 +196,8 @@
                         @csrf
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" name="name" id="add_foodname"
-                                placeholder="Food Name" required>
-                            <label for="add_foodname">Food Name</label>
+                                placeholder="Service Name" required>
+                            <label for="add_foodname">Service Name</label>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="number" class="form-control" name="price" id="add_price" placeholder="Price"
