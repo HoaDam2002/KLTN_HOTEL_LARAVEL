@@ -24,6 +24,11 @@ class RoomModel extends Model
         return $this->hasMany('App\Models\RoomDetail','id_room');
     }
 
+    public function RoomDetail2(){
+        return $this->hasMany('App\Models\RoomDetail','id_room');
+    }
+
+
     public function comment(){
         return $this->hasMany(Comment::class,'id_room');
     }

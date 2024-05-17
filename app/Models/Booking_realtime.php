@@ -53,4 +53,9 @@ class Booking_realtime extends Model
     {
         return $this->hasOne(BookingRealtiemNoAcc::class, 'id_booking_realtime');
     }
+
+    public function room()
+    {
+        return $this->belongsTo(RoomModel::class,'id_room');
+    }
 }

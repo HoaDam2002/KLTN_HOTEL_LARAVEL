@@ -323,7 +323,7 @@
                                         <span class="icon"><i class="fas fa-home"></i></span>{{ __('Home') }}
                                     </a>
                                     <a href="/manager/statistical"
-                                        class="nav-link {{ Route::currentRouteName() == 'statistical_manager' ? 'active' : '' }}">
+                                        class="nav-link {{ Route::currentRouteName() == 'statistical_manager' && 'search_statistical_manager' ? 'active' : '' }}">
                                         <span class="icon"> <i class="fas fa-user"></i></span>
                                         {{ __('Statistical') }}
                                     </a>
