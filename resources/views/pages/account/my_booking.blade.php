@@ -134,7 +134,7 @@
                                             </td>
                                             <td>
                                                 <span class="status" style="background-color: rgb(255,165,0)"
-                                                    id="">{{ $data['status'] }}</span>
+                                                    id="">{{ __($data['status']) }}</span>
                                             </td>
 
                                             <td class="btn-action" style="cursor: default;">

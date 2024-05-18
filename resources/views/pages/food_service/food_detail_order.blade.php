@@ -94,7 +94,7 @@
         <div class="tab-content" id="v-pills-tabContent">
             <div class="card card-body filter_booking d-flex mb-3" style="align-items: center;">
                 <form action="" class="w-50 ms-3">
-                    <input type="text" name="" id="" placeholder="Food Name" class="">
+                    <input type="text" name="" id="" placeholder="{{__("Food Name")}}" class="">
                     <button type="submit" class="btn_search_booking"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
             </div>

@@ -144,11 +144,11 @@
                             {{-- {{dd($a)}} --}}
                             <div class="col-lg-5 col-sm-6 col-xs-6">
                                 <input type="text" class="common-input name_room" name="name_room"
-                                    placeholder="{{__("Name Room / Infor Customer")}}" />
+                                    placeholder="{{ __('Name Room / Infor Customer') }}" />
                             </div>
                             <div class="col-md-3 col-sm-6 col-xs-6">
                                 <button type="submit" class="btn btn-main w-100" style="font-size: 11px">
-                                    {{__("Find Now")}}
+                                    {{ __('Find Now') }}
                                 </button>
                             </div>
                         </div>
@@ -157,11 +157,11 @@
             </div>
             <div class="func_filter_status mb-4">
 
-                <button class="btn_filter text-bg-secondary" id="{{ $a }}">{{__("Null")}}</button>
-                <button class="btn_filter text-bg-success" id="{{ $a }}">{{__("Occupied")}}</button>
+                <button class="btn_filter text-bg-secondary" id="{{ $a }}">Null</button>
+                <button class="btn_filter text-bg-success" id="{{ $a }}">Occupied</button>
                 {{-- <button class="btn_filter bg-deposit filter_ready">Ready</button> --}}
-                <button class="btn_filter text-bg-warning" id="{{ $a }}">{{__("Check in")}}</button>
-                <button class="btn_filter text-bg-danger filter_checkout" id="{{ $a }}">{{__("Check out")}}</button>
+                <button class="btn_filter text-bg-warning" id="{{ $a }}">Check in</button>
+                <button class="btn_filter text-bg-danger filter_checkout" id="{{ $a }}">Check out</button>
                 <button class="btn_filter text-bg-primary" id="{{ $a }}"><i
                         class="fa-solid fa-arrows-rotate"></i></button>
             </div>
@@ -187,7 +187,7 @@
                                             <p class="card-text" id="status"><i
                                                     class="fa-solid fa-calendar-days me-2"></i>{{ $item['status'] }}</p>
                                             <p class="card-text"><i
-                                                    class="fa-solid fa-calendar-days me-2"></i>{{ $item['type_room']['price'] . "/ Pernight" }}
+                                                    class="fa-solid fa-calendar-days me-2"></i>{{ $item['type_room']['price'] . '/ Pernight' }}
                                             </p>
                                             <p class="card-text"><i
                                                     class="fa-solid fa-calendar-days me-2"></i>{{ $item['type_room']['name'] }}
@@ -230,7 +230,7 @@
                                                                     class="fa-solid fa-calendar-days me-2"></i>{{ $item['status'] }}
                                                             </p>
                                                             <p class="card-text"><i
-                                                                    class="fa-solid fa-calendar-days me-2"></i>{{ $item['type_room']['price'] . "/ Pernight "}}
+                                                                    class="fa-solid fa-calendar-days me-2"></i>{{ $item['type_room']['price'] . '/ Pernight ' }}
                                                             </p>
                                                             <p class="card-text"><i
                                                                     class="fa-solid fa-calendar-days me-2"></i>{{ $item['type_room']['name'] }}
@@ -271,7 +271,7 @@
                                                                         class="fa-solid fa-calendar-days me-2"></i>{{ $item['status'] }}
                                                                 </p>
                                                                 <p class="card-text"><i
-                                                                        class="fa-solid fa-calendar-days me-2"></i>{{ $item['type_room']['price'] . "/ Pernight" }}
+                                                                        class="fa-solid fa-calendar-days me-2"></i>{{ $item['type_room']['price'] . '/ Pernight' }}
                                                                 </p>
                                                                 <p class="card-text"><i
                                                                         class="fa-solid fa-calendar-days me-2"></i>{{ $item['type_room']['name'] }}
@@ -313,7 +313,7 @@
                                                                     class="fa-solid fa-calendar-days me-2"></i>{{ $item['status'] }}
                                                             </p>
                                                             <p class="card-text"><i
-                                                                    class="fa-solid fa-calendar-days me-2"></i>{{ $item['type_room']['price'] . "/ Pernight" }}
+                                                                    class="fa-solid fa-calendar-days me-2"></i>{{ $item['type_room']['price'] . '/ Pernight' }}
                                                             </p>
                                                             <p class="card-text"><i
                                                                     class="fa-solid fa-calendar-days me-2"></i>{{ $item['type_room']['name'] }}
@@ -405,47 +405,47 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <strong class="modal-title fs-5" id="staticBackdropLabel">{{__("Room 01")}}</strong>
+                    <strong class="modal-title fs-5" id="staticBackdropLabel">{{ __('Room 01') }}</strong>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="wrapper_info_room">
-                        <span>{{__("Room name:")}} </span>
-                        <strong class="info_room_item mb-3">{{__("Room 01")}}</strong>
+                        <span>{{ __('Room name:') }} </span>
+                        <strong class="info_room_item mb-3">{{ __('Room 01') }}</strong>
                     </div>
                     <div class="wrapper_info_room">
-                        <span>{{__("Room type:")}} </span>
+                        <span>{{ __('Room type:') }} </span>
                         <strong class="info_room_item mb-3">Double room</strong>
                     </div>
                     <div class="wrapper_info_room">
-                        <span>{{__("Deposits:")}} </span>
+                        <span>{{ __('Deposits:') }} </span>
                         <strong class="info_room_item mb-3">80$</strong>
                     </div>
                     <p class="d-inline-flex gap-1">
                         <a class="" data-bs-toggle="collapse" href="#collapseExample" role="button"
                             aria-expanded="false" aria-controls="collapseExample">
-                            {{__("Service")}}
+                            {{ __('Service') }}
                         </a>
                     </p>
                     <div class="collapse" id="collapseExample">
                         <div class="row">
-                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> {{__("2 person")}}</span>
-                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> {{__("2 person")}}</span>
-                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> {{__("2 person")}}</span>
-                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> {{__("2 person")}}</span>
-                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> {{__("2 person")}}</span>
-                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> {{__("2 person")}}</span>
-                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> {{__("2 person")}}</span>
-                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> {{__("2 person")}}</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> {{ __('2 person') }}</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> {{ __('2 person') }}</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> {{ __('2 person') }}</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> {{ __('2 person') }}</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> {{ __('2 person') }}</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> {{ __('2 person') }}</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> {{ __('2 person') }}</span>
+                            <span class="d-block col-3"><i class="fa-solid fa-bed"></i> {{ __('2 person') }}</span>
                         </div>
                     </div>
                     <div class="mb-3 mt-3">
-                        <label for="formGroupExampleInput" class="form-label">{{__("Name")}}</label>
+                        <label for="formGroupExampleInput" class="form-label">{{ __('Name') }}</label>
                         <input type="text" class="form-control" id="formGroupExampleInput"
                             placeholder="Example input placeholder" value="Nguyễn Văn A" disabled>
                     </div>
                     <div class="mb-3">
-                        <label for="formGroupExampleInput2" class="form-label">{{__("Phone")}}</label>
+                        <label for="formGroupExampleInput2" class="form-label">{{ __('Phone') }}</label>
                         <input type="text" class="form-control" id="formGroupExampleInput2"
                             placeholder="Another input placeholder" value="0708852641" disabled>
                     </div>
@@ -455,9 +455,9 @@
                             placeholder="Another input placeholder" value="damvanhoa30052002@gmail.com" disabled>
                     </div>
                     <div class="d-flex justify-content-between">
-                        <span>{{__("Check in")}}</span>
+                        <span>{{ __('Check in') }}</span>
                         <span>>>>>></span>
-                        <span>{{__("Check out")}}</span>
+                        <span>{{ __('Check out') }}</span>
                     </div>
                     <div class="d-flex justify-content-between">
                         <strong>24/03/2024 14:00</strong>
@@ -465,7 +465,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">{{__("Cancel")}}</button>
+                    <button type="button" class="btn btn-primary">{{ __('Cancel') }}</button>
                 </div>
             </div>
         </div>
@@ -483,19 +483,19 @@
                 </div>
                 <div class="modal-body">
                     <div class="wrapper_info_room">
-                        <span> {{__("Room name:")}}</span>
+                        <span> {{ __('Room name') }}:</span>
                         <strong class="info_room_item mb-3 name_room" id=""></strong>
                     </div>
                     <div class="wrapper_info_room">
-                        <span> {{__("Room type:")}}</span>
+                        <span> {{ __('Room type') }}:</span>
                         <strong class="info_room_item mb-3 type_room"></strong>
                     </div>
                     <div class="wrapper_info_room">
-                        <span> {{__("Status:")}}</span>
+                        <span> {{ __('Status') }}:</span>
                         <strong class="info_room_item mb-3 status_room"></strong>
                     </div>
                     <div class="wrapper_info_room">
-                        <span> {{__("Price:")}}</span>
+                        <span> {{ __('Price') }}:</span>
                         <strong class="info_room_item mb-3 price_room"></strong>
                     </div>
 
@@ -503,11 +503,11 @@
                         <div class="btn_form_add_booking mb-2">
                             <button class="btn-booking-modal me-4" id="btn-add-booking">
                                 <i class="fa-solid fa-plus"></i>
-                               {{__("Add new booking")}}
+                                {{ __('Add new booking') }}
                             </button>
                             <button class="btn-booking-modal" id="btn-add-booking-with-info">
                                 <i class="fa-solid fa-plus"></i>
-                                {{__("Book with customer information")}}
+                                {{ __('Book with customer information') }}
                             </button>
                         </div>
                         <div class="form-add-new-booking">
@@ -518,15 +518,15 @@
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control name" name="name" id="floatingName"
                                         placeholder="Name" required>
-                                    <label for="floatingName">{{__("Name")}}</label>
+                                    <label for="floatingName">{{ __('Name') }}</label>
                                 </div>
                                 <div class="mt-2 text-danger err_phone">
                                     <small></small><br>
                                 </div>
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control phone" name="phone" id="floatingPhone"
-                                        placeholder="{{"(Phone number)"}}" required pattern="\d{9,10}">
-                                    <label for="floatingPhone">{{__("Phone")}}</label>
+                                        placeholder="{{ '(Phone number)' }}" required pattern="\d{9,10}">
+                                    <label for="floatingPhone">{{ __('Phone') }}</label>
                                 </div>
                                 <div class="mt-2 text-danger err_date">
                                     <small></small><br>
@@ -536,7 +536,7 @@
                                 </div>
 
                                 <div class="wrapper_info_room deposit_head">
-                                    <span style="color: red">{{__("Deposit:")}} </span>
+                                    <span style="color: red">{{ __('Deposit') }}: </span>
                                     <strong style="color: red; font-size: 20px;"
                                         class="info_room_item mb-3 deposit"></strong>
                                 </div>
@@ -545,25 +545,26 @@
                                     <input class="form-check-input a" type="radio" name="payment" value="cash"
                                         id="flexRadioDefault1" checked>
                                     <label class="form-check-label" for="flexRadioDefault1">
-                                        {{__("Cash payment for Deposit")}}
+                                        {{ __('Cash payment for Deposit') }}
                                     </label>
                                 </div>
                                 <div class="form-check mb-3 pay">
                                     <input class="form-check-input b" type="radio" name="payment" value="creditCard"
                                         id="flexRadioDefault2">
                                     <label class="form-check-label" for="flexRadioDefault2">
-                                        {{__("Credit card payment for Deposit")}}
+                                        {{ __('Credit card payment for Deposit') }}
                                     </label>
                                 </div>
 
-                                <button type="button" class="btn btn-primary booking">{{__("Add new booking")}}</button>
+                                <button type="button"
+                                    class="btn btn-primary booking">{{ __('Add new booking') }}</button>
                             </form>
                         </div>
                         <div class="form-add-booking-inf-customer booking" style="display: none;">
                             <form class="f2">
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control information" id="floatingInput"
-                                        placeholder="{{__("Phone")}}">
+                                        placeholder="{{ __('Phone') }}">
                                     <button type="button" class="input-group-text search_customer"><i
                                             class="fa-solid fa-magnifying-glass" style="padding: 0 10px;"></i></button>
 
@@ -577,7 +578,7 @@
                                 </div>
 
                                 <div class="wrapper_info_room deposit_head2">
-                                    <span style="color: red">{{__("Deposit:")}} </span>
+                                    <span style="color: red">{{ __('Deposit') }}: </span>
                                     <strong style="color: red; font-size: 20px;"
                                         class="info_room_item mb-3 deposit2"></strong>
                                 </div>
@@ -586,19 +587,20 @@
                                     <input class="form-check-input a" type="radio" name="payment-2" value="cash"
                                         id="flexRadioDefault1" checked>
                                     <label class="form-check-label" for="flexRadioDefault1">
-                                        C{{__("ash payment for Deposit")}}
+                                        {{ __('Cash payment for Deposit') }}
                                     </label>
                                 </div>
                                 <div class="form-check mb-3 pay2">
                                     <input class="form-check-input b" type="radio" name="payment-2" value="creditCard"
                                         id="flexRadioDefault2">
                                     <label class="form-check-label" for="flexRadioDefault2">
-                                        {{__("Credit card payment for Deposit")}}
+                                        {{ __('Credit card payment for Deposit') }}
                                     </label>
                                 </div>
 
 
-                                <button type="button" style="margin-bottom: 10px;" class="btn btn-primary booking_2">{{__("Add new booking")}}</button>
+                                <button type="button" style="margin-bottom: 10px;"
+                                    class="btn btn-primary booking_2">{{ __('Add new booking') }}</button>
                                 <div class="list-group">
 
                                 </div>
@@ -623,15 +625,15 @@
                 <div class="modal-body">
 
                     <div class="wrapper_info_room">
-                        <span> {{__("Room name:")}}</span>
+                        <span> {{ __('Room name') }}:</span>
                         <strong class="info_room_item mb-3 name_room"></strong>
                     </div>
                     <div class="wrapper_info_room">
-                        <span> {{__("Room type:")}}</span>
+                        <span> {{ __('Room type') }}:</span>
                         <strong class="info_room_item mb-3 type_room"></strong>
                     </div>
                     <div class="wrapper_info_room">
-                        <span> {{__("Deposits:")}}</span>
+                        <span> {{ __('Deposits') }}:</span>
                         <strong class="info_room_item mb-3 deposit"></strong>
                     </div>
 
@@ -647,9 +649,9 @@
                     </div>
 
                     <div class="d-flex justify-content-between">
-                        <span>{{__("Check in")}}</span>
+                        <span>{{ __('Check in') }}</span>
                         <span>>>>>></span>
-                        <span>{{__("Check out")}}</span>
+                        <span>{{ __('Check out') }}</span>
                     </div>
                     <div class="d-flex justify-content-between">
                         <strong class="checkin">24/03/2024 14:00</strong>
@@ -658,8 +660,8 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary bt_cancel">{{__("Cancel")}}</button>
-                    <button type="button" class="btn btn-primary bt_checkin">{{__("Check in")}}</button>
+                    <button type="button" class="btn btn-primary bt_cancel">{{ __('Cancel') }}</button>
+                    <button type="button" class="btn btn-primary bt_checkin">{{ __('Check in') }}</button>
                 </div>
             </div>
         </div>
@@ -672,54 +674,54 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <strong class="modal-title fs-5 name_room" id="staticBackdropLabel ">{{__("Room 01")}}</strong>
+                    <strong class="modal-title fs-5 name_room" id="staticBackdropLabel ">{{ __('Room 01') }}</strong>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
 
                     <div class="wrapper_info_room">
-                        <span> {{__("Room name:")}}</span>
-                        <strong class="info_room_item mb-3 name_room">{{__("Room 01")}}</strong>
+                        <span> {{ __('Room name') }}:</span>
+                        <strong class="info_room_item mb-3 name_room">{{ __('Room 01') }}</strong>
                     </div>
                     <div class="wrapper_info_room">
-                        <span> {{__("Room type:")}}</span>
+                        <span> {{ __('Room type') }}:</span>
                         <strong class="info_room_item mb-3 type_room">Double room</strong>
                     </div>
                     <div class="wrapper_info_room">
-                        <span>{{__("Price:")}} </span>
+                        <span>{{ __('Price') }}: </span>
                         <strong class="info_room_item mb-3 price">80$</strong>
                     </div>
                     <div class="wrapper_info_room">
-                        <span>{{__("Deposits:")}} </span>
+                        <span>{{ __('Deposits') }}: </span>
                         <strong class="info_room_item mb-3 deposit">80$</strong>
                     </div>
                     <div class="wrapper_info_room">
-                        <span>{{__("Total Food:")}} </span>
+                        <span>{{ __('Total Food') }}: </span>
                         <strong class="info_room_item mb-3 total_food" style="color: red">80$</strong>
                     </div>
                     <div class="wrapper_info_room">
-                        <span>{{__("Total Service:")}} </span>
+                        <span>{{ __('Total Service') }}: </span>
                         <strong class="info_room_item mb-3 total_service" style="color: red">80$</strong>
                     </div>
                     <div class="wrapper_info_room">
-                        <span>{{__("Total Room:")}} </span>
+                        <span>{{ __('Total Room') }}: </span>
                         <strong class="info_room_item mb-3 total" style="color: red">80$</strong>
                     </div>
                     <div class="wrapper_info_room">
-                        <span>{{__("Duration:")}} </span>
+                        <span>{{ __('Duration') }}: </span>
                         <strong class="info_room_item mb-3 duration">80$</strong>
                     </div>
                     <div class="wrapper_info_room">
-                        <span>{{__("Total Amount:")}} </span>
+                        <span>{{ __('Total Amount') }}: </span>
                         <strong class="info_room_item mb-3 final_total" style="color: red">80$</strong>
                     </div>
                     <div class="mb-3 mt-3">
-                        <label for="formGroupExampleInput" class="form-label">{{__("Name")}}</label>
+                        <label for="formGroupExampleInput" class="form-label">{{ __('Name') }}</label>
                         <input type="text" class="form-control name_cus" id="formGroupExampleInput"
                             placeholder="Example input placeholder" disabled>
                     </div>
                     <div class="mb-3">
-                        <label for="formGroupExampleInput2" class="form-label">{{__("Phone")}}</label>
+                        <label for="formGroupExampleInput2" class="form-label">{{ __('Phone') }}</label>
                         <input type="text" class="form-control phone_cus" id="formGroupExampleInput2"
                             placeholder="Another input placeholder" disabled>
                     </div>
@@ -728,20 +730,20 @@
                         <input class="form-check-input a" type="radio" name="pay_checkout" value="cash"
                             id="flexRadioDefault1" checked>
                         <label class="form-check-label" for="flexRadioDefault1">
-                            {{__("Cash payment for Deposit")}}
+                            {{ __('Cash payment for Deposit') }}
                         </label>
                     </div>
                     <div class="form-check mb-3 pay_checkout">
                         <input class="form-check-input b" type="radio" name="pay_checkout" value="creditCard"
                             id="flexRadioDefault2">
                         <label class="form-check-label" for="flexRadioDefault2">
-                            {{__("Credit card payment for Deposit")}}
+                            {{ __('Credit card payment for Deposit') }}
                         </label>
                     </div>
                     <div class="d-flex justify-content-between">
-                        <span>{{__("Check in")}}</span>
+                        <span>{{ __('Check in') }}</span>
                         <span>>>>>></span>
-                        <span>{{__("Check out")}}</span>
+                        <span>{{ __('Check out') }}</span>
                     </div>
                     <div class="d-flex justify-content-between">
                         <strong class="checkin">24/03/2024 14:00</strong>
@@ -758,7 +760,7 @@
                         <input type="text" name="id_booking" id="id_booking" hidden>
                         <input type="text" name="id_user" id="id_user" hidden>
                         <input type="text" name="name_user" id="name_user" hidden>
-                        <button type="submit" class="btn btn-primary bt_checkout">{{__("Check out")}}</button>
+                        <button type="submit" class="btn btn-primary bt_checkout">{{ __('Check out') }}</button>
                     </form>
                 </div>
             </div>
@@ -771,55 +773,63 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <strong class="modal-title fs-5 name_room" id="staticBackdropLabel ">{{__("Room 01")}}</strong>
+                    <strong class="modal-title fs-5 name_room" id="staticBackdropLabel ">{{ __('Room 01') }}</strong>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
 
                     <div class="wrapper_info_room">
-                        <span> {{__("Room name")}}:</span>
-                        <strong class="info_room_item mb-3 name_room">{{__("Room 01")}}</strong>
+                        <span> {{ __('Room name') }}:</span>
+                        <strong class="info_room_item mb-3 name_room">{{ __('Room 01') }}</strong>
                     </div>
                     <div class="wrapper_info_room">
-                        <span> {{__("Room type")}}:</span>
-                        <strong class="info_room_item mb-3 type_room">Double room{{__("")}}</strong>
+                        <span> {{ __('Room type') }}:</span>
+                        <strong class="info_room_item mb-3 type_room">Double room{{ __('') }}</strong>
                     </div>
                     <div class="wrapper_info_room">
-                        <span>: {{__("Price")}}:</span>
+                        <span>{{ __('Price') }}:</span>
                         <strong class="info_room_item mb-3 price">80$</strong>
                     </div>
                     <div class="wrapper_info_room">
-                        <span>{{__("Deposits")}}: </span>
+                        <span>{{ __('Deposits') }}: </span>
                         <strong class="info_room_item mb-3 deposit">80$</strong>
                     </div>
                     <div class="wrapper_info_room">
-                        <span>{{__("Total Food")}}: </span>
+                        <span>{{ __('Total Food') }}: </span>
                         <strong class="info_room_item mb-3 total_food">80$</strong>
                     </div>
                     <div class="wrapper_info_room">
-                        <span> {{__("Total Service:")}}:</span>
+                        <span> {{ __('Total Service') }}:</span>
                         <strong class="info_room_item mb-3 total_service">80$</strong>
                     </div>
                     <div class="wrapper_info_room">
+<<<<<<< HEAD
+                        <span> {{ __('Total Hotel') }}:</span>
+                        <strong class="info_room_item mb-3 total">80$</strong>
+                    </div>
+                    <div class="wrapper_info_room">
+                        <span> {{ __('Duration Now') }}:</span>
+=======
                         <span> {{__("Total Hotel Now")}}:</span>
                         <strong class="info_room_item mb-3 total">80$</strong>
                     </div>
                     <div class="wrapper_info_room">
                         <span> {{__("Duration Now")}}:</span>
 
+>>>>>>> aae3e1f90fc034fbe3328dd4f2b8b5fbcd76b3b6
                         <strong class="info_room_item mb-3 duration" style="color: red">80$</strong>
                     </div>
                     <div class="wrapper_info_room">
-                        <span> {{__("Total Amount")}}:</span>
+                        <span> {{ __('Total Amount') }}:</span>
                         <strong class="info_room_item mb-3 final_total" style="color: red">80$</strong>
                     </div>
                     <div class="mb-3 mt-3">
-                        <label for="formGroupExampleInput" class="form-label">{{__("Name")}}</label>
+                        <label for="formGroupExampleInput" class="form-label">{{ __('Name') }}</label>
                         <input type="text" class="form-control name_cus" id="formGroupExampleInput"
                             placeholder="Example input placeholder" disabled>
                     </div>
                     <div class="mb-3">
-                        <label for="formGroupExampleInput2" class="form-label">{{__("Phone")}}</label>
+                        <label for="formGroupExampleInput2" class="form-label">{{ __('Phone') }}</label>
                         <input type="text" class="form-control phone_cus" id="formGroupExampleInput2"
                             placeholder="Another input placeholder" disabled>
                     </div>
@@ -830,7 +840,7 @@
                             <select name="room_change" id="formGroupExampleInput2" class="form-control choose_room">
 
                             </select>
-                            <button class="btn-choose btn_change_room">{{__("Change")}}</button>
+                            <button class="btn-choose btn_change_room">{{ __('Change') }}</button>
                         </div>
                         {{-- <input type="text" class="form-control phone_cus" id="formGroupExampleInput2"
                             placeholder="Another input placeholder" value="0708852641" disabled> --}}
@@ -840,20 +850,20 @@
                         <input class="form-check-input a" type="radio" name="pay_checkout_soon" value="cash"
                             id="flexRadioDefault1" checked>
                         <label class="form-check-label" for="flexRadioDefault1">
-                            {{__("Cash payment for Deposit")}}
+                            {{ __('Cash payment for Deposit') }}
                         </label>
                     </div>
                     <div class="form-check mb-3 pay_checkout">
                         <input class="form-check-input b" type="radio" name="pay_checkout_soon" value="creditCard"
                             id="flexRadioDefault2">
                         <label class="form-check-label" for="flexRadioDefault2">
-                            {{__("Credit card payment for Deposit")}}
+                            {{ __('Credit card payment for Deposit') }}
                         </label>
                     </div>
                     <div class="d-flex justify-content-between">
-                        <span>{{__("Check in")}}</span>
+                        <span>{{ __('Check in') }}</span>
                         <span>>>>>></span>
-                        <span>{{__("Check out")}}</span>
+                        <span>{{ __('Check out') }}</span>
                     </div>
                     <div class="d-flex justify-content-between">
                         <strong class="checkin">24/03/2024 14:00</strong>
@@ -870,7 +880,7 @@
                         <input type="text" name="id_booking" id="id_booking" hidden>
                         <input type="text" name="id_user" id="id_user" hidden>
                         <input type="text" name="name_user" id="name_user" hidden>
-                        <button type="submit" class="btn btn-primary bt_checkout_soon">{{__("Check out")}}</button>
+                        <button type="submit" class="btn btn-primary bt_checkout_soon">{{ __('Check out') }}</button>
                     </form>
 
                 </div>
@@ -886,7 +896,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
             <div class="toast-body">
-                {{__("Success!!!")}}
+                {{ __('Success!!!') }}
             </div>
         </div>
     </div>
@@ -1912,12 +1922,15 @@
                             html +=
                                 "<div class=\"list-group-item list-group-item-action\" aria-current=\"true\" style=\"cursor: pointer;\">" +
                                 "<div class=\"d-flex w-100 justify-content-between\">" +
-                                "<h5 class=\"mb-1\" id= " + value.id + " > {{__("Name")}}: " +
+                                "<h5 class=\"mb-1\" id= " + value.id +
+                                " > {{ __('Name') }}: " +
                                 value.name + "</h5>" +
                                 "</div>" +
-                                "<p class=\"mb-1\">{{__("Phone")}}:<p class=\"abc\">" + value
+                                "<p class=\"mb-1\">{{ __('Phone') }}:<p class=\"abc\">" +
+                                value
                                 .phone + " </p> </p>" +
-                                "<small>{{__("Count Booking")}}: " + count_booking + "</small>" +
+                                "<small>{{ __('Count Booking') }}: " + count_booking +
+                                "</small>" +
                                 "</div>";
                         })
                         $('.list-group').html(html);
