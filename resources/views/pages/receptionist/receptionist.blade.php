@@ -298,7 +298,7 @@
                                 <button class="btn d-lg-block d-none">
                                     <a href="/dashboard" class="account-icon-link"><i
                                             class="fa-regular fa-circle-user"></i></a>
-                                 
+
                                 </button>
                             @else
                                 <a href="/login" class="btn btn-outline-light d-lg-block d-none">
@@ -415,6 +415,21 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
 
         @yield('js')
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                let lang = "{{ App::getLocale() }}";
+                if (lang) {
+                    if (lang == 'en') {
+                        document.getElementById('en-flag').classList.add('active');
+                        document.getElementById('vi-flag').classList.remove('active');
+                    } else if (lang == 'vi') {
+                        document.getElementById('vi-flag').classList.add('active');
+                        document.getElementById('en-flag').classList.remove('active');
+                    }
+                }
+            })
+        </script>
     </body>
 
 </html>
