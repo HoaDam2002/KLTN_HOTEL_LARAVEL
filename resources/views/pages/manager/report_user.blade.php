@@ -87,12 +87,14 @@
                     <div class="mb-3 date_report">Report from {{ $start_date }} to {{ $end_date }}</div>
                     <h6 class="">List of customers booked</h6>
                     <div class="mb-3">
-                        <button class="btn_export btn_pdf">
-                            Export PDF
-                        </button>
-                        <button class="btn_export btn_excel">
-                            Export Excel
-                        </button>
+                        <form action="/manager/report/user_booking_pdf" method="post">
+                            @csrf
+                            <input type="hidden" name="start_date" value="{{ $start_date }}">
+                            <input type="hidden" name="end_date" value="{{ $end_date }}">
+                            <button type="submit" class="btn_export btn_pdf">
+                                Export PDF
+                            </button>
+                        </form>
                     </div>
                     <div style="overflow: auto">
                         <table class="table table_report table-striped table-hover" style="color: #333; padding: 0 10px; font-size: 16px">
@@ -101,6 +103,7 @@
                                     <th scope="col" class="row_name">{{ __('Name') }}</th>
                                     <th scope="col">{{ __('Phone') }}</th>
                                     <th scope="col">{{ __('Room') }}</th>
+                                    <th scope="col">{{ __('Quantity') }}</th>
                                     <th scope="col">{{ __('Date Book') }}</th>
                                 </tr>
                             </thead>
@@ -118,11 +121,14 @@
 
                                             $room = $user[0]->room->name;
 
+                                            $quantity = $user[0]->quantity ?? 1;
+
                                         @endphp
                                         <tr>
                                             <th class="row_name">{{ $name }}</th>
                                             <td>{{ $phone }}</td>
                                             <td>{{ $room }}</td>
+                                            <td>{{ $quantity }}</td>
                                             <td>{{ $date_book }}</td>
                                         </tr>
                                     @endforeach
