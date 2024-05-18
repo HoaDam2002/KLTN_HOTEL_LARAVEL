@@ -16,6 +16,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Storage;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Illuminate\Support\Facades\Auth;
 
 class FoodController extends Controller
 {
@@ -24,7 +25,12 @@ class FoodController extends Controller
      */
     public function index()
     {
-        return view('pages.food_service.food_home');
+        if (Auth::check()) {
+            $id_account = Auth::id();
+            $id_user = Customer::where("id_account", $id_account)->value('id_user');
+            $name_user = User::where('id', $id_user)->value('name');
+            return view('pages.food_service.food_home',compact('name_user'));
+        }
     }
 
     /**
@@ -72,9 +78,9 @@ class FoodController extends Controller
             $query->where('status', 'checkin');
         })->with(['customer', 'customer_no_acc', 'booking_realtime' => function ($query) {
             $query->where('status', 'checkin');
-        }])->paginate(5);
+        }])->get()->toArray();
 
-        // dd($customer);
+        dd($customer);
 
         return view('pages.food_service.food_order', compact('customer'));
     }
@@ -91,6 +97,7 @@ class FoodController extends Controller
             $data = $request->all();
 
             $items = json_decode($data['arr']);
+            $infor = json_decode($data['infor']);
 
             $id_user = $data['id_user'];
             $name_user = $data['name_user'];
@@ -100,14 +107,16 @@ class FoodController extends Controller
 
             if ($invoice_food = InvoiceFood::create(['id_user' => $id_user])) {
                 $id_invoice_food = $invoice_food->id;
-                foreach ($items as $key => $value) {
-                    $invoice_detail = InvoiceFoodDetail::create(['id_booking_realtime' => $id_booking_realtime, 'id_invoice_food' => $id_invoice_food, 'id_food' => key($value), 'quantity' => reset($value)]);
+                $i = 0;
+                foreach ($items as $key => $value) {    
+                    $invoice_detail = InvoiceFoodDetail::create(['id_booking_realtime' => $id_booking_realtime, 'id_invoice_food' => $id_invoice_food, 'id_food' => key($value), 'quantity' => reset($value),'name_food' => key($infor[$i]), 'price' => reset($infor[$i])]);
                     $food = Food::find(key($value));
                     if ($food) {
                         $data_pdf['food'][] = [$food->toArray(), reset($value)];
                     } else {
                         throw new \Exception('Food not found.');
                     }
+                    $i++;
                 }
 
                 $pdf = PDF::loadView('pages.invoice.last_invoice', ['data_pdf' => $data_pdf]);
@@ -283,4 +292,13 @@ class FoodController extends Controller
 
         return $pdf->download("invoice_$name_user.pdf");
     }
+
+    public function order_detail_search_food(Request $request){
+        $name_food = $request->all()['name_food'];
+
+        $food = Food::where('name','like', '%' . $name_food . '%')->get()->toArray();
+
+        return response()->json(['foods' => $food]);
+    }
+
 }

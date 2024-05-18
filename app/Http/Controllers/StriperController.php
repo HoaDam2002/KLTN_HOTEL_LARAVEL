@@ -23,7 +23,7 @@ class StriperController extends Controller
     {
 
         $data = $request->all();
-
+       
         if (!auth()->check()) {
             return redirect()->route('login');
         } else {

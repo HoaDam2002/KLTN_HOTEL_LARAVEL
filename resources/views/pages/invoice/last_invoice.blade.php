@@ -105,7 +105,7 @@
         </tbody>
     </table>
     <div class="total">
-        Total: {{ $final_total }}
+        Total: ${{ $final_total }}
     </div>
 </body>
 

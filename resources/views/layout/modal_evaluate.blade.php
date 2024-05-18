@@ -14,7 +14,7 @@
         <div class="modal-content" style="padding: 0 15px">
             <div class="modal-header">
                 <h4 class="loginRegister__title text-poppins">
-                    {{__("Welcome to DanaHotel's room review form")}}</h4>
+                    {{ __("Welcome to DanaHotel's room review form") }}</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -25,15 +25,16 @@
                             <div id="rateYo"></div>
                         </div>
                         <div class="col-12">
-                            <label for="comment" class="form-label">{{__("Comment")}}</label>
+                            <label for="comment" class="form-label">{{ __('Comment') }}</label>
                             <div class="position-relative">
-                                <textarea class="common-input" name="comment" id="comment" cols="30" rows="10" placeholder="{{__("Your Comment")}}"></textarea>
+                                <textarea class="common-input" name="comment" id="comment" cols="30" rows="10"
+                                    placeholder="{{ __('Your Comment') }}"></textarea>
                             </div>
                         </div>
 
                         <div class="col-12">
                             <button type="button" class="btn btn-main w-100 submit_comment">
-                                {{__("Submit")}}
+                                {{ __('Submit') }}
                                 <span class="icon-right"> <i class="far fa-paper-plane"></i></span>
                             </button>
                         </div>
@@ -53,7 +54,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
         <div class="toast-body">
-            {{__("Success!!!")}}
+            {{ __('Success!!!') }}
         </div>
     </div>
 </div>
@@ -84,7 +85,8 @@
 
                 console.log(check_commented, status);
 
-                if (status == 'confirm' || status == 'cancel' || status == 'pending') {
+                if (status == 'confirm' || status == 'cancel' || status == 'pending' && status ==
+                    'Chấp thuận' || status == 'Hủy' || status == 'Chờ phê duyệt') {
                     $(this).closest('.btn-action').find('button.btn_rating').prop('disabled', true);
                 } else {
                     if (!check_commented) {

@@ -14,7 +14,9 @@ class InvoiceFoodDetail extends Model
         'id_booking_realtime',
         'id_invoice_food',
         'id_food',
-        'quantity'
+        'quantity',
+        'price',
+        'name_food'
     ];
 
     public function food()

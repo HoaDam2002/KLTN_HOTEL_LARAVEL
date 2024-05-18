@@ -14,6 +14,8 @@ class InvoiceServiceDetail extends Model
         'id_booking_realtime',
         'id_invoice_service',
         'id_service',
+        'name_serive',
+        'price'
     ];
 
     public function service()

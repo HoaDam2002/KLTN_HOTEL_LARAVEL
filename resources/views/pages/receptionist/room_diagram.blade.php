@@ -715,6 +715,10 @@
                         <span>{{ __('Total Amount') }}: </span>
                         <strong class="info_room_item mb-3 final_total" style="color: red">80$</strong>
                     </div>
+                    <div class="wrapper_info_room">
+                        <span>{{ __('Status') }}: </span>
+                        <strong class="info_room_item mb-3 status_room" style="color: red"></strong>
+                    </div>
                     <div class="mb-3 mt-3">
                         <label for="formGroupExampleInput" class="form-label">{{ __('Name') }}</label>
                         <input type="text" class="form-control name_cus" id="formGroupExampleInput"
@@ -803,20 +807,12 @@
                         <strong class="info_room_item mb-3 total_service">80$</strong>
                     </div>
                     <div class="wrapper_info_room">
-<<<<<<< HEAD
-                        <span> {{ __('Total Hotel') }}:</span>
+                        <span> {{ __('Total Hotel Now') }}:</span>
                         <strong class="info_room_item mb-3 total">80$</strong>
                     </div>
                     <div class="wrapper_info_room">
                         <span> {{ __('Duration Now') }}:</span>
-=======
-                        <span> {{__("Total Hotel Now")}}:</span>
-                        <strong class="info_room_item mb-3 total">80$</strong>
-                    </div>
-                    <div class="wrapper_info_room">
-                        <span> {{__("Duration Now")}}:</span>
 
->>>>>>> aae3e1f90fc034fbe3328dd4f2b8b5fbcd76b3b6
                         <strong class="info_room_item mb-3 duration" style="color: red">80$</strong>
                     </div>
                     <div class="wrapper_info_room">
@@ -1247,7 +1243,7 @@
                     dataType: "json",
                     success: function(response) {
                         let item = response.item;
-            
+
                         if (status == "Null") {
                             let html = '';
                             item.map(function(value) {
@@ -1274,11 +1270,11 @@
 
                         } else if (status == 'Occupied') {
                             let html = '';
-                   
+
                             item.map(function(value) {
                                 value.booking_realtime.map(function(item) {
                                     if (item.status == "pending") {
-                       
+
                                         html +=
                                             '<div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram" data-bs-toggle="modal" data-bs-target="#modalRoomCheckin" id=' +
                                             item.id + '>' +
@@ -1421,14 +1417,14 @@
 
             $(document).on('click', 'div.wrapper_diagram', function(event) {
                 id_room = $(this).find('strong.name_room').attr('id');
-          
+
                 let modal = $(this).attr('data-bs-target');
                 id_booking_realtime = $(this).attr('id');
 
                 let this__ = $(this);
 
                 if (modal === '#modalRoomNull') {
-         
+
 
                     let status = this__.find('div.card-body').find('p#status').text();
 
@@ -1444,7 +1440,7 @@
 
                 $('input[name="payment"]').change(function() {
                     payment = $('input[name="payment"]:checked').val();
-    
+
                 });
 
                 if ($('input[name="payment-2"]').prop('checked')) {
@@ -1453,7 +1449,7 @@
 
                 $('input[name="payment-2"]').change(function() {
                     payment = $('input[name="payment-2"]:checked').val();
-    
+
                 });
 
                 if ($('input[name="pay_checkout"]').prop('checked')) {
@@ -1501,13 +1497,14 @@
                             $(modal).find('strong.status_room').text(status);
                             $(modal).find('strong.price_room').text(price + "$ / Pernight");
                             $(modal).find('input.room_name').val(name_room);
-                            deposit = cul_deposit_checkin(check_in, check_out, price, 'deposit');
+                            deposit = cul_deposit_checkin(check_in, check_out, price,
+                                'deposit');
 
                             $('strong.deposit').text(deposit + "$");
                             $('strong.deposit2').text(deposit + "$");
 
                             payment = 'in';
-        
+
 
                         } else if (modal == '#modalRoomCheckin') {
 
@@ -1550,6 +1547,8 @@
                                     booking_realtime = value;
                                 }
                             })
+
+                            console.log(booking_realtime);
 
                             let id_user = booking_realtime.user.id;
                             let checkin = booking_realtime.check_in;
@@ -1629,6 +1628,14 @@
                             $(modal).find('input#id_booking').val(id_booking);
                             $(modal).find('input#id_user').val(id_user);
                             $(modal).find('input#name_user').val(name_cus);
+                            $(modal).find('strong.status_room').text(item.status);
+
+                            if (item.status == "Dirty") {
+                                $(modal).find('.bt_checkout').prop('disabled', true);
+                            } else {
+                                $(modal).find('.bt_checkout').prop('disabled', false);
+                            }
+
 
                         } else if (modal == '#modalRoomCheckout_Soon') {
 
@@ -1706,10 +1713,8 @@
                                 final_total = total - deposit + total_food + total_service;
                             }
 
-            
                             $(modal).find('strong.total_food').text(total_food + "$");
                             $(modal).find('strong.total_service').text(total_service + "$");
-
 
                             $(modal).find('strong.deposit').text(deposit + "$");
                             $(modal).find('strong.final_total').text(final_total + "$");
@@ -1720,7 +1725,7 @@
                             $(modal).find('strong.deposit').text(deposit + "$");
                             $(modal).find('strong.price').text(price + "$");
                             $(modal).find('strong.checkin').text(checkin);
-                            $(modal).find('strong.checkout').text(checkout);    
+                            $(modal).find('strong.checkout').text(checkout);
                             $(modal).find('strong.duration').text(duration);
                             $(modal).find('input.name_cus').val(name_cus + "    Tour: " + tour);
                             $(modal).find('input.phone_cus').val(phone);
@@ -1763,24 +1768,37 @@
             })
 
             $(document).on('click', 'button.bt_cancel', function() {
-                $.ajax({
-                    type: "post",
-                    url: "/recep/diagram/cancel",
-                    data: {
-                        time: time,
-                        id_booking_realtime: id_booking_realtime
-                    },
-                    dataType: "json",
-                    success: function(response) {
-                        let rooms = response.room;
-                        render_all_room(rooms);
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Got it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "post",
+                            url: "/recep/diagram/cancel",
+                            data: {
+                                time: time,
+                                id_booking_realtime: id_booking_realtime
+                            },
+                            dataType: "json",
+                            success: function(response) {
+                                let rooms = response.room;
+                                render_all_room(rooms);
 
-                        $('#modalRoomCheckin').modal(
-                            'hide');
-                        var toast = new bootstrap.Toast(
-                            document.getElementById(
-                                'liveToast'));
-                        toast.show();
+                                $('#modalRoomCheckin').modal(
+                                    'hide');
+                                var toast = new bootstrap.Toast(
+                                    document.getElementById(
+                                        'liveToast'));
+                                toast.show();
+                            }
+                        });
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
                     }
                 });
             })
@@ -1988,10 +2006,6 @@
 
                 })
             })
-
-            // $(document).on('click', 'button.btn-choose', function() {
-
-            // })
 
             function render_all_room(arr) {
                 let html = '';
@@ -2266,8 +2280,9 @@
 
             function cul_total_food(arr) {
                 let total_food = 0;
+                console.log(arr);
                 total_food += arr.reduce(function(acc, invoice) {
-                    return acc + (invoice.food.price * invoice.quantity);
+                    return acc + (invoice.price * invoice.quantity);
                 }, 0);
                 return total_food;
             }
@@ -2275,7 +2290,7 @@
             function cul_total_service(arr) {
                 let total_service = 0;
                 total_service += arr.reduce(function(acc, invoice) {
-                    return acc + invoice.service.price
+                    return acc + parseFloat(invoice.price);
                 }, 0);
                 return total_service;
             }
