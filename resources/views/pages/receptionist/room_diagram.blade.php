@@ -127,13 +127,6 @@
             right: 20px;
             z-index: 1050;
         }
-
-
-        /* .infor_customer{
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                display: flex;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                justify-content: center;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            } */
     </style>
 @endsection
 
@@ -191,7 +184,7 @@
                                         <strong class="card-header name_room"
                                             id="{{ $item['id'] }}">{{ $item['type_name'] }}</strong>
                                         <div class="card-body">
-                                            <p class="card-text"><i
+                                            <p class="card-text" id="status"><i
                                                     class="fa-solid fa-calendar-days me-2"></i>{{ $item['status'] }}</p>
                                             <p class="card-text"><i
                                                     class="fa-solid fa-calendar-days me-2"></i>{{ $item['type_room']['price'] . '/ Pernight' }}
@@ -233,7 +226,7 @@
                                                         <strong class="card-header name_room"
                                                             id="{{ $item['id'] }}">{{ $item['type_name'] }}</strong>
                                                         <div class="card-body">
-                                                            <p class="card-text"><i
+                                                            <p class="card-text" id="status"><i
                                                                     class="fa-solid fa-calendar-days me-2"></i>{{ $item['status'] }}
                                                             </p>
                                                             <p class="card-text"><i
@@ -269,11 +262,12 @@
                                                 @if ($value['check_out'] == $a . ' 12:00:00')
                                                     <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram"
                                                         data-bs-toggle="modal" data-bs-target="#modalRoomNull">
-                                                        <div class="card text-bg-secondary mb-3" style="max-width: 14rem;">
+                                                        <div class="card text-bg-secondary mb-3"
+                                                            style="max-width: 14rem;">
                                                             <strong class="card-header name_room"
                                                                 id="{{ $item['id'] }}">{{ $item['type_name'] }}</strong>
                                                             <div class="card-body">
-                                                                <p class="card-text"><i
+                                                                <p class="card-text" id="status"><i
                                                                         class="fa-solid fa-calendar-days me-2"></i>{{ $item['status'] }}
                                                                 </p>
                                                                 <p class="card-text"><i
@@ -315,7 +309,7 @@
                                                         <strong class="card-header name_room"
                                                             id="{{ $item['id'] }}">{{ $item['type_name'] }}</strong>
                                                         <div class="card-body">
-                                                            <p class="card-text"><i
+                                                            <p class="card-text" id="status"><i
                                                                     class="fa-solid fa-calendar-days me-2"></i>{{ $item['status'] }}
                                                             </p>
                                                             <p class="card-text"><i
@@ -809,11 +803,20 @@
                         <strong class="info_room_item mb-3 total_service">80$</strong>
                     </div>
                     <div class="wrapper_info_room">
+<<<<<<< HEAD
                         <span> {{ __('Total Hotel') }}:</span>
                         <strong class="info_room_item mb-3 total">80$</strong>
                     </div>
                     <div class="wrapper_info_room">
                         <span> {{ __('Duration Now') }}:</span>
+=======
+                        <span> {{__("Total Hotel Now")}}:</span>
+                        <strong class="info_room_item mb-3 total">80$</strong>
+                    </div>
+                    <div class="wrapper_info_room">
+                        <span> {{__("Duration Now")}}:</span>
+
+>>>>>>> aae3e1f90fc034fbe3328dd4f2b8b5fbcd76b3b6
                         <strong class="info_room_item mb-3 duration" style="color: red">80$</strong>
                     </div>
                     <div class="wrapper_info_room">
@@ -986,9 +989,6 @@
 
             let time_now = newYear_now + '-' + newMonth_now + '-' + newDay_now;
 
-            // console.log(time.trim());
-            console.log(time_now, time);
-
             if (time != time_now) {
                 $('.bt_checkin').hide();
                 $('.filter_checkout').hide();
@@ -1048,10 +1048,7 @@
                 }, function(start, end, label) {
                     check_in = start.format('YYYY-MM-DD');
                     check_out = end.format('YYYY-MM-DD');
-
-                    console.log(check_in, check_out);
-
-                    deposit = cul_deposit(check_in, check_out, price, 'deposit');
+                    deposit = cul_deposit_checkin(check_in, check_out, price, 'deposit');
                     $('strong.deposit').text(deposit + "$");
 
                     if (check_in == check_out) {
@@ -1072,8 +1069,6 @@
                         $('div.pay').hide();
                         payment = 'in'
                     }
-
-                    console.log(payment);
                 });
 
 
@@ -1088,9 +1083,7 @@
                     check_in2 = start.format('YYYY-MM-DD');
                     check_out2 = end.format('YYYY-MM-DD');
 
-                    console.log(check_in2, check_out2);
-
-                    deposit2 = cul_deposit(check_in2, check_out2, price, 'deposit');
+                    deposit2 = cul_deposit_checkin(check_in2, check_out2, price, 'deposit');
                     $('strong.deposit2').text(deposit2 + "$");
 
                     if (check_in2 == check_out2) {
@@ -1112,7 +1105,6 @@
                         payment = 'in';
                     }
 
-                    console.log(payment);
                 });
             });
 
@@ -1146,7 +1138,6 @@
                         let html = '';
 
                         if (response.check == 'true') {
-                            console.log(response.check);
                             render_all_room(item);
                         } else {
                             item.map(function(item) {
@@ -1242,7 +1233,9 @@
 
             $(document).on('click', 'button.btn_filter', function() {
                 let time = $(this).attr('id');
-                let status = $(this).text()
+                let status = $(this).text();
+                $('.bt_checkout').prop('disabled', false);
+                $('.bt_checkout_soon').prop('disabled', false);
 
                 $.ajax({
                     type: "post",
@@ -1254,8 +1247,7 @@
                     dataType: "json",
                     success: function(response) {
                         let item = response.item;
-                        console.log(item);
-                        // console.log(status);
+            
                         if (status == "Null") {
                             let html = '';
                             item.map(function(value) {
@@ -1267,7 +1259,7 @@
                                     .id + '">' + value.type_name +
                                     '</strong>' +
                                     '<div class="card-body >' +
-                                    '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                    '<p class="card-text" id="status"><i class="fa-solid fa-calendar-days me-2"></i>' +
                                     value.status + '</p>' +
                                     '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
                                     value.type_room.price + '/Pernight </p>' +
@@ -1282,11 +1274,11 @@
 
                         } else if (status == 'Occupied') {
                             let html = '';
-                            console.log(item);
+                   
                             item.map(function(value) {
                                 value.booking_realtime.map(function(item) {
                                     if (item.status == "pending") {
-                                        console.log(item.id);
+                       
                                         html +=
                                             '<div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram" data-bs-toggle="modal" data-bs-target="#modalRoomCheckin" id=' +
                                             item.id + '>' +
@@ -1398,7 +1390,7 @@
             let pay_checkout_soon = "";
 
             $(document).on('click', 'button.bt_checkout', function(event) {
-                even.preventDefault();
+                event.preventDefault();
 
                 $(this).closest('#form_checkout').submit();
 
@@ -1427,12 +1419,24 @@
                 toast.show();
             })
 
-
-            $(document).on('click', 'div.wrapper_diagram', function() {
+            $(document).on('click', 'div.wrapper_diagram', function(event) {
                 id_room = $(this).find('strong.name_room').attr('id');
-                console.log(id_room);
+          
                 let modal = $(this).attr('data-bs-target');
                 id_booking_realtime = $(this).attr('id');
+
+                let this__ = $(this);
+
+                if (modal === '#modalRoomNull') {
+         
+
+                    let status = this__.find('div.card-body').find('p#status').text();
+
+                    if (status === "Dirty") {
+                        event.preventDefault();
+                        alert('Warning!!! This room is dirty!!!');
+                    }
+                }
 
                 if ($('input[name="payment"]').prop('checked')) {
                     payment = $('input[name="payment"]:checked').val();
@@ -1440,7 +1444,7 @@
 
                 $('input[name="payment"]').change(function() {
                     payment = $('input[name="payment"]:checked').val();
-                    console.log(payment);
+    
                 });
 
                 if ($('input[name="payment-2"]').prop('checked')) {
@@ -1449,7 +1453,7 @@
 
                 $('input[name="payment-2"]').change(function() {
                     payment = $('input[name="payment-2"]:checked').val();
-                    console.log(payment);
+    
                 });
 
                 if ($('input[name="pay_checkout"]').prop('checked')) {
@@ -1491,18 +1495,19 @@
                         id_roomDetail = item.id;
 
                         if (modal == '#modalRoomNull') {
+
                             $(modal).find('strong.name_room').text(name_room);
                             $(modal).find('strong.type_room').text(type_room);
                             $(modal).find('strong.status_room').text(status);
                             $(modal).find('strong.price_room').text(price + "$ / Pernight");
                             $(modal).find('input.room_name').val(name_room);
-                            deposit = cul_deposit(check_in, check_out, price, 'deposit');
+                            deposit = cul_deposit_checkin(check_in, check_out, price, 'deposit');
 
                             $('strong.deposit').text(deposit + "$");
                             $('strong.deposit2').text(deposit + "$");
 
                             payment = 'in';
-                            console.log(payment);
+        
 
                         } else if (modal == '#modalRoomCheckin') {
 
@@ -1531,7 +1536,6 @@
                             let duration = cul_deposit(checkin, checkout, price, 'duration');
                             let total = price * duration;
                             let final_total = total - deposit;
-                            console.log(deposit, duration);
 
                             $(modal).find('strong.deposit').text(deposit + "$");
                             $(modal).find('strong.final_total').text(final_total + "$");
@@ -1645,7 +1649,6 @@
                                 }
                             })
 
-                            console.log(booking_realtime);
 
                             let id_user = booking_realtime.user.id;
                             let checkin = booking_realtime.check_in;
@@ -1668,7 +1671,7 @@
                                 deposit = '0';
                             }
 
-                            let duration = cul_deposit(checkin, checkout, price, 'duration');
+                            let duration = cul_deposit(checkin, time_now, price, 'duration');
 
                             if (booking_realtime.invoice_detail_food) {
                                 total_food = cul_total_food(booking_realtime
@@ -1679,6 +1682,8 @@
                                 total_service = cul_total_service(booking_realtime
                                     .invoice_detail_service);
                             }
+
+                            let count_tour = 0;
 
                             if (booking_realtime.booking) {
 
@@ -1693,15 +1698,15 @@
                                 deposit_booking = booking_realtime.booking.deposits;
                                 id_booking = booking_realtime.booking.id;
                                 quantity_booking = booking_realtime.booking.quantity;
-                                total = (price * duration) * count_tour;
-                                final_total = total - (deposit * count_tour) + total_food +
+                                total = price * duration;
+                                final_total = total - deposit + total_food +
                                     total_service;
                             } else {
                                 total = price * duration;
-                                final_total = total - deposit;
+                                final_total = total - deposit + total_food + total_service;
                             }
 
-
+            
                             $(modal).find('strong.total_food').text(total_food + "$");
                             $(modal).find('strong.total_service').text(total_service + "$");
 
@@ -1715,7 +1720,7 @@
                             $(modal).find('strong.deposit').text(deposit + "$");
                             $(modal).find('strong.price').text(price + "$");
                             $(modal).find('strong.checkin').text(checkin);
-                            $(modal).find('strong.checkout').text(checkout);
+                            $(modal).find('strong.checkout').text(checkout);    
                             $(modal).find('strong.duration').text(duration);
                             $(modal).find('input.name_cus').val(name_cus + "    Tour: " + tour);
                             $(modal).find('input.phone_cus').val(phone);
@@ -1784,7 +1789,6 @@
                 let id_room_change = $(this).closest('.change-room')
                     .find('.choose_room').val();
 
-                console.log(id_booking_realtime);
                 $.ajax({
                     type: "post",
                     url: "/recep/diagram/change_room",
@@ -1990,7 +1994,6 @@
             // })
 
             function render_all_room(arr) {
-                console.log(arr);
                 let html = '';
                 arr.map(function(item) {
                     let bookingrealtime = item.booking_realtime;
@@ -2001,7 +2004,7 @@
                             '<strong class="card-header name_room" id="' + item.id + '">' + item.type_name +
                             '</strong>' +
                             '<div class="card-body">' +
-                            '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                            '<p class="card-text" id="status"><i class="fa-solid fa-calendar-days me-2"></i>' +
                             item.status + '</p>' +
                             '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
                             item.type_room.price + '/ Pernight </p>' +
@@ -2041,7 +2044,7 @@
                                             '">' + item.type_name +
                                             '</strong>' +
                                             '<div class="card-body">' +
-                                            '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                            '<p class="card-text" id="status"><i class="fa-solid fa-calendar-days me-2"></i>' +
                                             item.status + '</p>' +
                                             '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
                                             item.type_room.price + '/ Pernight </p>' +
@@ -2079,7 +2082,7 @@
                                                 '">' + item.type_name +
                                                 '</strong>' +
                                                 '<div class="card-body">' +
-                                                '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                                '<p class="card-text" id="status"><i class="fa-solid fa-calendar-days me-2"></i>' +
                                                 item.status + '</p>' +
                                                 '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
                                                 item.type_room.price + '/ Pernight </p>' +
@@ -2119,7 +2122,7 @@
                                             '">' + item.type_name +
                                             '</strong>' +
                                             '<div class="card-body">' +
-                                            '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
+                                            '<p class="card-text" id="status"><i class="fa-solid fa-calendar-days me-2"></i>' +
                                             item.status + '</p>' +
                                             '<p class="card-text"><i class="fa-solid fa-calendar-days me-2"></i>' +
                                             item.type_room.price + '/ Pernight </p>' +
@@ -2212,6 +2215,24 @@
                 var difference = date2.getTime() - date1.getTime();
 
                 var daysDifference = Math.floor(difference / (1000 * 60 * 60 * 24)) + 1;
+
+                let deposit = (daysDifference * price) * 0.2;
+
+                if (action == "duration") {
+                    return daysDifference;
+                } else if (action == "deposit") {
+                    return deposit;
+                }
+            }
+
+            function cul_deposit_checkin(a, b, c, action) {
+                var date1 = new Date(a);
+                var date2 = new Date(b);
+
+                var difference = date2.getTime() - date1.getTime();
+
+                var daysDifference = Math.floor(difference / (1000 * 60 * 60 * 24));
+
                 let deposit = (daysDifference * price) * 0.2;
 
                 if (action == "duration") {
@@ -2244,7 +2265,6 @@
             }
 
             function cul_total_food(arr) {
-                console.log(arr);
                 let total_food = 0;
                 total_food += arr.reduce(function(acc, invoice) {
                     return acc + (invoice.food.price * invoice.quantity);

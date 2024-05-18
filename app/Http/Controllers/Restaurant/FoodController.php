@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Restaurant;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddFood;
+use App\Http\Requests\addfoodRequest;
 use App\Models\Booking_realtime;
 use App\Models\Customer;
 use App\Models\Food;
@@ -36,7 +37,7 @@ class FoodController extends Controller
         return view('pages.food_service.food_manation', compact('food'));
     }
 
-    public function add_food(Request $request)
+    public function add_food(addfoodRequest $request)
     {
         $data = $request->all();
 
