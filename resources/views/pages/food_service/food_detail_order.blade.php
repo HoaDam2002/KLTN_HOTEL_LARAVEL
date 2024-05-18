@@ -94,8 +94,8 @@
         <div class="tab-content" id="v-pills-tabContent">
             <div class="card card-body filter_booking d-flex mb-3" style="align-items: center;">
                 <form action="" class="w-50 ms-3">
-                    <input type="text" name="" id="" placeholder="{{__("Food Name")}}" class="">
-                    <button type="submit" class="btn_search_booking"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <input type="text" name="" id="" placeholder="{{ __('Food Name') }}" class="name_food">
+                    {{-- <button type="button" class="btn_search_booking"><i class="fa-solid fa-magnifying-glass"></i></button> --}}
                 </form>
             </div>
             <div class="tab-content mb-3" id="v-pills-tabContent">
@@ -110,7 +110,7 @@
                                         <th>{{ __('Handle') }}</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="fill_food">
                                     @if ($food)
                                         @foreach ($food as $item)
                                             @php
@@ -152,21 +152,21 @@
 
         <div class="tab-content mb-3" id="v-pills-tabContent">
             <div class="card common-card min-w-maxContent">
-                <h3 class="title_order_form">{{__("INFORMATION ORDER")}}</h3>
+                <h3 class="title_order_form">{{ __('INFORMATION ORDER') }}</h3>
                 {{-- {{ dd($user) }} --}}
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="infor_customer" value="{{ $user[0]['name'] }}" disabled>
-                    <label for="infor_customer">{{__("Name Customer")}}</label>
+                    <label for="infor_customer">{{ __('Name Customer') }}</label>
                 </div>
 
                 <table class="table-primary" style="width: 100%; margin: 5px;">
                     <thead>
                         <tr class="table-primary">
-                            <th scope="col">{{__("Food")}}</th>
-                            <th scope="col">{{__("Quantity")}}</th>
-                            <th scope="col">{{__("Price")}}</th>
-                            <th scope="col">{{__("Total")}}</th>
-                            <th scope="col">{{__("Action")}}</th>
+                            <th scope="col">{{ __('Food') }}</th>
+                            <th scope="col">{{ __('Quantity') }}</th>
+                            <th scope="col">{{ __('Price') }}</th>
+                            <th scope="col">{{ __('Total') }}</th>
+                            <th scope="col">{{ __('Action') }}</th>
                         </tr>
                     </thead>
                     <tbody class="fill">
@@ -174,22 +174,24 @@
                     </tbody>
                 </table>
                 <div style="display: flex;">
-                    <div scope="row"><strong>{{__("Total")}}</strong></div>
+                    <div scope="row"><strong>{{ __('Total') }}</strong></div>
                     <div style="margin-left: 20px;" class="table-primary total_final">0$</div>
                 </div>
                 <form id="orderForm" action="/food/order" method="POST">
                     @csrf
                     <input type="text" name="id_user" value="{{ $user[0]['id'] }}" hidden>
-                    <input type="text" name="id_booking_realtime" value="{{ $user[0]['booking_realtime'][0]['id'] }}" hidden>
+                    <input type="text" name="id_booking_realtime" value="{{ $user[0]['booking_realtime'][0]['id'] }}"
+                        hidden>
                     <input type="text" name="name_user" value="{{ $user[0]['name'] }}" hidden>
                     <input type="text" id="arr" name="arr" value="" hidden>
+                    <input type="text" id="infor" name="infor" value="" hidden>
 
                     <button type="submit" class="btn btn-main w-10 mb-2 btn_order"
-                        style="background-color: rgb(255,165,0);">{{__("ORDER")}}</button>
+                        style="background-color: rgb(255,165,0);">{{ __('ORDER') }}</button>
                 </form>
             </div>
         </div>
-        
+
     </div>
 @endsection
 
@@ -202,6 +204,7 @@
                 }
             });
             let arr = [];
+            let infor = [];
 
             $('.btn_order').prop('disabled', true);
 
@@ -225,6 +228,15 @@
                 let price_food = parseFloat(price_food_text.replace('$', ''));
 
                 let index = arr.findIndex(item => item.hasOwnProperty(id_food));
+
+                let index_infor = infor.findIndex(item => item.hasOwnProperty(name_food));
+
+                if (index_infor === -1) {
+                    let newInfor = {};
+                    newInfor[name_food] = price_food;
+                    infor.push(newInfor);
+                    index_infor = infor.length - 1;
+                }
 
                 if (index === -1) {
                     let newItem = {};
@@ -267,12 +279,16 @@
 
                 let finalTotal = calculateFinalTotal();
                 $('.total_final').text(finalTotal + '$');
+                $('input.name_food').val(name_food);
+                $('input.price').val(price_food);
+                $('input#infor').val(JSON.stringify(infor));
                 allow_order()
             });
 
 
             $(document).on('click', 'button.btn_order', function() {
                 arr = [];
+                infor = [];
                 $('tbody.fill').empty();
                 $('.btn_order').prop('disabled', true);
                 $('.total_final').text('0$');
@@ -301,9 +317,11 @@
                 let id_food = $(this).closest('tr').attr('id');
                 let quantityElement = $(this).closest('tr').find('.quantity');
                 let quantity = parseInt(quantityElement.text());
+                let name_food = $(this).closest('tr').find('span.name').text();
 
                 // Tìm index của id_food trong mảng arr
                 let index = arr.findIndex(item => item.hasOwnProperty(id_food));
+                let index_infor = infor.findIndex(item => item.hasOwnProperty(name_food));
 
                 if (index !== -1) {
                     if (quantity === 1) {
@@ -311,6 +329,7 @@
                         $('#' + id_food).remove();
                         // Xóa id_food ra khỏi mảng arr
                         arr.splice(index, 1);
+                        infor.splice(index_infor, 1);
                     } else {
                         // Giảm quantity đi 1
                         arr[index][id_food]--;
@@ -319,36 +338,9 @@
                 }
                 let finalTotal = calculateFinalTotal();
                 $('.total_final').text(finalTotal + '$');
+                console.log(arr);
                 allow_order()
             });
-
-            // $(document).on('click', 'button.btn_order', function() {
-            //     let id_booking_realtime = {{ $user[0]['booking_realtime'][0]['id'] }};
-            //     let id_user = "{{ $user[0]['id'] }}";
-            //     let name_user = "{{ $user[0]['name'] }}";
-            //     $.ajax({
-            //         type: "post",
-            //         url: "/food/order",
-            //         data: {
-            //             id_user: id_user,
-            //             name_user: name_user,
-            //             arr: arr,
-            //             id_booking_realtime: id_booking_realtime
-            //         },
-            //         // dataType: "json",
-            //         success: function(response) {
-            //             var pdfUrl = response.pdf_url;
-            //             console.log(pdfUrl);
-            //             // Chuyển hướng đến URL của file PDF
-            //             window.location.href = pdfUrl;
-            //         },
-            //         error: function(xhr, status, error) {
-            //             // Xử lý lỗi nếu có
-            //             console.error(error);
-            //         }
-            //     });
-            // })
-
 
             function calculateFinalTotal() {
                 let finalTotal = arr.reduce((acc, item) => {
@@ -361,6 +353,53 @@
                 }, 0);
                 return finalTotal;
             }
+
+            $(document).on('input', 'input.name_food', function() {
+                let name_food = $(this).val();
+                $.ajax({
+                    type: "post",
+                    url: "/order/detail/search_food",
+                    data: {
+                        name_food: name_food
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        let foods = response.foods;
+
+                        let html = '';
+
+                        foods.map(function(value) {
+                            let path = "{{ asset('restaurant/food') }}" + '/' + value.image;
+                            html +=
+                                '<tr>' +
+                                '<td>' +
+                                '<div class="d-flex align-items-center gap-3">' +
+                                '<div class="cart-item__thumb">' +
+                                '<img src="' + path +'" alt="" />' +
+                                '</div>' +
+                                '<div class="cart-item__content">' +
+                                '<h6 class="cart-item__title fw-500 font-18">' +
+                                '<div class="link name_food">' + value.name + '</div>' +
+                                '</h6>' +
+                                '</div>' +
+                                '</div>' +
+                                '</td>' +
+                                '<td>' +
+                                '<span class="price_food" id="">' + value.price + '$</span>' +
+                                '</td>' +
+                                '<td>' +
+                                '<button type="button" class="add_food" data-id="' + value.id + '" style="margin-left: 5px">' +
+                                '<i class="fa-solid fa-plus"></i>' +
+                                '</button>' +
+                                '</td>' +
+                                '</tr>';
+                        })
+
+                        $('.fill_food').html(html);
+                    }
+                });
+            });
+
 
         });
     </script>

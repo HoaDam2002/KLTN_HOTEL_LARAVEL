@@ -153,7 +153,7 @@ Route::middleware(['restaurant'])->group(function () {
     Route::post('/food/manation/delete_food', [FoodController::class, 'delete_food'])->name('delete_food_food_service');
     Route::post('/food/manation/fill_modal', [FoodController::class, 'fill_modal'])->name('fill_modal_food_service');
     Route::post('/food/manation/edit_food/{id}', [FoodController::class, 'edit_food'])->name('edit_food_service');
-    Route::post('/food/manation/search_food', [FoodController::class, 'search_food'])->name('search_food_service');
+    Route::post('/food/manation/search_food', [FoodController::class, 'search_food'])->name('food_service_manation');
 
     Route::get('/food/ordered_list', [FoodController::class, 'ordered_list'])->name('food_ordered_list');
     Route::post('/food/ordered_list/search', [FoodController::class, 'ordered_list_search'])->name('food_ordered_list');
@@ -166,8 +166,9 @@ Route::middleware(['restaurant'])->group(function () {
 
     Route::post('/food/manation/search_customer', [FoodController::class, 'search_customer'])->name('food_service_order');
 
-
     Route::get('/food/order/detail/{id}', [FoodController::class, 'food_detail'])->name('food_service_order');
+    Route::post('/order/detail/search_food', [FoodController::class, 'order_detail_search_food'])->name('food_service_order');
+
 });
 
 
@@ -191,10 +192,13 @@ Route::middleware(['service'])->group(function () {
     Route::post('/service/manation/search_customer', [ServiceController::class, 'search_customer'])->name('service_order');
 
     Route::get('/service/order/detail/{id}', [ServiceController::class, 'service_detail'])->name('service_order');
+    Route::post('/order/detail/search_service', [ServiceController::class, 'order_detail_search_service'])->name('service_order');
+
 
     Route::get('/service/ordered_list', [ServiceController::class, 'ordered_list'])->name('service_ordered_list');
     Route::post('/service/ordered_list/search', [ServiceController::class, 'ordered_list_search'])->name('service_ordered_list');
     Route::post('/service/ordered_list/printpdf', [ServiceController::class, 'printpdf'])->name('service_ordered_list');
+
 
 });
 

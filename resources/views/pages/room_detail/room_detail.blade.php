@@ -151,7 +151,7 @@
                     </div>
                     <div class="property-details-wrapper">
                         <div class="property-details-item">
-                            <h6 class="property-details-item__title">{{__("Preview")}}</h6>
+                            <h6 class="property-details-item__title">{{ __('Preview') }}</h6>
                             <div class="property-details-item__content">
                                 <div class="row gy-4 gy-lg-5">
                                     <div class="col-sm-4 col-6">
@@ -161,9 +161,9 @@
                                                     alt="">
                                             </span>
                                             <div class="amenities-content__inner">
-                                                <span class="amenities-content__text"> {{__("Max Person")}}</span>
+                                                <span class="amenities-content__text"> {{ __('Max Person') }}</span>
                                                 <h6 class="amenities-content__title mb-0 font-16">{{ $room[0]['person'] }}
-                                                    {{__("Person")}}</h6>
+                                                    {{ __('Person') }}</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -174,9 +174,9 @@
                                                     alt="">
                                             </span>
                                             <div class="amenities-content__inner">
-                                                <span class="amenities-content__text">{{__("Bed")}}</span>
+                                                <span class="amenities-content__text">{{ __('Bed') }}</span>
                                                 <h6 class="amenities-content__title mb-0 font-16">{{ $room[0]['beds'] }}
-                                                    {{__("Beds")}}</h6>
+                                                    {{ __('Beds') }}</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -187,8 +187,8 @@
                                                     alt="">
                                             </span>
                                             <div class="amenities-content__inner">
-                                                <span class="amenities-content__text">{{__("Bath")}}</span>
-                                                <h6 class="amenities-content__title mb-0 font-16">{{__("1 Baths")}}</h6>
+                                                <span class="amenities-content__text">{{ __('Bath') }}</span>
+                                                <h6 class="amenities-content__title mb-0 font-16">{{ __('1 Baths') }}</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -200,10 +200,10 @@
                                                     alt="">
                                             </span>
                                             <div class="amenities-content__inner">
-                                                <span class="amenities-content__text">{{__("Available Room")}}</span>
+                                                <span class="amenities-content__text">{{ __('Available Room') }}</span>
                                                 <h6 class="amenities-content__title mb-0 font-16 available_room">
                                                     {{ $count_available }}
-                                                    <span>{{__("Room")}}</span>
+                                                    <span>{{ __('Room') }}</span>
                                                 </h6>
                                             </div>
                                         </div>
@@ -216,8 +216,9 @@
                                                     alt="">
                                             </span>
                                             <div class="amenities-content__inner">
-                                                <span class="amenities-content__text">{{__("Property Type")}}</span>
-                                                <h6 class="amenities-content__title mb-0 font-16">{{__("Apartment")}}</h6>
+                                                <span class="amenities-content__text">{{ __('Property Type') }}</span>
+                                                <h6 class="amenities-content__title mb-0 font-16">{{ __('Apartment') }}
+                                                </h6>
                                             </div>
                                         </div>
                                     </div>
@@ -225,19 +226,19 @@
                             </div>
                         </div>
                         <div class="property-details-item">
-                            <h6 class="property-details-item__title">{{__("Features")}}</h6>
+                            <h6 class="property-details-item__title">{{ __('Features') }}</h6>
                             <div class="property-details-item__content">
-                                <p>{{__("This room is located on a high floor of the hotel, offering guests a magnificent view of the city or the surrounding landscape. Upon entering, natural light floods in from the large windows, illuminating the spacious and airy space. The interior decoration adopts a modern and luxurious style, with bright colors and meticulously designed furniture.")}}
+                                <p>{{ __('This room is located on a high floor of the hotel, offering guests a magnificent view of the city or the surrounding landscape. Upon entering, natural light floods in from the large windows, illuminating the spacious and airy space. The interior decoration adopts a modern and luxurious style, with bright colors and meticulously designed furniture.') }}
                                 </p><br>
                                 <p>
-                                    {{__("The room is equipped with all modern amenities to ensure comfort and convenience for guests, including a large and comfortable bed, a convenient work desk, a cozy sofa, and a small living area for relaxation. Additionally, the room comes with a luxurious bathroom featuring premium toiletries and either a bathtub or a standing shower, providing guests with a delightful bathing experience.")}}
+                                    {{ __('The room is equipped with all modern amenities to ensure comfort and convenience for guests, including a large and comfortable bed, a convenient work desk, a cozy sofa, and a small living area for relaxation. Additionally, the room comes with a luxurious bathroom featuring premium toiletries and either a bathtub or a standing shower, providing guests with a delightful bathing experience.') }}
                                 </p><br>
-                                <p>{{__("Guests can also enjoy the hotel's amenities such as 24/7 room service, restaurants, and bars serving delicious food and a variety of drinks, a gym, and a spa to unwind after a long day of exploring the city. This room is an ideal choice for travelers looking to indulge in a comfortable and luxurious holiday.")}}
-                                    </p>
+                                <p>{{ __("Guests can also enjoy the hotel's amenities such as 24/7 room service, restaurants, and bars serving delicious food and a variety of drinks, a gym, and a spa to unwind after a long day of exploring the city. This room is an ideal choice for travelers looking to indulge in a comfortable and luxurious holiday.") }}
+                                </p>
                             </div>
                         </div>
                         <div class="property-details-item">
-                            <h6 class="property-details-item__title">{{__("Evaluate")}}</h6>
+                            <h6 class="property-details-item__title">{{ __('Evaluate') }}</h6>
                             <div class="shadow">
                                 <div class="my-1 py-1">
                                     <div class="row d-flex justify-content-center">
@@ -293,7 +294,8 @@
                 <div class="col-lg-4">
                     <div class="common-sidebar-wrapper price_wrapper shadow">
                         <div class="price">
-                            <span>{{__("From")}} <strong>${{ $room[0]['price'] }}</strong> {{__("/ night")}}</span>
+                            <span>{{ __('From') }} <strong>${{ $room[0]['price'] }}</strong>
+                                {{ __('/ night') }}</span>
                         </div>
                         <div class="info_price">
                             @if ($errors->any())
@@ -320,42 +322,45 @@
                                 <input type="text" name="check_out" class="checkout" hidden>
                                 <input type="text" name="quantity" class="quantity" hidden>
                                 <input type="text" name="total" class="total" hidden>
+                                <input type="text" name="guests" class="guests" hidden>
 
                                 <div class="dropdown numberofroomandguests mb-3">
                                     <div class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true"
-                                        data-bs-auto-close="outside" id="number_of_rg">{{__("Number of rooms and guests")}}</div>
+                                        data-bs-auto-close="outside" id="number_of_rg">
+                                        {{ __('Rooms') . ": 1, " . __('Guests:') . " 4" }}</div>
 
                                     <div class="dropdown-menu dropdown_numberof">
                                         <div class="item_numberof">
-                                            <span>{{__("Rooms")}}</span>
-                                            <div class="wrapper_btn_numberof" onclick="handleClickMenuItemDropdown(e)">
+                                            <span>{{ __('Rooms') }}</span>
+                                            <div class="wrapper_btn_numberof">
                                                 <button class="minus_btn" id="minus_room"><span>-</span></button>
                                                 <span class="quantity_numberof" id="quantity_room">1</span>
                                                 <button class="plus_btn" id="plus_room"><span>+</span></button>
                                             </div>
                                         </div>
-                                        {{-- <div class="item_numberof">
+                                        <div class="item_numberof">
                                             <span>Guests</span>
-                                            <div class="wrapper_btn_numberof" onclick="handleClickMenuItemDropdown(e)">
+                                            <div class="wrapper_btn_numberof">
                                                 <button class="minus_btn" id="minus_guest"><span>-</span></button>
-                                                <span class="quantity_numberof" id="quantity_guest">1</span>
+                                                <span class="quantity_numberof" id="quantity_guest">4</span>
                                                 <button class="plus_btn" id="plus_guest"><span>+</span></button>
                                             </div>
-                                        </div> --}}
+                                        </div>
 
                                     </div>
                                 </div>
                                 <div class="down_payment duration">
-                                    <span>{{__("Duration")}}</span>
-                                    <strong>{{ $diffInDays ? $diffInDays : 1 }} {{__("day")}}</strong>
+                                    <span>{{ __('Duration') }}</span>
+                                    <strong>{{ $diffInDays ? $diffInDays : 1 }} {{ __('day') }}</strong>
                                 </div>
                                 <div class="down_payment total">
-                                    <span>{{__("Total")}}</span>
+                                    <span>{{ __('Total') }}</span>
                                     <strong>{{ $diffInDays ? $diffInDays * $room[0]['price'] : $room[0]['price'] }}$</strong>
                                 </div>
-                                <span style="font-weight: bold; text-align: center; margin-top: 20px;">{{__("You must deposit 20% in advance to request a reservation")}}</span>
+                                <span
+                                    style="font-weight: bold; text-align: center; margin-top: 20px;">{{ __('You must deposit 20% in advance to request a reservation') }}</span>
 
-                                <button class="btn_request_book request_deposit" type="submit">{{__("Deposit")}}
+                                <button class="btn_request_book request_deposit" type="submit">{{ __('Deposit') . " " }}
                                     {{ $diffInDays ? $diffInDays * $room[0]['price'] * 0.2 : $room[0]['price'] * 0.2 }}$</button>
                             </form>
 
@@ -372,7 +377,7 @@
 @section('js')
     <script>
         $(document).ready(function() {
-            let count_guests = 1;
+            let count_guests = 4;
             let count_rooms = 1;
 
             let max_person = {{ $room[0]['person'] }}
@@ -410,7 +415,8 @@
             $('input.total').val(total);
             $('input.deposit').val(deposit);
             $('input.quantity').val(count_rooms);
-
+            $('input.guests').val(count_guests);
+            
             $('.rateYo').each((key, element) => {
                 let id = $(element).attr('id');
                 let rate = $(element).attr('data-rating');
@@ -424,7 +430,7 @@
                 if (startDate === endDate) {
                     $('button.request_deposit').css('background-color', 'rgb(214,214,214)');
                     $('button.request_deposit').prop('disabled', true);
-                    alert('{{__("Please choose different arrival and departure dates")}}')
+                    alert('{{ __('Please choose different arrival and departure dates') }}')
                     return;
                 } else {
                     duration = picker.endDate.diff(picker.startDate, 'days');
@@ -515,24 +521,46 @@
                 updateNumberOfRG();
             })
 
+            $('#minus_guest').click(function(e) {
+                e.preventDefault();
+                if (count_guests > 1) {
+                    count_guests -= 1;
+                    $('#quantity_guest').html(count_guests);
+                    up();
+
+                }
+                updateNumberOfRG();
+            })
+
+            $('#plus_guest').click(function(e) {
+                e.preventDefault();
+                if (count_guests < available_person) {
+                    count_guests += 1;
+                    $('#quantity_guest').html(count_guests);
+                    up();
+                }
+                updateNumberOfRG();
+            })
+
             function up() {
                 total = duration * ({{ $room[0]['price'] }} * count_rooms);
                 deposit = total * 0.2;
-                $('.request_deposit').text(' {{__("Deposit")}}' + deposit + '$');
+                $('.request_deposit').text(' {{ __('Deposit') }}' + deposit + '$');
                 $('.total strong').text('$' + total);
                 $('.duration strong').text(duration + ' days');
 
                 $('input.deposits').val(deposit);
                 $('input.total').val(total);
                 $('input.quantity').val(count_rooms);
-
+                $('input.guests').val(count_guests);
             }
 
             function updateNumberOfRG() {
                 if (count_guests > 0 || count_rooms > 0) {
-                    $('#number_of_rg').html(`{{__("Rooms:")}} ${count_rooms}, {{__("Guests:")}} ${count_guests}`);
+                    $('#number_of_rg').html(
+                        `{{ __('Rooms:') }} ${count_rooms}, {{ __('Guests:') }} ${count_guests}`);
                 } else {
-                    $('#number_of_rg').html('{{__("Number of rooms and guests")}}');
+                    $('#number_of_rg').html('{{ __('Number of rooms and guests') }}');
                 }
             }
         })

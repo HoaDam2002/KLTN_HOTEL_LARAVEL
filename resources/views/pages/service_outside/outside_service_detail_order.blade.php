@@ -94,8 +94,8 @@
         <div class="tab-content" id="v-pills-tabContent">
             <div class="card card-body filter_booking d-flex mb-3" style="align-items: center;">
                 <form action="" class="w-50 ms-3">
-                    <input type="text" name="" id="" placeholder="{{__("Service Name")}}" class="">
-                    <button type="submit" class="btn_search_booking"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <input type="text" name="" id="" placeholder="{{ __('Service Name') }}" class="name_service">
+                    {{-- <button type="submit" class="btn_search_booking"><i class="fa-solid fa-magnifying-glass"></i></button> --}}
                 </form>
             </div>
             <div class="tab-content mb-3" id="v-pills-tabContent">
@@ -110,7 +110,7 @@
                                         <th>{{ __('Handle') }}</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="fill_service">
                                     @if ($service)
                                         @foreach ($service as $item)
                                             @php
@@ -153,20 +153,20 @@
 
         <div class="tab-content mb-3" id="v-pills-tabContent">
             <div class="card common-card min-w-maxContent">
-                <h3 class="title_order_form">{{__("INFORMATION ORDER")}}</h3>
+                <h3 class="title_order_form">{{ __('INFORMATION ORDER') }}</h3>
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="infor_customer" value="{{ $user[0]['name'] }}" disabled>
-                    <label for="infor_customer">{{__("Name Customer")}}</label>
+                    <label for="infor_customer">{{ __('Name Customer') }}</label>
                 </div>
 
                 <table class="table-primary" style="width: 100%; margin: 5px;">
                     <thead>
                         <tr class="table-primary">
-                            <th scope="col">{{__("Service")}}</th>
-                            <th scope="col">{{__("Quantity")}}</th>
-                            <th scope="col">{{__("Price")}}</th>
-                            <th scope="col">{{__("Total")}}</th>
-                            <th scope="col">{{__("Action")}}</th>
+                            <th scope="col">{{ __('Service') }}</th>
+                            <th scope="col">{{ __('Quantity') }}</th>
+                            <th scope="col">{{ __('Price') }}</th>
+                            <th scope="col">{{ __('Total') }}</th>
+                            <th scope="col">{{ __('Action') }}</th>
                         </tr>
                     </thead>
                     <tbody class="fill">
@@ -174,7 +174,7 @@
                     </tbody>
                 </table>
                 <div style="display: flex;">
-                    <div scope="row"><strong>{{__("Total")}}</strong></div>
+                    <div scope="row"><strong>{{ __('Total') }}</strong></div>
                     <div style="margin-left: 20px;" class="table-primary total_final">0$</div>
                 </div>
                 <form id="orderForm" action="/outside_service/order" method="POST">
@@ -184,9 +184,11 @@
                         hidden>
                     <input type="text" name="name_user" value="{{ $user[0]['name'] }}" hidden>
                     <input type="text" id="arr" name="arr" value="" hidden>
+                    <input type="text" id="infor" name="infor" value="" hidden>
+
 
                     <button type="submit" class="btn btn-main w-10 mb-2 btn_order"
-                        style="background-color: rgb(255,165,0);">{{__("ORDER")}}</button>
+                        style="background-color: rgb(255,165,0);">{{ __('ORDER') }}</button>
                 </form>
             </div>
         </div>
@@ -203,6 +205,8 @@
             });
 
             let arr = [];
+            let infor = [];
+
             $('.btn_order').prop('disabled', true);
 
             function allow_order() {
@@ -215,9 +219,20 @@
 
             $(document).on('click', 'button.add_service', function() {
                 let id_service = $(this).attr('data-id');
+
+                console.log(id_service);
                 let name_service = $(this).closest('tr').find('.name_service').text();
                 let price_service_text = $(this).closest('tr').find('.price_service').text();
                 let price_service = parseFloat(price_service_text.replace('$', ''));
+
+                let index_infor = infor.findIndex(item => item.hasOwnProperty(name_service));
+
+                if (index_infor === -1) {
+                    let newInfor = {};
+                    newInfor[name_service] = price_service;
+                    infor.push(newInfor);
+                    index_infor = infor.length - 1;
+                }
 
                 let idExists = arr.some(item => item.hasOwnProperty(id_service));
 
@@ -251,11 +266,13 @@
 
                 let finalTotal = calculateFinalTotal();
                 $('.total_final').text(finalTotal + '$');
+                $('input#infor').val(JSON.stringify(infor));
                 allow_order();
             });
 
             $(document).on('click', 'button.btn_order', function() {
                 arr = [];
+                infor = [];
                 $('tbody.fill').empty();
                 $('.btn_order').prop('disabled', true);
                 $('.total_final').text('0$');
@@ -263,56 +280,30 @@
             });
 
             $(document).on('click', 'button.btn_minus', function() {
-                let id_food = $(this).closest('tr').attr('id');
+                let id_service = $(this).closest('tr').attr('id');
                 let quantityElement = $(this).closest('tr').find('.quantity');
                 let quantity = parseInt(quantityElement.text());
+                let name_service = $(this).closest('tr').find('span.name').text();
 
                 // Tìm index của id_food trong mảng arr
-                let index = arr.findIndex(item => item.hasOwnProperty(id_food));
+                let index = arr.findIndex(item => item.hasOwnProperty(id_service));
+                let index_infor = infor.findIndex(item => item.hasOwnProperty(name_service));
 
                 if (index !== -1) {
                     if (quantity === 1) {
                         // Xóa HTML của hàng có id_food tương ứng
-                        $('#' + id_food).remove();
+                        $('#' + id_service).remove();
                         // Xóa id_food ra khỏi mảng arr
                         arr.splice(index, 1);
-                    } else {
-                        // Giảm quantity đi 1
-                        arr[index][id_food]--;
-                        quantityElement.text(arr[index][id_food]); // Cập nhật quantity trên giao diện
+                        infor.splice(index_infor, 1);
                     }
                 }
                 let finalTotal = calculateFinalTotal();
                 $('.total_final').text(finalTotal + '$');
+                console.log(arr);
+                console.log(infor);
                 allow_order()
             });
-
-            // Sự kiện khi click vào nút Order
-            // $(document).on('click', 'button.btn_order', function() {
-            //     let id_booking_realtime = {{ $user[0]['booking_realtime'][0]['id'] }};
-            //     let id_user = "{{ $user[0]['id'] }}";
-            //     let name_user = "{{ $user[0]['name'] }}";
-
-            //     $.ajax({
-            //         type: "post",
-            //         url: "/outside_service/order",
-            //         data: {
-            //             id_user: id_user,
-            //             name_user: name_user,
-            //             arr: arr,
-            //             id_booking_realtime: id_booking_realtime
-            //         },
-            //         success: function(response) {
-            //             var pdfUrl = response.pdf_url;
-            //             console.log(pdfUrl);
-            //             // Chuyển hướng đến URL của file PDF
-            //             window.location.href = pdfUrl;
-            //         },
-            //         error: function(xhr, status, error) {
-            //             console.error(error);
-            //         }
-            //     });
-            // });
 
             // Hàm tính tổng final
             function calculateFinalTotal() {
@@ -324,6 +315,55 @@
                 }, 0);
                 return finalTotal;
             }
+
+            $(document).on('input', 'input.name_service', function() {
+                let name_service = $(this).val();
+                $.ajax({
+                    type: "post",
+                    url: "/order/detail/search_service",
+                    data: {
+                        name_service: name_service
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        let services = response.services;
+
+                        let html = '';
+
+                        services.map(function(value) {
+                            let path = "{{ asset('service') }}" + '/' + value
+                                .image;
+                            html +=
+                                '<tr>' +
+                                '<td>' +
+                                '<div class="d-flex align-items-center gap-3">' +
+                                '<div class="cart-item__thumb">' +
+                                '<img src="' + path + '" alt="" />' +
+                                '</div>' +
+                                '<div class="cart-item__content">' +
+                                '<h6 class="cart-item__title fw-500 font-18">' +
+                                '<div class="link name_service">' + value.name + '</div>' +
+                                '</h6>' +
+                                '</div>' +
+                                '</div>' +
+                                '</td>' +
+                                '<td>' +
+                                '<span class="price_service" id="">' + value.price +
+                                '$</span>' +
+                                '</td>' +
+                                '<td>' +
+                                '<button type="button" class="add_service" data-id="' +
+                                value.id + '" style="margin-left: 5px">' +
+                                '<i class="fa-solid fa-plus"></i>' +
+                                '</button>' +
+                                '</td>' +
+                                '</tr>';
+                        })
+
+                        $('.fill_service').html(html);
+                    }
+                });
+            });
 
         });
     </script>

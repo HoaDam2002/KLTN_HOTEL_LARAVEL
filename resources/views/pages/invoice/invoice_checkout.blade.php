@@ -118,6 +118,7 @@
                     <tr>
                         <th>Service</th>
                         <th>Price</th>
+                        <th>Quantity</th>
                         <th>Total</th>
                     </tr>
                     <!-- Change restaurant details according to your data -->
@@ -125,6 +126,7 @@
                         <tr>
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->price }}$</td>
+                            <td>{{ $item->quantity }}$</td>
                             <td>{{ $item->total }}$</td>
                         </tr>
                     @endforeach
