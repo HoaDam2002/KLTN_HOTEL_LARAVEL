@@ -8,6 +8,7 @@ use App\Models\Booking_realtime;
 use App\Models\BookingRealtiemNoAcc;
 use App\Models\InvoiceFoodDetail;
 use App\Models\InvoiceServiceDetail;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
@@ -193,6 +194,16 @@ class StatisticalController extends Controller
     /**
      * Display the specified resource.
      */
+
+    public function reportDataService($start_date = null, $end_date = null)
+    {
+        $list_service = InvoiceServiceDetail::with('service')
+            ->where('created_at', '>=', $start_date . ' 00:00:00')
+            ->where('created_at', '<=', $end_date . ' 23:59:59')
+            ->get();
+        return $list_service;
+    }
+
     public function reportService(Request $request)
     {
         $start_date = $request->start_date;
@@ -200,18 +211,45 @@ class StatisticalController extends Controller
         $start_date_format = Carbon::createFromFormat('d/m/Y', $request->start_date)->format('Y/m/d');
         $end_date_format = Carbon::createFromFormat('d/m/Y', $request->end_date)->format('Y/m/d');
 
-        $list_service = InvoiceServiceDetail::with('service')
-            ->where('created_at', '>=', $start_date_format . ' 00:00:00')
-            ->where('created_at', '<=', $end_date_format . ' 23:59:59')
-            ->get();
+        $list_service = $this->reportDataService($start_date_format, $end_date_format);
 
+        // $list_service = InvoiceServiceDetail::with('service')
+        //     ->where('created_at', '>=', $start_date_format . ' 00:00:00')
+        //     ->where('created_at', '<=', $end_date_format . ' 23:59:59')
+        //     ->get();
 
         return view('pages.manager.report_service', compact('list_service', 'start_date', 'end_date'));
+    }
+
+    public function reportPDFService(Request $request)
+    {
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+        $start_date_format = Carbon::createFromFormat('d/m/Y', $request->start_date)->format('Y/m/d');
+        $end_date_format = Carbon::createFromFormat('d/m/Y', $request->end_date)->format('Y/m/d');
+
+        $data_pdf['start_date'] = $start_date;
+        $data_pdf['end_date'] = $end_date;
+        $data_pdf['service'] = $this->reportDataService($start_date_format, $end_date_format);
+
+        $pdf = PDF::loadView('pages.manager.report.service_pdf', ['data_pdf' => $data_pdf]);
+
+        return $pdf->download("report_" . time() . "service.pdf");
     }
 
     /**
      * Show the form for editing the specified resource.
      */
+
+    public function reportDataFood($start_date = null, $end_date = null)
+    {
+        $list_food = InvoiceFoodDetail::with('food')
+            ->where('created_at', '>=', $start_date . ' 00:00:00')
+            ->where('created_at', '<=', $end_date . ' 23:59:59')
+            ->get();
+        return $list_food;
+    }
+
     public function reportFood(Request $request)
     {
         $start_date = $request->start_date;
@@ -219,33 +257,42 @@ class StatisticalController extends Controller
         $start_date_format = Carbon::createFromFormat('d/m/Y', $request->start_date)->format('Y/m/d');
         $end_date_format = Carbon::createFromFormat('d/m/Y', $request->end_date)->format('Y/m/d');
 
-        $list_food = InvoiceFoodDetail::with('food')
-            ->where('created_at', '>=', $start_date_format . ' 00:00:00')
-            ->where('created_at', '<=', $end_date_format . ' 23:59:59')
-            ->get();
+        $list_food = $this->reportDataFood($start_date_format, $end_date_format);
+
 
         return view('pages.manager.report_food', compact('list_food', 'start_date', 'end_date'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function reportUserBooking(Request $request)
+    public function reportPDFFood(Request $request)
     {
         $start_date = $request->start_date;
         $end_date = $request->end_date;
         $start_date_format = Carbon::createFromFormat('d/m/Y', $request->start_date)->format('Y/m/d');
         $end_date_format = Carbon::createFromFormat('d/m/Y', $request->end_date)->format('Y/m/d');
 
+        $data_pdf['start_date'] = $start_date;
+        $data_pdf['end_date'] = $end_date;
+        $data_pdf['food'] = $this->reportDataFood($start_date_format, $end_date_format);
+        $pdf = PDF::loadView('pages.manager.report.food_pdf', ['data_pdf' => $data_pdf]);
+
+        return $pdf->download("report_" . time() . "food.pdf");
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+
+    public function reportDataUserBooking($start_date = null, $end_date = null)
+    {
         $list_users_booking_onl = Booking::with('user', 'room')->whereIn('status', ['pending', 'confirm'])
-            ->where('created_at', '>=', $start_date_format . ' 00:00:00')
-            ->where('created_at', '<=', $end_date_format . ' 23:59:59')
+            ->where('created_at', '>=', $start_date . ' 00:00:00')
+            ->where('created_at', '<=', $end_date . ' 23:59:59')
             ->get();
 
         $list_users_booking_in_place = Booking_realtime::with('user', 'room')
             ->where('id_booking', 0)
-            ->where('created_at', '>=', $start_date_format . ' 00:00:00')
-            ->where('created_at', '<=', $end_date_format . ' 23:59:59')
+            ->where('created_at', '>=', $start_date . ' 00:00:00')
+            ->where('created_at', '<=', $end_date . ' 23:59:59')
             ->get();
 
         $list_users_booking_onl_grouped = $list_users_booking_onl->groupBy('id_user');
@@ -253,13 +300,60 @@ class StatisticalController extends Controller
 
         $merged_grouped_users_booking = $list_users_booking_onl_grouped->mergeRecursive($list_users_booking_in_place_grouped);
 
+        return $merged_grouped_users_booking;
+    }
+
+    public function reportUserBooking(Request $request)
+    {
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+        $start_date_format = Carbon::createFromFormat('d/m/Y', $request->start_date)->format('Y/m/d');
+        $end_date_format = Carbon::createFromFormat('d/m/Y', $request->end_date)->format('Y/m/d');
+
+        $merged_grouped_users_booking = $this->reportDataUserBooking($start_date_format, $end_date_format);
 
         return view('pages.manager.report_user', compact('merged_grouped_users_booking', 'start_date', 'end_date'));
     }
 
+    public function reportPDFUserBooking(Request $request)
+    {
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+        $start_date_format = Carbon::createFromFormat('d/m/Y', $request->start_date)->format('Y/m/d');
+        $end_date_format = Carbon::createFromFormat('d/m/Y', $request->end_date)->format('Y/m/d');
+
+        $data_pdf['start_date'] = $start_date;
+        $data_pdf['end_date'] = $end_date;
+        $data_pdf['user_booking'] = $this->reportDataUserBooking($start_date_format, $end_date_format);
+
+        $pdf = PDF::loadView('pages.manager.report.user_booking_pdf', ['data_pdf' => $data_pdf]);
+
+        return $pdf->download("report_" . time() . "user_booking.pdf");
+    }
+
+
     /**
      * Remove the specified resource from storage.
      */
+
+    public function reportDataBooking($start_date = null, $end_date = null)
+    {
+        $list_bookings_onl = Booking::with('user', 'room')->whereIn('status', ['pending', 'confirm'])
+            ->where('created_at', '>=', $start_date . ' 00:00:00')
+            ->where('created_at', '<=', $end_date . ' 23:59:59')
+            ->get();
+
+        $list_bookings_in_place = Booking_realtime::with('deposit_customer', 'user', 'room')
+            ->where('id_booking', 0)
+            ->where('created_at', '>=', $start_date . ' 00:00:00')
+            ->where('created_at', '<=', $end_date . ' 23:59:59')
+            ->get();
+
+        $merged_list_booking = $list_bookings_onl->mergeRecursive($list_bookings_in_place);
+
+        return $merged_list_booking;
+    }
+
     public function reporBooking(Request $request)
     {
         $start_date = $request->start_date;
@@ -267,20 +361,24 @@ class StatisticalController extends Controller
         $start_date_format = Carbon::createFromFormat('d/m/Y', $request->start_date)->format('Y/m/d');
         $end_date_format = Carbon::createFromFormat('d/m/Y', $request->end_date)->format('Y/m/d');
 
-
-        $list_bookings_onl = Booking::with('user', 'room')->whereIn('status', ['pending', 'confirm'])
-            ->where('created_at', '>=', $start_date_format . ' 00:00:00')
-            ->where('created_at', '<=', $end_date_format . ' 23:59:59')
-            ->get();
-
-        $list_bookings_in_place = Booking_realtime::with('deposit_customer', 'user', 'room')
-            ->where('id_booking', 0)
-            ->where('created_at', '>=', $start_date_format . ' 00:00:00')
-            ->where('created_at', '<=', $end_date_format . ' 23:59:59')
-            ->get();
-
-        $merged_list_booking = $list_bookings_onl->mergeRecursive($list_bookings_in_place);
+        $merged_list_booking = $this->reportDataBooking($start_date_format, $end_date_format);
 
         return view('pages.manager.report_booking', compact('merged_list_booking', 'start_date', 'end_date'));
+    }
+
+    public function reportPDFBooking(Request $request)
+    {
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+        $start_date_format = Carbon::createFromFormat('d/m/Y', $request->start_date)->format('Y/m/d');
+        $end_date_format = Carbon::createFromFormat('d/m/Y', $request->end_date)->format('Y/m/d');
+
+        $data_pdf['start_date'] = $start_date;
+        $data_pdf['end_date'] = $end_date;
+        $data_pdf['booking'] = $this->reportDataBooking($start_date_format, $end_date_format);
+
+        $pdf = PDF::loadView('pages.manager.report.booking_pdf', ['data_pdf' => $data_pdf]);
+
+        return $pdf->download("report_" . time() . "booking.pdf");
     }
 }

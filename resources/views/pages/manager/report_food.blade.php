@@ -83,12 +83,14 @@
                     <div class="mb-3 date_report">Report from {{ $start_date }} to {{ $end_date }}</div>
                     <h6 class="">Food items</h6>
                     <div class="mb-3">
-                        <button class="btn_export btn_pdf">
-                            Export PDF
-                        </button>
-                        <button class="btn_export btn_excel">
-                            Export Excel
-                        </button>
+                        <form action="/manager/report/food_pdf" method="post">
+                            @csrf
+                            <input type="hidden" name="start_date" value="{{ $start_date }}">
+                            <input type="hidden" name="end_date" value="{{ $end_date }}">
+                            <button type="submit" class="btn_export btn_pdf">
+                                Export PDF
+                            </button>
+                        </form>
                     </div>
                     <div style="overflow: auto">
                         <table class="table table_report table-striped table-hover" style="color: #333; padding: 0 10px; font-size: 16px">
