@@ -13,7 +13,7 @@
                             </span>
                             <div class="client-statistics__content">
                                 <h5 class="client-statistics__number statisticsCounter">3,000+</h5>
-                                <span class="client-statistics__text fs-18">Satisfied Clients</span>
+                                <span class="client-statistics__text fs-18">{{__("Satisfied Clients")}}</span>
                             </div>
                         </div>
                     </div>
@@ -21,27 +21,22 @@
                 <div class="col-lg-6">
                     <div class="about-content">
                         <div class="section-heading style-left">
-                            <span class="section-heading__subtitle"> <span class="text-gradient fw-semibold">About
-                                    Us</span>
+                            <span class="section-heading__subtitle"> <span class="text-gradient fw-semibold">{{__("About Us")}}</span>
                             </span>
-                            <h2 class="section-heading__title">Details About Us and Our Operations</h2>
-                            <p class="section-heading__desc">Real Estate is a vast industry that deals with the buying,
-                                selling, and renting of properties. It inv transactions related to residential</p>
+                            <h2 class="section-heading__title">{{__("Details About Us and Our Operations")}}</h2>
+                            <p class="section-heading__desc">{{__("Our dedicated and professional staff are available nhuw chõ ni hắn đổi thanh about ú cái tui đỏi lại nè 24/7 to ensure your maximum satisfaction during your stay. We are always ready to listen and respond to any of your needs with enthusiasm and friendliness.")}}</p>
                         </div>
                         <div class="about-box d-flex">
                             <div class="about-box__icon">
                                 <img src="{{ asset('assets/customer/images/icons/about-icon.svg') }}" alt="">
                             </div>
                             <div class="about-box__content">
-                                <h6 class="about-box__title">Your Dream Home Awaits</h6>
-                                <p class="about-box__desc font-13">Real Estate is a vast industry that deals with the
-                                    buying, selling, and renting of properties. It inv transactions related to
-                                    residential,
-                                    commercial, and industrial properties</p>
+                                <h6 class="about-box__title">{{__("Luxury restaurant")}}</h6>
+                                <p class="about-box__desc font-13">{{__("Our restaurant serves a wide range of dishes, from local cuisine to international favorites, crafted by our talented chefs. Dont miss the chance to enjoy our sumptuous breakfast buffet, as well as our diverse lunch and dinner menus.")}}</p>
                             </div>
                         </div>
                         <div class="about-button">
-                            <a href="/aboutus" class="btn btn-main">Learn More <span class="icon-right"> <i
+                            <a href="/aboutus" class="btn btn-main"> {{__("Learn More")}}<span class="icon-right"> <i
                                         class="fas fa-arrow-right"></i> </span> </a>
                         </div>
                     </div>

@@ -133,13 +133,13 @@
                                             @endif
                                         </option>
                                         <option value="Male">
-                                            Male
+                                            {{__("Male")}}
                                         </option>
                                         <option value="Female">
-                                            Female
+                                            {{__("Female")}}
                                         </option>
                                         <option value="Other">
-                                            Other
+                                            {{__("Other")}}
                                         </option>
                                     </select>
                                 </div>

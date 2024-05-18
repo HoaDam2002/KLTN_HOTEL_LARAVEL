@@ -95,7 +95,8 @@
             <div class="card card-body filter_booking d-flex mb-3" style="align-items: center;">
                 <form action="/food/ordered_list/search" class="w-50 ms-3" method="POST">
                     @csrf
-                    <input type="text" name="infor" id="" placeholder="Name or phone Customer" class="">
+                    <input type="text" name="infor" id="" placeholder="{{ __('Name or phone Customer') }}"
+                        class="">
                     <button type="submit" class="btn_search_booking"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
             </div>
@@ -112,6 +113,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {{-- @php
+                                        dd($data->toArray());
+                                    @endphp --}}
                                     @if (!empty($data))
                                         @foreach ($data as $item)
                                             @php

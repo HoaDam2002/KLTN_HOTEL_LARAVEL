@@ -60,7 +60,7 @@
                     <div class="card-body filter_booking d-flex" style="justify-content: center;">
                         <form action="/food/manation/search_customer" class="w-50 ms-3" method="POST">
                             @csrf
-                            <input type="text" name="infor" id="" placeholder="Customer Name" class="">
+                            <input type="text" name="infor" id="" placeholder="{{__("Customer Name")}}" class="">
                             <button type="submit" class="btn_search_booking"><i
                                     class="fa-solid fa-magnifying-glass"></i></button>
                         </form>
@@ -71,9 +71,9 @@
                         <table class="table style-two">
                             <thead>
                                 <tr>
-                                    <th>Information</th>
-                                    <th>Check in</th>
-                                    <th>Check out</th>
+                                    <th>{{__("Information")}}</th>
+                                    <th>{{__("Check in")}}</th>
+                                    <th>{{__("Check out")}}</th>
                                     {{-- <th>Status</th> --}}
                                     {{-- <th>Action</th> --}}
                                 </tr>

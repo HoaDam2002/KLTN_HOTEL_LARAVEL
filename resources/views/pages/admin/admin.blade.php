@@ -280,7 +280,7 @@
                         <!-- Menu Start  -->
                         <div class="header-menu d-lg-block d-none">
 
-                            <h3 style="padding: 15px; margin: 0">Admin</h3>
+                            <h3 style="padding: 15px; margin: 0">{{__("Admin")}}</h3>
                         </div>
                         <!-- Menu End  -->
 
@@ -327,7 +327,7 @@
                                         class="nav-link {{ Route::currentRouteName() == 'users_admin' ? 'active' : '' }}"
                                         id="profile_account" onclick="menu_account_customer(this.id)">
                                         <span class="icon"> <i class="fas fa-user"></i></span>
-                                        {{ __('Users') }}
+                                        {{ __('List Account Users') }}
                                     </a>
                                     <a href="/admin/list_evaluate"
                                         class="nav-link {{ Route::currentRouteName() == 'list_evaluate_admin' ? 'active' : '' }}"

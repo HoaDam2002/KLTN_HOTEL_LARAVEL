@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-md">
         <div class="modal-content" style="padding: 0 15px">
             <div class="modal-header">
-                <h4 class="loginRegister__title text-poppins">Edit Service</h4>
+                <h4 class="loginRegister__title text-poppins">{{__("Edit Service")}}</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -10,22 +10,22 @@
                     @csrf
                     <div class="row gy-lg-4 gy-3">
                         <div class="col-12">
-                            <label for="service_name" class="form-label">Name</label>
+                            <label for="service_name" class="form-label">{{__("Name")}}</label>
                             <input type="text" class="common-input nameservice" placeholder="Service Name" name="name" id="servicename">
                         </div>
                         
                         <div class="col-12">
-                            <label for="price" class="form-label">Price</label>
+                            <label for="price" class="form-label">{{__("Price")}}</label>
                             <input type="text" class="common-input price" placeholder="Price" name="price" id="price">
                         </div>
 
                         <div class="col-12">
-                            <label for="image" class="form-label">Image</label>
+                            <label for="image" class="form-label">{{__("Image")}}</label>
                             <input type="file" class="common-input" placeholder="image" name="image" id="image">
-                        </div>
+                        </div>  
 
                         <div class="col-12">
-                            <button type="submit" class="btn btn-main w-100">Update <span class="icon-right"> <i
+                            <button type="submit" class="btn btn-main w-100"> {{__("Update")}}<span class="icon-right"> <i
                                         class="far fa-paper-plane"></i>
                                 </span> </button>
                         </div>

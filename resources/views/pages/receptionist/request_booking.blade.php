@@ -116,7 +116,7 @@
                                                         <h6 class="cart-item__title fw-500 font-18">
                                                             <strong>{{ $item['room']['name'] }}</strong>
                                                         </h6>
-                                                        <span class="cart-item__price">Price:
+                                                        <span class="cart-item__price">{{__("Price")}}:
                                                             <span
                                                                 class="fw-500 text-heading">${{ $item['price'] }}</span></span>
                                                     </div>
@@ -134,7 +134,7 @@
                                             </td>
                                             <td>
                                                 <button type="button" class="btn_detail_booking">
-                                                    <a href="/recep/info-booking/{{ $item['id'] }}">Detail</a>
+                                                    <a href="/recep/info-booking/{{ $item['id'] }}">{{__("Detail")}}</a>
                                                 </button>
                                             </td>
 
@@ -143,7 +143,7 @@
                                 </tbody>
                             </table>
                         @else
-                            <h4 class="text-center">No booking</h4>
+                            <h4 class="text-center">{{__("No booking")}}</h4>
                         @endif
                     </div>
                 </div>

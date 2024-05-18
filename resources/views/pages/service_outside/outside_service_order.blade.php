@@ -72,9 +72,9 @@
                         <table class="table style-two">
                             <thead>
                                 <tr>
-                                    <th>Information</th>
-                                    <th>Check in</th>
-                                    <th>Check out</th>
+                                    <th>{{__("Information")}}</th>
+                                    <th>{{__("Check in")}}</th>
+                                    <th>{{__("Check out")}}</th>
                                     {{-- <th>Status</th> --}}
                                     {{-- <th>Action</th> --}}
                                 </tr>

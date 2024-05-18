@@ -69,17 +69,17 @@
                     </div>
                 @endif
                 <div class="card-header">
-                    <h6 class="title mb-0">List Evaluate</h6>
+                    <h6 class="title mb-0">{{__("List Evaluate")}}</h6>
                 </div>
                 <div class="card-body">
                     <table class="table style-two">
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Room</th>
-                                <th>Comment</th>
+                                <th>ID</th>
+                                <th>{{__("Room")}}</th>
+                                <th>{{__("Comment")}}</th>
                                 <form action="{{ route('search_rate_admin') }}" method="get" id="form_search_rate">
-                                    <th>Rate
+                                    <th>{{__("Rate")}}
                                         @csrf
                                         <select id="search_rate" name="rate">
                                             <option value="5" {{ isset($_GET['rate']) && $_GET['rate'] == 5 ? 'selected' : ''}}>⭐⭐⭐⭐⭐</option>
@@ -90,8 +90,8 @@
                                         </select>
                                     </th>
                                     </form>
-                                <th>Status</th>
-                                <th>Action</th>
+                                <th>{{__("Status")}}</th>
+                                <th>{{__("Action")}}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -138,8 +138,8 @@
                                                 @csrf
                                                 <input type="hidden" name="id_comment" value="{{ $data->id }}">
                                                 <select name="status_comment" class="change_status_comment">
-                                                    <option value="show" {{ $data->status == 'show' ? 'selected' : '' }}>Show</option>
-                                                    <option value="hide" {{ $data->status == 'hide' ? 'selected' : '' }}>Hide</option>
+                                                    <option value="show" {{ $data->status == 'show' ? 'selected' : '' }}>{{__("Show")}}</option>
+                                                    <option value="hide" {{ $data->status == 'hide' ? 'selected' : '' }}>{{__("Hide")}}</option>
                                                 </select>
                                             </form>
                                         </td>
@@ -168,18 +168,18 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 class="modal-title fs-5" id="exampleModalLabel">Delete Comment</h6>
+                    <h6 class="modal-title fs-5" id="exampleModalLabel">{{__("Delete Comment")}}</h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form method="POST" action="{{ route('delete_comment_admin') }}">
                     @csrf
                     <div class="modal-body">
                         <input type="hidden" name="id_comment" id="id_comment">
-                        <span>Are you sure you want to delete?</span>
+                        <span>{{__("Are you sure you want to delete?")}}</span>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" id="btn_delete_comment" class="btn btn-main comfirm">Delete</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__("Close")}}</button>
+                        <button type="submit" id="btn_delete_comment" class="btn btn-main comfirm">{{__("Delete")}}</button>
                     </div>
                 </form>
             </div>

@@ -3,9 +3,9 @@
     <div class="container container-two">
         <div class="section-heading">
             <span class="section-heading__subtitle bg-white">
-                <span class="text-gradient fw-semibold">Latest Proparties</span>
+                {{-- <span class="text-gradient fw-semibold">Latest Proparties</span> --}}
             </span>
-            <h2 class="section-heading__title">Explore our room listings</h2>
+            <h2 class="section-heading__title">{{__("Explore our room listings")}}</h2>
         </div>
 
 
@@ -40,21 +40,21 @@
                                             <li class="amenities-list__item flx-align">
                                                 <span class="icon text-gradient"><i class="fas fa-bed"></i></span>
                                                 <span class="text">
-                                                    {{ $room->beds }} beds
+                                                    {{ $room->beds }} {{__("beds")}}
                                                 </span>
                                             </li>
                                             <li class="amenities-list__item flx-align">
                                                 <span class="icon text-gradient"><i class="fas fa-bath"></i></span>
-                                                <span class="text">1 Baths</span>
+                                                <span class="text">{{__("1 Baths")}}</span>
                                             </li>
                                         </ul>
                                         <h6 class="property-item__price"> {{ $room->price }}
-                                            <span class="day">/per day</span>
+                                            <span class="day">{{__("/per day")}}</span>
                                         </h6>
                                         <h6 class="property-item__price">
                                             {{ isset($count_quantity) ? $count_quantity[$i] : $room->quantity }}
                                             <span
-                                                class="day">{{ isset($count_quantity) ? 'Available' : 'Rooms' }}</span>
+                                                class="day">{{ isset($count_quantity) ? __('Available' ) : __('Rooms') }}</span>
                                         </h6>
                                         <p class="property-item__location d-flex gap-2">
                                             <span class="icon text-gradient"> <i
@@ -62,7 +62,7 @@
                                             Da Nang, Viet Nam
                                         </p>
                                         <a href="/room-detail/{{ $room->id }}/null null"
-                                            class="simple-btn text-gradient fw-semibold font-14">Book Now
+                                            class="simple-btn text-gradient fw-semibold font-14">{{__("Book Now")}}
                                             <span class="icon-right"> <i class="fas fa-arrow-right"></i> </span> </a>
                                     </div>
                                 </div>

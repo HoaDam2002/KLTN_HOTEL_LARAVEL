@@ -9,16 +9,14 @@
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
                     <p class="account-alert">
-                        Hello
+                        {{__("Hello")}}
                         <strong class="text-heading fw-500 text-poppins">{{ $name_user }}</strong>
-                        (not
-                        <strong class="text-heading fw-500 text-poppins">{{ $name_user }}</strong>? <button type="submit" style="color: blue">Log out</button> )
+                        (
+                        <strong class="text-heading fw-500 text-poppins">{{ $name_user }}</strong> <button type="submit" style="color: blue">{{__("Log out")}}</button> )
                     </p>
                 </form>
                 <p class="account-alert">
-                    From your account dashboard you can view your recent orders,
-                    manage your shipping and billing addresses, and edit your
-                    password and account details.
+                    {{__("From your account dashboard you can view your recent orders, manage your shipping and billing addresses, and edit your password and account details.")}}
                 </p>
             </div>
         </div>

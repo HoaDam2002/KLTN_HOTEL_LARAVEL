@@ -158,7 +158,7 @@
                     <a href="/customer/account" class="account-icon-link"><i class="fa-regular fa-circle-user"></i></a>
                 </button>
                 <ul class="dropdown-menu menu_drop">
-                    <li><a class="dropdown-item" href="#">Log out</a></li>
+                    <li><a class="dropdown-item" href="#">t{{__("Log ou")}}</a></li>
                 </ul>
             </div>
 

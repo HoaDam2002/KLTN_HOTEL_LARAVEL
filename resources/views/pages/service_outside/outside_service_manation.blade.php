@@ -81,13 +81,12 @@
                 <div style="display: flex; justify-content: space-between">
                     <form action="/service/manation/search_service" method="POST" class="w-50 ms-3">
                         @csrf
-                        <input type="text" name="infor" id="" placeholder="Name Service"
+                        <input type="text" name="infor" id="" placeholder="{{__("Name Service")}}"
                             style="height: 100%">
                         <button type="submit" class="btn_search_booking"><i
                                 class="fa-solid fa-magnifying-glass"></i></button>
                     </form>
-                    <button class="btn btn_add_food" data-bs-toggle="modal" data-bs-target="#modal_add_service">Add
-                        Service</button>
+                    <button class="btn btn_add_food" data-bs-toggle="modal" data-bs-target="#modal_add_service">{{__("Add Service")}}</button>
                 </div>
             </div>
             @if (session('success'))
@@ -188,7 +187,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h6 class="modal-title fs-5" id="exampleModalLabel">
-                        Add New Service</h6>
+                        {{__("Add New Service")}}</h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -197,19 +196,18 @@
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" name="name" id="add_foodname"
                                 placeholder="Food Name" required>
-                            <label for="add_foodname">Food Name</label>
+                            <label for="add_foodname">{{__("Service Name")}}</label>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="number" class="form-control" name="price" id="add_price" placeholder="Price"
                                 required>
-                            <label for="add_price">Price</label>
+                            <label for="add_price">{{__("Price")}}</label>
                         </div>
                         <div class="mb-3">
                             <input class="form-control form-control-lg" name="image" type="file" id="formFileMultiple"
                                 required>
                         </div>
-                        <button class="btn btn-main mb-3 w-100" type="submit">Add
-                            New Food</button>
+                        <button class="btn btn-main mb-3 w-100" type="submit">{{__("Add New Service")}}</button>
                     </form>
                 </div>
             </div>
@@ -223,15 +221,15 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 class="modal-title fs-5" id="exampleModalLabel">Delete Service</h6>
+                    <h6 class="modal-title fs-5" id="exampleModalLabel">{{__("Delete Service")}}</h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <span>Are you sure you want to delete?</span>
+                    <span>{{__("Are you sure you want to delete?")}}</span>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-main comfirm">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__("Close")}}</button>
+                    <button type="button" class="btn btn-main comfirm">{{__("Delete")}}</button>
                 </div>
             </div>
         </div>
@@ -247,7 +245,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
             <div class="toast-body">
-                Success!!!
+                {{__("Success!!!")}}
             </div>
         </div>
     </div>

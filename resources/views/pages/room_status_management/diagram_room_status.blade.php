@@ -123,9 +123,9 @@
                             data-bs-target="#modalEditStatusRoom">
                             <div class="card mb-3 {{ $room->status == 'Clean' ? 'text-bg-success' : ($room->status == 'Dirty' ? 'text-bg-danger' : ($room->status == 'Vacancy' ? 'text-bg-secondary' : ($room->status == 'Checkin' ? 'card-deposited' : ''))) }} {{ $room->type_name }}"
                                 style="max-width: 14rem;">
-                                <div class="card-header name">Room {{ $room->type_name }}</div>
+                                <div class="card-header name">{{__(("Room"))}}{{ $room->type_name }}</div>
                                 <div class="card-body">
-                                    <p class="card-text bold"><i class="fa-solid fa-calendar-days me-2"></i>Status: <span
+                                    <p class="card-text bold"><i class="fa-solid fa-calendar-days me-2"></i>{{__(("Status:"))}} <span
                                             class="font-weight-bold status">{{ $room->status }}</span></p>
                                 </div>
                             </div>
@@ -146,10 +146,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h4 style="text-align: center;">Status Room Management</h4>
+                    <h4 style="text-align: center;">{{__("Status Room Management")}}</h4>
                     <div class="btn-status">
-                        <button class="status text-bg-danger p-2 w-25" id="Dirty">Dirty</button>
-                        <button class="status text-bg-success p-2 w-25" id="Clean">Clean</button>
+                        <button class="status text-bg-danger p-2 w-25" id="Dirty">{{__("Dirty")}}</button>
+                        <button class="status text-bg-success p-2 w-25" id="Clean">{{__("Clean")}}</button>
                         {{-- <button class="status card-deposited p-2 w-25" id="Checkin"
                             data-bs-dismiss="modal">Checkin</button> --}}
                         {{-- <button class="status text-bg-secondary p-2 w-25" id="Vacancy"
@@ -157,7 +157,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{__("Close")}}</button>
                 </div>
             </div>
         </div>
@@ -168,12 +168,12 @@
         <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
                 {{-- <img src="..." class="rounded me-2" alt="..."> --}}
-                <strong class="me-auto">{{ __('Notification') }}</strong>
+                <strong class="me-auto">{{__('Notification')}}</strong>
                 {{-- <small>11 mins ago</small> --}}
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
             <div class="toast-body">
-                Success!!!
+               {{__(" Success!!!")}}
             </div>
         </div>
     </div>

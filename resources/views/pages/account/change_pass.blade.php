@@ -14,14 +14,14 @@
                 <div class="card common-card">
                     <div class="card-body">
                         <h6 class="loginRegister__title text-poppins">
-                            Password Change
+                            {{__("Password Change")}}
                         </h6>
 
                         <div class="row gy-lg-4 gy-3">
                             <div class="col-12">
-                                <label for="current_password" class="form-label">Current Password</label>
+                                <label for="current_password" class="form-label">{{__("Current Password")}}</label>
                                 <div class="position-relative">
-                                    <input type="password" class="common-input" placeholder="Password" id="current_password"
+                                    <input type="password" class="common-input" placeholder="{{__("Password")}}" id="current_password"
                                         name="current_password" />
                                     <span class="password-show-hide fas fa-eye toggle-password la-eye-slash"
                                         id="#current_password"></span>
@@ -33,9 +33,9 @@
                                 @enderror
                             </div>
                             <div class="col-12">
-                                <label for="password" class="form-label">New Password</label>
+                                <label for="password" class="form-label">{{__("New Password")}}</label>
                                 <div class="position-relative">
-                                    <input type="password" class="common-input" placeholder="New Password" id="password"
+                                    <input type="password" class="common-input" placeholder="{{__("New Password")}}" id="password"
                                         name="password" />
                                     <span class="password-show-hide fas fa-eye toggle-password la-eye-slash"
                                         id="#password"></span>
@@ -47,9 +47,9 @@
                                 @enderror
                             </div>
                             <div class="col-12">
-                                <label for="password_confirmation" class="form-label">Confirm Password</label>
+                                <label for="password_confirmation" class="form-label">{{__("Confirm Password")}}</label>
                                 <div class="position-relative">
-                                    <input type="password" class="common-input" placeholder="Confirm Password"
+                                    <input type="password" class="common-input" placeholder="{{__("Confirm Password")}}"
                                         id="password_confirmation" name="password_confirmation" />
                                     <span class="password-show-hide fas fa-eye toggle-password la-eye-slash"
                                         id="#password_confirmation"></span>
@@ -62,7 +62,7 @@
                             </div>
                             <div class="col-12">
                                 <button type="submit" class="btn btn-main w-100">
-                                    Save Changes
+                                    {{__("Save Changes")}}
                                 </button>
                             </div>
                         </div>
