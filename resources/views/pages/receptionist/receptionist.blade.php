@@ -288,7 +288,7 @@
                         <!-- Menu Start  -->
                         <div class="header-menu d-lg-block d-none">
 
-                            <h3 style="padding: 15px; margin: 0">Receptionist</h3>
+                            <h3 style="padding: 15px; margin: 0">{{__("Receptionist")}}</h3>
                         </div>
                         <!-- Menu End  -->
 

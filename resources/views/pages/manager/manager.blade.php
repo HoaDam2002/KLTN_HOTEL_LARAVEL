@@ -280,7 +280,7 @@
                         <!-- Menu Start  -->
                         <div class="header-menu d-lg-block d-none">
 
-                            <h3 style="padding: 15px; margin: 0">Manager</h3>
+                            <h3 style="padding: 15px; margin: 0">{{__("Manager")}}</h3>
                         </div>
                         <!-- Menu End  -->
 

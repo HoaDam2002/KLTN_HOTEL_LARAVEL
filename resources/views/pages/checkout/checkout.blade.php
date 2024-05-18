@@ -7,12 +7,12 @@
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="breadcrumb__wrapper">
-                        <h2 class="breadcrumb__title"> Checkout</h2>
+                        <h2 class="breadcrumb__title"> {{__("Checkout")}}</h2>
                         <ul class="breadcrumb__list">
                             <li class="breadcrumb__item"><a href="index.html" class="breadcrumb__link"> <i
-                                        class="las la-home"></i> Home</a> </li>
+                                        class="las la-home"></i> {{__("Home")}}</a> </li>
                             <li class="breadcrumb__item"><i class="fas fa-angle-right"></i></li>
-                            <li class="breadcrumb__item"> <span class="breadcrumb__item-text"> Checkout </span> </li>
+                            <li class="breadcrumb__item"> <span class="breadcrumb__item-text"> {{__("Checkout")}} </span> </li>
                         </ul>
                     </div>
                 </div>

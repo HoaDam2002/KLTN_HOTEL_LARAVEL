@@ -118,7 +118,7 @@
                                                                 <i class="fas fa-map-marker-alt"></i></span>
                                                             Da Nang, Viet Nam
                                                         </p>
-                                                        <span class="cart-item__price">Total:
+                                                        <span class="cart-item__price">{{__("Total:")}}
                                                             <span
                                                                 class="fw-500 text-heading">${{ $total }}</span></span>
                                                     </div>

@@ -62,11 +62,11 @@
                 <div style="display: flex; justify-content: space-between">
                     <form action="/admin/search/user" method="get" class="w-50 ms-3">
                         @csrf
-                        <input type="text" name="value_search_user" id="" placeholder="Email User Or ID" class=""
+                        <input type="text" name="value_search_user" id="" placeholder="{{__("Email User Or ID")}}" class=""
                             style="height: 100%">
                         <button type="submit" class="btn_search_booking"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </form>
-                    <button class="btn btn-main" data-bs-toggle="modal" data-bs-target="#modal_add_staff">Add Staff</button>
+                    <button class="btn btn-main" data-bs-toggle="modal" data-bs-target="#modal_add_staff">{{__("Add Staff")}}</button>
                 </div>
             </div>
             <div class="card common-card min-w-maxContent">
@@ -81,17 +81,17 @@
                     </div>
                 @endif
                 <div class="card-header">
-                    <h6 class="title mb-0">List Account User </h6>
+                    <h6 class="title mb-0">{{__("List Account Users")}} </h6>
                 </div>
                 <div class="card-body">
                     <table class="table style-two">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
+                                <th>{{__("Name")}}</th>
                                 <th>Email</th>
-                                <th>Role</th>
-                                <th>Action</th>
+                                <th>{{__("Role")}}</th>
+                                <th>{{__("Action")}}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -113,19 +113,19 @@
                                         </td>
                                         <td>
                                             @if ($user->role === 'customer')
-                                                <span>Customer</span>
+                                                <span>{{__("Customer")}}</span>
                                             @else
                                                 <form action="/admin/set_role_user" method="POST">
                                                     @csrf
                                                     <input type="hidden" name="id_user" value="{{ $user->id }}">
                                                     <select name="role_user" class="list_role_user">
-                                                        <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>Admin</option>
+                                                        <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>{{__("Admin")}}</option>
                                                         <option value="receptionist" {{ $user->role === 'receptionist' ? 'selected' : '' }}>
-                                                            Receptionist</option>
-                                                        <option value="service" {{ $user->role === 'service' ? 'selected' : '' }}>Service
+                                                            {{__("Receptionist")}}</option>
+                                                        <option value="service" {{ $user->role === 'service' ? 'selected' : '' }}>{{__("Service")}}
                                                         </option>
                                                         <option value="restaurant" {{ $user->role === 'restaurant' ? 'selected' : '' }}>
-                                                            Restaurant
+                                                            {{__("Restaurant")}}
                                                         </option>
                                                     </select>
                                                 </form>
@@ -169,7 +169,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 class="modal-title fs-5" id="exampleModalLabel">Delete User</h6>
+                    <h6 class="modal-title fs-5" id="exampleModalLabel">{{__("Delete User")}}</h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form method="POST" action="/admin/list_users/delete" id="delete_user">
@@ -177,11 +177,11 @@
                     <div class="modal-body">
                         <input type="hidden" name="user_id" id="user_id">
                         <input type="hidden" name="role" id="role">
-                        <span>Are you sure you want to delete?</span>
+                        <span>{{__("Are you sure you want to delete?")}}</span>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" id="btn_delete_user" class="btn btn-main comfirm">Delete</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__("Close")}}</button>
+                        <button type="submit" id="btn_delete_user" class="btn btn-main comfirm">{{__("Delete")}}</button>
                     </div>
                 </form>
             </div>
@@ -192,7 +192,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 class="modal-title fs-5" id="exampleModalLabel">Add Staff</h6>
+                    <h6 class="modal-title fs-5" id="exampleModalLabel">{{__("Add Staff")}}</h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form method="POST" action="{{ route('create_account_staff') }}" class="needs-validation" novalidate>
@@ -201,43 +201,43 @@
                         <div class="form-floating mb-3 validation">
                             <input type="email" class="form-control" name="email" id="floatingInput" placeholder="name@example.com"
                                 required>
-                            <label for="floatingInput">Email address</label>
+                            <label for="floatingInput">{{__("Email address")}}</label>
                             <div class="invalid-feedback">
-                                This field is required.
+                                {{__("This field is required.")}}
                             </div>
                         </div>
                         <div class="form-floating mb-3 validation">
                             <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="Password"
                                 required>
-                            <label for="floatingPassword">Password</label>
+                            <label for="floatingPassword">{{__("Password")}}</label>
                             <div class="invalid-feedback">
-                                This field is required.
+                                {{__("This field is required.")}}
                             </div>
                         </div>
                         <div class="form-floating mb-3 validation">
                             <input type="text" class="form-control" name="name" id="floatingName" placeholder="Name" required>
-                            <label for="floatingName">Name</label>
+                            <label for="floatingName">{{__("Name")}}</label>
                             <div class="invalid-feedback">
-                                This field is required.
+                                {{__("This field is required.")}}
                             </div>
                         </div>
                         <div class="form-floating mb-3">
                             <select class="form-control" id="nationality" name="nationality"></select>
-                            <label for="nationality">Nationality</label>
+                            <label for="nationality">{{__("Nationality")}}</label>
                         </div>
                         <div class="form-floating mb-3">
                             <select class="form-control" id="floatingRole" name="role_staff">
-                                <option value="admin">Admin</option>
-                                <option value="receptionist">Receptionist</option>
-                                <option value="service">service</option>
-                                <option value="restaurant">restaurant</option>
+                                <option value="admin">{{__("Admin")}}</option>
+                                <option value="receptionist">{{__("Receptionist")}}</option>
+                                <option value="service">{{__("Service")}}</option>
+                                <option value="restaurant">{{__("Restaurant")}}</option>
                             </select>
-                            <label for="floatingRole">Role</label>
+                            <label for="floatingRole">{{__("Role")}}</label>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-main comfirm" id="btn_create_account_staff">Create</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__("Close")}}</button>
+                        <button type="submit" class="btn btn-main comfirm" id="btn_create_account_staff">{{__("Create")}}</button>
                     </div>
                 </form>
             </div>
@@ -249,7 +249,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 class="modal-title fs-5" id="exampleModalLabel">Edit Information Staff</h6>
+                    <h6 class="modal-title fs-5" id="exampleModalLabel">{{__("Edit Information Staff")}}</h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form method="POST" action="{{ route('edit_info_staff') }}" class="needs-validation" novalidate>
@@ -259,50 +259,50 @@
                         <div class="form-floating mb-3 validation">
                             <input type="text" class="form-control" name="staff_name" id="floatingInput" placeholder="Full name"
                                 required pattern="^[a-zA-Z\sàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđĐ]+$">
-                            <label for="floatingInput">Name</label>
+                            <label for="floatingInput">{{__("Name")}}</label>
                             <div class="invalid-feedback">
-                                This field is required.
+                                {{__("This field is required.")}}
                             </div>
                         </div>
                         <div class="form-floating mb-3 validation">
                             <input type="text" class="form-control" name="staff_phone" id="floatingPhone" placeholder="Phone" required
                                 pattern="[0-9]{10,11}">
-                            <label for="floatingPhone">Phone</label>
+                            <label for="floatingPhone">{{__("Phone")}}</label>
                             <div class="invalid-feedback">
-                                This field is required.
+                                {{__("This field is required.")}}
                             </div>
                         </div>
                         <div class="form-floating mb-3 validation">
                             <input type="text" class="form-control" name="staff_birthday" id="floatingBirthday" placeholder="Birthday"
                                 required pattern="\d{2}/\d{2}/\d{4}">
-                            <label for="floatingBirthday">Birthday</label>
+                            <label for="floatingBirthday">{{__("Birthday")}}</label>
                             <div class="invalid-feedback">
-                                This field is required.
+                                {{__("This field is required.")}}
                             </div>
                         </div>
                         <div class="form-floating mb-3 validation">
                             <input type="text" class="form-control" name="staff_address" id="floatingAddress" placeholder="Address"
                                 required>
-                            <label for="floatingAddress">Address</label>
+                            <label for="floatingAddress">Address{{__("")}}</label>
                             <div class="invalid-feedback">
-                                This field is required.
+                                {{__("This field is required.")}}
                             </div>
                         </div>
                         <div class="form-floating mb-3 validation">
                             <select class="form-control" name="staff_gender" id="floatingGender" required>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
+                                <option value="male">{{__("Male")}}</option>
+                                <option value="female">{{__("Female")}}</option>
                             </select>
-                            <label for="floatingGendery">Gender</label>
+                            <label for="floatingGendery">{{__("Gender")}}</label>
                             <div class="invalid-feedback">
-                                This field is required.
+                                {{__("This field is required.")}}
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="btn_modal_change_pass" class="btn btn-secondary" data-bs-dismiss="modal"
-                            data-bs-toggle="modal" data-bs-target="#modal_change_pass_staff" data-idaccount=''>Change Pass</button>
-                        <button type="submit" class="btn btn-main comfirm" id="btn_create_account_staff">Update</button>
+                            data-bs-toggle="modal" data-bs-target="#modal_change_pass_staff" data-idaccount=''>{{__("Change Pass")}}</button>
+                        <button type="submit" class="btn btn-main comfirm" id="btn_create_account_staff">{{__("Update")}}</button>
                     </div>
                 </form>
             </div>
@@ -315,7 +315,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 class="modal-title fs-5" id="exampleModalLabel">Delete User</h6>
+                    <h6 class="modal-title fs-5" id="exampleModalLabel">{{__("Delete User")}}</h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form method="POST" action="{{ route('change_pass_staff_admin') }}" id="change_pass_staff" class="needs-validation"
@@ -326,23 +326,23 @@
                         <div class="form-floating mb-3 validation">
                             <input type="password" class="form-control" name="staff_new_pass" id="floatingNewPass"
                                 placeholder="New Password" required>
-                            <label for="floatingNewPass">New Password</label>
+                            <label for="floatingNewPass">{{__("New Password")}}</label>
                             <div class="invalid-feedback">
-                                This field is required.
+                                {{__("This field is required.")}}
                             </div>
                         </div>
                         <div class="form-floating mb-3 validation">
                             <input type="password" class="form-control" name="confirm_staff_new_pass" id="floatingCFNewPass"
                                 placeholder="Confirm New Password" required>
-                            <label for="floatingCFNewPass">Confirm New Password</label>
+                            <label for="floatingCFNewPass">{{__("Confirm New Password")}}</label>
                             <div class="invalid-feedback invalid_confirm_pass">
-                                This field is required.
+                                {{__("This field is required.")}}
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" id="btn_change_pass_staff" class="btn btn-main comfirm">Change</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__("Close")}}</button>
+                        <button type="submit" id="btn_change_pass_staff" class="btn btn-main comfirm">{{__("Change")}}</button>
                     </div>
                 </form>
             </div>

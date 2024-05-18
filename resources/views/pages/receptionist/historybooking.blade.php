@@ -62,7 +62,7 @@
                 <div class="card-body filter_booking d-flex" style="justify-content: center">
 
                     <form action="" class="w-50 ms-3">
-                        <input type="text" name="" id="" placeholder="Name or Phone Customer"
+                        <input type="text" name="" id="" placeholder="{{__("Name or Phone Customer")}}"
                             class="name_room">
                         <button type="submit" class="btn_search_booking"><i
                                 class="fa-solid fa-magnifying-glass"></i></button>
@@ -120,10 +120,10 @@
                                                                     {{ $value['room_detail']['type_room']['name'] }}</div>
                                                             </h6>
 
-                                                            <span class="cart-item__price text">Price:
+                                                            <span class="cart-item__price text">{{__("Price")}}:
                                                                 <span
                                                                     class="fw-500 text-heading text">{{ $value['room_detail']['type_room']['price'] }}</span></span>
-                                                            <span class="cart-item__price text">Total:
+                                                            <span class="cart-item__price text">{{__("Total")}}:
                                                                 <span
                                                                     class="fw-500 text-heading text">{{ $total }}</span></span>
 

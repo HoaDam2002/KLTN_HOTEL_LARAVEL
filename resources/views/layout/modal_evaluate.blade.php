@@ -25,7 +25,7 @@
                             <div id="rateYo"></div>
                         </div>
                         <div class="col-12">
-                            <label for="comment" class="form-label">Comment</label>
+                            <label for="comment" class="form-label">{{__("Comment")}}</label>
                             <div class="position-relative">
                                 <textarea class="common-input" name="comment" id="comment" cols="30" rows="10" placeholder="Your Comment"></textarea>
                             </div>
@@ -33,7 +33,7 @@
 
                         <div class="col-12">
                             <button type="button" class="btn btn-main w-100 submit_comment">
-                                Submit
+                                {{__("Submit")}}
                                 <span class="icon-right"> <i class="far fa-paper-plane"></i></span>
                             </button>
                         </div>
@@ -53,7 +53,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
         <div class="toast-body">
-            Success!!!
+            {{__("Success!!!")}}
         </div>
     </div>
 </div>

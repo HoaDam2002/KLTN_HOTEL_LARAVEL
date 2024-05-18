@@ -89,7 +89,7 @@
 
                         <div class="col-lg-4 col-sm-6 col-xs-6">
                             <button type="submit" class="btn btn-main w-100">
-                                Find Now
+                                {{__("Find Now")}}
                             </button>
                         </div>
                     </div>
@@ -163,16 +163,16 @@
                                         <li class="amenities-list__item flx-align">
                                             <span class="icon text-gradient"><i class="fas fa-bed"></i></span>
                                             <span class="text">
-                                                {{ $room->beds }} beds
+                                                {{ $room->beds }} {{__("beds")}}
                                             </span>
                                         </li>
                                         <li class="amenities-list__item flx-align">
                                             <span class="icon text-gradient"><i class="fas fa-bath"></i></span>
-                                            <span class="text">1 Baths</span>
+                                            <span class="text">{{__("1 Baths")}}</span>
                                         </li>
                                     </ul>
                                     <h6 class="property-item__price"> {{ $room->price }}
-                                        <span class="day">/per day</span>
+                                        <span class="day">{{__("/per day")}}</span>
                                     </h6>
                                     <h6 class="property-item__price">
                                         {{ isset($count_quantity) ? $count_quantity[$i] : $room->quantity }}
@@ -183,7 +183,7 @@
                                         Da Nang, Viet Nam
                                     </p>
                                     <a href="/room-detail/{{ $room->id }}/{{$timeBooking}}"
-                                        class="simple-btn text-gradient fw-semibold font-14">Book Now
+                                        class="simple-btn text-gradient fw-semibold font-14">{{__("Book Now")}}
                                         <span class="icon-right"> <i class="fas fa-arrow-right"></i> </span> </a>
                                 </div>
                             </div>
@@ -193,7 +193,7 @@
                         @endphp
                     @endforeach
                 @else
-                    <h4 style="text-align: center;">None of room available for the time that you chosen</h4>
+                    <h4 style="text-align: center;">{{__("None of room available for the time that you chosen")}}</h4>
                 @endif
             </div>
         </div>
@@ -203,18 +203,18 @@
         <div class="container container-two">
             <div class="cta-box flx-between gap-2">
                 <div class="cta-content">
-                    <h2 class="cta-content__title">Subscribe To Our <span class="text-gradient">Newsletter</span> </h2>
-                    <p class="cta-content__desc">It is a long established fact that a reader will be distracted by the
-                        readable content of a page when looking at its layout.</p>
+                    <h2 class="cta-content__title">{{__("Subscribe To Our")}} <span class="text-gradient">{{__("Newsletter")}}</span> </h2>
+                    {{-- <p class="cta-content__desc">{{__("It is a long established fact that a reader will be distracted by the
+                        readable content of a page when looking at its layout.")}}</p> --}}
                     <form action="#" class="cta-content__form d-flex align-items-center gap-2">
                         <div class="position-relative w-100">
                             <input type="text" class="common-input common-input--withLeftIcon w-100"
-                                placeholder="Enter Your Email Address">
+                                placeholder="{{__("Enter Your Email Address")}}">
                             <span class="input-icon input-icon--left text-gradient font-20 line-height-1"><i
                                     class="far fa-envelope"></i></span>
                         </div>
-                        <button type="submit" class="btn btn-main text-uppercase flex-shrink-0"> Subscribe <span
-                                class="text">Now</span> </button>
+                        <button type="submit" class="btn btn-main text-uppercase flex-shrink-0"> {{__("Subscribe")}} <span
+                                class="text">{{__("Now")}}</span> </button>
                     </form>
                 </div>
                 <div class="cta-content__thumb d-xl-block d-none">

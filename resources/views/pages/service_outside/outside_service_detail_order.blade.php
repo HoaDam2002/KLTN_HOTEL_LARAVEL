@@ -153,20 +153,20 @@
 
         <div class="tab-content mb-3" id="v-pills-tabContent">
             <div class="card common-card min-w-maxContent">
-                <h3 class="title_order_form">INFORMATION ORDER</h3>
+                <h3 class="title_order_form">{{__("INFORMATION ORDER")}}</h3>
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="infor_customer" value="{{ $user[0]['name'] }}" disabled>
-                    <label for="infor_customer">Name Customer</label>
+                    <label for="infor_customer">{{__("Name Customer")}}</label>
                 </div>
 
                 <table class="table-primary" style="width: 100%; margin: 5px;">
                     <thead>
                         <tr class="table-primary">
-                            <th scope="col">Service</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Total</th>
-                            <th scope="col">Action</th>
+                            <th scope="col">{{__("Service")}}</th>
+                            <th scope="col">{{__("Quantity")}}</th>
+                            <th scope="col">{{__("Price")}}</th>
+                            <th scope="col">{{__("Total")}}</th>
+                            <th scope="col">{{__("Action")}}</th>
                         </tr>
                     </thead>
                     <tbody class="fill">
@@ -174,7 +174,7 @@
                     </tbody>
                 </table>
                 <div style="display: flex;">
-                    <div scope="row"><strong>Total</strong></div>
+                    <div scope="row"><strong>{{__("Total")}}</strong></div>
                     <div style="margin-left: 20px;" class="table-primary total_final">0$</div>
                 </div>
                 <form id="orderForm" action="/outside_service/order" method="POST">
@@ -186,7 +186,7 @@
                     <input type="text" id="arr" name="arr" value="" hidden>
 
                     <button type="submit" class="btn btn-main w-10 mb-2 btn_order"
-                        style="background-color: rgb(255,165,0);">ORDER</button>
+                        style="background-color: rgb(255,165,0);">{{__("ORDER")}}</button>
                 </form>
             </div>
         </div>

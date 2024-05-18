@@ -304,12 +304,12 @@
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="breadcrumb__wrapper">
-                        <h2 class="breadcrumb__title"> About Us</h2>
+                        <h2 class="breadcrumb__title"> {{__("About Us")}}</h2>
                         <ul class="breadcrumb__list">
                             <li class="breadcrumb__item"><a href="/" class="breadcrumb__link"> <i
-                                        class="las la-home"></i> Home</a> </li>
+                                        class="las la-home"></i> {{__("Home")}}</a> </li>
                             <li class="breadcrumb__item"><i class="fas fa-angle-right"></i></li>
-                            <li class="breadcrumb__item"> <span class="breadcrumb__item-text"> About Us </span> </li>
+                            <li class="breadcrumb__item"> <span class="breadcrumb__item-text"> {{__("About Us")}} </span> </li>
                         </ul>
                     </div>
                 </div>
@@ -328,8 +328,8 @@
                             <img src="{{ asset('home/home1.jpg') }}" alt="">
                             <div class="project-content">
                                 <div class="project-content__inner">
-                                    <h2 class="project-content__number"> 10k+ </h2>
-                                    <span class="project-content__text font-12">Complete project</span>
+                                    <h2 class="project-content__number"> 30+ </h2>
+                                    <span class="project-content__text font-12">{{__("Vip rooms")}}</span>
                                 </div>
                             </div>
                         </div>
@@ -339,28 +339,26 @@
                     <div class="about-content">
                         <div class="section-heading style-left">
                             <span class="section-heading__subtitle bg-gray-100"> <span
-                                    class="text-gradient fw-semibold">About Us</span> </span>
-                            <h2 class="section-heading__title">Unlocking the door to your a the new home</h2>
-                            <p class="section-heading__desc font-18">Real estate is a lucrative industry that involves the
-                                buying selling and renting of properties. It encompasses residential commercial and
-                                industrial properties Real estate agents play a crucial role in facilitating real estate</p>
+                                    class="text-gradient fw-semibold">{{__("About Us")}}</span> </span>
+                            <h2 class="section-heading__title">{{__("We bring great things to customers")}}</h2>
+                            <p class="section-heading__desc font-18">{{__("We offer a variety of room types to meet the diverse needs of our guests, from standard rooms to premium suites. All rooms feature stunning views, plush bedding, and modern conveniences such as free Wi-Fi, flat-screen TVs, and minibars.")}}</p>
                         </div>
-                        <ul class="check-list style-two">
+                        <ul class="check-list style-two" >
                             <li class="check-list__item d-flex align-items-center">
                                 <span class="icon"><i class="fas fa-check"></i></span>
-                                <span class="text fw-semibold">Dream Property Solutions</span>
+                                <span class="text fw-semibold">{{__("Crafting Memorable Moments")}}</span>
                             </li>
                             <li class="check-list__item d-flex align-items-center">
                                 <span class="icon"><i class="fas fa-check"></i></span>
-                                <span class="text fw-semibold"> Prestige Property Management</span>
+                                <span class="text fw-semibold">{{__("Redefining Hospitality")}}</span>
                             </li>
                             <li class="check-list__item d-flex align-items-center">
                                 <span class="icon"><i class="fas fa-check"></i></span>
-                                <span class="text fw-semibold">Secure Property Partners</span>
+                                <span class="text fw-semibold">{{__("Discover Tranquility and Luxury")}}</span>
                             </li>
                             <li class="check-list__item d-flex align-items-center">
                                 <span class="icon"><i class="fas fa-check"></i></span>
-                                <span class="text fw-semibold">Global Real Estate Investments</span>
+                                <span class="text fw-semibold">{{__("Exquisite Stays, Exceptional Service")}}</span>
                             </li>
                         </ul>
                         {{-- <div class="about-button">
@@ -378,9 +376,10 @@
     <section class="property-type-three padding-b-60">
         <div class="container container-two">
             <div class="section-heading style-left">
-                <span class="section-heading__subtitle bg-white"> <span class="text-gradient fw-semibold">Property
-                        Type</span> </span>
-                <h2 class="section-heading__title">Investing in real estate made it lot easy</h2>
+                <span class="section-heading__subtitle bg-white"> 
+                    {{-- <span class="text-gradient fw-semibold">Property Type{{__("")}}</span> --}}
+                     </span>
+                <h2 class="section-heading__title">{{__("Reasons for you to choose our hotel")}}</h2>
             </div>
             <div class="row gy-4">
                 <div class="col-xl-4 col-sm-6 col-xs-6">
@@ -389,10 +388,8 @@
                             <img src="assets/images/icons/ppty-type-icon1.svg" alt="">
                         </span>
                         <div class="property-type-three-item__content">
-                            <h6 class="property-type-three-item__title">Prestige Management</h6>
-                            <p class="property-type-three-item__desc font-18">Prestige Management is about elevating and
-                                maintaining an organization's reputation and performance through strategic planning and
-                                effective leadership.</p>
+                            <h6 class="property-type-three-item__title">{{__("24/7 Reception Service")}}</h6>
+                            <p class="property-type-three-item__desc font-18">{{__("We understand that customer needs can appear at any time of the day. Therefore, our reception team is always ready to serve you 24/7, ensuring all your requests and questions will be resolved quickly and effectively.")}}</p>
                             {{-- <a href="property.html" class="simple-btn text-heading fw-semibold">More About
                                 <span class="icon-right"> <i class="fas fa-arrow-right"></i> </span>
                             </a> --}}
@@ -405,10 +402,8 @@
                             <img src="assets/images/icons/ppty-type-icon2.svg" alt="">
                         </span>
                         <div class="property-type-three-item__content">
-                            <h6 class="property-type-three-item__title">Prime Investments</h6>
-                            <p class="property-type-three-item__desc font-18">Prime Investments seeks out and capitalizes
-                                on lucrative opportunities in diverse markets, prioritizing strategic planning and prudent
-                                financial management to maximize returns for our clients and partners. </p>
+                            <h6 class="property-type-three-item__title">{{__("Room Service")}}</h6>
+                            <p class="property-type-three-item__desc font-18">{{__("Bring maximum benefit to our room service. From daily cleaning, in-room meal service to meeting other special requests, we are ready to provide you with a comfortable and worry-free stay.")}} </p>
                             {{-- <a href="property.html" class="simple-btn text-heading fw-semibold">More About
                                 <span class="icon-right"> <i class="fas fa-arrow-right"></i> </span>
                             </a> --}}
@@ -421,9 +416,8 @@
                             <img src="assets/images/icons/ppty-type-icon3.svg" alt="">
                         </span>
                         <div class="property-type-three-item__content">
-                            <h6 class="property-type-three-item__title">SmartHouse Agency</h6>
-                            <p class="property-type-three-item__desc font-18">SmartHouse Agency: Where innovation meets
-                                personalized real estate solutions for modern living. </p>
+                            <h6 class="property-type-three-item__title">{{__("Restaurants and Cuisine")}}</h6>
+                            <p class="property-type-three-item__desc font-18">{{__("Our restaurant not only brings you delicious food but also a memorable culinary experience. With a diverse menu from local to international dishes, you will enjoy great meals in a luxurious and cozy space.")}}</p>
                             {{-- <a href="property.html" class="simple-btn text-heading fw-semibold">More About
                                 <span class="icon-right"> <i class="fas fa-arrow-right"></i> </span>
                             </a> --}}
@@ -436,9 +430,8 @@
                             <img src="assets/images/icons/ppty-type-icon4.svg" alt="">
                         </span>
                         <div class="property-type-three-item__content">
-                            <h6 class="property-type-three-item__title">Reliable Rentals</h6>
-                            <p class="property-type-three-item__desc font-18">Reliable Rentals: Your trusted source for
-                                dependable leasing solutions. </p>
+                            <h6 class="property-type-three-item__title">{{__("Great Location")}}</h6>
+                            <p class="property-type-three-item__desc font-18">{{__("DanaHotel is located right in the center of city, convenient to famous tourist attractions, shopping areas, and restaurants. With a prime location, customers will easily explore and experience the best of the city.")}}</p>
                             {{-- <a href="property.html" class="simple-btn text-heading fw-semibold">More About
                                 <span class="icon-right"> <i class="fas fa-arrow-right"></i> </span>
                             </a> --}}
@@ -451,9 +444,8 @@
                             <img src="assets/images/icons/ppty-type-icon5.svg" alt="">
                         </span>
                         <div class="property-type-three-item__content">
-                            <h6 class="property-type-three-item__title">Golden Key Properties</h6>
-                            <p class="property-type-three-item__desc font-18">Golden Key Properties: Unlocking your pathway
-                                to exceptional real estate experiences.</p>
+                            <h6 class="property-type-three-item__title">{{__("Attractive Promotion Program")}}</h6>
+                            <p class="property-type-three-item__desc font-18">{{__("We always have special promotions and offers for customers, including discounts when booking online, vacation packages with spa services, and many other incentives. This helps customers enjoy their vacation economically and fully.")}}</p>
                             {{-- <a href="property.html" class="simple-btn text-heading fw-semibold">More About
                                 <span class="icon-right"> <i class="fas fa-arrow-right"></i> </span>
                             </a> --}}
@@ -466,9 +458,8 @@
                             <img src="assets/images/icons/ppty-type-icon6.svg" alt="">
                         </span>
                         <div class="property-type-three-item__content">
-                            <h6 class="property-type-three-item__title">Swift Home Sales</h6>
-                            <p class="property-type-three-item__desc font-18">Swift Home Sales excels in urban and suburban
-                                real estate. With our expertise and dedication, we ensure quick, seamless transactions. </p>
+                            <h6 class="property-type-three-item__title">{{__("Positive feedback from previous customers")}}</h6>
+                            <p class="property-type-three-item__desc font-18">{{__("Positive feedback from previous customers who have stayed at the hotel is proof of the quality of service and great experience we bring.")}} </p>
                             {{-- <a href="property.html" class="simple-btn text-heading fw-semibold">More About
                                 <span class="icon-right"> <i class="fas fa-arrow-right"></i> </span>
                             </a> --}}

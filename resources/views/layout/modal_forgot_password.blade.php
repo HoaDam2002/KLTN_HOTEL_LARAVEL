@@ -114,8 +114,7 @@
                                 <p class="text">{{__("Don't Have An Account?")}} <button type="button"
                                         class="link text-main text-decoration-underline font-14 text-poppins"
                                         data-bs-toggle="modal" data-bs-target="#modal_signup" data-bs-dismiss="modal"
-                                        aria-label="Close">{{__('Sign
-                                        up')}}</button>
+                                        aria-label="Close">{{__('Sign up')}}</button>
                                 </p>
                             </div>
                         </div>

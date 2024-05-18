@@ -8,15 +8,13 @@
                 <div class="col-lg-6">
                     <div class="banner-inner position-relative">
                         <div class="banner-content">
-                            <span class="banner-content__subtitle text-uppercase font-14">FinTech Fusion</span>
+                            {{-- <span class="banner-content__subtitle text-uppercase font-14">FinTech Fusion</span> --}}
                             <h1 class="banner-content__title">
-                                Invest today in You
-                                <span class="text-gradient">Dream Home</span>
+                                {{__("Welcome to")}}
+                                <span class="text-gradient">{{__("DANAHOTEL")}}</span>
                             </h1>
                             <p class="banner-content__desc font-18">
-                                Unlock the Power of Real Estate Making Your Real Estate
-                                Dreams a Reality Real Estate here Unlock the Power of
-                                Real Estate
+                               {{__("DANAHOTEL boasts a perfect blend of modern architecture and the traditional charm of VietNam. Each room is furnished with luxurious interiors and modern amenities, ensuring a comfortable and cozy stay for all our guests.")}}
                             </p>
                         </div>
                     </div>
@@ -68,7 +66,7 @@
 
                                         <div class="col-lg-4 col-sm-6 col-xs-6">
                                             <button type="submit" class="btn btn-main w-100">
-                                                Find Now
+                                               {{__("Find Now")}}
                                             </button>
                                         </div>
                                     </div>

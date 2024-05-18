@@ -7,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>DANA Hotel</title>
+        <title>DANAHOTEL</title>
 
         <!-- Favicon -->
         <link rel="shortcut icon"
@@ -238,7 +238,7 @@
                         <!-- Menu Start  -->
                         <div class="header-menu d-lg-block d-none">
 
-                            <h3 style="padding: 15px; margin: 0">Service department</h3>
+                            <h3 style="padding: 15px; margin: 0">{{__("Service department")}}</h3>
                         </div>
                         <!-- Menu End  -->
 
