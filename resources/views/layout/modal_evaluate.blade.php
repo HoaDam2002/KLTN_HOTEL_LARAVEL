@@ -14,7 +14,7 @@
         <div class="modal-content" style="padding: 0 15px">
             <div class="modal-header">
                 <h4 class="loginRegister__title text-poppins">
-                    Welcome to DanaHotel's room review form</h4>
+                    {{__("Welcome to DanaHotel's room review form")}}</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -27,7 +27,7 @@
                         <div class="col-12">
                             <label for="comment" class="form-label">{{__("Comment")}}</label>
                             <div class="position-relative">
-                                <textarea class="common-input" name="comment" id="comment" cols="30" rows="10" placeholder="Your Comment"></textarea>
+                                <textarea class="common-input" name="comment" id="comment" cols="30" rows="10" placeholder="{{__("Your Comment")}}"></textarea>
                             </div>
                         </div>
 

@@ -59,8 +59,7 @@
                     <a href="/" class="nav-menu__link">{{ __('Home') }}</a>
                 </li>
                 <li class="nav-menu__item">
-                    <a href="/food_service/manation" class="nav-menu__link">{{ __('Food Manation')
-                        }}</a>
+                    <a href="/food_service/manation" class="nav-menu__link">{{ __('Food Manation') }}</a>
                 </li>
                 <li class="nav-menu__item">
                     <a href="/food_service/order" class="nav-menu__link">{{ __('Order Food') }}</a>
@@ -158,7 +157,7 @@
                     <a href="/customer/account" class="account-icon-link"><i class="fa-regular fa-circle-user"></i></a>
                 </button>
                 <ul class="dropdown-menu menu_drop">
-                    <li><a class="dropdown-item" href="#">t{{__("Log ou")}}</a></li>
+                    <li><a class="dropdown-item" href="#">t{{ __('Log out') }}</a></li>
                 </ul>
             </div>
 
