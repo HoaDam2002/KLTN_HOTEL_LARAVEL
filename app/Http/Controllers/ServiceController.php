@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\addserviceRequest;
 use App\Models\InvoiceService;
 use App\Models\InvoiceServiceDetail;
 use App\Models\Service;
@@ -51,7 +52,7 @@ class ServiceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function add_service(Request $request)
+    public function add_service(addserviceRequest $request)
     {
         $data = $request->all();
 
