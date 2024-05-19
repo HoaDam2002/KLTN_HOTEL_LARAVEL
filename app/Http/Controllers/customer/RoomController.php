@@ -30,6 +30,12 @@ class RoomController extends Controller
     {
         $room = RoomModel::where('id', $id)->get()->toArray();
 
+        $imageString = $room[0]['images'];
+
+        $imageArray = explode(', ', $imageString);
+
+        $room[0]['images'] = $imageArray;
+
         $timeData = explode(" ", $time->data);
 
         $checkin = $timeData[0];

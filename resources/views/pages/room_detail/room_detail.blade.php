@@ -133,19 +133,32 @@
                     <div class="row gy-4">
                         <h5 class="name_room">{{ $room[0]['name'] }}</h5>
                         <div class="col-sm-12 col-6" style="margin-top: 5px;">
-                            <div class="property-details__thumb">
-                                @php
-                                    $image = $room[0]['images'];
-                                    if ($checkin != 'null' && $checkout != 'null') {
-                                        $checkin[4] = '/';
-                                        $checkin[7] = '/';
-                                        $checkout[4] = '/';
-                                        $checkout[7] = '/';
-                                    }
-                                    // dd($checkin,$checkout)
-                                @endphp
-                                <img src="{{ asset("/customer/image_room/detail/$image") }}" alt=""
-                                    class="cover-img">
+                            @php
+                                $images = $room[0]['images'];
+                                if ($checkin != 'null' && $checkout != 'null') {
+                                    $checkin[4] = '/';
+                                    $checkin[7] = '/';
+                                    $checkout[4] = '/';
+                                    $checkout[7] = '/';
+                                }
+                            @endphp
+                            <div class="row g-2">
+                                <div class="col-8 g-2">
+                                    <div>
+                                        <img src="{{ asset('rooms/'. $images[0]) }}" alt=""
+                                            >
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="row g-1">
+                                        <div class="col-12">
+                                            <img src="{{ asset('rooms/'. $images[1]) }}" alt="">
+                                        </div>
+                                        <div class="col-12" style="padding-top: 1px">
+                                            <img src="{{ asset('rooms/'. $images[2]) }}" alt="">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -380,10 +393,10 @@
     <script>
         $(document).ready(function() {
             let count_rooms = 1;
-            
+
             let max_person = {{ $room[0]['person'] }}
             let count_guests = max_person;
-        
+
             let available_room = parseInt($('.available_room').text(), 10)
 
             let available_person = max_person;
@@ -419,7 +432,7 @@
             $('input.deposit').val(deposit);
             $('input.quantity').val(count_rooms);
             $('input.guests').val(count_guests);
-            
+
             $('.rateYo').each((key, element) => {
                 let id = $(element).attr('id');
                 let rate = $(element).attr('data-rating');
