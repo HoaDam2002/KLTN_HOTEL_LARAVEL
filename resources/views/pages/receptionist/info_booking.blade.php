@@ -34,39 +34,39 @@
                             <img src="{{ asset('assets/customer/images/logo/logohotel.jpg') }}" alt=""
                                 class="image_customer_booking col-4">
                             <div class="title_booking col-8">
-                                <h6>Booking code: #{{ $booking['id'] }}</h6>
-                                <h6>Customer: {{ $booking['user']['name'] }}</h6>
+                                <h6>{{__("Booking code")}}: #{{ $booking['id'] }}</h6>
+                                <h6>{{__("Customer")}}: {{ $booking['user']['name'] }}</h6>
                             </div>
                         </div>
                         <div class="card-body">
-                            <h6 class="title_inf_booking">Request</h6>
+                            <h6 class="title_inf_booking">{{__("Request")}}</h6>
                             <div class="row mb-4">
-                                <div class="col-6"><strong>Check in</strong>
+                                <div class="col-6"><strong>{{__("Check in")}}</strong>
                                     <p>{{ $booking['check_in'] }}</p>
                                 </div>
-                                <div class="col-6"><strong>Check out</strong>
+                                <div class="col-6"><strong>{{__("Check out")}}</strong>
                                     <p>{{ $booking['check_out'] }}</p>
                                 </div>
                             </div>
                             <div class="mb-4">
-                                <strong>Room name:</strong>
+                                <strong>{{__("Room name")}}:</strong>
                                 <span>{{ $booking['room']['name'] }}</span>
                             </div>
                             <div class="mb-4">
-                                <strong>Daily price:</strong>
+                                <strong>{{__("Daily price")}}:</strong>
                                 <strong class="price_booking">$4{{ $booking['price'] }}</strong>
                             </div>
                             <div class="mb-4">
                                 <form class="row g-3 needs-validation" novalidate>
-                                    <strong class="mb-2 d-block">Please choose the room for guests</strong>
+                                    <strong class="mb-2 d-block">{{__("Please choose the room for guests")}}</strong>
                                     @if ($booking['quantity'] > 0)
                                         @for ($i = 0; $i < $booking['quantity']; $i++)
                                             <div class="mb-3 col-4">
-                                                <label for="exampleFormControlInput1" class="form-label">Room
+                                                <label for="exampleFormControlInput1" class="form-label">{{__("Room")}}
                                                     {{ $i + 1 }}</label>
                                                 <select class="form-select form-select-lg room_booking_realtime"
                                                     required>
-                                                    <option value="">Please choose the room</option>
+                                                    <option value="">{{__("Please choose the room")}}</option>
                                                     @if (!empty($list_empty_room_booking))
                                                         @foreach ($list_empty_room_booking as $item)
                                                             <option value="{{ $item->id }}">
@@ -76,14 +76,14 @@
                                                     @endif
                                                 </select>
                                                 <div class="invalid-feedback">
-                                                    Please select a valid room.
+                                                   {{__("Please select a valid room.")}}
                                                 </div>
                                             </div>
                                         @endfor
                                     @endif
                                     <div class="card-footer" style="padding: 15px 0">
                                         <button type="submit" class="btn btn-success"
-                                            id="btn_confirm_booking">Confirm</button>
+                                            id="btn_confirm_booking">{{__("Confirm")}}</button>
                                     </div>
                                 </form>
                             </div>
@@ -98,16 +98,15 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 class="modal-title fs-5" id="exampleModalLabel">Cancel this booking?</h6>
+                    <h6 class="modal-title fs-5" id="exampleModalLabel">{{__("Cancel this booking?")}}</h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>You definitely want to cancel this booking. Once you confirm the cancellation, you will not be able
-                        to return to the original status.</p>
+                    <p>{{__("You definitely want to cancel this booking. Once you confirm the cancellation, you will not be able to return to the original status.")}}</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="btn_cancel_booking">Agree to cancel</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__("Close")}}</button>
+                    <button type="button" class="btn btn-primary" id="btn_cancel_booking">{{__("Agree to cancel")}}</button>
                 </div>
             </div>
         </div>

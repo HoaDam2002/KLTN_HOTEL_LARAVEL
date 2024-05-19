@@ -803,20 +803,19 @@
                         <strong class="info_room_item mb-3 total_service">80$</strong>
                     </div>
                     <div class="wrapper_info_room">
-<<<<<<< HEAD
                         <span> {{ __('Total Hotel') }}:</span>
                         <strong class="info_room_item mb-3 total">80$</strong>
                     </div>
                     <div class="wrapper_info_room">
                         <span> {{ __('Duration Now') }}:</span>
-=======
+                        <strong class="info_room_item mb-3 total">80$</strong>
+                    </div>
+                    <div class="wrapper_info_room">
                         <span> {{__("Total Hotel Now")}}:</span>
                         <strong class="info_room_item mb-3 total">80$</strong>
                     </div>
                     <div class="wrapper_info_room">
                         <span> {{__("Duration Now")}}:</span>
-
->>>>>>> aae3e1f90fc034fbe3328dd4f2b8b5fbcd76b3b6
                         <strong class="info_room_item mb-3 duration" style="color: red">80$</strong>
                     </div>
                     <div class="wrapper_info_room">

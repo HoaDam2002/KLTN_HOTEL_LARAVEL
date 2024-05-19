@@ -143,7 +143,7 @@
                                                 </td>
                                                 <td>
                                                     <span class="status cancel text"
-                                                        id="checkout">{{ $value['status'] }}</span>
+                                                        id="checkout">{{__($value['status'])}}</span>
                                                 </td>
                                             </tr>
                                         @endforeach

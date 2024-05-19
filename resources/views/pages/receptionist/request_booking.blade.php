@@ -130,7 +130,7 @@
                                             </td>
                                             <td>
                                                 <span class="status" style="background-color: rgb(255,165,0)"
-                                                    id="">{{ $item['status'] }}</span>
+                                                    id="">{{__($item['status'])  }}</span>
                                             </td>
                                             <td>
                                                 <button type="button" class="btn_detail_booking">

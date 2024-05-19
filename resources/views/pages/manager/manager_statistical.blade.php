@@ -150,7 +150,8 @@
                         @csrf
                         <input type="text" name="search_date"
                             value="{{ isset($start_date) && isset($end_date) ? $start_date . ' - ' . $end_date : $currentDate . ' - ' . $nextDate }}" />
-                        <button type="submit" class="btn_search_booking"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        <button type="submit" class="btn_search_booking"><i
+                                class="fa-solid fa-magnifying-glass"></i></button>
                     </form>
                 </div>
             </div>
@@ -214,7 +215,7 @@
                     <div class="card card_service mb-3 card_custom">
                         <div class="card-body">
                             <h5 class="card-title">{{ $statisticalData['quantity_service'] }}</h5>
-                            <p class="card-text">{{ __('service is booked') }}</p>
+                            <p class="card-text">{{ __('Service is booked') }}</p>
                         </div>
                         <div class="icon_card card_icon_service"><i class="fa-solid fa-spa"></i></div>
                     </div>
@@ -237,7 +238,8 @@
                     }
 
                 }, function(start, end, label) {
-                    console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
+                    console.log("A new date selection was made: " + start.format('DD-MM-YYYY') +
+                        ' to ' + end.format('DD-MM-YYYY'));
                 });
             });
 
