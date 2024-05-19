@@ -35,11 +35,9 @@ class HomeController extends Controller
                 Auth::logout();
                 return redirect('/');
             }
-        }else{
-            return redirect('/');
         }
 
-        // return view('pages.home.home_customer', compact('data'));
+        return view('pages.home.home_customer', compact('data'));
     }
 
     /**

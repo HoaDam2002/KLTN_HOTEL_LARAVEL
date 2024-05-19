@@ -1535,7 +1535,7 @@
                             let final_total = total - deposit;
 
                             $(modal).find('strong.deposit').text(deposit + "$");
-                            $(modal).find('strong.final_total').text(final_total + "$");
+                            $(modal).find('strong.final_total').text((final_total < 0 ? 0 : final_total) + "$");
                             $(modal).find('strong.total').text(total + "$");
 
                         } else if (modal == '#modalRoomCheckout') {
@@ -1608,7 +1608,7 @@
                             $(modal).find('strong.total_food').text(total_food + "$");
                             $(modal).find('strong.total_service').text(total_service + "$");
 
-                            $(modal).find('strong.final_total').text(final_total + "$");
+                            $(modal).find('strong.final_total').text((final_total < 0 ? 0 : final_total) + "$");
                             $(modal).find('strong.total').text(total + "$");
 
                             $(modal).find('strong.name_room').text(name_room);
@@ -1717,7 +1717,7 @@
                             $(modal).find('strong.total_service').text(total_service + "$");
 
                             $(modal).find('strong.deposit').text(deposit + "$");
-                            $(modal).find('strong.final_total').text(final_total + "$");
+                            $(modal).find('strong.final_total').text((final_total < 0 ? 0 : final_total) + "$");
                             $(modal).find('strong.total').text(total + "$");
 
                             $(modal).find('strong.name_room').text(name_room);
