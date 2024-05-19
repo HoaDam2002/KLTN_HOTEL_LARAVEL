@@ -5,7 +5,7 @@
             <div class="col-xl-4 col-lg-6">
                 <div class="footer-item">
                     <div class="footer-item__logo">
-                        <a href="/"> <img src="{{ asset('assets/customer/images/logo/logo.png') }}" alt=""></a>
+                        <a href="/"> <img src="{{ asset('assets/customer/images/logo/logohotel.jpg') }}" alt=""></a>
                     </div>
                     {{-- <p class="footer-item__desc">{{__("Experience Luxury, Embrace Comfort")}}</p> --}}
 
@@ -54,27 +54,26 @@
                 </div>
             </div>
             <div class="col-xl-1 d-xl-block d-none"></div>
-            <div class="col-xl-3 col-sm-6">
+            {{-- <div class="col-xl-3 col-sm-6">
                 <div class="footer-item">
-                    {{-- <h6 class="footer-item__title">Our gallery{{__("")}}</h6>
-                    <p class="footer-item__desc">It is a long established fact that reader will be Elite Property {{__("")}}</p> --}}
+                    <h6 class="footer-item__title">Our gallery{{__("")}}</h6>
+                    <p class="footer-item__desc">It is a long established fact that reader will be Elite Property {{__("")}}</p>
 
-                    {{-- <form action="#" class="mt-4 subscribe-box">
+                    <form action="#" class="mt-4 subscribe-box">
                         <div class="input-group">
                             <input type="text" class="form-control common-input common-input--md text-white"
                                 placeholder="Your mail address">
                             <button type="submit" class="px-4 input-group-text bg--gradient border-0 text-white"><i
                                     class="fas fa-paper-plane"></i></button>
                         </div>
-                    </form> --}}
+                    </form>
 
-                    
                 </div>
-                
-            </div>
 
-            <div>
-                <h6 class="footer-item__title" style=" margin-top: -170px">{{__("Connect with us")}}</h6> 
+            </div> --}}
+
+            <div style="margin-top: 0">
+                <h6 class="footer-item__title">{{__("Connect with us")}}</h6>
 
                 <ul class="social-list" style="width: 12%; margin-top: -160px ">
                     <li class="social-list__item"><a href="https://www.facebook.com"
@@ -87,7 +86,7 @@
                             class="social-list__link flx-center"> <i class="fab fa-instagram"></i></a></li>
                 </ul>
             </div>
-           
+
         </div>
     </div>
 </footer>

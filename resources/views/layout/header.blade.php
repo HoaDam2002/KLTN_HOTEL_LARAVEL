@@ -48,7 +48,7 @@
     <div class="mobile-menu__inner">
         @if (Auth::check())
             <a href="/" class="mobile-menu__logo">
-                <img src="{{ asset('assets/customer/images/logo/logo.png') }}" alt="Logo">
+                <img src="{{ asset('assets/customer/images/logo/logohotel.jpg') }}" alt="DANA Hotel">
             </a>
         @endif
         <div class="mobile-menu__menu">
@@ -97,7 +97,7 @@
 <div class="common-offcanvas d-lg-block d-none">
     <div class="flx-between">
         <a href="/" class="mobile-menu__logo">
-            <img src="{{ asset('assets/customer/images/logo/white-logo.png') }}" alt="Logo">
+                <img src="{{ asset('assets/customer/images/logo/logohotel.jpg') }}" alt="DANA Hotel">
         </a>
         <button type="button" class="close-button d-flex position-relative top-0 end-0"> <i class="las la-times"></i>
         </button>
@@ -178,17 +178,17 @@
                 </div>
                 <div class="header-info__item flx-align">
                     <span class="header-info__icon"><i class="fas fa-phone"></i></span>
-                    <a href="tel:" class="header-info__text">(629) 555-0129</a>
+                    <a href="tel:" class="header-info__text">0394903720</a>
                 </div>
                 <div class="header-info__item flx-align">
                     <span class="header-info__icon"><i class="fas fa-envelope"></i></span>
-                    <a href="mailto:" class="header-info__text">info@example.com</a>
+                    <a href="mailto:" class="header-info__text">danahotel@gmail.com</a>
                 </div>
             </div>
             <div class="header-info flx-align d-sm-block d-none">
                 <div class="header-info__item flx-align">
                     <span class="header-info__icon"><i class="fas fa-map-marker-alt"></i></span>
-                    <span class="header-info__text">6391 Elgin St. Celina, 10299</span>
+                    <span class="header-info__text">Da Nang, Viet Nam</span>
                 </div>
             </div>
         </div>
@@ -201,9 +201,9 @@
         <nav class="header-inner flx-between">
             <!-- Logo Start -->
             <div class="logo">
-                <a href="/" class="link">
-                    <img src="{{ asset('assets/customer/images/logo/z5175648554199_ccc2baf0a7ac356050aa28149405a89d.jpg') }}"
-                        alt="Logo" style="width: 190px; height: 40px; object-fit: contain">
+                <a href="/" class="link" style="width: 190px; height: 100%; object-fit: contain">
+                    <img src="{{ asset('assets/customer/images/logo/logohotel.jpg') }}"
+                        alt="DANA Hotel" >
                 </a>
             </div>
             <!-- Logo End  -->
