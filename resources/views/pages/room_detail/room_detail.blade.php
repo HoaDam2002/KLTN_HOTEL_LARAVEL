@@ -281,6 +281,8 @@
                                                             </div>
                                                         </div>
                                                     @endforeach
+                                                @else
+                                                    <span style="text-align: center;">No Comment</span>
                                                 @endif
 
                                             </div>
@@ -327,7 +329,7 @@
                                 <div class="dropdown numberofroomandguests mb-3">
                                     <div class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true"
                                         data-bs-auto-close="outside" id="number_of_rg">
-                                        {{ __('Rooms') . ": 1, " . __('Guests:') . " 4" }}</div>
+                                        {{ __('Rooms') . ": 1, " . __('Guests:') . $room[0]['person'] }}</div>
 
                                     <div class="dropdown-menu dropdown_numberof">
                                         <div class="item_numberof">
@@ -342,7 +344,7 @@
                                             <span>Guests</span>
                                             <div class="wrapper_btn_numberof">
                                                 <button class="minus_btn" id="minus_guest"><span>-</span></button>
-                                                <span class="quantity_numberof" id="quantity_guest">4</span>
+                                                <span class="quantity_numberof" id="quantity_guest">{{ $room[0]['person'] }}</span>
                                                 <button class="plus_btn" id="plus_guest"><span>+</span></button>
                                             </div>
                                         </div>
@@ -377,10 +379,11 @@
 @section('js')
     <script>
         $(document).ready(function() {
-            let count_guests = 4;
             let count_rooms = 1;
-
+            
             let max_person = {{ $room[0]['person'] }}
+            let count_guests = max_person;
+        
             let available_room = parseInt($('.available_room').text(), 10)
 
             let available_person = max_person;
