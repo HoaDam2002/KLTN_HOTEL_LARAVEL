@@ -244,14 +244,14 @@
 
                         <!-- Header Right start -->
                         <div class="header-right flx-align">
-                            @if (Auth::check())
+                            {{-- @if (Auth::check())
                                 <button class="btn d-lg-block d-none">
                                     <a href="/dashboard" class="account-icon-link"><i
-                                            class="fa-regular fa-circle-user"></i></a>
+                                            class="fa-regular fa-circle-user"></i></a> --}}
                                     {{-- <a href="/dashboard" class="account-icon-link"><img
                                     src="{{ asset('assets/customer/images/logo/z5175648554199_ccc2baf0a7ac356050aa28149405a89d.jpg') }}"
                                     alt="account"></a> --}}
-                                </button>
+                                {{-- </button>
                             @else
                                 <a href="/login" class="btn btn-outline-light d-lg-block d-none">
                                     {{ __('Sign In') }}
@@ -262,7 +262,7 @@
                             @endif
                             <button type="button" class="toggle-mobileMenu d-lg-none ms-3"> <i
                                     class="las la-bars"></i>
-                            </button>
+                            </button> --}}
 
                         </div>
                         <!-- Header Right End  -->
