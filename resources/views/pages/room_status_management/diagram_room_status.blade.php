@@ -123,7 +123,7 @@
                             data-bs-target="#modalEditStatusRoom">
                             <div class="card mb-3 {{ $room->status == 'Clean' ? 'text-bg-success' : ($room->status == 'Dirty' ? 'text-bg-danger' : ($room->status == 'Vacancy' ? 'text-bg-secondary' : ($room->status == 'Checkin' ? 'card-deposited' : ''))) }} {{ $room->type_name }}"
                                 style="max-width: 14rem;">
-                                <div class="card-header name">{{__(("Room"))}}{{ $room->type_name }}</div>
+                                <div class="card-header name">{{__(("Room")) . " "}}{{ $room->type_name }}</div>
                                 <div class="card-body">
                                     <p class="card-text bold"><i class="fa-solid fa-calendar-days me-2"></i>{{__(("Status:"))}} <span
                                             class="font-weight-bold status">{{ $room->status }}</span></p>
@@ -235,7 +235,7 @@
                 name_room = $(this).find('div.name').text();
                 let stt = $(this).find('span.status').text();
 
-                console.log(stt);
+                console.log(name_room);
 
                 updateButtonVisibility(stt);
 
@@ -252,7 +252,6 @@
                 let status = $(this).text();
                 let a = name_room.split(" ")[1];
 
-                console.log(a);
                 $.ajax({
                     type: "post",
                     url: "{{ url('/room_status_management') }}",
