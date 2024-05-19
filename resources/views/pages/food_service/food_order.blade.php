@@ -60,7 +60,8 @@
                     <div class="card-body filter_booking d-flex" style="justify-content: center;">
                         <form action="/food/manation/search_customer" class="w-50 ms-3" method="POST">
                             @csrf
-                            <input type="text" name="infor" id="" placeholder="{{__("Customer Name")}}" class="">
+                            <input type="text" name="infor" id="" placeholder="{{ __('Customer Name') }}"
+                                class="">
                             <button type="submit" class="btn_search_booking"><i
                                     class="fa-solid fa-magnifying-glass"></i></button>
                         </form>
@@ -71,9 +72,10 @@
                         <table class="table style-two">
                             <thead>
                                 <tr>
-                                    <th>{{__("Information")}}</th>
-                                    <th>{{__("Check in")}}</th>
-                                    <th>{{__("Check out")}}</th>
+                                    <th>{{ __('Information') }}</th>
+                                    <th>{{ __('Room') }}</th>
+                                    <th>{{ __('Check in') }}</th>
+                                    <th>{{ __('Check out') }}</th>
                                     {{-- <th>Status</th> --}}
                                     {{-- <th>Action</th> --}}
                                 </tr>
@@ -82,35 +84,43 @@
                                 @if (!empty($customer))
                                     @foreach ($customer as $item)
                                         @php
-                                            $avatar = "http://127.0.0.1:8000/assets/customer/images/thumbs/property-1.png";
+                                            $avatar =
+                                                'http://127.0.0.1:8000/assets/customer/images/thumbs/property-1.png';
 
                                             if (!empty($item['customer'])) {
-                                                $avatar = asset("customer/avatar/" . $item['customer']['avatar']);
+                                                $avatar = asset('customer/avatar/' . $item['customer']['avatar']);
                                             }
 
                                         @endphp
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-3">
-                                                    <div class="cart-item__thumb">
-                                                        <img src="{{ $avatar }}"
-                                                            alt="">
+                                        @foreach ($item['booking_realtime'] as $booking_realtime)
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center gap-3">
+                                                        <div class="cart-item__thumb">
+                                                            <img src="{{ $avatar }}" alt="">
+                                                        </div>
+                                                        <div class="cart-item__content">
+                                                            <h6 class="cart-item__title fw-500 font-18">
+                                                                <a href="/food/order/detail/{{ $item['id'] }}"
+                                                                    class="link">{{ $item['name'] }}</a>
+                                                            </h6>
+                                                        </div>
                                                     </div>
-                                                    <div class="cart-item__content">
-                                                        <h6 class="cart-item__title fw-500 font-18">
-                                                            <a href="/food/order/detail/{{ $item['id'] }}" class="link">{{ $item['name'] }}</a>
-                                                        </h6>
-                                                    </div>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <span class="date" id="checkin">{{ explode(' ',$item['booking_realtime'][0]['check_in'])[0] }}</span>
-                                            </td>
-                                            <td>
-                                                <span class="date" id="checkout">{{ explode(' ',$item['booking_realtime'][0]['check_out'])[0] }}</span>
-                                            </td>
-                                        </tr>
+                                                </td>
+                                                <td>
+                                                    <span class=""
+                                                        id="room">{{ $booking_realtime['room_detail']['type_name'] }}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="date"
+                                                        id="checkin">{{ explode(' ', $item['booking_realtime'][0]['check_in'])[0] }}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="date"
+                                                        id="checkout">{{ explode(' ', $item['booking_realtime'][0]['check_out'])[0] }}</span>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     @endforeach
                                 @endif
 
@@ -127,5 +137,3 @@
         </div>
     </div>
 @endsection
-
-

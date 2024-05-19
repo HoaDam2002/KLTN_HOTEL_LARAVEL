@@ -1888,16 +1888,16 @@
             })
 
             function empty_err() {
-                $('div.err_name').show();
+                $('div.err_name').hide();
                 $('div.err_name').find('small').text('');
 
-                $('div.err_phone').show();
+                $('div.err_phone').hide();
                 $('div.err_phone').find('small').text('');
 
-                $('div.err_date').show();
+                $('div.err_date').hide();
                 $('div.err_date').find('small').text('');
 
-                $('div.err_date1').show();
+                $('div.err_date1').hide();
                 $('div.err_date1').find('small').text('');
 
                 $('div.pay').hide();

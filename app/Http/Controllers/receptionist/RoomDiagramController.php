@@ -395,7 +395,27 @@ class RoomDiagramController extends Controller
                 return response()->json(['room' => $room]);
             }
         } else {
-            return response()->json(['mess' => 'Room not available on this time !!!']);
+            $id_roomDetail = $data['id_roomDetail'];
+            $conflictingBookings = Booking_realtime::where('id_roomDetail', $id_roomDetail)
+                ->where(function ($query) use ($checkin, $checkout) {
+                    $query->where('check_in', '<', $checkout)
+                        ->where('check_out', '>', $checkin);
+                })
+                ->get()->toArray();
+
+            // dd($conflictingBookings);
+
+            $mess = 'There is a duplicate, this room was booked ';
+
+            foreach ($conflictingBookings as $key => $value) {
+                $checkin = explode(' ', $value['check_in'])[0];
+                $checkout = explode(' ', $value['check_out'])[0];
+
+                $mess .= "on $checkin to $checkout, ";
+            }
+
+            $mess = rtrim($mess, ', ');
+            return response()->json(['mess' => $mess]);
         }
     }
 
@@ -562,7 +582,7 @@ class RoomDiagramController extends Controller
 
         $arr['rooms'][] = $booking_realtime;
 
-        $total = ($booking_realtime['price'] * $diffInDays) - ($booking['deposits'] / 3);
+        $total = ($booking_realtime['price'] * $diffInDays) - ($booking['deposits'] / $booking['quantity']);
 
         $arr['total'] = $total;
         $arr['deposits'] = $booking['deposits'] / $booking['quantity'];
@@ -637,8 +657,6 @@ class RoomDiagramController extends Controller
 
         return $list_service_ordered;
     }
-
-
 
     public function checkout_soon(Request $request)
     {
