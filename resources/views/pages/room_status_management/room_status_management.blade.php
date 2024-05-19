@@ -255,17 +255,17 @@
                             </div>
                             <div class="header-info__item flx-align">
                                 <span class="header-info__icon"><i class="fas fa-phone"></i></span>
-                                <a href="tel:" class="header-info__text">(629) 555-0129</a>
+                                <a href="tel:" class="header-info__text">0394903720</a>
                             </div>
                             <div class="header-info__item flx-align">
                                 <span class="header-info__icon"><i class="fas fa-envelope"></i></span>
-                                <a href="mailto:" class="header-info__text">info@example.com</a>
+                                <a href="mailto:" class="header-info__text">danahotel@gmail.com</a>
                             </div>
                         </div>
                         <div class="header-info flx-align d-sm-block d-none">
                             <div class="header-info__item flx-align">
                                 <span class="header-info__icon"><i class="fas fa-map-marker-alt"></i></span>
-                                <span class="header-info__text">6391 Elgin St. Celina, 10299</span>
+                                <span class="header-info__text">Da Nang, Viet Nam</span>
                             </div>
                         </div>
                     </div>
@@ -328,7 +328,7 @@
                             <div class="account-sidebar search-sidebar">
                                 <div class="nav side-tab flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
                                     aria-orientation="vertical">
-                                    
+
                                     <a href="/recep/room_diagram"
                                         class="nav-link {{ Route::currentRouteName() == 'room_diagram_recep' ? 'active' : '' }}"
                                         id="profile_account" onclick="menu_account_customer(this.id)">
