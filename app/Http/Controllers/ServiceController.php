@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\addserviceRequest;
+use App\Models\Booking_realtime;
 use App\Models\Customer;
 use App\Models\InvoiceService;
 use App\Models\InvoiceServiceDetail;
@@ -25,7 +26,7 @@ class ServiceController extends Controller
             $id_account = Auth::id();
             $id_user = Customer::where("id_account", $id_account)->value('id_user');
             $name_user = User::where('id', $id_user)->value('name');
-            return view('pages.service_outside.service_home',compact('name_user'));
+            return view('pages.service_outside.service_home', compact('name_user'));
         }
     }
 
@@ -48,9 +49,7 @@ class ServiceController extends Controller
             $query->where('status', 'checkin');
         })->with(['customer', 'customer_no_acc', 'booking_realtime' => function ($query) {
             $query->where('status', 'checkin');
-        }])->paginate(5);
-
-        // dd($customer);
+        }])->orderByDesc('created_at')->paginate(5);
 
         return view('pages.service_outside.outside_service_order', compact('customer'));
     }
@@ -246,10 +245,20 @@ class ServiceController extends Controller
 
     public function ordered_list(Request $request)
     {
-        $data = InvoiceService::with(['invoice_detail.service', 'user.booking_realtime' => function ($query) {
-            $query->where('status', 'checkin');
-        }])->paginate(6);
+        $data = Booking_realtime::with(['invoice_detail_service.invoice', 'user', 'room_detail'])
+            ->whereHas('invoice_detail_service.invoice.invoice_detail')
+            ->orderByDesc('created_at')
+            ->get()
+            ->map(function ($booking) {
+                // Thu thập tất cả các invoices từ invoice_detail_food
+                $invoices = $booking->invoice_detail_service->map(function ($detail) {
+                    return $detail->invoice;
+                })->flatten()->unique('id');
 
+                $booking->invoices = $invoices;
+                unset($booking->invoice_detail_service);
+                return $booking;
+            })->toArray();
         return view('pages.service_outside.service_ordered_list', compact('data'));
     }
 
@@ -276,13 +285,23 @@ class ServiceController extends Controller
     {
         $infor = $request->all()['infor'];
 
-        $data = InvoiceService::whereHas('user', function ($query) use ($infor) {
-            $query->where('name', 'like', '%' . $infor . '%');
-        })
-            ->with(['invoice_detail.service', 'user.booking_realtime' => function ($query) {
-                $query->where('status', 'checkin');
-            }])
-            ->paginate(5);
+        $data = Booking_realtime::with(['invoice_detail_service.invoice','user', 'room_detail'])
+            ->whereHas('invoice_detail_service.invoice.invoice_detail')
+            ->whereHas('user' , function($query) use ($infor){
+                $query->where('name','like', '%' . $infor . '%')->orwhere('phone','like', '%' . $infor . '%');
+            })
+            ->orderByDesc('created_at')
+            ->get()
+            ->map(function ($booking) {
+                // Thu thập tất cả các invoices từ invoice_detail_food
+                $invoices = $booking->invoice_detail_service->map(function ($detail) {
+                    return $detail->invoice;
+                })->flatten()->unique('id');
+
+                $booking->invoices = $invoices;
+                unset($booking->invoice_detail_service);
+                return $booking;
+            })->toArray();
 
         return view('pages.service_outside.service_ordered_list', compact('data'));
     }

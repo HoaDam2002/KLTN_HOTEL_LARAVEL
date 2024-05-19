@@ -83,7 +83,7 @@
                             <td>{{ $item[0]['name'] }}</td>
                             <td>{{ $item[0]['price'] }}$</td>
                             <td>{{ $item[1] }}</td>
-                            <td>{{ $total }}</td>
+                            <td>{{ $total }}$</td>
                         </tr>
                     @endforeach
                 @else
