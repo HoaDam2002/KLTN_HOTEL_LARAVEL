@@ -223,10 +223,18 @@ Route::middleware(['manager'])->prefix('manager')->group(function () {
     Route::get('/home', [ManagerController::class, 'home_manager'])->name('home_manager');
     Route::get('/statistical', [StatisticalController::class, 'index'])->name('statistical_manager');
     Route::post('/statistical/search', [StatisticalController::class,'searchStatistical'])->name('search_statistical_manager');
+
     Route::get('/report/service', [StatisticalController::class,'reportService'])->name('report_service_manager');
+    Route::post('/report/service_pdf', [StatisticalController::class,'reportPDFService'])->name('report_service_manager_pdf');
+
     Route::get('/report/food', [StatisticalController::class,'reportFood'])->name('report_food_manager');
+    Route::post('/report/food_pdf', [StatisticalController::class,'reportPDFFood'])->name('report_food_manager_pdf');
+
     Route::get('/report/user_booking', [StatisticalController::class,'reportUserBooking'])->name('report_user_manager');
+    Route::post('/report/user_booking_pdf', [StatisticalController::class,'reportPDFUserBooking'])->name('report_user_manager_pdf');
+
     Route::get('/report/bookings', [StatisticalController::class,'reporBooking'])->name('report_booking_manager');
+    Route::post('/report/booking_pdf', [StatisticalController::class,'reportPDFBooking'])->name('report_booking_manager_pdf');
 });
 
 
