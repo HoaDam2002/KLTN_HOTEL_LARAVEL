@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\addserviceRequest;
+use App\Models\Booking_realtime;
+use App\Models\Customer;
 use App\Models\InvoiceService;
 use App\Models\InvoiceServiceDetail;
 use App\Models\Service;
@@ -11,7 +13,7 @@ use Illuminate\Http\Request;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Barryvdh\DomPDF\Facade\Pdf;
-
+use Illuminate\Support\Facades\Auth;
 
 class ServiceController extends Controller
 {
@@ -20,7 +22,12 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        return view('pages.service_outside.service_home');
+        if (Auth::check()) {
+            $id_account = Auth::id();
+            $id_user = Customer::where("id_account", $id_account)->value('id_user');
+            $name_user = User::where('id', $id_user)->value('name');
+            return view('pages.service_outside.service_home', compact('name_user'));
+        }
     }
 
     /**
@@ -42,9 +49,7 @@ class ServiceController extends Controller
             $query->where('status', 'checkin');
         })->with(['customer', 'customer_no_acc', 'booking_realtime' => function ($query) {
             $query->where('status', 'checkin');
-        }])->paginate(5);
-
-        // dd($customer);
+        }])->orderByDesc('created_at')->paginate(5);
 
         return view('pages.service_outside.outside_service_order', compact('customer'));
     }
@@ -202,7 +207,11 @@ class ServiceController extends Controller
 
             $data = $request->all();
 
+            // dd($data);
+
             $items = json_decode($data['arr']);
+            $infor = json_decode($data['infor']);
+
             $id_user = $data['id_user'];
             $name_user = $data['name_user'];
             $id_booking_realtime = $data['id_booking_realtime'];
@@ -211,14 +220,16 @@ class ServiceController extends Controller
 
             if ($invoice_service = InvoiceService::create(['id_user' => $id_user])) {
                 $id_invoice_service = $invoice_service->id;
+                $i = 0;
                 foreach ($items as $key => $value) {
-                    $invoice_detail = InvoiceServiceDetail::create(['id_booking_realtime' => $id_booking_realtime, 'id_invoice_service' => $id_invoice_service, 'id_service' => key($value)]);
+                    $invoice_detail = InvoiceServiceDetail::create(['id_booking_realtime' => $id_booking_realtime, 'id_invoice_service' => $id_invoice_service, 'id_service' => key($value), 'name_serive' => key($infor[$i]), 'price' => reset($infor[$i])]);
                     $food = Service::find(key($value));
                     if ($food) {
                         $data_pdf['service'][] = [$food->toArray(), reset($value)];
                     } else {
                         throw new \Exception('Food not found.');
                     }
+                    $i++;
                 }
 
                 $pdf = PDF::loadView('pages.invoice.last_invoice', ['data_pdf' => $data_pdf]);
@@ -234,10 +245,20 @@ class ServiceController extends Controller
 
     public function ordered_list(Request $request)
     {
-        $data = InvoiceService::with(['invoice_detail.service', 'user.booking_realtime' => function ($query) {
-            $query->where('status', 'checkin');
-        }])->paginate(6);
+        $data = Booking_realtime::with(['invoice_detail_service.invoice', 'user', 'room_detail'])
+            ->whereHas('invoice_detail_service.invoice.invoice_detail')
+            ->orderByDesc('created_at')
+            ->get()
+            ->map(function ($booking) {
+                // Thu thập tất cả các invoices từ invoice_detail_food
+                $invoices = $booking->invoice_detail_service->map(function ($detail) {
+                    return $detail->invoice;
+                })->flatten()->unique('id');
 
+                $booking->invoices = $invoices;
+                unset($booking->invoice_detail_service);
+                return $booking;
+            })->toArray();
         return view('pages.service_outside.service_ordered_list', compact('data'));
     }
 
@@ -264,14 +285,33 @@ class ServiceController extends Controller
     {
         $infor = $request->all()['infor'];
 
-        $data = InvoiceService::whereHas('user', function ($query) use ($infor) {
-            $query->where('name', 'like', '%' . $infor . '%');
-        })
-            ->with(['invoice_detail.service', 'user.booking_realtime' => function ($query) {
-                $query->where('status', 'checkin');
-            }])
-            ->paginate(5);
+        $data = Booking_realtime::with(['invoice_detail_service.invoice','user', 'room_detail'])
+            ->whereHas('invoice_detail_service.invoice.invoice_detail')
+            ->whereHas('user' , function($query) use ($infor){
+                $query->where('name','like', '%' . $infor . '%')->orwhere('phone','like', '%' . $infor . '%');
+            })
+            ->orderByDesc('created_at')
+            ->get()
+            ->map(function ($booking) {
+                // Thu thập tất cả các invoices từ invoice_detail_food
+                $invoices = $booking->invoice_detail_service->map(function ($detail) {
+                    return $detail->invoice;
+                })->flatten()->unique('id');
+
+                $booking->invoices = $invoices;
+                unset($booking->invoice_detail_service);
+                return $booking;
+            })->toArray();
 
         return view('pages.service_outside.service_ordered_list', compact('data'));
+    }
+
+    public function order_detail_search_service(Request $request)
+    {
+        $name_service = $request->all()['name_service'];
+
+        $service = Service::where('name', 'like', '%' . $name_service . '%')->get()->toArray();
+
+        return response()->json(['services' => $service]);
     }
 }

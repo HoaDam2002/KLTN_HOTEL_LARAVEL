@@ -31,8 +31,7 @@
                 @if (!empty($booking))
                     <div class="card common-card">
                         <div class="card-header info_booking_header row">
-                            <img src="{{ asset('assets/customer/images/logo/logohotel.jpg') }}" alt=""
-                                class="image_customer_booking col-4">
+                            <img src="{{ asset('assets/customer/images/logo/logohotel.jpg') }}" alt="" class="image_customer_booking col-4">
                             <div class="title_booking col-8">
                                 <h6>{{__("Booking code")}}: #{{ $booking['id'] }}</h6>
                                 <h6>{{__("Customer")}}: {{ $booking['user']['name'] }}</h6>
@@ -64,9 +63,14 @@
                                             <div class="mb-3 col-4">
                                                 <label for="exampleFormControlInput1" class="form-label">{{__("Room")}}
                                                     {{ $i + 1 }}</label>
+<<<<<<< HEAD
                                                 <select class="form-select form-select-lg room_booking_realtime"
                                                     required>
                                                     <option value="">{{__("Please choose the room")}}</option>
+=======
+                                                <select class="form-select form-select-lg room_booking_realtime" required>
+                                                    <option value="">Please choose the room</option>
+>>>>>>> 25415f6fc6710770d332b637421fbb98e06c095f
                                                     @if (!empty($list_empty_room_booking))
                                                         @foreach ($list_empty_room_booking as $item)
                                                             <option value="{{ $item->id }}">
@@ -121,8 +125,6 @@
             }
         });
 
-        var selectedValues = [];
-
         (() => {
             'use strict'
 
@@ -139,7 +141,7 @@
 
                         $(".room_booking_realtime").each(function() {
                             var selectedValueRoom = $(this).find('option:selected').val();
-                            if (selectedValueRoom) { 
+                            if (selectedValueRoom) {
                                 selectedValuesArray.push(selectedValueRoom);
                             }
                         });
@@ -177,17 +179,31 @@
             $('select.room_booking_realtime').change(function() {
                 disableSelectedOptions(this);
             });
-
         })
 
+        var selectedValues = [];
 
         function disableSelectedOptions(selectedOption) {
-            selectedValues.push(selectedOption.value);
+            var previousValue = selectedOption.dataset.previousValue;
+            var currentValue = selectedOption.value;
+
+            selectedOption.dataset.previousValue = currentValue;
+
+            if (previousValue) {
+                var index = selectedValues.indexOf(previousValue);
+                if (index !== -1) {
+                    selectedValues.splice(index, 1);
+                }
+            }
+            if (currentValue) {
+                selectedValues.push(currentValue);
+            }
+
             var selects = $('select.form-select');
             for (var i = 0; i < selects.length; i++) {
                 var options = $(selects[i]).find('option');
                 for (var j = 0; j < options.length; j++) {
-                    if (selectedValues.includes(options[j].value)) {
+                    if (selectedValues.includes(options[j].value) && options[j].value !== selects[i].value) {
                         options[j].disabled = true;
                     } else {
                         options[j].disabled = false;
@@ -195,5 +211,19 @@
                 }
             }
         }
+
+        $(document).ready(function() {
+            var selects = $('select.form-select');
+            selects.each(function() {
+                var currentSelect = this;
+                currentSelect.dataset.previousValue = currentSelect.value;
+
+                $(currentSelect).on('change', function() {
+                    disableSelectedOptions(currentSelect);
+                });
+
+                disableSelectedOptions(currentSelect);
+            });
+        });
     </script>
 @endsection

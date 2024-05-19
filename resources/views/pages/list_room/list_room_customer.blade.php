@@ -129,6 +129,9 @@
                     @foreach ($data as $room)
                         @php
                             $image = $room->images;
+
+                            $arrayImages = explode(', ', $image);
+
                             if (!isset($checkin)) {
                                 $checkin = 'null';
                             }
@@ -148,7 +151,7 @@
                             <div class="property-item style-two">
                                 <div class="property-item__thumb">
                                     <a href="/room-detail/{{ $room->id }}/{{ $timeBooking }}" class="link">
-                                        <img src={{ asset("/customer/image_room/$image") }} alt=""
+                                        <img src={{ asset("rooms/$arrayImages[0]") }} alt=""
                                             class="cover-img">
                                     </a>
                                 </div>

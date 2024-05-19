@@ -71,6 +71,11 @@
         thead th {
             font-weight: 600 !important;
         }
+
+        .btn_pdf:hover {
+            color: #fff !important;
+            cursor: pointer;
+        }
     </style>
 @endsection
 
@@ -79,19 +84,25 @@
         <div class="tab-content" id="v-pills-tabContent">
             <div class="row">
                 <div class="col-12">
-                    <h5 class="">{{__("DANAHOTEL Report")}}</h5>
-                    <div class="mb-3 date_report">{{__("Report from")}} {{ $start_date }} {{__("to")}} {{ $end_date }}</div>
-                    <h6 class="">{{__("Service")}}</h6>
+                    <h5 class="" style="text-align: center">DANA Hotel Report</h5>
+                    <div class="mb-3 date_report">Report from {{ $start_date }} to {{ $end_date }}</div>
+                    <h6 class="">Service</h6>
                     <div class="mb-3">
-                        <button class="btn_export btn_pdf">
-                            {{__("Export PDF")}}
-                        </button>
+                        <form action="/manager/report/service_pdf" method="post">
+                            @csrf
+                            <input type="hidden" name="start_date" value="{{ $start_date }}">
+                            <input type="hidden" name="end_date" value="{{ $end_date }}">
+                            <button type="submit" class="btn_export btn_pdf">
+                                Export PDF
+                            </button>
+                        </form>
                         {{-- <button class="btn_export btn_excel">
                             Export Excel
                         </button> --}}
                     </div>
                     <div style="overflow: auto">
-                        <table class="table table_report table-striped table-hover" style="color: #333; padding: 0 10px; font-size: 16px">
+                        <table class="table table_report table-striped table-hover"
+                            style="color: #333; padding: 0 10px; font-size: 16px">
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>

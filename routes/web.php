@@ -153,7 +153,7 @@ Route::middleware(['restaurant'])->group(function () {
     Route::post('/food/manation/delete_food', [FoodController::class, 'delete_food'])->name('delete_food_food_service');
     Route::post('/food/manation/fill_modal', [FoodController::class, 'fill_modal'])->name('fill_modal_food_service');
     Route::post('/food/manation/edit_food/{id}', [FoodController::class, 'edit_food'])->name('edit_food_service');
-    Route::post('/food/manation/search_food', [FoodController::class, 'search_food'])->name('search_food_service');
+    Route::post('/food/manation/search_food', [FoodController::class, 'search_food'])->name('food_service_manation');
 
     Route::get('/food/ordered_list', [FoodController::class, 'ordered_list'])->name('food_ordered_list');
     Route::post('/food/ordered_list/search', [FoodController::class, 'ordered_list_search'])->name('food_ordered_list');
@@ -166,8 +166,9 @@ Route::middleware(['restaurant'])->group(function () {
 
     Route::post('/food/manation/search_customer', [FoodController::class, 'search_customer'])->name('food_service_order');
 
-
     Route::get('/food/order/detail/{id}', [FoodController::class, 'food_detail'])->name('food_service_order');
+    Route::post('/order/detail/search_food', [FoodController::class, 'order_detail_search_food'])->name('food_service_order');
+
 });
 
 
@@ -191,10 +192,13 @@ Route::middleware(['service'])->group(function () {
     Route::post('/service/manation/search_customer', [ServiceController::class, 'search_customer'])->name('service_order');
 
     Route::get('/service/order/detail/{id}', [ServiceController::class, 'service_detail'])->name('service_order');
+    Route::post('/order/detail/search_service', [ServiceController::class, 'order_detail_search_service'])->name('service_order');
+
 
     Route::get('/service/ordered_list', [ServiceController::class, 'ordered_list'])->name('service_ordered_list');
     Route::post('/service/ordered_list/search', [ServiceController::class, 'ordered_list_search'])->name('service_ordered_list');
     Route::post('/service/ordered_list/printpdf', [ServiceController::class, 'printpdf'])->name('service_ordered_list');
+
 
 });
 
@@ -219,10 +223,18 @@ Route::middleware(['manager'])->prefix('manager')->group(function () {
     Route::get('/home', [ManagerController::class, 'home_manager'])->name('home_manager');
     Route::get('/statistical', [StatisticalController::class, 'index'])->name('statistical_manager');
     Route::post('/statistical/search', [StatisticalController::class,'searchStatistical'])->name('search_statistical_manager');
+
     Route::get('/report/service', [StatisticalController::class,'reportService'])->name('report_service_manager');
+    Route::post('/report/service_pdf', [StatisticalController::class,'reportPDFService'])->name('report_service_manager_pdf');
+
     Route::get('/report/food', [StatisticalController::class,'reportFood'])->name('report_food_manager');
+    Route::post('/report/food_pdf', [StatisticalController::class,'reportPDFFood'])->name('report_food_manager_pdf');
+
     Route::get('/report/user_booking', [StatisticalController::class,'reportUserBooking'])->name('report_user_manager');
+    Route::post('/report/user_booking_pdf', [StatisticalController::class,'reportPDFUserBooking'])->name('report_user_manager_pdf');
+
     Route::get('/report/bookings', [StatisticalController::class,'reporBooking'])->name('report_booking_manager');
+    Route::post('/report/booking_pdf', [StatisticalController::class,'reportPDFBooking'])->name('report_booking_manager_pdf');
 });
 
 

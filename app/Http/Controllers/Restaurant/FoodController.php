@@ -16,6 +16,9 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Storage;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Stripe\Invoice;
 
 class FoodController extends Controller
 {
@@ -24,7 +27,12 @@ class FoodController extends Controller
      */
     public function index()
     {
-        return view('pages.food_service.food_home');
+        if (Auth::check()) {
+            $id_account = Auth::id();
+            $id_user = Customer::where("id_account", $id_account)->value('id_user');
+            $name_user = User::where('id', $id_user)->value('name');
+            return view('pages.food_service.food_home', compact('name_user'));
+        }
     }
 
     /**
@@ -72,7 +80,7 @@ class FoodController extends Controller
             $query->where('status', 'checkin');
         })->with(['customer', 'customer_no_acc', 'booking_realtime' => function ($query) {
             $query->where('status', 'checkin');
-        }])->paginate(5);
+        }, 'booking_realtime.room_detail'])->orderByDesc('created_at')->paginate(6);
 
         // dd($customer);
 
@@ -91,6 +99,7 @@ class FoodController extends Controller
             $data = $request->all();
 
             $items = json_decode($data['arr']);
+            $infor = json_decode($data['infor']);
 
             $id_user = $data['id_user'];
             $name_user = $data['name_user'];
@@ -100,14 +109,16 @@ class FoodController extends Controller
 
             if ($invoice_food = InvoiceFood::create(['id_user' => $id_user])) {
                 $id_invoice_food = $invoice_food->id;
+                $i = 0;
                 foreach ($items as $key => $value) {
-                    $invoice_detail = InvoiceFoodDetail::create(['id_booking_realtime' => $id_booking_realtime, 'id_invoice_food' => $id_invoice_food, 'id_food' => key($value), 'quantity' => reset($value)]);
+                    $invoice_detail = InvoiceFoodDetail::create(['id_booking_realtime' => $id_booking_realtime, 'id_invoice_food' => $id_invoice_food, 'id_food' => key($value), 'quantity' => reset($value), 'name_food' => key($infor[$i]), 'price' => reset($infor[$i])]);
                     $food = Food::find(key($value));
                     if ($food) {
                         $data_pdf['food'][] = [$food->toArray(), reset($value)];
                     } else {
                         throw new \Exception('Food not found.');
                     }
+                    $i++;
                 }
 
                 $pdf = PDF::loadView('pages.invoice.last_invoice', ['data_pdf' => $data_pdf]);
@@ -243,9 +254,20 @@ class FoodController extends Controller
 
     public function ordered_list()
     {
-        $data = InvoiceFood::with(['invoice_detail.food', 'user.booking_realtime' => function ($query) {
-            $query->where('status', 'checkin');
-        }])->paginate(6);
+        $data = Booking_realtime::with(['invoice_detail_food.invoice', 'user', 'room_detail'])
+            ->whereHas('invoice_detail_food')
+            ->orderByDesc('created_at')
+            ->get()
+            ->map(function ($booking) {
+                // Thu thập tất cả các invoices từ invoice_detail_food
+                $invoices = $booking->invoice_detail_food->map(function ($detail) {
+                    return $detail->invoice;
+                })->flatten()->unique('id');
+
+                $booking->invoices = $invoices;
+                unset($booking->invoice_detail_food);
+                return $booking;
+            })->toArray();
 
         return view('pages.food_service.food_ordered_list', compact('data'));
     }
@@ -254,13 +276,23 @@ class FoodController extends Controller
     {
         $infor = $request->all()['infor'];
 
-        $data = InvoiceFood::whereHas('user', function ($query) use ($infor) {
-            $query->where('name', 'like', '%' . $infor . '%')->orwhere('phone', 'like' , '%' . $infor . '%');
-        })
-            ->with(['invoice_detail.food', 'user.booking_realtime' => function ($query) {
-                $query->where('status', 'checkin');
-            }])
-            ->paginate(5);
+        $data = Booking_realtime::with(['invoice_detail_food.invoice', 'user', 'room_detail'])
+            ->whereHas('invoice_detail_food')
+            ->whereHas('user', function ($query) use ($infor) {
+                $query->where('name', 'like', '%' . $infor . '%')->orwhere('phone', 'like', '%' . $infor . '%');
+            })
+            ->orderByDesc('created_at')
+            ->get()
+            ->map(function ($booking) {
+                // Thu thập tất cả các invoices từ invoice_detail_food
+                $invoices = $booking->invoice_detail_food->map(function ($detail) {
+                    return $detail->invoice;
+                })->flatten()->unique('id');
+
+                $booking->invoices = $invoices;
+                unset($booking->invoice_detail_food);
+                return $booking;
+            })->toArray();
 
         return view('pages.food_service.food_ordered_list', compact('data'));
     }
@@ -282,5 +314,14 @@ class FoodController extends Controller
         $pdf = PDF::loadView('pages.invoice.last_invoice', ['data_pdf' => $data_pdf]);
 
         return $pdf->download("invoice_$name_user.pdf");
+    }
+
+    public function order_detail_search_food(Request $request)
+    {
+        $name_food = $request->all()['name_food'];
+
+        $food = Food::where('name', 'like', '%' . $name_food . '%')->get()->toArray();
+
+        return response()->json(['foods' => $food]);
     }
 }

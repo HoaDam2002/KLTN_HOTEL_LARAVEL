@@ -108,55 +108,67 @@
                                 <thead>
                                     <tr>
                                         <th>{{ __('Name Customer') }}</th>
+                                        <th>{{ __('Phone') }}</th>
+                                        <th>{{ __('Room') }}</th>
+                                        <th>{{ __('Ordered At') }}</th>
                                         <th>{{ __('Total') }}</th>
                                         <th>{{ __('Handle') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{-- @php
-                                        dd($data->toArray());
-                                    @endphp --}}
                                     @if (!empty($data))
                                         @foreach ($data as $item)
-                                            @php
-                                                $Total = 0;
-                                                foreach ($item['invoice_detail'] as $key => $value) {
-                                                    $Total += $value['food']['price'] * $value['quantity'];
-                                                }
-                                            @endphp
-                                            <tr>
-                                                <td>
-                                                    <h6 class="cart-item__title fw-500 font-18">
-                                                        <div class="link name">{{ $item['user']['name'] }}</div>
-                                                    </h6>
-                                                </td>
-                                                <td>
-                                                    <span class="price_food" id="">{{ $Total }}$</span>
-                                                </td>
-                                                <td>
-                                                    <form action="/food/ordered_list/printpdf" method="post">
-                                                        @csrf
-                                                        <input type="text" name="id_invoice" value="{{ $item['id'] }}"
-                                                            hidden>
-                                                        <input type="text" name="name_user"
-                                                            value="{{ $item['user']['name'] }}" hidden>
+                                            @foreach ($item['invoices'] as $invoice)
+                                                @php
+                                                    $Total = 0;
+                                                    foreach ($invoice->invoice_detail as $invoice_detail) {
+                                                        $Total += $invoice_detail->price * $invoice_detail->quantity;
+                                                    }
+                                                @endphp
+                                                <tr>
+                                                    <td>
+                                                        <h6 class="cart-item__title fw-500 font-18">
+                                                            <div class="link name">{{ $item['user']['name'] }}</div>
+                                                        </h6>
+                                                    </td>
+                                                    <td>
+                                                        <span class="name" id="">{{ $item['user']['phone'] }}</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="room" id="">{{ $item['room_detail']['type_name'] }}</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="room" id="">{{ $invoice['created_at'] }}</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="price_food" id="">{{ $Total }}$</span>
+                                                    </td>   
+                                                    <td>
+                                                        <form action="/food/ordered_list/printpdf" method="post">
+                                                            @csrf
+                                                            <input type="text" name="id_invoice"
+                                                                value="{{ $invoice->id }}" hidden>
+                                                            <input type="text" name="name_user"
+                                                                value="{{ $item['user']['name'] }}" hidden>
 
-                                                        <button type="submit" class="add_food" style="margin-left: 5px">
-                                                            <i class="fa-solid fa-print" style="font-size: 25px"></i>
-                                                        </button>
-                                                    </form>
-                                                </td>
-                                            </tr>
+                                                            <button type="submit" class="add_food"
+                                                                style="margin-left: 5px">
+                                                                <i class="fa-solid fa-print" style="font-size: 25px"></i>
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
                                         @endforeach
                                     @endif
                             </table>
                         </div>
                     </div>
-                    <nav aria-label="Page navigation example" style="padding-bottom: 50px;">
+                    {{-- <nav aria-label="Page navigation example" style="padding-bottom: 50px;">
                         <ul class="pagination common-pagination">
                             {{ $data->links() }}
                         </ul>
-                    </nav>
+                    </nav> --}}
                 </div>
             </div>
         </div>

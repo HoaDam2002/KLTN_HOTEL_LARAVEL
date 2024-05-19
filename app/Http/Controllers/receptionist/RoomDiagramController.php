@@ -190,7 +190,7 @@ class RoomDiagramController extends Controller
     {
         $id_roomDetail = $request->all()['id_room'];
 
-        $room_detail = Roomdetail::with('booking_realtime.invoice_detail_food.food', 'booking_realtime.invoice_detail_service.service', 'typeRoom', 'booking_realtime.user', 'booking_realtime.booking.booking_realtime.room_detail')
+        $room_detail = Roomdetail::with('booking_realtime.invoice_detail_food', 'booking_realtime.invoice_detail_service', 'typeRoom', 'booking_realtime.user', 'booking_realtime.booking.booking_realtime.room_detail')
             ->where('id', $id_roomDetail)->get()->toArray();
 
         if (!empty($room_detail[0]['booking_realtime'])) {
@@ -395,7 +395,27 @@ class RoomDiagramController extends Controller
                 return response()->json(['room' => $room]);
             }
         } else {
-            return response()->json(['mess' => 'Room not available on this time !!!']);
+            $id_roomDetail = $data['id_roomDetail'];
+            $conflictingBookings = Booking_realtime::where('id_roomDetail', $id_roomDetail)
+                ->where(function ($query) use ($checkin, $checkout) {
+                    $query->where('check_in', '<', $checkout)
+                        ->where('check_out', '>', $checkin);
+                })
+                ->get()->toArray();
+
+            // dd($conflictingBookings);
+
+            $mess = 'There is a duplicate, this room was booked ';
+
+            foreach ($conflictingBookings as $key => $value) {
+                $checkin = explode(' ', $value['check_in'])[0];
+                $checkout = explode(' ', $value['check_out'])[0];
+
+                $mess .= "on $checkin to $checkout, ";
+            }
+
+            $mess = rtrim($mess, ', ');
+            return response()->json(['mess' => $mess]);
         }
     }
 
@@ -562,7 +582,7 @@ class RoomDiagramController extends Controller
 
         $arr['rooms'][] = $booking_realtime;
 
-        $total = ($booking_realtime['price'] * $diffInDays) - ($booking['deposits'] / 3);
+        $total = ($booking_realtime['price'] * $diffInDays) - ($booking['deposits'] / $booking['quantity']);
 
         $arr['total'] = $total;
         $arr['deposits'] = $booking['deposits'] / $booking['quantity'];
@@ -575,18 +595,17 @@ class RoomDiagramController extends Controller
     {
         $invoices = DB::table('invoice_food')
             ->join('invoice_detail_food', 'invoice_food.id', '=', 'invoice_detail_food.id_invoice_food')
-            ->join('food', 'food.id', '=', 'invoice_detail_food.id_food') // Thêm bảng food và điều kiện kết nối
             ->select(
-                DB::raw('MAX(food.name) AS name'),
-                DB::raw('MAX(food.price) AS price'),
+                DB::raw('MAX(invoice_detail_food.name_food) AS name'),
+                DB::raw('MAX(invoice_detail_food.price) AS price'),
                 'invoice_food.id_user AS user_id',
-                'food.id AS food_id',
+                'invoice_detail_food.id_food AS food_id',
                 DB::raw('SUM(invoice_detail_food.quantity) AS total_quantity'),
-                DB::raw('SUM(invoice_detail_food.quantity * food.price) AS total') // Tính tổng số tiền cho mỗi loại food
+                DB::raw('SUM(invoice_detail_food.quantity * invoice_detail_food.price) AS total')
             )
-            ->where('invoice_food.id_user', $id_user) // Thêm điều kiện id_user
-            ->where('invoice_detail_food.id_booking_realtime', $id_booking_realtime) // Thêm điều kiện cho id_booking_realtime
-            ->groupBy('invoice_food.id_user', 'food.id')
+            ->where('invoice_food.id_user', $id_user)
+            ->where('invoice_detail_food.id_booking_realtime', $id_booking_realtime)
+            ->groupBy('invoice_food.id_user', 'invoice_detail_food.id_food')
             ->get()->toArray();
 
         if (empty($invoices)) {
@@ -602,7 +621,6 @@ class RoomDiagramController extends Controller
         $list_food_ordered['total'] = $total;
         $list_food_ordered['invoice'] = $invoices;
 
-
         return $list_food_ordered;
     }
 
@@ -610,17 +628,18 @@ class RoomDiagramController extends Controller
     {
         $invoices = DB::table('invoice_service')
             ->join('invoice_detail_service', 'invoice_service.id', '=', 'invoice_detail_service.id_invoice_service')
-            ->join('service', 'service.id', '=', 'invoice_detail_service.id_service')
             ->select(
-                DB::raw('MAX(service.name) AS name'),
-                DB::raw('MAX(service.price) AS price'),
+                DB::raw('MAX(invoice_detail_service.name_serive) AS name'),
+                DB::raw('MAX(invoice_detail_service.price) AS price'),
                 'invoice_service.id_user AS user_id',
-                'service.id AS service_id',
-                DB::raw('SUM(service.price) AS total')
+                'invoice_detail_service.id_service AS service_id',
+                // DB::raw('Count(invoice_detail_service) AS total_quantity'),
+                DB::raw('SUM(invoice_detail_service.price) AS total'),
+                DB::raw('Count(invoice_detail_service.name_serive) AS quantity')
             )
             ->where('invoice_service.id_user', $id_user)
             ->where('invoice_detail_service.id_booking_realtime', $id_booking_realtime)
-            ->groupBy('invoice_service.id_user', 'service.id')
+            ->groupBy('invoice_service.id_user', 'invoice_detail_service.id_service')
             ->get()->toArray();
 
         if (empty($invoices)) {
@@ -630,17 +649,14 @@ class RoomDiagramController extends Controller
         $total = 0;
 
         foreach ($invoices as $key => $value) {
-            $total += $value->price;
+            $total += $value->price * $value->quantity;
         }
 
-        $list_food_ordered['total'] = $total;
-        $list_food_ordered['invoice'] = $invoices;
+        $list_service_ordered['total'] = $total;
+        $list_service_ordered['invoice'] = $invoices;
 
-
-        return $list_food_ordered;
+        return $list_service_ordered;
     }
-
-
 
     public function checkout_soon(Request $request)
     {

@@ -247,17 +247,17 @@
                             </div>
                             <div class="header-info__item flx-align">
                                 <span class="header-info__icon"><i class="fas fa-phone"></i></span>
-                                <a href="tel:" class="header-info__text">(629) 555-0129</a>
+                                <a href="tel:" class="header-info__text">0394903720</a>
                             </div>
                             <div class="header-info__item flx-align">
                                 <span class="header-info__icon"><i class="fas fa-envelope"></i></span>
-                                <a href="mailto:" class="header-info__text">info@example.com</a>
+                                <a href="mailto:" class="header-info__text">danahotel@gmail.com</a>
                             </div>
                         </div>
                         <div class="header-info flx-align d-sm-block d-none">
                             <div class="header-info__item flx-align">
                                 <span class="header-info__icon"><i class="fas fa-map-marker-alt"></i></span>
-                                <span class="header-info__text">6391 Elgin St. Celina, 10299</span>
+                                <span class="header-info__text">Da Nang, Viet Nam</span>
                             </div>
                         </div>
                     </div>
@@ -386,6 +386,21 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
 
         @yield('js')
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                let lang = "{{ App::getLocale() }}";
+                if (lang) {
+                    if (lang == 'en') {
+                        document.getElementById('en-flag').classList.add('active');
+                        document.getElementById('vi-flag').classList.remove('active');
+                    } else if (lang == 'vi') {
+                        document.getElementById('vi-flag').classList.add('active');
+                        document.getElementById('en-flag').classList.remove('active');
+                    }
+                }
+            })
+        </script>
     </body>
 
 </html>

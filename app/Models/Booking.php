@@ -17,6 +17,7 @@ class Booking extends Model
         'check_in',
         'check_out',
         'quantity',
+        'guests',
         'deposits',
         'price'
     ];
