@@ -23,10 +23,10 @@ class RoomStatusController extends Controller
     {
         $data = $request->all();
 
-        $room = Roomdetail::where('type_name', $data['name_room'])->first();
+        $room = Roomdetail::where('id', $data['id_room'])->first();
 
         if ($room) {
-            $room->status = $data['status'];
+            $room->status = $data['status_change'];
             $room->save(); 
 
             return response()->json(['room' => $room]);

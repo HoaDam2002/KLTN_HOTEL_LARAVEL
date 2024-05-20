@@ -157,12 +157,12 @@
             </div>
             <div class="func_filter_status mb-4">
 
-                <button class="btn_filter text-bg-secondary" id="{{ $a }}">Null</button>
-                <button class="btn_filter text-bg-success" id="{{ $a }}">Occupied</button>
+                <button class="btn_filter text-bg-secondary" id="{{ $a }}" data-id="Null">{{ __('Null') }}</button>
+                <button class="btn_filter text-bg-success" id="{{ $a }}" data-id="Occupied">{{ __('Occupied') }}</button>
                 {{-- <button class="btn_filter bg-deposit filter_ready">Ready</button> --}}
-                <button class="btn_filter text-bg-warning" id="{{ $a }}">Check in</button>
-                <button class="btn_filter text-bg-danger filter_checkout" id="{{ $a }}">Check out</button>
-                <button class="btn_filter text-bg-primary" id="{{ $a }}"><i
+                <button class="btn_filter text-bg-warning" id="{{ $a }}" data-id="Check in">{{ __('Check in') }}</button>
+                <button class="btn_filter text-bg-danger filter_checkout" id="{{ $a }}" data-id="Check out">{{ __('Check out') }}</button>
+                <button class="btn_filter text-bg-primary" id="{{ $a }}" data-id=""><i
                         class="fa-solid fa-arrows-rotate"></i></button>
             </div>
             <div class="room_diagram container">
@@ -1229,7 +1229,7 @@
 
             $(document).on('click', 'button.btn_filter', function() {
                 let time = $(this).attr('id');
-                let status = $(this).text();
+                let status = $(this).attr('data-id');
                 $('.bt_checkout').prop('disabled', false);
                 $('.bt_checkout_soon').prop('disabled', false);
 
@@ -1535,7 +1535,8 @@
                             let final_total = total - deposit;
 
                             $(modal).find('strong.deposit').text(deposit + "$");
-                            $(modal).find('strong.final_total').text((final_total < 0 ? 0 : final_total) + "$");
+                            $(modal).find('strong.final_total').text((final_total < 0 ? 0 :
+                                final_total) + "$");
                             $(modal).find('strong.total').text(total + "$");
 
                         } else if (modal == '#modalRoomCheckout') {
@@ -1608,7 +1609,8 @@
                             $(modal).find('strong.total_food').text(total_food + "$");
                             $(modal).find('strong.total_service').text(total_service + "$");
 
-                            $(modal).find('strong.final_total').text((final_total < 0 ? 0 : final_total) + "$");
+                            $(modal).find('strong.final_total').text((final_total < 0 ? 0 :
+                                final_total) + "$");
                             $(modal).find('strong.total').text(total + "$");
 
                             $(modal).find('strong.name_room').text(name_room);
@@ -1717,7 +1719,8 @@
                             $(modal).find('strong.total_service').text(total_service + "$");
 
                             $(modal).find('strong.deposit').text(deposit + "$");
-                            $(modal).find('strong.final_total').text((final_total < 0 ? 0 : final_total) + "$");
+                            $(modal).find('strong.final_total').text((final_total < 0 ? 0 :
+                                final_total) + "$");
                             $(modal).find('strong.total').text(total + "$");
 
                             $(modal).find('strong.name_room').text(name_room);
@@ -1798,8 +1801,7 @@
                                 toast.show();
                             }
                         });
-                    } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    }
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {}
                 });
             })
 
