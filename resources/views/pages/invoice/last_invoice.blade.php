@@ -45,6 +45,10 @@
         .total {
             font-weight: bold;
         }
+
+        body{
+            font-family: 'DejaVu Sans', sans-serif;
+        }
     </style>
 </head>
 
@@ -53,7 +57,7 @@
         <span>Invoice</span>
     </div>
     <div class="hotel-info">
-        <p><strong>Hotel Name:</strong>DANAHOTEL</p>
+        <p><strong>Hotel Name:</strong> DANAHOTEL</p>
         <p><strong>Address:</strong> Da Nang, Viet Nam</p>
     </div>
     <div class="customer-info">
