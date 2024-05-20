@@ -7,7 +7,7 @@
         <title>{{ __('Report User Booking') }}</title>
         <style>
             body {
-                font-family: Arial, sans-serif;
+                font-family: 'DejaVu Sans', sans-serif;
             }
 
             .container {
