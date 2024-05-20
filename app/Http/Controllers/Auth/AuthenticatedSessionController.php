@@ -54,6 +54,8 @@ class AuthenticatedSessionController extends Controller
                 return redirect()->intended(RouteServiceProvider::HOME_ADMIN);
             } else if ($role == 'manager') {
                 return redirect()->intended(RouteServiceProvider::HOME_MANAGER);
+            } else {
+                return redirect()->back()->withErrors('Your role not allow to do this action!');
             }
         }
     }

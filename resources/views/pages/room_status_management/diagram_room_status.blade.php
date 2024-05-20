@@ -119,14 +119,14 @@
             <div class="room_diagram container">
                 <div class="row">
                     @foreach ($data as $room)
-                        <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram room" data-bs-toggle="modal"
+                        <div class="mb-1 col-4 col-md-3 col-lg-2 px-1 wrapper_diagram room" id="{{ $room->id }}" data-bs-toggle="modal"
                             data-bs-target="#modalEditStatusRoom">
                             <div class="card mb-3 {{ $room->status == 'Clean' ? 'text-bg-success' : ($room->status == 'Dirty' ? 'text-bg-danger' : ($room->status == 'Vacancy' ? 'text-bg-secondary' : ($room->status == 'Checkin' ? 'card-deposited' : ''))) }} {{ $room->type_name }}"
                                 style="max-width: 14rem;">
                                 <div class="card-header name">{{__(("Room")) . " "}}{{ $room->type_name }}</div>
                                 <div class="card-body">
                                     <p class="card-text bold"><i class="fa-solid fa-calendar-days me-2"></i>{{__(("Status:"))}} <span
-                                            class="font-weight-bold status">{{ $room->status }}</span></p>
+                                            class="font-weight-bold status" id="{{ $room->status == "Dirty" ? "1" : "2" }}">{{ __($room->status) }}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -148,8 +148,8 @@
                 <div class="modal-body">
                     <h4 style="text-align: center;">{{__("Status Room Management")}}</h4>
                     <div class="btn-status">
-                        <button class="status text-bg-danger p-2 w-25" id="Dirty">{{__("Dirty")}}</button>
-                        <button class="status text-bg-success p-2 w-25" id="Clean">{{__("Clean")}}</button>
+                        <button class="status text-bg-danger p-2 w-25 Dirty" id="1">{{__("Dirty")}}</button>
+                        <button class="status text-bg-success p-2 w-25 Clean" id="2">{{__("Clean")}}</button>
                         {{-- <button class="status card-deposited p-2 w-25" id="Checkin"
                             data-bs-dismiss="modal">Checkin</button> --}}
                         {{-- <button class="status text-bg-secondary p-2 w-25" id="Vacancy"
@@ -200,42 +200,25 @@
 
 
         $(document).ready(function() {
-            let name_room = "";
+            let id_room = "";
 
             function updateButtonVisibility(stt) {
                 switch (stt) {
                     case "Dirty":
-                        $('button#Dirty').hide();
-                        $('button#Clean').show();
-                        $('button#Checkin').show();
-                        $('button#Vacancy').show();
+                        $('button.Dirty').hide();
+                        $('button.Clean').show();
                         break;
                     case "Clean":
-                        $('button#Dirty').show();
-                        $('button#Clean').hide();
-                        $('button#Checkin').show();
-                        $('button#Vacancy').show();
-                        break;
-                    case "Checkin":
-                        $('button#Dirty').show();
-                        $('button#Clean').show();
-                        $('button#Checkin').hide();
-                        $('button#Vacancy').show();
-                        break;
-                    case "Vacancy":
-                        $('button#Dirty').show();
-                        $('button#Clean').show();
-                        $('button#Checkin').show();
-                        $('button#Vacancy').hide();
+                        $('button.Dirty').show();
+                        $('button.Clean').hide();
                         break;
                 }
             }
 
             $(document).on('click', 'div.room', function() {
-                name_room = $(this).find('div.name').text();
+                let name_room = $(this).find('div.name').text();
+                id_room = $(this).attr('id');
                 let stt = $(this).find('span.status').text();
-
-                console.log(name_room);
 
                 updateButtonVisibility(stt);
 
@@ -249,15 +232,16 @@
             });
 
             $(document).on('click', 'button.status', function() {
-                let status = $(this).text();
-                let a = name_room.split(" ")[1];
+                let status = $(this).attr('id');
+
+                let status_change = status == 1 ? "Dirty" : "Clean";
 
                 $.ajax({
                     type: "post",
                     url: "{{ url('/room_status_management') }}",
                     data: {
-                        status: status,
-                        name_room: a
+                        status_change: status_change,
+                        id_room: id_room,
                     },
                     dataType: "json",
                     success: function(response) {
@@ -272,22 +256,12 @@
 
                         if (status_class == 'Dirty') {
                             r.addClass('text-bg-danger');
-                            r.find('span.status').text('Dirty')
+                            r.find('span.status').text('{{ __("Dirty") }}')
                         }
 
                         if (status_class == 'Clean') {
                             r.addClass('text-bg-success');
-                            r.find('span.status').text('Clean')
-                        }
-
-                        if (status_class == 'Vacancy') {
-                            r.addClass('text-bg-secondary');
-                            r.find('span.status').text('Vacancy')
-                        }
-
-                        if (status_class == 'Checkin') {
-                            r.addClass('card-deposited');
-                            r.find('span.status').text('Checkin')
+                            r.find('span.status').text('{{ __("Clean") }}')
                         }
 
                         $('#modalEditStatusRoom').modal(
