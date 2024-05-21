@@ -85,8 +85,9 @@
 
                 console.log(check_commented, status);
 
-                if (status == 'confirm' || status == 'cancel' || status == 'pending' && status ==
+                if (status == 'confirm' || status == 'cancel' || status == 'pending' || status ==
                     'Chấp thuận' || status == 'Hủy' || status == 'Chờ phê duyệt') {
+                        console.log('alo');
                     $(this).closest('.btn-action').find('button.btn_rating').prop('disabled', true);
                 } else {
                     if (!check_commented) {
