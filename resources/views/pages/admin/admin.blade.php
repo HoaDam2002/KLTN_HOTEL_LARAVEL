@@ -115,7 +115,7 @@
         <main class="body-bg">
 
             <!-- ==================== Mobile Menu Start Here ==================== -->
-            <div class="mobile-menu d-lg-none d-block">
+            {{-- <div class="mobile-menu d-lg-none d-block">
                 <button type="button" class="close-button"> <i class="las la-times"></i> </button>
                 <div class="mobile-menu__inner">
                     @if (Auth::check())
@@ -162,7 +162,7 @@
                         @endif
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <!-- ==================== Mobile Menu End Here ==================== -->
 
             <!-- ==================== Right Offcanvas Start Here ==================== -->
@@ -288,13 +288,13 @@
 
                         <!-- Header Right start -->
                         <div class="header-right flx-align">
-                            @if (Auth::check())
+                            {{-- @if (Auth::check())
                                 <button class="btn d-lg-block d-none">
-                                    <a href="/dashboard" class="account-icon-link"><i class="fa-regular fa-circle-user"></i></a>
+                                    <a href="/dashboard" class="account-icon-link"><i class="fa-regular fa-circle-user"></i></a> --}}
                                     {{-- <a href="/dashboard" class="account-icon-link"><img
                                     src="{{ asset('assets/customer/images/logo/z5175648554199_ccc2baf0a7ac356050aa28149405a89d.jpg') }}"
                                     alt="account"></a> --}}
-                                </button>
+                                {{-- </button>
                             @else
                                 <a href="/login" class="btn btn-outline-light d-lg-block d-none">
                                     {{ __('Sign In') }}
@@ -304,7 +304,7 @@
                                 </a>
                             @endif
                             <button type="button" class="toggle-mobileMenu d-lg-none ms-3"> <i class="las la-bars"></i>
-                            </button>
+                            </button> --}}
 
                         </div>
                         <!-- Header Right End  -->
