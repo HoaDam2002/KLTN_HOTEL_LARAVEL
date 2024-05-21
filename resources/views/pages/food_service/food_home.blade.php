@@ -9,7 +9,7 @@
                     {{__("Hello")}}
                     <strong class="text-heading fw-500 text-poppins">{{ isset($name_user) ? $name_user : "UserName" }}</strong>
                     (
-                    <strong class="text-heading fw-500 text-poppins">{{ isset($name_user) ? $name_user : "UserName" }}</strong>{{__("Log out")}} )
+                    <strong class="text-heading fw-500 text-poppins">{{ isset($name_user) ? $name_user : "UserName " }}</strong>{{__("Log out")}} )
                 </p>
                 <p class="account-alert">
                     {{__("From your account dashboard you can view your recent orders, manage your shipping and billing addresses, and edit your password and account details.")}}
