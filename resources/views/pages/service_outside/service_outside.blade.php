@@ -10,9 +10,7 @@
         <title>DANAHOTEL</title>
 
         <!-- Favicon -->
-        <link rel="shortcut icon"
-            href="{{ asset('assets/customer/images/logo/z5175648554199_ccc2baf0a7ac356050aa28149405a89d.jpg') }}">
-
+        <link rel="shortcut icon" href="{{ asset('assets/customer/images/logo/logohotel.jpg') }}">
         <!-- Bootstrap -->
         <link rel="stylesheet" href="{{ asset('assets/customer/css/bootstrap.min.css') }}">
         <!-- Fontawesome -->
