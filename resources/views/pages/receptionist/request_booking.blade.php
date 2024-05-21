@@ -103,13 +103,15 @@
                                         @php
                                             $check_in = $item['check_in'];
                                             $check_out = $item['check_out'];
+
+                                            $arrayImages = explode(', ', $item['room']['images']);
                                         @endphp
 
                                         <tr>
                                             <td>
                                                 <div class="d-flex align-items-center gap-3">
                                                     <div class="cart-item__thumb">
-                                                        <img src="{{ asset('customer/image_room/' . $item['room']['images']) }}"
+                                                        <img src="{{ asset('rooms/' . $arrayImages[0]) }}"
                                                             alt="">
                                                     </div>
                                                     <div class="cart-item__content">

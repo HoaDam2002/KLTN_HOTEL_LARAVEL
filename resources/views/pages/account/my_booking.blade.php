@@ -85,33 +85,32 @@
                             </thead>
                             <tbody>
                                 @if (isset($data))
-                                    {{-- {{ dd($data) }} --}}
                                     @foreach ($data as $data)
                                         @php
                                             $image = $data['room']['images'];
+
+                                            $arrayImages = explode(', ', $image);
+
                                             $checkin = new DateTime($data['check_in']);
                                             $checkout = new DateTime($data['check_out']);
 
                                             $interval = $checkout->diff($checkin);
                                             $numberOfDays = $interval->days + 1;
 
-                                            // dd($numberOfDays);
-
-                                            $total =
-                                                $data['price'] * $data['quantity'] * $numberOfDays - $data['deposits'];
+                                            $total = $data['price'] * $data['quantity'] * $numberOfDays - $data['deposits'];
 
                                         @endphp
                                         <tr>
                                             <td>
                                                 <div class="d-flex align-items-center gap-3">
                                                     <div class="cart-item__thumb">
-                                                        <img src="{{ asset("customer/image_room/$image") }}"
+                                                        <img src="{{ asset("rooms/$arrayImages[0]") }}"
                                                             alt="" />
                                                     </div>
                                                     <div class="cart-item__content">
                                                         <h6 class="cart-item__title fw-500 font-18">
                                                             <a href="/room-detail/{{ $data['room']['id'] }}/null null" class="link">{{ $data['room']['name'] }}</a>
-                                    
+
                                                         </h6>
                                                         <p class="property-item__location d-flex gap-2 font-14">
                                                             <span class="icon text-gradient">

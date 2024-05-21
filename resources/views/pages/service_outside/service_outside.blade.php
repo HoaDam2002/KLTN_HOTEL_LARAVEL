@@ -228,9 +228,9 @@
                     <nav class="header-inner flx-between">
                         <!-- Logo Start -->
                         <div class="logo">
-                            <a href="/outside_service" class="link">
-                                <img src="{{ asset('assets/customer/images/logo/z5175648554199_ccc2baf0a7ac356050aa28149405a89d.jpg') }}"
-                                    alt="Logo" style="width: 190px; height: 40px; object-fit: contain">
+                            <a href="/outside_service" class="link" style="width: 190px; height: 100%; object-fit: contain">
+                                <img src="{{ asset('assets/customer/images/logo/logohotel.jpg') }}"
+                                    alt="DANA Hotel" >
                             </a>
                         </div>
                         <!-- Logo End  -->
