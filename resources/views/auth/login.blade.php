@@ -8,8 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>DANA HOTEL</title>
     <!-- Favicon -->
-    <link rel="shortcut icon"
-        href="{{ asset('assets/customer/images/logo/z5175648554199_ccc2baf0a7ac356050aa28149405a89d.jpg') }}">
+    <link rel="shortcut icon" href="{{ asset('assets/customer/images/logo/logohotel.jpg') }}">
 
     <style>
         #logo_hotel {
