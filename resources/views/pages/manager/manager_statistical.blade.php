@@ -181,8 +181,7 @@
                     </div>
                 </form>
 
-                <form action="/manager/report/food" method="GET" class="col-12 col-sm-6 col-md-4 report">
-                    @csrf
+                <div class="col-12 col-sm-6 col-md-4 report">
                     <input type="hidden" name="start_date" value="{{ isset($start_date) ? $start_date : $currentDate }}">
                     <input type="hidden" name="end_date" value="{{ isset($end_date) ? $end_date : $nextDate }}">
                     <div class="card card_revenue mb-3 card_custom">
@@ -192,7 +191,7 @@
                         </div>
                         <div class="icon_card card_icon_revenue"><i class="fa-solid fa-chart-simple"></i></div>
                     </div>
-                </form>
+                </div>
 
                 <form action="/manager/report/food" method="GET" class="col-12 col-sm-6 col-md-4 report">
                     @csrf

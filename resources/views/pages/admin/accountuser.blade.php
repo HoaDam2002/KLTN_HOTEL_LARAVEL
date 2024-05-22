@@ -231,6 +231,8 @@
                                 <option value="receptionist">{{__("Receptionist")}}</option>
                                 <option value="service">{{__("Service")}}</option>
                                 <option value="restaurant">{{__("Restaurant")}}</option>
+                                <option value="status_manager">{{__("Housekeeping")}}</option>
+                                <option value="manager">{{__("Manager")}}</option>
                             </select>
                             <label for="floatingRole">{{__("Role")}}</label>
                         </div>
@@ -442,7 +444,6 @@
             $('.btn_edit_staff').click(function() {
                 var id_user = $(this).attr('data-userid');
                 var id_account = $(this).attr('data-accountid');
-                alert(id_user)
                 $.ajax({
                     type: "post",
                     url: "/admin/info_staff",

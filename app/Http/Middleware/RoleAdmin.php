@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\Customer;
+use App\Models\Staff;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,14 +21,14 @@ class RoleAdmin
     {
         if(Auth::check()){
             $id_account = Auth::id();
-            $customer = Customer::where('id_account', $id_account)->first();
-    
-            $id_user = $customer->id_user;
-    
+            $staff = Staff::where('id_account', $id_account)->first();
+
+            $id_user = $staff->id_user;
+
             $user = User::where('id', $id_user)->first();
-    
+
             $role = $user->role;
-    
+
             if ($role == 'admin') {
                 return $next($request);
             } else {

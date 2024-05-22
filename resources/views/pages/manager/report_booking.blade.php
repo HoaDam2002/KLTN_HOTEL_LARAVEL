@@ -138,7 +138,7 @@
                                             $date_book = $date->format('d/m/Y');
 
                                             $deposit = 0;
-                                            if (isset($booking->deposit)) {
+                                            if (isset($booking->deposits)) {
                                                 $deposit = $booking->deposits;
                                             } elseif (isset($booking->deposit_customer)) {
                                                 $deposit = $booking->deposit_customer->deposit;

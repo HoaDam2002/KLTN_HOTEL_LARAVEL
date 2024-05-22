@@ -291,7 +291,7 @@
                 id_food = $(this).attr('data-id');
                 __this = $(this).closest('tr');
             })
-            
+
             $(document).on('click', 'button.comfirm', function() {
                 $.ajax({
                     type: "post",
@@ -318,8 +318,7 @@
 
             $(document).on('click', 'button.btn_edit_food', function() {
                 let id_food = $(this).attr('data-id');
-                $('#modal_editfood').find('#form_edit').attr('action', '/food/manation/edit_food/' +
-                    id_food)
+                $('#modal_editfood').find('#form_edit').attr('action', '/food/manation/edit_food/' + id_food)
 
                 $.ajax({
                     type: "post",
@@ -329,12 +328,12 @@
                     },
                     dataType: "json",
                     success: function(response) {
-                        let mess = response.service;
+                        let mess = response.food;
 
                         console.log(mess);
 
                         if (mess) {
-                            $('#servicename').val(mess.name);
+                            $('#foodname').val(mess.name);
                             $('#price').val(mess.price);
                             $('h4.title_edit').text('Edit ' + mess.name);
                         }

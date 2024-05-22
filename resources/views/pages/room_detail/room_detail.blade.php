@@ -375,8 +375,7 @@
                                 <span
                                     style="font-weight: bold; text-align: center; margin-top: 20px;">{{ __('You must deposit 20% in advance to request a reservation') }}</span>
 
-                                <button class="btn_request_book request_deposit" type="submit">{{ __('Deposit') . " " }}
-                                    {{ $diffInDays ? $diffInDays * $room[0]['price'] * 0.2 : $room[0]['price'] * 0.2 }}$</button>
+                                <button class="btn_request_book request_deposit" type="submit">{{ __('Deposit') }} {{ $diffInDays ? $diffInDays * $room[0]['price'] * 0.2 : $room[0]['price'] * 0.2 }}$</button>
                             </form>
 
                         </div>
@@ -563,7 +562,7 @@
                 deposit = total * 0.2;
                 $('.request_deposit').text(' {{ __('Deposit') }}' + deposit + '$');
                 $('.total strong').text('$' + total);
-                $('.duration strong').text(duration + ' days');
+                $('.duration strong').text(duration + ' {{ __('days') }}');
 
                 $('input.deposits').val(deposit);
                 $('input.total').val(total);
