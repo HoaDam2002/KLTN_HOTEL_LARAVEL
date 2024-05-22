@@ -10,6 +10,7 @@ use App\Models\Customer;
 use App\Models\Food;
 use App\Models\InvoiceFood;
 use App\Models\InvoiceFoodDetail;
+use App\Models\Staff;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -29,7 +30,7 @@ class FoodController extends Controller
     {
         if (Auth::check()) {
             $id_account = Auth::id();
-            $id_user = Customer::where("id_account", $id_account)->value('id_user');
+            $id_user = Staff::where("id_account", $id_account)->value('id_user');
             $name_user = User::where('id', $id_user)->value('name');
             return view('pages.food_service.food_home', compact('name_user'));
         }

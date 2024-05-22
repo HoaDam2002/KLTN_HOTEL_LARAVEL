@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use App\Models\Customer;
+use App\Models\Staff;
 use App\Models\User;
 
 class AuthenticatedSessionController extends Controller
@@ -34,8 +35,13 @@ class AuthenticatedSessionController extends Controller
         if (Auth::check()) {
             $id_account = Auth::id();
             $customer = Customer::where('id_account', $id_account)->first();
+            $staff = Staff::where('id_account', $id_account)->first();
 
-            $id_user = $customer->id_user;
+            if (!empty($staff)) {
+                $id_user = $staff->id_user;
+            } else {
+                $id_user = $customer->id_user;
+            }
 
             $user = User::where('id', $id_user)->first();
 

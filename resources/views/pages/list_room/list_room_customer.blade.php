@@ -174,8 +174,8 @@
                                             <span class="text">{{ __('1 Baths') }}</span>
                                         </li>
                                     </ul>
-                                    <h6 class="property-item__price"> {{ $room->price }}
-                                        <span class="day">{{ __('/per day') }}</span>
+                                    <h6 class="property-item__price"> {{ $room->price }}$
+                                        <span class="day">{{ __('/pernight') }}</span>
                                     </h6>
                                     <h6 class="property-item__price">
                                         {{ isset($count_quantity) ? $count_quantity[$i] : $room->quantity }}
