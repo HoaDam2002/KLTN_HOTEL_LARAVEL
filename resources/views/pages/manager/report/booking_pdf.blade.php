@@ -35,6 +35,7 @@
             border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
+            font-size: 10px;
         }
 
         th {
