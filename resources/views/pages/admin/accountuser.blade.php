@@ -95,7 +95,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if (isset($data_users))
+                            @if (!empty($data_users))
                                 @foreach ($data_users as $user)
                                     <tr>
                                         <td><strong>{{ $user->id }}</strong></td>
@@ -108,8 +108,11 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <span
-                                                style="margin-right: 15px">{{ $user->customer ? $user->customer->account->email : ($user->staff ? $user->staff->account->email : '') }}</span>
+                                            @if (isset($user->customer->account->email))
+                                                <span style="margin-right: 15px">{{ $user->customer->account->email }}</span>
+                                            @elseif (isset($user->staff->account->email))
+                                                <span style="margin-right: 15px">{{ $user->staff->account->email }}</span>
+                                            @endif
                                         </td>
                                         <td>
                                             @if ($user->role === 'customer')
@@ -127,6 +130,12 @@
                                                         <option value="restaurant" {{ $user->role === 'restaurant' ? 'selected' : '' }}>
                                                             {{__("Restaurant")}}
                                                         </option>
+                                                        <option value="status_manager" {{ $user->role === 'status_manager' ? 'selected' : '' }}>
+                                                            {{__("Housekeeping")}}
+                                                        </option>
+                                                        <option value="manager" {{ $user->role === 'manager' ? 'selected' : '' }}>
+                                                            {{__("Manager")}}
+                                                        </option>
                                                     </select>
                                                 </form>
                                             @endif
@@ -137,14 +146,14 @@
                                                 <button data-bs-toggle="modal" data-bs-target="#modal_edit_staff" type="button"
                                                     class="btn_edit_staff rounded-btn edit-btn  text-primary bg-primary bg-opacity-10 flex-shrink-0"
                                                     data-userid="{{ $user->id }}"
-                                                    data-accountid="{{ $user->staff ? $user->staff->id_account : '' }}"><i
+                                                    data-accountid="{{ isset($user->staff) ? $user->staff->id_account : '' }}"><i
                                                         class="fa-sharp fa-solid fa-pen-to-square"></i></button>
                                             @endif
                                             @if ($user->customer || $user->staff)
                                                 <button type="button"
                                                     class="rounded-btn text-danger bg-danger bg-opacity-10 flex-shrink-0 btn_delete_user"
                                                     data-bs-toggle="modal" data-bs-target="#modal_delete_user"
-                                                    data-userid="{{ $user->customer ? $user->customer->id : ($user->staff ? $user->staff->id : '') }}"
+                                                    data-userid="{{ isset($user->customer) ? $user->customer->id : (isset($user->staff) ? $user->staff->id : '') }}"
                                                     data-role="{{ $user->role }}">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </button>
@@ -317,7 +326,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 class="modal-title fs-5" id="exampleModalLabel">{{__("Delete User")}}</h6>
+                    <h6 class="modal-title fs-5" id="exampleModalLabel">{{__("Change Password User")}}</h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form method="POST" action="{{ route('change_pass_staff_admin') }}" id="change_pass_staff" class="needs-validation"

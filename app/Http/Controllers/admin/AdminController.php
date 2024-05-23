@@ -35,8 +35,7 @@ class AdminController extends Controller
      */
     public function get_list_users()
     {
-        $data_users = User::with(['customer.account', 'staff.account'])->orderBy('created_at', 'desc')->paginate(20);
-
+        $data_users = User::with(['customer.account', 'staff.account'])->where('role', '<>', 'null')->orderBy('created_at', 'desc')->paginate(10);
         return view('pages.admin.accountuser', compact('data_users'));
     }
 
